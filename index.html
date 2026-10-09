@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0e15">
+<title>솔라리아 제국 기록 보관소</title>
+<meta name="description" content="북부 대공에게 구해진 당신, 그리고 당신만을 향하는 마물들. 솔라리아 제국 시뮬레이션 세계관 기록 보관소.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0e15; --bg1:#10141e; --bg2:#151b28; --line:rgba(201,169,79,.28); --line2:rgba(201,169,79,.55);
+  --gold:#c9a94f; --gold-hi:#f0d98a; --ink:#ece3cb; --muted:#a99d80; --dim:#6f6652;
+  --paper:#e8dcbd; --paper2:#d9c9a2; --paper-ink:#2b2216; --paper-dim:#6b5a40; --seal:#b3352a; --seal-hi:#ff6a58; --rift:#9c7cff;
+  --serif:'Noto Serif KR',serif; --sans:'Noto Sans KR',system-ui,sans-serif; --latin:'Cinzel',serif;
+  --nav-h:64px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--serif);line-height:1.75;word-break:keep-all;-webkit-font-smoothing:antialiased;min-height:100vh;padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 12px)}
+body:before{content:"";position:fixed;inset:0;z-index:-1;background:
+  radial-gradient(ellipse 80% 50% at 50% -10%,rgba(201,169,79,.10),transparent 70%),
+  radial-gradient(ellipse 60% 40% at 100% 100%,rgba(70,90,140,.10),transparent 70%),
+  repeating-linear-gradient(0deg,rgba(255,255,255,.012) 0 1px,transparent 1px 3px),var(--bg)}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.latin{font-family:var(--latin);letter-spacing:.32em;font-size:11px;color:var(--gold)}
+.ui{font-family:var(--sans)}
+
+/* ---------- top bar ---------- */
+.top{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);background:rgba(11,14,21,.78);border-bottom:1px solid var(--line)}
+.top .in{max-width:1080px;margin:0 auto;height:56px;padding:0 16px;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand .mk{width:26px;height:26px;position:relative;flex:none}
+.brand .mk:before{content:"";position:absolute;inset:4px;transform:rotate(45deg);border:1px solid var(--gold)}
+.brand .mk:after{content:"";position:absolute;inset:10px;transform:rotate(45deg);background:var(--gold)}
+.brand b{display:block;font-family:var(--latin);font-weight:600;font-size:12px;letter-spacing:.28em;color:var(--gold-hi);line-height:1.2}
+.brand small{display:block;font-family:var(--sans);font-size:10.5px;color:var(--muted);letter-spacing:.18em;line-height:1.3}
+.top nav{margin-left:auto;display:flex;gap:4px}
+.top nav a{font-family:var(--sans);font-size:13px;letter-spacing:.14em;padding:8px 14px;color:var(--muted);position:relative}
+.top nav a.on{color:var(--gold-hi)}
+.top nav a.on:after{content:"";position:absolute;left:14px;right:14px;bottom:2px;height:1px;background:var(--gold)}
+
+/* ---------- bottom nav (mobile) ---------- */
+.bnav{position:fixed;left:0;right:0;bottom:0;z-index:30;height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);display:none;background:linear-gradient(180deg,rgba(16,20,30,.92),rgba(9,11,17,.98));border-top:1px solid var(--line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.bnav a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-family:var(--sans);font-size:11px;letter-spacing:.12em;color:var(--dim);position:relative}
+.bnav a.on{color:var(--gold-hi)}
+.bnav a.on:before{content:"";position:absolute;top:-1px;left:30%;right:30%;height:2px;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+.ic{width:20px;height:20px;position:relative;display:block}
+.ic-map:before{content:"";position:absolute;inset:3px;border:1.5px solid currentColor;transform:rotate(45deg)}
+.ic-map:after{content:"";position:absolute;left:8px;top:8px;width:4px;height:4px;background:currentColor;transform:rotate(45deg)}
+.ic-ppl:before{content:"";position:absolute;left:6px;top:1px;width:8px;height:8px;border:1.5px solid currentColor;border-radius:50%}
+.ic-ppl:after{content:"";position:absolute;left:2px;bottom:1px;width:16px;height:8px;border:1.5px solid currentColor;border-bottom:0;border-radius:9px 9px 0 0}
+.ic-seal:before{content:"";position:absolute;inset:1px;border:1.5px solid currentColor;border-radius:50%}
+.ic-seal:after{content:"";position:absolute;left:6px;top:6px;width:8px;height:8px;background:currentColor;transform:rotate(45deg)}
+@media (max-width:720px){.top nav{display:none}.bnav{display:flex}}
+@media (min-width:721px){body{padding-bottom:0}}
+
+/* ---------- page ---------- */
+main{max-width:1080px;margin:0 auto;padding:0 16px}
+.page{animation:pageIn .45s cubic-bezier(.2,.7,.2,1)}
+@keyframes pageIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.sec{margin:44px 0}
+.sh{display:flex;align-items:baseline;gap:12px;margin:0 0 16px}
+.sh .n{font-family:var(--latin);font-size:12px;color:var(--gold);letter-spacing:.2em}
+.sh h2{margin:0;font-size:19px;font-weight:700;letter-spacing:.14em;color:#f4ead0}
+.sh .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent);align-self:center}
+.sh .more{font-family:var(--sans);font-size:12px;color:var(--muted);letter-spacing:.1em}
+.back{display:inline-flex;align-items:center;gap:8px;margin:18px 0 0;font-family:var(--sans);font-size:12.5px;letter-spacing:.14em;color:var(--muted)}
+.back:before{content:"";width:7px;height:7px;border-left:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg)}
+.back:hover{color:var(--gold-hi)}
+
+/* angled panel (game ui) */
+.cut{--c:12px;clip-path:polygon(var(--c) 0,100% 0,100% calc(100% - var(--c)),calc(100% - var(--c)) 100%,0 100%,0 var(--c))}
+
+/* ---------- hero (home) ---------- */
+.hero{position:relative;text-align:center;padding:56px 0 8px}
+.hero h1{margin:14px 0 4px;font-size:clamp(34px,8vw,58px);font-weight:900;letter-spacing:.14em;color:#f8efd7;text-shadow:0 0 30px rgba(240,217,138,.16)}
+.hero .sub{font-family:var(--latin);font-size:12px;letter-spacing:.42em;color:var(--muted)}
+.orn{display:flex;align-items:center;gap:10px;max-width:420px;margin:24px auto}
+.orn:before,.orn:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.orn:after{background:linear-gradient(270deg,transparent,var(--gold))}
+.orn i{width:7px;height:7px;transform:rotate(45deg);background:var(--gold)}
+.hook{max-width:520px;margin:0 auto;font-size:15.5px}
+.hook p{margin:0 0 10px}
+.hook .hi{color:var(--gold-hi)}
+
+/* ---------- map ---------- */
+.frame{max-width:1060px;margin:0 auto;position:relative;padding:10px;border:1px solid #8c733a;background:linear-gradient(160deg,#181c28,#0d1017);box-shadow:0 0 0 3px #0d1017,0 0 0 4px #4a3d1f,0 18px 40px rgba(0,0,0,.6)}
+.frame .cn{position:absolute;color:var(--gold);font-size:9px;line-height:1}
+.map{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;border:1px solid rgba(201,169,79,.6);background:repeating-radial-gradient(circle at 50% 50%,rgba(231,200,115,.06) 0 1px,transparent 1px 18px),radial-gradient(circle at 50% 45%,#1c2a38,#0c141c 75%);box-shadow:inset 0 0 30px rgba(0,0,0,.75)}
+.rg{position:absolute;inset:0;pointer-events:none;filter:drop-shadow(0 0 .6px rgba(240,217,138,.9));transition:filter .3s}
+.shp{position:absolute;inset:0;pointer-events:auto;cursor:pointer;transition:filter .3s}
+.map .rg.hov{filter:drop-shadow(0 0 1.2px #f6e3a0) drop-shadow(0 0 9px rgba(240,217,138,.5))}
+.map .rg.hov .shp{filter:brightness(1.12)}
+.glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 0% 50%,rgba(150,80,255,.55),transparent 22%)}
+.fis{position:absolute;inset:0;background:#05050a;cursor:pointer;clip-path:polygon(0 0,7% 0,4.5% 12%,8.5% 26%,5% 42%,9% 58%,5.5% 74%,8% 88%,6% 100%,0 100%)}
+.rl{position:absolute;left:3.5%;top:50%;transform:translate(-50%,-50%);color:#c9a4ff;font-family:var(--sans);font-size:clamp(8px,1.4vw,11px);letter-spacing:3px;writing-mode:vertical-rl;white-space:nowrap;text-shadow:0 0 6px #9a5cff;pointer-events:none}
+.lb{position:absolute;transform:translate(-50%,-50%);font-family:var(--sans);font-size:clamp(10px,2vw,14px);letter-spacing:.35em;font-weight:700;pointer-events:none}
+.lb.sd{text-shadow:0 1px 2px rgba(0,0,0,.7)}
+.ms{position:absolute;width:10px;height:10px;transform:translate(-50%,-50%) rotate(45deg);border:1px solid rgba(240,217,138,.7);pointer-events:none}
+.pin{position:absolute;left:62%;top:19%;pointer-events:none}
+.pin b{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#ffd66b);box-shadow:0 0 10px 3px rgba(255,214,107,.85)}
+.pin s{position:absolute;left:-14px;top:-14px;width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,235,160,.6);animation:ping 2.6s ease-out infinite}
+.pin em{position:absolute;left:12px;top:-10px;white-space:nowrap;font-style:normal;font-family:var(--sans);font-size:11px;color:var(--gold-hi);letter-spacing:.1em;text-shadow:0 1px 3px #000}
+@keyframes ping{0%{transform:scale(.5);opacity:1}100%{transform:scale(1.5);opacity:0}}
+.compass{position:absolute;right:10px;bottom:10px;width:38px;height:38px;border-radius:50%;border:1px solid rgba(240,217,138,.55);background:rgba(10,14,20,.6);pointer-events:none}
+.compass:before{content:"";position:absolute;left:18.5px;top:4px;width:1px;height:28px;background:rgba(240,217,138,.7)}
+.compass:after{content:"";position:absolute;top:18.5px;left:4px;height:1px;width:28px;background:rgba(240,217,138,.7)}
+.compass i{position:absolute;left:0;top:1px;width:100%;text-align:center;font-size:7px;color:#f0d98a;font-style:normal;line-height:8px}
+.maphint{margin:12px 0 0;text-align:center;font-family:var(--sans);font-size:12px;color:var(--dim);letter-spacing:.14em}
+
+/* ---------- region cards ---------- */
+.rgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.rcard{position:relative;display:block;padding:18px 18px 16px 22px;background:linear-gradient(135deg,var(--bg2),var(--bg1));border:1px solid var(--line);overflow:hidden;transition:transform .25s,border-color .25s}
+.rcard:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--rc)}
+.rcard:after{content:attr(data-l);position:absolute;right:-6px;bottom:-14px;font-family:var(--latin);font-size:46px;font-weight:700;letter-spacing:.06em;color:var(--rc);opacity:.06;white-space:nowrap}
+.rcard>*{position:relative;z-index:1}.rcard:after{z-index:0}
+.rcard:hover{transform:translateY(-2px);border-color:var(--line2)}
+.rcard .latin{color:var(--rc);font-size:10px}
+.rcard h3{margin:4px 0 2px;font-size:18px;color:#f4ead0}
+.rcard h3 small{font-size:13px;color:var(--muted);font-weight:400;margin-left:6px}
+.rcard p{margin:6px 0 0;font-size:13.5px;color:var(--muted);line-height:1.6}
+.rcard .go{position:absolute;right:16px;top:18px;width:8px;height:8px;border-right:1.5px solid var(--rc);border-top:1.5px solid var(--rc);transform:rotate(45deg)}
+.rcard.sealed{background:linear-gradient(135deg,#140f22,#0c0a14)}
+@media (max-width:560px){.rgrid{grid-template-columns:1fr}}
+
+/* entry tiles */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{position:relative;display:block;padding:20px;border:1px solid var(--line);background:linear-gradient(160deg,#171d2b,#0f131c);min-height:120px;overflow:hidden}
+.tile .latin{font-size:10px}
+.tile h3{margin:6px 0 4px;font-size:18px;color:#f4ead0}
+.tile p{margin:0;font-size:13px;color:var(--muted)}
+.tile .deco{position:absolute;right:18px;bottom:16px;width:44px;height:44px;opacity:.5}
+.tile .deco.d1:before{content:"";position:absolute;inset:6px;border:1px solid var(--gold);transform:rotate(45deg)}
+.tile .deco.d1:after{content:"";position:absolute;inset:16px;background:var(--gold);transform:rotate(45deg)}
+.tile .deco.d2{border-radius:50%;border:1px solid var(--seal-hi);box-shadow:0 0 16px rgba(255,90,70,.35)}
+.tile .deco.d2:after{content:"";position:absolute;inset:14px;background:var(--seal-hi);transform:rotate(45deg)}
+
+/* ---------- region page ---------- */
+.rhero{position:relative;margin:0 -16px;padding:34px 16px 30px;overflow:hidden;border-bottom:1px solid var(--line)}
+.rhero:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in srgb,var(--rc) 22%,transparent),transparent 85%)}
+.rhero .bigl{position:absolute;right:-10px;top:4px;font-family:var(--latin);font-weight:700;font-size:clamp(54px,14vw,120px);letter-spacing:.04em;color:var(--rc);opacity:.10;white-space:nowrap;pointer-events:none}
+.rhero .in{position:relative;max-width:1080px;margin:0 auto}
+.rhero .latin{color:var(--rc)}
+.rhero h1{margin:6px 0 0;font-size:clamp(28px,6vw,40px);font-weight:900;letter-spacing:.08em;color:#f8efd7}
+.rhero h1 small{display:block;font-size:15px;font-weight:600;letter-spacing:.2em;color:var(--muted);margin-top:2px}
+.rhero .tg{margin:14px 0 0;font-size:16px;color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.chips span{font-family:var(--sans);font-size:11.5px;letter-spacing:.08em;padding:3px 11px;border:1px solid color-mix(in srgb,var(--rc) 45%,transparent);color:var(--muted)}
+
+.doc{position:relative;padding:26px 24px 22px;color:var(--paper-ink);background:
+  radial-gradient(ellipse at 20% 0%,rgba(255,255,255,.35),transparent 60%),
+  radial-gradient(ellipse at 100% 100%,rgba(120,90,40,.18),transparent 60%),
+  linear-gradient(180deg,var(--paper),var(--paper2));box-shadow:0 14px 30px rgba(0,0,0,.45),inset 0 0 0 1px rgba(90,70,30,.25),inset 0 0 40px rgba(120,90,40,.18)}
+.doc:before{content:"";position:absolute;inset:7px;border:1px solid rgba(110,85,40,.35);pointer-events:none}
+.doc .dh{display:flex;justify-content:space-between;gap:10px;font-family:var(--sans);font-size:10.5px;letter-spacing:.2em;color:var(--paper-dim);border-bottom:1px solid rgba(110,85,40,.35);padding-bottom:8px;margin-bottom:14px}
+.doc p{margin:0;font-size:15.5px;line-height:1.95}
+.doc .first:first-letter{float:left;font-size:44px;line-height:1;font-weight:900;margin:4px 8px 0 0;color:#5a3f17}
+
+.places{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.place{display:flex;gap:12px;padding:14px 16px;background:var(--bg1);border:1px solid var(--line)}
+.place i{flex:none;width:9px;height:9px;margin-top:9px;transform:rotate(45deg);border:1px solid var(--rc);background:color-mix(in srgb,var(--rc) 35%,transparent)}
+.place b{display:block;font-size:15px;color:#f4ead0;font-weight:600}
+.place span{display:block;font-size:13.5px;color:var(--muted);line-height:1.65;margin-top:2px}
+@media (max-width:560px){.places{grid-template-columns:1fr}}
+.now{margin:0;padding:0;list-style:none;border-left:1px solid var(--line2)}
+.now li{position:relative;padding:8px 0 8px 22px;font-size:15px}
+.now li:before{content:"";position:absolute;left:-4px;top:19px;width:7px;height:7px;transform:rotate(45deg);background:var(--bg);border:1px solid var(--gold)}
+.hscroll{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(132px,160px);gap:10px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.hscroll>*{scroll-snap-align:start}
+.rnav{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:40px 0 0}
+.rnav a{padding:14px 16px;border:1px solid var(--line);background:var(--bg1);font-family:var(--sans);font-size:12px;color:var(--muted);letter-spacing:.1em}
+.rnav a b{display:block;font-family:var(--serif);font-size:16px;color:#f4ead0;letter-spacing:.06em;margin-top:2px}
+.rnav a:last-child{text-align:right}
+.sealed-note{margin-top:16px;padding:16px;border:1px dashed rgba(156,124,255,.5);color:#cdbcff;font-size:14px;text-align:center;background:rgba(40,25,80,.2)}
+
+/* ---------- people ---------- */
+.filters{display:flex;gap:6px;overflow-x:auto;padding:2px 0 10px;margin:0 -16px;padding-left:16px;padding-right:16px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.fb{flex:none;font-family:var(--sans);font-size:12.5px;letter-spacing:.1em;padding:7px 14px;border:1px solid var(--line);color:var(--muted);background:var(--bg1);transition:all .2s}
+.fb.on{color:#1a1408;background:linear-gradient(145deg,#f3dc8e,#b8963d);border-color:transparent;font-weight:700}
+.fb[data-f=rift].on{color:#fff;background:linear-gradient(145deg,#8a5cff,#4b2a8f)}
+.count{font-family:var(--sans);font-size:12px;color:var(--dim);letter-spacing:.12em;margin:4px 0 14px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+@media (max-width:420px){.pgrid{grid-template-columns:1fr 1fr;gap:10px}}
+.pc{position:relative;display:block;background:var(--bg1);border:1px solid var(--line);transition:transform .25s,border-color .25s}
+.pc:hover{transform:translateY(-3px);border-color:var(--line2)}
+.por{position:relative;aspect-ratio:3/4;overflow:hidden;background:
+  radial-gradient(circle at 50% 38%,color-mix(in srgb,var(--rc) 40%,transparent),transparent 62%),
+  linear-gradient(180deg,#1a2030,#0d1018)}
+.por img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.por .crest{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:58%;aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+.por .crest:before{content:"";position:absolute;inset:14%;transform:rotate(45deg);border:1px solid color-mix(in srgb,var(--rc) 75%,#fff 0%)}
+.por .crest:after{content:"";position:absolute;inset:24%;transform:rotate(45deg);border:1px solid color-mix(in srgb,var(--rc) 35%,transparent)}
+.por .crest span{position:relative;font-size:clamp(26px,7vw,36px);font-weight:900;color:#f4ead0;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.por .no{position:absolute;left:8px;top:7px;font-family:var(--latin);font-size:10px;letter-spacing:.14em;color:var(--gold-hi);text-shadow:0 1px 2px #000}
+.por .rib{position:absolute;right:0;top:10px;padding:2px 8px 2px 10px;font-family:var(--sans);font-size:10px;letter-spacing:.14em;color:#1a1408;background:linear-gradient(145deg,#f3dc8e,#b8963d);clip-path:polygon(6px 0,100% 0,100% 100%,6px 100%,0 50%)}
+.por:after{content:"";position:absolute;left:0;right:0;bottom:0;height:40%;background:linear-gradient(0deg,rgba(11,14,21,.95),transparent)}
+.pc .meta{position:relative;padding:9px 11px 11px;border-top:1px solid var(--line)}
+.pc .meta b{display:block;font-size:14.5px;color:#f4ead0;letter-spacing:.02em;line-height:1.35}
+.pc .meta small{display:block;font-family:var(--sans);font-size:11px;color:var(--muted);letter-spacing:.06em;margin-top:2px}
+.pc .bar{position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--rc);opacity:.7}
+.pc.sealed .por{background:radial-gradient(circle at 50% 40%,rgba(156,124,255,.35),transparent 60%),linear-gradient(180deg,#151026,#09070f)}
+.pc.sealed .crest span{color:#cdbcff}
+
+/* ---------- person page ---------- */
+.dossier{display:grid;grid-template-columns:minmax(220px,320px) 1fr;gap:22px;margin-top:18px;align-items:start}
+@media (max-width:720px){.dossier{grid-template-columns:1fr}}
+.dossier .por{border:1px solid var(--line2);box-shadow:0 0 0 3px var(--bg),0 0 0 4px rgba(201,169,79,.25),0 16px 34px rgba(0,0,0,.55)}
+@media (max-width:720px){.pin em{display:none}.dossier .por{max-width:230px;margin:0 auto;width:100%}}
+.dossier .por .crest span{font-size:52px}
+.doc h1{margin:0;font-size:clamp(26px,5vw,34px);font-weight:900;letter-spacing:.06em;color:#2a1d0d;line-height:1.3}
+.doc .role{margin:4px 0 0;font-family:var(--sans);font-size:13px;letter-spacing:.14em;color:var(--paper-dim)}
+.dt{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:18px 0 0;padding:14px 0;border-top:1px solid rgba(110,85,40,.35);border-bottom:1px solid rgba(110,85,40,.35)}
+.dt dt{font-family:var(--sans);font-size:11.5px;letter-spacing:.18em;color:var(--paper-dim);padding-top:3px}
+.dt dd{margin:0;font-size:15px}
+.dsec{margin-top:16px}
+.dsec h4{margin:0 0 4px;font-family:var(--sans);font-size:11.5px;letter-spacing:.22em;color:#7a5a24}
+.dsec p{font-size:15px;line-height:1.85}
+.quote{position:relative;margin-top:20px;padding:16px 18px 16px 42px;background:#1a1610;color:var(--gold-hi);font-size:16px;line-height:1.7}
+.quote:before{content:"";position:absolute;left:16px;top:22px;width:10px;height:10px;transform:rotate(45deg);border:1px solid var(--gold)}
+.stamp{position:absolute;right:18px;top:62px;transform:rotate(-12deg);padding:6px 12px;border:2px solid rgba(179,53,42,.75);color:rgba(179,53,42,.85);font-family:var(--sans);font-weight:700;font-size:12px;letter-spacing:.3em;mix-blend-mode:multiply}
+.stamp.gold{border-color:rgba(140,100,30,.7);color:rgba(140,100,30,.85)}
+.redact{display:inline-block;height:14px;background:#2a2218;vertical-align:middle;margin:3px 4px 3px 0}
+.pnav{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:28px 0 0}
+.pnav a{padding:12px 14px;border:1px solid var(--line);background:var(--bg1);font-family:var(--sans);font-size:11.5px;color:var(--muted);letter-spacing:.1em}
+.pnav a b{display:block;font-family:var(--serif);font-size:15px;color:#f4ead0;margin-top:2px;letter-spacing:.04em}
+.pnav a:last-child{text-align:right}
+
+/* ---------- seals ---------- */
+.intro{max-width:560px;margin:0 auto;text-align:center;color:var(--muted);font-size:15px}
+.seals{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+@media (max-width:560px){.seals{grid-template-columns:1fr 1fr;gap:10px}}
+.seal{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:26px 12px 20px;border:1px solid var(--line);background:linear-gradient(170deg,#161b28,#0d1018);min-height:220px;transition:border-color .3s}
+.seal:hover{border-color:var(--line2)}
+.wax{position:relative;width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#d4574a,#8e2219 60%,#5a120c);box-shadow:0 4px 10px rgba(0,0,0,.6),inset 0 -3px 6px rgba(0,0,0,.35),inset 0 2px 4px rgba(255,255,255,.18);transition:transform .5s cubic-bezier(.3,1.6,.5,1),filter .5s}
+.wax:before{content:"";position:absolute;inset:9px;border-radius:50%;border:1.5px solid rgba(255,210,190,.35)}
+.wax:after{content:"";position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;transform:rotate(45deg);border:1.5px solid rgba(255,220,200,.6)}
+.wax.rift{background:radial-gradient(circle at 35% 30%,#9c7cff,#4b2a8f 60%,#24124a)}
+.crack{position:absolute;inset:0;border-radius:50%;opacity:0;transition:opacity .4s .15s;background:
+  linear-gradient(62deg,transparent 47%,rgba(20,4,2,.85) 48%,rgba(20,4,2,.85) 50%,transparent 51%),
+  linear-gradient(-30deg,transparent 47%,rgba(20,4,2,.75) 48%,rgba(20,4,2,.75) 49.5%,transparent 50.5%)}
+.seal .rn{font-family:var(--sans);font-size:12.5px;letter-spacing:.3em;color:var(--gold)}
+.seal .st{font-family:var(--sans);font-size:11.5px;letter-spacing:.2em;color:var(--dim)}
+.seal .tx{display:none;font-size:14.5px;line-height:1.75;color:var(--ink)}
+.seal.open{border-color:rgba(255,106,88,.4);background:linear-gradient(170deg,#21141a,#0f0b10)}
+.seal.open .wax{transform:scale(.92) rotate(-8deg);filter:brightness(.85)}
+.seal.open .crack{opacity:1}
+.seal.open .st{display:none}
+.seal.open .tx{display:block;animation:pageIn .6s ease}
+.seal.rift .rn{color:#c9a4ff}
+.foot-note{margin:30px auto 0;max-width:560px;text-align:center;font-family:var(--sans);font-size:12px;color:var(--dim);letter-spacing:.08em}
+
+footer{max-width:1080px;margin:56px auto 0;padding:22px 16px 30px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;font-family:var(--sans);font-size:11px;color:var(--dim);letter-spacing:.14em}
+
+
+/* ---------- painted world map ---------- */
+.wmap{position:relative;width:100%;aspect-ratio:3/2;overflow:hidden;background:#0c1830}
+.wmap img{position:absolute;inset:0;width:100%;height:100%;display:block;filter:saturate(.88) contrast(.97) brightness(.96)}
+.wmap:after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 60px rgba(5,8,15,.65)}
+.wmap svg{position:absolute;inset:0;width:100%;height:100%}
+.rp{fill:rgba(255,230,160,0);stroke:none;cursor:pointer;transition:fill .25s}
+.rp.hov{fill:rgba(255,228,150,.20);stroke:rgba(255,214,107,.95);stroke-width:5}
+.rp[data-r=rift].hov{fill:rgba(170,120,255,.16);stroke:rgba(200,160,255,.9)}
+.bd0{fill:none;stroke:rgba(10,10,20,.45);stroke-width:7;stroke-linecap:round;pointer-events:none}
+.bd{fill:none;stroke:rgba(255,236,180,.85);stroke-width:3;stroke-dasharray:14 11;stroke-linecap:round;pointer-events:none}
+.ml{position:absolute;transform:translate(-50%,-50%);pointer-events:none;text-align:center;white-space:nowrap}
+.ml.big{padding:4px 12px 5px;background:linear-gradient(180deg,rgba(14,17,26,.86),rgba(9,11,18,.82));border:1px solid rgba(201,169,79,.75);box-shadow:0 0 0 2px rgba(9,11,18,.5),0 4px 12px rgba(0,0,0,.5);transition:transform .25s,border-color .25s}
+.ml.big:before,.ml.big:after{content:"";position:absolute;top:50%;width:6px;height:6px;margin-top:-3px;transform:rotate(45deg);background:var(--gold)}
+.ml.big:before{left:-4px}.ml.big:after{right:-4px}
+.ml.big b{display:block;font-family:var(--serif);font-weight:900;font-size:clamp(11px,1.8vw,20px);letter-spacing:.3em;margin-right:-.3em;line-height:1.2;color:#f8eccb}
+.ml.big small{display:block;font-family:var(--serif);font-weight:600;font-size:clamp(8px,1vw,11.5px);letter-spacing:.16em;color:var(--gold-hi);margin-top:1px}
+.ml.big.hov{transform:translate(-50%,-50%) scale(1.07);border-color:var(--gold-hi)}
+.ml.big.rift{border-color:rgba(190,150,255,.8);background:rgba(25,12,45,.85)}
+.ml.big.rift:before,.ml.big.rift:after{background:#b48cff}
+.ml.big.rift{padding:14px 9px 12px}
+.ml.big.rift b{writing-mode:vertical-rl;text-orientation:upright;letter-spacing:.28em;margin:0;padding:0 0 .1em;line-height:1.3;color:#ecdcff;text-shadow:0 0 8px #8a4dff}
+.ml.sm{font-family:var(--sans);font-weight:700;font-size:clamp(7.5px,.95vw,11.5px);letter-spacing:.05em;color:#fff3d6;padding:1px 7px 2px;background:rgba(12,14,22,.66);border-radius:2px;text-shadow:0 1px 2px #000}
+.ml.sm.wt{color:#bfe6ff}
+.ml.sm.dk{color:#d9c8ff;background:rgba(30,14,50,.7)}
+.mpin{position:absolute;pointer-events:none}
+.mpin b{position:absolute;left:-5px;top:-5px;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#ffcf4d);box-shadow:0 0 12px 4px rgba(255,190,60,.95)}
+.mpin s{position:absolute;left:-17px;top:-17px;width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(255,214,107,.95);animation:ping 2.6s ease-out infinite}
+.mpin em{position:absolute;left:-12px;top:-36px;transform:translateX(-50%);white-space:nowrap;font-style:normal;font-family:var(--sans);font-weight:700;font-size:clamp(8.5px,1vw,11.5px);color:#1a1408;letter-spacing:.08em;padding:2px 8px;background:linear-gradient(145deg,#f3dc8e,#c9a94f);box-shadow:0 2px 6px rgba(0,0,0,.5)}
+@media (max-width:640px){.ml.sm{display:none}.ml.big small{display:none}.ml.big{padding:2px 8px 3px}.mpin em{display:none}.ml.big.rift{padding:8px 4px 7px}.ml.big.rift b{font-size:10px;letter-spacing:.2em}}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="in">
+  <a class="brand" href="#/"><span class="mk"></span><span><b translate="no">SOLARIA ARCHIVES</b><small>제국 기록 보관소</small></span></a>
+  <nav id="tnav"><a href="#/" data-t="home">권역</a><a href="#/people" data-t="people">인물</a><a href="#/seals" data-t="seals">인장</a></nav>
+</div></header>
+
+<main id="app"></main>
+
+<footer><span translate="no">SOLARIA · IMPERIAL ARCHIVES</span><span>케이브덕 시뮬레이션</span></footer>
+
+<nav class="bnav" id="bnav">
+  <a href="#/" data-t="home"><span class="ic ic-map"></span>권역</a>
+  <a href="#/people" data-t="people"><span class="ic ic-ppl"></span>인물</a>
+  <a href="#/seals" data-t="seals"><span class="ic ic-seal"></span>인장</a>
+</nav>
+
+<template id="mapTpl">
+  <div class="frame">
+    <span class="cn" style="left:4px;top:3px">◆</span><span class="cn" style="right:4px;top:3px">◆</span><span class="cn" style="left:4px;bottom:3px">◆</span><span class="cn" style="right:4px;bottom:3px">◆</span>
+    <div class="wmap">
+      <img src="map.jpg" alt="솔라리아 제국 전도" width="3072" height="2048">
+      <svg viewBox="0 0 3072 2048" preserveAspectRatio="none" aria-hidden="true"><polygon class="rp" data-r="north" points="480,380 600,240 760,120 1000,80 1300,100 1600,100 1900,80 2020,180 1970,320 1930,500 1920,660 1800,660 1640,700 1440,710 1300,720 1120,660 800,600 480,580"/><polygon class="rp" data-r="east" points="2020,180 2200,140 2500,160 2700,240 2840,400 2920,600 3000,800 3000,1040 2980,1120 2800,1180 2600,1250 2400,1340 2240,1420 2120,1500 2080,1540 2000,1400 1950,1280 1890,1200 1860,1080 1850,940 1890,800 1920,660 1930,500 1970,320"/><polygon class="rp" data-r="capital" points="1300,720 1440,710 1640,700 1800,660 1920,660 1890,800 1850,940 1860,1080 1890,1200 1740,1200 1520,1180 1320,1170 1200,1140 1240,960 1280,840"/><polygon class="rp" data-r="west" points="480,580 800,600 1120,660 1300,720 1280,840 1240,960 1200,1140 1120,1240 960,1360 800,1480 640,1580 600,1400 560,1200 520,1000 470,800 460,600"/><polygon class="rp" data-r="south" points="640,1580 800,1480 960,1360 1120,1240 1200,1140 1320,1170 1520,1180 1740,1200 1890,1200 1950,1280 2000,1400 2080,1540 2120,1500 2240,1420 2400,1340 2600,1250 2800,1180 2980,1120 2960,1280 2880,1400 2760,1480 2640,1580 2500,1720 2360,1760 2200,1720 2000,1660 1800,1720 1600,1760 1400,1720 1200,1680 1000,1660 840,1620 680,1600"/><polygon class="rp" data-r="rift" points="0,0 380,0 480,380 480,580 460,600 470,800 520,1000 560,1200 600,1400 640,1580 600,1640 400,1600 0,1640"/><polyline class="bd0" points="480,580 800,600 1120,660 1300,720 1440,710 1640,700 1800,660 1920,660"/><polyline class="bd" points="480,580 800,600 1120,660 1300,720 1440,710 1640,700 1800,660 1920,660"/><polyline class="bd0" points="1300,720 1280,840 1240,960 1200,1140"/><polyline class="bd" points="1300,720 1280,840 1240,960 1200,1140"/><polyline class="bd0" points="640,1580 800,1480 960,1360 1120,1240 1200,1140 1320,1170 1520,1180 1740,1200 1890,1200"/><polyline class="bd" points="640,1580 800,1480 960,1360 1120,1240 1200,1140 1320,1170 1520,1180 1740,1200 1890,1200"/></svg>
+      <div class="ml big" data-r="north" style="left:39.06%;top:29.10%"><b>북부</b><small>보레알 대공령</small></div><div class="ml big" data-r="capital" style="left:51.43%;top:49.32%"><b>황도</b><small>아우룸</small></div><div class="ml big" data-r="west" style="left:27.34%;top:41.50%"><b>서부</b><small>베스퍼 변경</small></div><div class="ml big" data-r="east" style="left:76.82%;top:35.16%"><b>동부</b><small>아우로라 숲</small></div><div class="ml big" data-r="south" style="left:39.06%;top:75.20%"><b>남부</b><small>오스트랄 항만 연합</small></div><div class="ml sm dk" style="left:27.99%;top:11.52%">마물 숲</div><div class="ml sm " style="left:27.99%;top:20.70%">글라시스 방벽</div><div class="ml sm " style="left:47.40%;top:24.61%">보레알 성</div><div class="ml sm " style="left:54.82%;top:24.41%">성하 마을</div><div class="ml sm " style="left:55.01%;top:29.79%">산악 관문</div><div class="ml sm " style="left:45.57%;top:35.94%">마탑</div><div class="ml sm " style="left:57.42%;top:39.26%">대신전</div><div class="ml sm " style="left:17.06%;top:46.09%">베스퍼 요새</div><div class="ml sm " style="left:33.20%;top:54.88%">광산 도시들</div><div class="ml sm wt" style="left:65.89%;top:60.94%">큰 강</div><div class="ml sm " style="left:78.12%;top:48.54%">이름 없는 유적</div><div class="ml sm " style="left:86.91%;top:44.73%">수호자 마을</div><div class="ml sm " style="left:55.34%;top:65.62%">곡창 평야</div><div class="ml sm wt" style="left:86.91%;top:57.62%">동부 지류</div><div class="ml sm " style="left:72.27%;top:71.78%">오스트랄 대항구</div><div class="ml big rift" data-r="rift" style="left:7.29%;top:48.83%"><b>균열 너머</b></div><div class="mpin" style="left:41.67%;top:16.41%"><s></s><b></b><em>이야기의 시작</em></div>
+    </div>
+  </div>
+</template>
+
+<script>
+const REGIONS = {
+  north: {
+    latin: 'BOREAL', name: '북부', full: '보레알 대공령', color: '#9fb3c6', ink: '#244056',
+    tag: '벽 너머에서, 숲이 숨 쉰다.',
+    air: ['서리', '언 쇠', '입김', '피 위의 눈'],
+    about: '제국 면적의 큰 몫을 차지하는 설원과 설산의 땅. 한 해의 절반이 눈에 묻힌다. 북쪽 경계의 마물 숲을 글라시스 방벽이 가로막고 있고, 보레알 대공가는 대대로 그 벽을 지켜 왔다. 황도에서는 북부를 제국의 방패라 부르지만, 정작 방패를 쥔 손이 얼마나 얼어 있는지는 묻지 않는다.',
+    places: [
+      ['글라시스 방벽', '균열 절벽 끝에서 큰 강의 폭포까지, 북부를 통째로 가로지르는 거대한 성벽. 제국이 끝나는 곳이다.'],
+      ['보레알 성', '방벽 한가운데에 맞붙어 선 대공가의 거성. 북부 방어의 심장.'],
+      ['성하 마을', '성벽 아래 붙은 마을. 북부의 소문은 대개 이곳 약방에서 시작된다.'],
+      ['마물 숲', '방벽 너머의 검은 침엽수림. 서쪽 끝에서 균열이 낮게 열려, 보랏빛 안개가 숲으로 번져 든다.'],
+      ['산악 관문', '보레알 성 남쪽 산자락의 관문 요새. 황도로 이어지는 유일한 대로가 이곳을 지난다.']
+    ],
+    now: [
+      '황도에서 내려오는 방벽 지원금이 해마다 줄고 있다.',
+      '북부 귀족들 사이에서도 물자난에 대한 불만이 쌓여 간다.',
+      '균열에서 흘러나온 마물들이 숲을 지나 방벽에 부딪친다. 요 며칠은 그 마물들이 모두 같은 방향을 향한다는 보고가 올라왔다.'
+    ]
+  },
+  capital: {
+    latin: 'AURUM', name: '황도', full: '아우룸', color: '#d8bd72', ink: '#4a3208',
+    tag: '태양은 모든 것을 비추고, 그만큼 짙은 그림자를 만든다.',
+    air: ['금박', '대리석', '향', '예복 끌리는 소리'],
+    about: '대륙 중앙의 넓은 평야 위에 선 금빛 수도. 황궁과 마탑과 대신전이 모두 이곳에 있고, 제국의 모든 대로가 이곳에서 뻗어 나간다. 이 도시에서는 말 한마디, 무릎 꿇는 각도 하나에도 값이 매겨진다.',
+    places: [
+      ['황궁', '태양 문장이 새겨진 제국의 심장. 황제의 병상이 이곳에 있다.'],
+      ['마탑', '마석을 정제해 제국의 불을 밝히는 마법사들의 탑.'],
+      ['대신전', '교단의 본산. 성녀의 기도가 매일 이곳에서 울린다.'],
+      ['동쪽의 큰 강', '북부 설산에서 발원해 황도 동쪽을 지나 남부 바다로 흐른다. 대교 하나가 도시와 동쪽 길을 잇는다.'],
+      ['중앙 평야', '황도를 둘러싼 너른 들. 제국의 대로가 모두 이곳에서 갈라진다.']
+    ],
+    now: [
+      '황제의 병이 깊어지면서 제1황자와 황녀의 계승전이 조용히 달아오른다.',
+      '마탑은 마석 정제를 독점하고, 대신전은 마물을 신의 시험이라 가르친다.',
+      '귀족 가문들은 어느 쪽에 설지 저울질을 멈추지 않는다.'
+    ]
+  },
+  south: {
+    latin: 'AUSTRAL', name: '남부', full: '오스트랄 항만 연합', color: '#6f9fb0', ink: '#1d3a46',
+    tag: '금화와 소문은 같은 배를 타고 들어온다.',
+    air: ['소금기', '젖은 밧줄', '동전 소리'],
+    about: '긴 해안과 넓은 곡창 평야의 땅. 큰 강 하구의 오스트랄 대항구를 중심으로 여러 항구 도시가 연합을 이루고 있다. 마석과 향신료, 그리고 출처를 묻지 않는 물건들이 이 부두를 지난다.',
+    places: [
+      ['오스트랄 대항구', '큰 강 하구에 자리한 제국 최대의 항구. 상단의 깃발이 돛대마다 걸린다.'],
+      ['해안 항구 도시들', '넓은 만과 작은 반도를 따라 흩어진 항구들. 각자의 상가가 각자의 바다를 쥐고 있다.'],
+      ['곡창 평야', '제국의 식탁을 채우는 들판. 큰 강과 동쪽에서 흘러온 지류가 이곳에서 만난다.'],
+      ['남부 앞바다', '제독의 함대가 지키는 바다. 크고 작은 섬들이 흩어져 있다.']
+    ],
+    now: [
+      '곡창의 작물이 시들기 시작했다. 사람들은 동쪽 숲에서 흘러오는 물을 의심한다.',
+      '최대 상단의 자리를 노리는 상가들의 견제가 날로 노골적이다.',
+      '해상에서 설명할 수 없는 징후를 봤다는 뱃사람들의 이야기가 돈다.'
+    ]
+  },
+  east: {
+    latin: 'AURORA', name: '동부', full: '아우로라 숲', color: '#7fa58a', ink: '#1f3a28',
+    tag: '숲은 모든 것을 기억한다.',
+    air: ['이끼', '젖은 흙', '끊긴 새소리'],
+    about: '동부 대부분을 덮은 거대한 고대 숲. 북쪽은 큰 강의 폭포와 협곡이 막고 있다. 빛이 잎 사이로 번지고, 깊이 들어갈수록 소리가 사라진다. 수호자 일족이 숲을 지키고, 황실이 임명한 총독이 숲 가장자리를 다스린다. 이름난 대마법사가 이곳에 머문다.',
+    places: [
+      ['아우로라 숲', '동부의 대부분. 허락 없이 들어간 자는 길을 잃는다고들 한다.'],
+      ['수호자 일족의 마을', '숲 안쪽, 외부인을 들이지 않는 일족의 터전.'],
+      ['숲 신전', '교단과 거리를 둔 오래된 신전. 숲 또한 신의 일부라 가르친다.'],
+      ['이름 없는 유적', '숲 깊은 중앙, 지도에 이름이 없는 곳. 아무도 읽지 못하는 석판이 서 있다.'],
+      ['지류의 발원', '숲에서 흘러나온 물줄기가 남부 곡창으로 내려간다.']
+    ],
+    now: [
+      '남부는 작물 오염의 원인을 동부 숲으로 돌리고 있다.',
+      '황실 총독부와 수호자 일족 사이의 긴장이 조용히 이어진다.',
+      '대마법사의 거처를 찾는 황도의 사절이 늘었다.'
+    ]
+  },
+  west: {
+    latin: 'VESPER', name: '서부', full: '베스퍼 변경', color: '#b08f72', ink: '#3a2a1c',
+    tag: '해가 지는 쪽에서는, 먼저 칼을 뽑아야 산다.',
+    air: ['마른 먼지', '곡괭이', '땀 밴 가죽'],
+    about: '서부 대부분을 차지하는 메마른 고원과 광산 지대. 서쪽 끝은 깎아지른 절벽이 되어 균열을 내려다본다. 마물이 오르지 못하는 절벽 위에서, 변경군은 균열을 지켜본다. 이곳 사람들은 황도의 명령보다 변경백의 한마디를 먼저 따른다.',
+    places: [
+      ['베스퍼 요새', '균열 절벽 끝에 선 변경군의 본거지. 제국에서 균열에 가장 가까운 성채.'],
+      ['광산 도시들', '요새와 황도 사이의 고원에 늘어선 도시들. 광산 길드가 실권을 쥐고 있다.'],
+      ['메마른 고원', '바람과 먼지의 땅. 서쪽으로 갈수록 땅이 거칠게 갈라진다.'],
+      ['균열 절벽', '요새 아래로 끝없이 떨어지는 검은 절벽. 바닥은 보랏빛 번개에 가려 보이지 않는다.']
+    ],
+    now: [
+      '변경백은 황실의 편입 요구를 거절했다.',
+      '황실이 파견한 광산 감독관 가문과 변경군의 마찰이 끊이지 않는다.',
+      '갱도 깊은 곳에서 말 못 할 것이 나온다는 소문이 돈다.'
+    ]
+  },
+  rift: {
+    latin: 'ULTRA FISSURAM', name: '균열 너머', full: '봉인 지역', color: '#9c7cff', ink: '#1a0f33', sealed: true,
+    tag: '그 너머를 보고 돌아온 사람은 없다.',
+    air: ['빛 먹는 어둠', '쇠맛 공기', '낮은 울림'],
+    about: '대륙 서쪽 끝을 따라 길게 갈라진 검은 균열. 서부 쪽은 아무것도 오를 수 없는 절벽이지만, 북쪽 끝은 마물 숲으로 낮게 열려 있다. 보랏빛 번개가 그치지 않고, 부서진 땅덩이가 허공에 떠 있다. 마물은 그곳에서 온다.',
+    places: [
+      ['절벽 구간', '서부와 맞닿은 깎아지른 절벽. 서부 변경이 내려다보는 곳.'],
+      ['북쪽의 틈', '마물 숲으로 낮게 열린 균열의 끝. 검은 안개와 마물이 이곳으로 흘러나온다.'],
+      ['떠 있는 땅', '균열 위 허공에 부서진 바위들이 떠 있다. 안쪽은 아무도 그리지 못했다.'],
+      ['???', '기록 없음.']
+    ],
+    now: ['이 지역의 기록은 봉인되어 있다.']
+  }
+};
+
+/* [no, 이름, 성별, 나이, 소속키, 소속표기, 직위, 외형, 성격, 알려진 사실, 대사, 주요, 봉인] */
+const PEOPLE = [
+  [1,'아우구스 솔라리아','남','27','capital','황실','제1황자','밝은 금발 올백, 금안. 흰금 군복에 붉은 망토.','단호한 강경파. 정통성과 완벽을 중시하고, 공손한 말투로 상대를 압박한다.','계승전의 선두. 마물은 박멸해야 할 대상이라는 입장을 공공연히 밝힌다.','거절은 선택지에 없습니다만.',1,0],
+  [2,'셀레네 솔라리아','여','24','capital','황실','황녀','끝이 주황빛으로 물드는 금발, 금안, 여우 같은 눈매. 흰금 드레스와 부채.','실리주의 계략가. 능청스럽게 웃으며 계산하고, 자기 사람은 끝까지 챙긴다.','사교계와 정보망을 쥔 황녀. 계승전의 또 다른 축이다.','그건 거래 제안으로 들어도 될까요?',1,0],
+  [3,'카시안 보레알','남','29','north','보레알 대공가','북부 대공','은발, 청회색 눈, 큰 키. 목에 흉터가 있고 늘 잠이 부족해 보인다.','과묵하고 책임감이 강하다. 냉정해 보이지만 약자에게 약하고, 말보다 행동으로 지킨다.','글라시스 방벽의 지휘자. 줄어드는 지원금 속에서 북부를 버티고 있다.','움직이지 마라. 지금은 살아남는 것만 생각해.',1,0],
+  [4,'루치안 베르가','남','34','south','베르가 상단','남부 상단주','와인빛 웨이브 머리, 호박색 눈, 눈 밑 점. 에메랄드 벨벳 코트.','능글맞고 낙천적이지만 속은 철저한 계산가. 사람을 자산으로 보되, 약속은 반드시 지킨다.','남부 최대 상단의 주인. 시들어 가는 곡창 때문에 속이 타는 중이다.','공짜는 없지만, 너한텐 외상 정도는 해 줄게.',1,0],
+  [5,'일리아나','여','외견 20대 후반','east','아우로라 숲','대마법사','연초록 장발, 금빛 눈. 흰 드레스에 이끼색 망토, 늘 책을 들고 있다.','느긋하지만 차갑고 초연하다. 걱정할수록 반대로 말하는 버릇이 있다.','오래 산 대마법사로 알려져 있다. 고대 마법과 기록에 집착하며, 북부 대공가와 오랜 인연이 있다.','가까이 오지 마. 위험하니까... 아니, 상관없지만.',1,0],
+  [6,'발레리아 베스퍼','여','32','west','베스퍼 변경','변경백','주황 포니테일, 헤이즐 눈, 갈색 피부, 단단한 근육. 눈가 흉터와 가죽 재킷.','직설적이고 호탕하다. 권위를 싫어하고 말보다 주먹이 먼저 나가지만, 의리만큼은 깊다.','변경군을 지휘하고 광산 길드를 장악했다. 황자의 편입 요구를 거절했다.','할 거면 하고, 안 할 거면 꺼져.',1,0],
+  [7,'발타자르','남','외견 20대 중반','tower','마탑','마탑주','라일락 단발, 옅은 노란 눈, 중성적인 얼굴. 별자리 자수 코트.','지적 허영과 냉소. 겉으로는 흠잡을 데 없이 예의 바르다.','마석 정제를 독점한 마탑의 수장. 보이는 나이와 실제 나이가 다르다는 소문이 있다.','부디 해부되지 않도록 협조 부탁드립니다.',1,0],
+  [8,'노바','여','26','tower','마탑','마탑주 후임자','연청 단발, 큰 안경. 구겨진 로브, 소매에 묻은 잉크.','성실하고 정의감 있는 덜렁이. 마법 이야기만 나오면 눈빛부터 달라지는 이론 천재.','차기 마탑주로 지목된 엘리트. 마석 분석이 전공이다.','어, 열쇠가... 아니 이건 이론상 불가능해요.',1,0],
+  [9,'파비우스','남','54','temple','교단','교주','넘긴 백발, 푸른 눈. 금실 수놓은 흰 제의, 인자한 미소.','누구에게나 자애로운 목자로 존경받는다.','마물은 신의 시험이라는 교리를 이끈다. 황자파의 든든한 후원자.','길 잃은 어린 양이여, 신은 모든 걸 보고 계십니다.',1,0],
+  [10,'루미나','여','22','temple','교단','성녀','끝이 금빛인 흰 웨이브 머리, 연하늘 눈. 흰금 사제복과 얇은 베일.','순수하고 다정하며 모든 것을 품는다. 단, 악 앞에서는 물러서지 않는다.','정화와 치유의 성녀. 마물의 기운을 감지할 수 있다.','저분들은 화난 게 아니라 울고 있는 것 같아요.',1,0],
+  [11,'???','?','?','rift','균열 너머','봉인','','','균열 너머에서, 누군가 아주 오래 기다리고 있다.','',1,1],
+  [12,'???','?','?','rift','균열 너머','봉인','','','인간의 얼굴을 한 이방인이 제국을 걷고 있다.','',1,1],
+  [13,'유스티누스','남','58','capital','황실','황제','야윈 얼굴의 금발 금안. 병색이 짙다.','노회하고 냉정하다. 가족보다 제국이 먼저인 군주.','오랜 병상에 있지만 아직 누구에게도 옥좌를 넘기지 않았다.','',0,0],
+  [14,'마르가리타','여','52','capital','황실','황후','올림머리의 연금발, 보라 눈.','침착하고 품위 있는, 억센 어머니.','황자와 황녀의 친모. 궁 안살림의 실권을 쥐고 있으며 세베루스 공작가 출신이다.','',0,0],
+  [15,'에밀리아 페렌','여','31','capital','근위기사단','근위기사단장','은회색 단발, 흰 갑옷.','원칙적이고 과묵하다.','충성의 대상은 황제 개인. 계승전에는 중립을 지킨다.','',0,0],
+  [16,'다미안 크로이','남','26','capital','황자 직속','황자 직속 기사','금갈색 머리, 푸른 눈.','맹목적으로 충성하고 강직하다.','황자의 명이라면 무엇이든 따른다.','',0,0],
+  [17,'리비아 마르텔','여','25','capital','황녀 직속','황녀 호위기사','붉은 갈색 포니테일, 쌍검.','쾌활하고 눈치가 빠르다.','황녀의 소꿉친구이자 그림자 같은 호위.','',0,0],
+  [18,'테오 렉슨','남','23','capital','황실 기사단','평민 출신 기사','갈색 곱슬머리, 주근깨.','이상주의자, 정의감이 강하다.','황실 기록고를 지키는 경비 기사.','',0,0],
+  [19,'옥타비우스','남','60','capital','세베루스 공작가','공작가 가주','넘긴 은회색 머리.','양쪽을 저울질하며 가문의 보존을 최우선으로 둔다.','황후의 친정. 제국 최고 가문 중 하나.','',0,0],
+  [20,'유니아','여','22','capital','세베루스 공작가','공작 영애','연갈색 웨이브 머리, 에메랄드 눈.','상냥하고 사교적이다.','사교계의 중심. 제1황자의 혼담 후보로 거론된다.','',0,0],
+  [21,'막시무스','남','48','capital','벨라토르 후작가','후작','짧은 흑발, 군복.','목소리 큰 군부 강경파.','마물 박멸을 신봉하는 황자파의 군부 인사.','',0,0],
+  [22,'코르넬리아','여','45','capital','아우레아 백작가','백작','올림머리의 금발, 안경.','또박또박 따지는 재무가.','상업 귀족의 대표. 황녀의 정치 스승격이다.','',0,0],
+  [23,'카밀라','여','29','capital','스크리바 자작가','자작가 대행','검은 단발, 잉크 묻은 손.','말수가 적고 건조하다.','대대로 황실 기록관을 지낸 가문의 마지막 대행. 가문은 몰락했다.','',0,0],
+  [24,'헬가','여','52','north','보레알 대공가','성 집사장','땋아 올린 회색 머리.','따뜻한 잔소리꾼.','대공을 어릴 때부터 돌봐 온 보레알 성의 안주인 같은 존재.','',0,0],
+  [25,'비고','남','41','north','방벽 수비대','방벽 수비대장','붉은 수염, 거구.','거칠고 의리 있다.','대공의 오른팔. 방벽에서 가장 먼저 도끼를 드는 사람.','',0,0],
+  [26,'리암','남','23','north','성하 마을','약사','밤색 머리, 주근깨.','상냥하고 겁이 많지만, 환자 앞에서는 용감하다.','성하 마을 약방의 주인. 북부의 소문은 대개 그의 귀를 거친다.','',0,0],
+  [27,'마르쿠스','남','50','north','칸디두스 백작가','백작','흰 수염이 섞인 갈색 머리.','소박하고 헌신적이다.','방벽 요새의 영주. 대공가의 오랜 충신.','',0,0],
+  [28,'율리아','여','36','north','히엠스 자작가','자작','땋은 연금발, 늘 지친 표정.','현실적이다.','물자난에 가장 먼저 지친 북부의 소영주.','',0,0],
+  [29,'칼리스타','여','38','south','남부 함대','제독','땋아 내린 검은 장발, 선장 코트.','호탕하고 자유분방하다.','해적 출신 제독. 황실의 명령에 고분고분하지 않다.','',0,0],
+  [30,'지노','남','29','south','무소속','정보상','낮게 묶은 검은 장발, 안대. 린넨 셔츠와 후드 망토.','능글맞고 눈치가 빠르지만 선은 지킨다.','남부 부두에서 정보를 사고파는 사람.','',0,0],
+  [31,'마이아','여','27','south','베르가 상단','상단 비서','갈색 올림머리, 둥근 안경. 하이넥 블라우스에 코르셋 조끼.','유능하고 무뚝뚝하지만 속정이 깊다.','상단주의 장부를 쥔 사람.','',0,0],
+  [32,'가이우스','남','42','south','마르카토 상가','상가 주인','넘긴 흑발, 금 시계.','말은 매끄럽고 속뜻은 깊다.','베르가 상단의 자리를 노리는 정적.','',0,0],
+  [33,'플로라','여','33','south','프루멘타 자작가','자작','밀짚빛 금발, 눈 밑 그늘.','절박하다.','곡창 지주. 시든 작물 때문에 가문이 존망의 기로에 섰다.','',0,0],
+  [34,'그라우','남','52','west','광산 길드','광산 길드장','땅딸막한 체구, 땋은 수염. 가죽 앞치마와 곡괭이.','실리적이고 고집이 세다. 광부의 목숨이 먼저다.','서부 광산을 실제로 굴리는 사람.','',0,0],
+  [35,'프리마','여','27','west','베스퍼 변경군','변경군 부관','검은 땋은 머리, 경갑.','엄격하고 규율을 중시한다.','변경백의 무리수를 말리는 유일한 사람.','',0,0],
+  [36,'렉스','남','35','west','용병단','용병단장','흑갈색 머리, 뺨의 흉터.','냉소적이지만 돈에는 정직하다.','광산 도시의 일을 중개하는 용병. 계약은 철저하다.','',0,0],
+  [37,'안토니우스','남','44','west','아르겐툼 백작가','백작','갈색 곱슬머리, 은단추 코트.','오만하다.','황실이 파견한 광산 감독관 가문. 변경군과 마찰이 잦다.','',0,0],
+  [38,'두르','남','57','west','삭수스 남작가','남작','대머리, 회색 수염.','투박하고 우직하다.','변경 토착 귀족. 변경백에게는 아버지뻘이다.','',0,0],
+  [39,'엘라르','남','46','east','수호자 일족','족장','몸에 새긴 녹색 문양.','폐쇄적이고 외부인을 믿지 않는다.','숲의 출입을 허락하는 사람.','',0,0],
+  [40,'세일라','여','20','east','수호자 일족','석판 터 지킴이','연갈색 땋은 머리, 호박색 눈.','조용하고 호기심이 많다.','대마법사의 제자격. 숲 깊은 곳의 석판을 지킨다.','',0,0],
+  [41,'마리엔','여','58','east','숲 신전','사제장','땋은 흰 머리, 지팡이.','온화하다.','교단과 거리를 두고, 마물 또한 숲의 일부라 가르친다.','',0,0],
+  [42,'아델리아','여','40','east','루쿠스 자작가','황실 임명 총독','갈색 중단발, 관복.','조심스럽다.','황실과 숲 사이에 끼어 있는 총독.','',0,0],
+  [43,'아드리엘','남','38','temple','성기사단','성기사단장','짙은 갈색 머리, 회색 눈, 흰 갑옷. 얼굴 한쪽에 화상.','엄격하고 신앙에 충실하다.','성녀를 지키는 검. 마물에게 가족을 잃었다.','',0,0],
+  [44,'엘레오노라','여','55','temple','세라핀 후작가','후작','은빛 금발, 흰금 드레스.','신앙 깊고 우아하다.','교단의 큰 후원자.','',0,0],
+  [45,'로렌조','남','43','temple','대신전','주교','검은 머리, 검은 눈, 가늘고 긴 손.','낮고 차분한 목소리에 은근한 위압이 있다.','교주의 오른팔. 심문과 기록을 맡는다.','',0,0],
+  [46,'이사벨라','여','55','tower','마탑','마탑 이사','짧은 은발, 안경 걸이 줄.','졸린 듯 느릿하다.','마탑 중립파의 이사.','',0,0],
+  [47,'세바스티안','남','25','tower','에테리온 백작가','백작가 후계','백금발, 청회색 눈.','오만한 천재.','노바의 라이벌.','',0,0],
+  [48,'티토','남','27','tower','마탑','연구원','부스스한 갈색 머리.','호기심 많고 수다스럽다.','노바의 동료 연구원.','',0,0],
+  [49,'???','?','?','rift','균열 너머','봉인','','','검은 갑주의 기사가 균열 끝에 서 있다.','',0,1],
+  [50,'???','?','?','rift','균열 너머','봉인','','','온화한 목소리로 계산하는 자.','',0,1],
+  [51,'???','?','?','rift','균열 너머','봉인','','','가장 먼저 당신을 알아본 눈.','',0,1],
+  [52,'???','?','?','rift','균열 너머','봉인','','','웃음이 수상한 치유사.','',0,1],
+  [53,'움브라','?','?','north','동행','검은 털 아기 늑대','검은 털, 붉은 눈의 아기 늑대. 털색이 특이한 변종이라고 한다.','어린애처럼 들러붙는다. 잘 잊어버린다.','당신을 졸졸 따라다니는 털뭉치. 먼저 물지는 않는다.','',0,0]
+];
+
+const SEALS = [
+  ['north','얼음 아래 묻힌 약속은 한 번도 녹은 적이 없다.'],
+  ['capital','태양 아래에서 지워진 글자일수록 그림자가 짙다.'],
+  ['south','가장 비싼 보석은 한때 뛰고 있었다.'],
+  ['east','숲은 그날을 기억한다. 눈이 붉게 내리던 스무 해 전을.'],
+  ['west','먼저 칼을 뽑은 쪽은 언제나 기록되지 않는다.'],
+  ['rift','부르는 소리는 처음부터 하나의 이름을 향했다.']
+];
+
+
+const ORDER = ['north','capital','south','east','west','rift'];
+const AFF = {capital:'황도',north:'북부',south:'남부',east:'동부',west:'서부',temple:'교단',tower:'마탑',rift:'균열 너머'};
+const AFF_COLOR = {temple:'#e6e0cf',tower:'#b9a3e0'};
+const colorOf = k => (REGIONS[k] && REGIONS[k].color) || AFF_COLOR[k] || '#c9a94f';
+const P = PEOPLE.map(a => ({no:a[0],name:a[1],sex:a[2],age:a[3],aff:a[4],group:a[5],role:a[6],look:a[7],pers:a[8],known:a[9],quote:a[10],main:!!a[11],sealed:!!a[12]}));
+const pad = n => String(n).padStart(2,'0');
+const app = document.getElementById('app');
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+function portrait(p, big){
+  const init = p.sealed ? '?' : p.name.charAt(0);
+  return `<div class="por" style="--rc:${colorOf(p.aff)}">
+    ${p.sealed ? '' : `<img src="img/${pad(p.no)}.png" alt="" loading="lazy" onerror="this.remove()">`}
+    <div class="crest"><span>${init}</span></div>
+    <span class="no" translate="no">No.${pad(p.no)}</span>
+    ${p.main && !big ? '<span class="rib">주요</span>' : ''}
+  </div>`;
+}
+function card(p){
+  return `<a class="pc${p.sealed?' sealed':''}" href="#/person/${p.no}" style="--rc:${colorOf(p.aff)}">
+    ${portrait(p)}
+    <div class="meta"><b>${esc(p.name)}</b><small>${esc(p.sealed ? '봉인된 기록' : p.role)}</small></div>
+    <span class="bar"></span></a>`;
+}
+function secHead(n, t, more){
+  return `<div class="sh"><span class="n" translate="no">${n}</span><h2>${t}</h2><span class="ln"></span>${more||''}</div>`;
+}
+
+/* ---------- views ---------- */
+function viewHome(){
+  return `<div class="page">
+    <section class="hero">
+      <div class="latin" translate="no">IMPERIUM SOLARIAE</div>
+      <h1>솔라리아 제국</h1>
+      <div class="sub" translate="no">IMPERIAL ARCHIVES</div>
+      <div class="orn"><i></i></div>
+      <div class="hook">
+        <p>마물의 아가리 앞에서, 당신은 북부 대공의 칼에 구해졌다.</p>
+        <p>그런데 이상한 일이었다. 마물들은 당신을 해치지 않았다.</p>
+        <p class="hi">숲에서 나온 발자국은 모두, 당신이 있던 자리로만 향해 있었다.</p>
+      </div>
+    </section>
+    <section class="sec">
+      ${secHead('01','제국 전도')}
+      <div id="mapslot"></div>
+      <p class="maphint">권역을 눌러 기록을 여십시오</p>
+    </section>
+    <section class="sec">
+      ${secHead('02','권역 기록')}
+      <div class="rgrid">${ORDER.map(k => { const r = REGIONS[k]; return `
+        <a class="rcard${r.sealed?' sealed':''}" href="#/region/${k}" style="--rc:${r.color}" data-l="${r.latin}">
+          <span class="latin" translate="no">${r.latin}</span>
+          <h3>${r.name}<small>${r.full}</small></h3>
+          <p>${r.tag}</p><span class="go"></span></a>`; }).join('')}
+      </div>
+    </section>
+    <section class="sec">
+      ${secHead('03','열람실')}
+      <div class="tiles">
+        <a class="tile cut" href="#/people"><span class="latin" translate="no">PERSONAE</span><h3>인물 도감</h3><p>${P.length}명의 기록</p><span class="deco d1"></span></a>
+        <a class="tile cut" href="#/seals"><span class="latin" translate="no">SIGILLA</span><h3>여섯 개의 인장</h3><p>지워진 문장</p><span class="deco d2"></span></a>
+      </div>
+    </section>
+  </div>`;
+}
+
+function viewRegion(k){
+  const r = REGIONS[k]; if(!r) return viewHome();
+  const i = ORDER.indexOf(k), prev = ORDER[(i+5)%6], next = ORDER[(i+1)%6];
+  const keys = k==='capital' ? ['capital','temple','tower'] : [k];
+  let ppl = P.filter(p => keys.includes(p.aff));
+  if(k==='capital') ppl = ppl.filter(p => p.main || p.aff==='capital');
+  return `<div class="page" style="--rc:${r.color}">
+    <section class="rhero"><span class="bigl" translate="no">${r.latin}</span><div class="in">
+      <a class="back" href="#/">제국 전도</a>
+      <div style="height:18px"></div>
+      <span class="latin" translate="no">${r.latin}</span>
+      <h1>${r.name}<small>${r.full}</small></h1>
+      <p class="tg">${r.tag}</p>
+      <div class="chips">${r.air.map(a=>`<span>${a}</span>`).join('')}</div>
+    </div></section>
+    <section class="sec">
+      ${secHead('I','기록')}
+      <div class="doc"><div class="dh"><span>제국 기록 보관소 · 권역 기록</span><span translate="no">${r.latin}</span></div>
+        <p class="first">${r.about}</p>
+        ${r.sealed ? '<span class="stamp">열람 제한</span>' : ''}
+      </div>
+    </section>
+    <section class="sec">
+      ${secHead('II','지리')}
+      <div class="places">${r.places.map(p=>`<div class="place"><i></i><div><b>${p[0]}</b><span>${p[1]}</span></div></div>`).join('')}</div>
+    </section>
+    <section class="sec">
+      ${secHead('III','정세')}
+      <ul class="now">${r.now.map(n=>`<li>${n}</li>`).join('')}</ul>
+    </section>
+    <section class="sec">
+      ${secHead('IV','인물', `<a class="more" href="#/people?f=${k}">전체 보기</a>`)}
+      <div class="hscroll">${ppl.map(card).join('')}</div>
+      ${r.sealed ? '<div class="sealed-note">이 지역의 인물 기록은 이야기 속에서만 열립니다.</div>' : ''}
+    </section>
+    <nav class="rnav">
+      <a href="#/region/${prev}">이전 권역<b>${REGIONS[prev].name}</b></a>
+      <a href="#/region/${next}">다음 권역<b>${REGIONS[next].name}</b></a>
+    </nav>
+  </div>`;
+}
+
+const FILTERS = [['all','전체'],['main','주요'],['north','북부'],['capital','황도'],['temple','교단'],['tower','마탑'],['south','남부'],['east','동부'],['west','서부'],['rift','균열 너머']];
+function viewPeople(f){
+  f = FILTERS.some(x=>x[0]===f) ? f : 'all';
+  const list = P.filter(p => f==='all' ? true : f==='main' ? p.main : p.aff===f);
+  return `<div class="page">
+    <section class="sec" style="margin-top:28px">
+      ${secHead('PERSONAE','인물 도감')}
+      <div class="filters">${FILTERS.map(x=>`<button class="fb${x[0]===f?' on':''}" data-f="${x[0]}">${x[1]}</button>`).join('')}</div>
+      <div class="count">${list.length}명의 기록</div>
+      <div class="pgrid">${list.map(card).join('')}</div>
+    </section>
+  </div>`;
+}
+
+function viewPerson(no){
+  const idx = P.findIndex(p => p.no===+no); if(idx<0) return viewPeople('all');
+  const p = P[idx], prev = P[(idx-1+P.length)%P.length], next = P[(idx+1)%P.length];
+  const affName = AFF[p.aff] || '';
+  const red = w => `<span class="redact" style="width:${w}%"></span>`;
+  const body = p.sealed ? `
+      <h1>???</h1><p class="role">봉인된 기록 · ${affName}</p>
+      <dl class="dt"><dt>소속</dt><dd>${red(40)}</dd><dt>직위</dt><dd>${red(55)}</dd><dt>나이</dt><dd>${red(20)}</dd></dl>
+      <div class="dsec"><h4>남은 문장</h4><p>${esc(p.known)}</p></div>
+      <div class="dsec"><h4>기록</h4><p>${red(92)}${red(70)}${red(84)}</p></div>
+      <span class="stamp">열람 제한</span>` : `
+      <h1>${esc(p.name)}</h1><p class="role">${esc(p.role)}</p>
+      <dl class="dt"><dt>소속</dt><dd>${esc(p.group)} · ${affName}</dd><dt>성별</dt><dd>${p.sex==='?'?'—':p.sex==='남'?'남성':'여성'}</dd><dt>나이</dt><dd>${esc(p.age==='?'?'알 수 없음':p.age.match(/^\d+$/)?p.age+'세':p.age)}</dd></dl>
+      <div class="dsec"><h4>외형</h4><p>${esc(p.look)}</p></div>
+      <div class="dsec"><h4>성품</h4><p>${esc(p.pers)}</p></div>
+      <div class="dsec"><h4>알려진 사실</h4><p>${esc(p.known)}</p></div>
+      ${p.main ? '<span class="stamp gold">주요 인물</span>' : ''}`;
+  return `<div class="page" style="--rc:${colorOf(p.aff)}">
+    <a class="back" href="#/people">인물 도감</a>
+    <div class="dossier">
+      <div>${portrait(p, true)}</div>
+      <div>
+        <div class="doc"><div class="dh"><span>인물 기록 No.${pad(p.no)}</span><span>${affName}</span></div>${body}</div>
+        ${p.quote ? `<div class="quote">${esc(p.quote)}</div>` : ''}
+      </div>
+    </div>
+    <nav class="pnav">
+      <a href="#/person/${prev.no}">이전 기록<b>${esc(prev.name)}</b></a>
+      <a href="#/person/${next.no}">다음 기록<b>${esc(next.name)}</b></a>
+    </nav>
+  </div>`;
+}
+
+function viewSeals(){
+  return `<div class="page">
+    <section class="sec" style="margin-top:28px">
+      ${secHead('SIGILLA','여섯 개의 인장')}
+      <p class="intro">이 제국에는 지워진 문장이 여섯 개 있다.<br>권역마다 하나씩, 누군가 그것을 쥐고 있다.</p>
+      <div class="seals">${SEALS.map(s => { const r = REGIONS[s[0]]; return `
+        <button class="seal${s[0]==='rift'?' rift':''}" type="button" aria-expanded="false">
+          <span class="wax${s[0]==='rift'?' rift':''}"><span class="crack"></span></span>
+          <span class="rn">${r.name}</span>
+          <span class="st">봉인됨 · 눌러서 열기</span>
+          <span class="tx">${s[1]}</span>
+        </button>`; }).join('')}
+      </div>
+      <p class="foot-note">인장 아래의 진짜 문장은 이야기 속에서만 읽을 수 있습니다.</p>
+    </section>
+  </div>`;
+}
+
+/* ---------- router ---------- */
+function mountMap(){
+  const slot = document.getElementById('mapslot'); if(!slot) return;
+  slot.appendChild(document.getElementById('mapTpl').content.cloneNode(true));
+  const set = (k,on) => slot.querySelectorAll(`[data-r="${k}"]`).forEach(x=>x.classList.toggle('hov',on));
+  slot.querySelectorAll('.rp').forEach(el => {
+    const k = el.dataset.r;
+    el.addEventListener('click', () => location.hash = '#/region/' + k);
+    el.addEventListener('mouseenter', () => set(k,true));
+    el.addEventListener('mouseleave', () => set(k,false));
+  });
+}
+function route(){
+  const h = location.hash.replace(/^#\/?/, '');
+  const [path, qs] = h.split('?');
+  const seg = path.split('/');
+  const q = new URLSearchParams(qs||'');
+  let html, tab = 'home';
+  if(seg[0]==='region') html = viewRegion(seg[1]);
+  else if(seg[0]==='people'){ html = viewPeople(q.get('f')||'all'); tab='people'; }
+  else if(seg[0]==='person'){ html = viewPerson(seg[1]); tab='people'; }
+  else if(seg[0]==='seals'){ html = viewSeals(); tab='seals'; }
+  else html = viewHome();
+  app.innerHTML = html;
+  document.querySelectorAll('[data-t]').forEach(a => a.classList.toggle('on', a.dataset.t===tab));
+  mountMap();
+  app.querySelectorAll('.fb').forEach(b => b.addEventListener('click', () => {
+    const f = b.dataset.f; history.replaceState(null,'', '#/people' + (f==='all'?'':'?f='+f)); route.keepScroll=true; route(); route.keepScroll=false;
+  }));
+  app.querySelectorAll('.seal').forEach(s => s.addEventListener('click', () => {
+    const o = s.classList.toggle('open'); s.setAttribute('aria-expanded', o);
+  }));
+  if(!route.keepScroll) window.scrollTo(0,0);
+}
+window.addEventListener('hashchange', route);
+route();
+</script>
+</body>
+</html>
