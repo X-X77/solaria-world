@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0A0E18">
-<script>try{if(sessionStorage.getItem('sol-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches||location.hash)document.documentElement.classList.add('no-intro')}catch(e){}</script>
+<script>try{if(!new URLSearchParams(location.search).has('opening')&&(sessionStorage.getItem('sol-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches||location.hash))document.documentElement.classList.add('no-intro')}catch(e){}</script>
 <title>솔라리아 | 태양의 제국</title>
 <meta name="description" content="마물에게 먹히기 직전, 북부 대공의 칼이 당신을 구했다. 그런데 숲에서 나온 발자국은 모두 당신을 향해 있었다.">
 <meta property="og:type" content="website">
@@ -969,7 +969,7 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
   /* Timeline seconds, easy to fine-tune if the Suno mix is revised. */
   const AUDIO_START=6.05; // skip the long instrumental prelude, keep all three spoken lines
   const C={beast:8.42,nox:10.55,slash:12.28,cassian:13.45,
-    beastLine:[8.28,10.30],noxLine:[10.72,11.90],cassianLine:[16.73,19.12],
+    beastLine:[8.78,10.43],noxLine:[10.72,11.90],cassianLine:[16.73,19.12],
     flash:[12.41,12.64],beam:[12.32,13.05],end:19.80};
   stage.querySelectorAll('img[data-fallback]').forEach(img=>{
     const fallback=()=>{if(img.dataset.fallback){img.src=img.dataset.fallback;delete img.dataset.fallback}};
