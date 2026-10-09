@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0A0E18">
-<script>try{if(sessionStorage.getItem('sol-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches||location.hash)document.documentElement.classList.add('no-intro')}catch(e){}</script>
+<script>try{if(!new URLSearchParams(location.search).has('opening')&&(sessionStorage.getItem('sol-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches||location.hash))document.documentElement.classList.add('no-intro')}catch(e){}</script>
 <title>솔라리아 | 태양의 제국</title>
 <meta name="description" content="마물에게 먹히기 직전, 북부 대공의 칼이 당신을 구했다. 그런데 숲에서 나온 발자국은 모두 당신을 향해 있었다.">
 <meta property="og:type" content="website">
@@ -450,6 +450,24 @@ html.intro-done .hero .in{animation:heroIn 1.6s cubic-bezier(.2,.7,.2,1) both}
 }
 @media(prefers-reduced-motion:reduce){#intro.op-v2 .op-snow{animation:none}#intro.op-v2 .op-shot,#intro.op-v2 .op-caption,#intro.op-v2 .op-title{transition:none}}
 
+
+/* Monster shot: hold the red-eye discovery through the first spoken word,
+   then reveal the body as the phrase resolves. */
+#intro.op-v2 .op-shot.eyes{transition:opacity .65s ease,transform 3.4s ease}
+#intro.op-v2 .op-shot.beast{transition:opacity .45s ease,transform 2.6s ease}
+/* Opening pacing revision: fast handoff to the existing hero title */
+#intro.op-v2.out{transition:opacity .55s ease}
+html.intro-done .hero .in{animation-duration:.7s}
+#intro.op-v2 .op-shot.eyes.active{transform:scale(1.085)}
+#intro.op-v2 .op-shot.beast.active{transform:scale(1.13)}
+#intro.op-v2 .op-shot.nox.active{transform:scale(1.08)}
+#intro.op-v2 .op-shot.cassian.active{transform:scale(1.07)}
+
+/* Full-length opening handoff: Cassian's final music tail fades into the hero. */
+#intro.op-v2.out{transition:opacity 1.85s ease}
+html.intro-done .hero .in{animation-duration:1.15s}
+#intro.op-v2 .op-shot.slash.fast{transition:opacity .25s ease,transform 1s ease}
+
 </style>
 </head>
 <body>
@@ -884,7 +902,7 @@ const EDGES=[
 /* sound */
 const SND=(function(){
   const AC=window.AudioContext||window.webkitAudioContext,graph=!!AC&&/^https?:$/.test(location.protocol);
-  const op=new Audio(),bg=new Audio();op.preload='none';bg.preload='none';bg.loop=true;op.src='audio/op.mp3';bg.src='audio/bgm.mp3';
+  const op=new Audio(),bg=new Audio();op.preload='none';bg.preload='none';bg.loop=true;op.src='audio/op.mp3';bg.src='audio/bgm.mp3';let newOpening=false,openingStarted=false;
   const EL={op,bg},VOL={op:.9,bg:.3},G={},T={};
   let ctx=null,on=false,bgWant=false,disarm=null,wasBg=false;
   const btn=document.getElementById('snd');
@@ -908,14 +926,16 @@ const SND=(function(){
   ui();
   return{
     preload(){op.preload='auto';try{op.load()}catch(e){}},
-    opening(cb){on=true;save(true);ui();init();resume();unlockBg();
+    setNewOpening(){if(openingStarted)return;op.pause();op.src='audio/op-v2.mp3';newOpening=true;try{op.load()}catch(e){}},
+    isNewOpening(){return newOpening},
+    opening(cb){on=true;save(true);ui();init();resume();unlockBg();openingStarted=true;
       let fired=false,late=false;const go=()=>{if(!fired){fired=true;cb()}};
-      set('op',VOL.op);try{op.currentTime=0}catch(e){}
+      set('op',VOL.op);try{op.currentTime=newOpening?0:6.05}catch(e){}
       const to=setTimeout(()=>{late=true;op.pause();go()},2500);
       let p;try{p=op.play()}catch(e){}
       if(p&&p.then)p.then(()=>{clearTimeout(to);if(late)op.pause();else go()}).catch(()=>{clearTimeout(to);go()});else{clearTimeout(to);go()}},
     silent(){on=false;save(false);ui()},
-    introEnd(){if(!on)return;if(!op.paused)opOff(1.4);bgOn(3.5)},
+    introEnd(){if(!on)return;if(!op.paused)opOff(newOpening?1.8:1.4);bgOn(newOpening?3.0:3.5)},
     openingTime(){return op.currentTime||0;},
     openingPlaying(){return !op.paused&&!op.ended;},
     arm(){if(pref()!=='1')return;
@@ -937,31 +957,30 @@ const PLAY_URL='https://caveduck.io/character-info/94c25e1f-961a-4ff0-a4a5-e9e7d
 
 document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{sessionStorage.removeItem('sol-intro')}catch(e){}location.href=location.pathname});
 
-/* Opening v2: visual timing follows the real opening audio clock. */
+/* Solaria opening: full 22.4s mix, audio-clock cues, graceful transition. */
 (function(){
-  const box=document.getElementById('intro'), R=document.documentElement;
+  const box=document.getElementById('intro'),R=document.documentElement;
   if(!box)return;
-  if(getComputedStyle(box).display==='none'){
-    box.remove();R.classList.add('intro-done');SND.arm();return;
-  }
-  R.classList.add('intro-on');
-  SND.preload();
-  const gate=document.getElementById('opGate');
-  const stage=document.getElementById('opStage');
-  const shots=[...stage.querySelectorAll('.op-shot')];
-  const caption=document.getElementById('opCaption');
-  const beam=document.getElementById('opBeam');
-  const light=document.getElementById('opLight');
-  const title=document.getElementById('opTitle');
-  let started=false,ended=false,withSound=false,startAt=0,raf=0,shot=-1,spoken='';
-  /* Timeline seconds, easy to fine-tune if the Suno mix is revised. */
-  const C={beast:6.9,nox:10.25,slash:12.7,cassian:14.3,
-    beastLine:[7.0,9.7],noxLine:[10.15,12.5],cassianLine:[16.05,18.8],
-    flash:[12.83,13.15],beam:[12.70,13.65],title:19.05,end:19.94};
+  if(getComputedStyle(box).display==='none'){box.remove();R.classList.add('intro-done');SND.arm();return;}
+  R.classList.add('intro-on');SND.preload();
+  const gate=document.getElementById('opGate'),stage=document.getElementById('opStage');
+  const shots=[...stage.querySelectorAll('.op-shot')],caption=document.getElementById('opCaption');
+  const beam=document.getElementById('opBeam'),light=document.getElementById('opLight'),title=document.getElementById('opTitle');
+  let started=false,ended=false,withSound=false,startAt=0,raf=0,shot=-1,spoken='',outro=false,bgStarted=false,newMix=false;
+  // The new MP3 is optional until it is uploaded; keep the existing intro working.
+  fetch('audio/op-v2.mp3?assetcheck=2',{method:'HEAD',cache:'no-store'})
+    .then(r=>{if(r.ok&&!started&&!ended)SND.setNewOpening()}).catch(()=>{});
+  const OLD={start:6.05,beast:8.42,nox:10.55,slash:12.28,cassian:13.45,
+    beastLine:[9.10,10.43],noxLine:[10.72,11.90],cassianLine:[16.73,19.12],
+    flash:[12.41,12.64],beam:[12.32,13.05],fade:19.50,end:19.80};
+  const NEW={start:0,beast:3.10,nox:7.60,slash:14.75,cassian:15.70,
+    beastLine:[3.65,5.02],noxLine:[9.45,10.76],cassianLine:[17.10,18.62],
+    flash:[14.94,15.17],beam:[14.78,15.39],fade:20.50,end:22.40};
+  let C=OLD;
   stage.querySelectorAll('img[data-fallback]').forEach(img=>{
-    const fallback=()=>{if(img.dataset.fallback){img.src=img.dataset.fallback;delete img.dataset.fallback}};
-    img.addEventListener('error',fallback,{once:true});
-    if(img.complete&&!img.naturalWidth)fallback();
+    const fail=()=>{if(img.dataset.fallback){img.src=img.dataset.fallback;delete img.dataset.fallback;}};
+    img.addEventListener('error',fail,{once:true});
+    if(img.complete&&!img.naturalWidth)fail();
   });
   function changeLine(s,cls){
     const key=s+'|'+cls;
@@ -970,47 +989,52 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
   }
   function paint(t){
     const next=t<C.beast?0:t<C.nox?1:t<C.slash?2:t<C.cassian?3:4;
-    if(next!==shot){
-      shot=next;shots.forEach((el,i)=>el.classList.toggle('active',i===shot));
-      stage.classList.toggle('nox-time',shot===2);
-      stage.classList.toggle('slash-time',shot===3);
+    if(next!==shot){shot=next;shots.forEach((el,i)=>el.classList.toggle('active',i===shot));
+      stage.classList.toggle('nox-time',shot===2);stage.classList.toggle('slash-time',shot===3);
     }
     light.classList.toggle('on',t>=C.flash[0]&&t<C.flash[1]);
     beam.classList.toggle('on',t>=C.beam[0]&&t<C.beam[1]);
-    title.classList.toggle('on',t>=C.title);
+    title.classList.remove('on');
     if(t>=C.beastLine[0]&&t<C.beastLine[1])changeLine('『ㅊ,ㅏㅈ았다』','beast-line');
     else if(t>=C.noxLine[0]&&t<C.noxLine[1])changeLine('드디어.','nox-line');
     else if(t>=C.cassianLine[0]&&t<C.cassianLine[1])changeLine('움직이지 마라.','cassian-line');
     else changeLine('','');
   }
+  function startOutro(){
+    if(outro)return;
+    outro=true;changeLine('','');box.classList.add('out');
+    R.classList.remove('intro-on');R.classList.add('intro-done');
+    try{sessionStorage.setItem('sol-intro','1')}catch(e){}
+    if(started){SND.introEnd();bgStarted=true;}
+  }
   function frame(now){
     if(ended)return;
     const elapsed=(now-startAt)/1000;
-    const audioIsRunning=withSound&&SND.openingPlaying();
-    const t=audioIsRunning?SND.openingTime():elapsed;
+    const playing=withSound&&SND.openingPlaying();
+    const t=playing?SND.openingTime():C.start+elapsed;
     paint(Math.min(t,C.end));
-    if(t>=C.end||elapsed>24){finish();return;}
+    if(t>=C.fade)startOutro();
+    if(t>=C.end||elapsed>C.end-C.start+2.5){finish();return;}
     raf=requestAnimationFrame(frame);
   }
   function begin(sound){
-    withSound=sound;startAt=performance.now();
-    gate.classList.add('out');
-    paint(0);
+    withSound=sound;newMix=SND.isNewOpening();C=newMix?NEW:OLD;
+    startAt=performance.now();gate.classList.add('out');paint(C.start);
     raf=requestAnimationFrame(frame);
   }
   function start(sound){
     if(started||ended)return;
     started=true;
     if(sound)SND.opening(()=>begin(true));
-    else{SND.silent();begin(false)}
+    else{SND.silent();begin(false);}
   }
   function finish(){
     if(ended)return;
     ended=true;cancelAnimationFrame(raf);
-    box.classList.add('out');R.classList.remove('intro-on');R.classList.add('intro-done');
-    try{sessionStorage.setItem('sol-intro','1')}catch(e){}
-    if(started)SND.introEnd();else SND.arm();
-    setTimeout(()=>box.remove(),1250);
+    if(!outro){box.style.transition='opacity .35s ease';startOutro();}
+    R.classList.remove('intro-on');R.classList.add('intro-done');
+    if(started&&!bgStarted)SND.introEnd();else if(!started)SND.arm();
+    setTimeout(()=>box.remove(),outro&&newMix?250:450);
   }
   document.getElementById('opStart').addEventListener('click',()=>start(true));
   document.getElementById('opSilent').addEventListener('click',()=>start(false));
