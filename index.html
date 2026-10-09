@@ -450,6 +450,14 @@ html.intro-done .hero .in{animation:heroIn 1.6s cubic-bezier(.2,.7,.2,1) both}
 }
 @media(prefers-reduced-motion:reduce){#intro.op-v2 .op-snow{animation:none}#intro.op-v2 .op-shot,#intro.op-v2 .op-caption,#intro.op-v2 .op-title{transition:none}}
 
+
+/* Opening pacing revision: fast handoff to the existing hero title */
+#intro.op-v2.out{transition:opacity .55s ease}
+html.intro-done .hero .in{animation-duration:.7s}
+#intro.op-v2 .op-shot.eyes.active{transform:scale(1.085)}
+#intro.op-v2 .op-shot.beast.active{transform:scale(1.13)}
+#intro.op-v2 .op-shot.nox.active{transform:scale(1.08)}
+#intro.op-v2 .op-shot.cassian.active{transform:scale(1.07)}
 </style>
 </head>
 <body>
@@ -910,7 +918,7 @@ const SND=(function(){
     preload(){op.preload='auto';try{op.load()}catch(e){}},
     opening(cb){on=true;save(true);ui();init();resume();unlockBg();
       let fired=false,late=false;const go=()=>{if(!fired){fired=true;cb()}};
-      set('op',VOL.op);try{op.currentTime=0}catch(e){}
+      set('op',VOL.op);try{op.currentTime=6.05}catch(e){}
       const to=setTimeout(()=>{late=true;op.pause();go()},2500);
       let p;try{p=op.play()}catch(e){}
       if(p&&p.then)p.then(()=>{clearTimeout(to);if(late)op.pause();else go()}).catch(()=>{clearTimeout(to);go()});else{clearTimeout(to);go()}},
@@ -955,9 +963,10 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
   const title=document.getElementById('opTitle');
   let started=false,ended=false,withSound=false,startAt=0,raf=0,shot=-1,spoken='';
   /* Timeline seconds, easy to fine-tune if the Suno mix is revised. */
-  const C={beast:6.9,nox:10.25,slash:12.7,cassian:14.3,
-    beastLine:[7.0,9.7],noxLine:[10.15,12.5],cassianLine:[16.05,18.8],
-    flash:[12.83,13.15],beam:[12.70,13.65],title:19.05,end:19.94};
+  const AUDIO_START=6.05; // skip the long instrumental prelude, keep all three spoken lines
+  const C={beast:7.18,nox:10.55,slash:12.28,cassian:13.45,
+    beastLine:[7.32,9.10],noxLine:[10.72,11.90],cassianLine:[16.20,18.55],
+    flash:[12.41,12.64],beam:[12.32,13.05],end:19.80};
   stage.querySelectorAll('img[data-fallback]').forEach(img=>{
     const fallback=()=>{if(img.dataset.fallback){img.src=img.dataset.fallback;delete img.dataset.fallback}};
     img.addEventListener('error',fallback,{once:true});
@@ -977,7 +986,8 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     }
     light.classList.toggle('on',t>=C.flash[0]&&t<C.flash[1]);
     beam.classList.toggle('on',t>=C.beam[0]&&t<C.beam[1]);
-    title.classList.toggle('on',t>=C.title);
+    // The existing hero screen is the title reveal; do not show a duplicate title here.
+    title.classList.remove('on');
     if(t>=C.beastLine[0]&&t<C.beastLine[1])changeLine('『ㅊ,ㅏㅈ았다』','beast-line');
     else if(t>=C.noxLine[0]&&t<C.noxLine[1])changeLine('드디어.','nox-line');
     else if(t>=C.cassianLine[0]&&t<C.cassianLine[1])changeLine('움직이지 마라.','cassian-line');
@@ -987,9 +997,9 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     if(ended)return;
     const elapsed=(now-startAt)/1000;
     const audioIsRunning=withSound&&SND.openingPlaying();
-    const t=audioIsRunning?SND.openingTime():elapsed;
+    const t=audioIsRunning?SND.openingTime():AUDIO_START+elapsed;
     paint(Math.min(t,C.end));
-    if(t>=C.end||elapsed>24){finish();return;}
+    if(t>=C.end||elapsed>17){finish();return;}
     raf=requestAnimationFrame(frame);
   }
   function begin(sound){
