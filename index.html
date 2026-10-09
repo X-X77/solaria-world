@@ -468,6 +468,240 @@ html.intro-done .hero .in{animation-duration:.7s}
 html.intro-done .hero .in{animation-duration:1.15s}
 #intro.op-v2 .op-shot.slash.fast{transition:opacity .25s ease,transform 1s ease}
 
+
+/* Solaria imperial archive design pass */
+/* Sitewide editorial rhythm — opening cinematic remains unchanged. */
+:root{--bg:#080D16;--bg2:#101827;--gold:#D2AD69;--gold-hi:#F1DDB4;--text:#EFEAE0;--sub:#AEB8C7;--line:rgba(210,173,105,.23)}
+body{background:#080D16}
+html{scroll-padding-top:78px}
+.nav{height:70px;padding:0 clamp(16px,3.8vw,62px);background:linear-gradient(180deg,rgba(7,12,21,.75),rgba(7,12,21,.03));transition:background .4s,border-color .4s}
+.nav.solid{background:rgba(8,13,22,.94);border-bottom:1px solid rgba(210,173,105,.22);box-shadow:0 10px 32px rgba(0,0,0,.19)}
+.logo{font-size:21px;letter-spacing:.035em;gap:12px}
+.logo svg{width:28px;height:28px;color:#DDBA7F}
+.nav ul{gap:clamp(3px,1.5vw,23px)}
+.nav li a{font-size:14px;letter-spacing:.04em;font-weight:600;color:#C6C4BE;padding:12px 10px;transition:color .2s}
+.nav li a:hover,.nav li a.on{color:#F6DFB2}
+.nav li a.on:after{height:1px;background:#EBC991;bottom:4px}
+.snd{border-color:rgba(210,173,105,.34)}
+/* Hero: connect the Cassian rescue to the archive instead of dropping onto a dim map. */
+.hero{height:min(920px,100svh);min-height:670px;text-align:left;isolation:isolate}
+.hero .bg{inset:-3%;background:linear-gradient(90deg,rgba(4,9,17,.58),rgba(4,9,17,.12)),url(img/r/north.jpg) center 35%/cover no-repeat;filter:saturate(.78) brightness(.68);animation:kb 40s ease-in-out infinite alternate}
+.hero:before{z-index:1;background:linear-gradient(90deg,rgba(7,12,22,.96) 0%,rgba(7,12,22,.82) 35%,rgba(7,12,22,.52) 72%,rgba(7,12,22,.72) 100%),linear-gradient(0deg,var(--bg) 0%,transparent 24%,transparent 77%,rgba(5,9,18,.50))}
+.hero:after{content:"";position:absolute;inset:82px clamp(16px,3.8vw,62px) 64px;z-index:1;border-left:1px solid rgba(217,181,113,.12);border-right:1px solid rgba(217,181,113,.12);pointer-events:none}
+.hero .in{width:100%;max-width:1440px;padding:80px clamp(30px,5.2vw,76px) 82px;margin:auto;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(30px,5vw,86px);align-items:center}
+.hero-copy{position:relative;z-index:2;min-width:0}
+.hero-kicker{display:flex;align-items:center;gap:12px;font-family:var(--lat);font-size:clamp(10px,.85vw,12px);letter-spacing:.16em;color:#D9C6A0;margin:0 0 33px}
+.hero-kicker-dot{display:inline-block;flex:none;width:6px;height:6px;border-radius:100%;background:#DABB82;box-shadow:0 0 16px rgba(239,208,147,.4)}
+.hero-kicker-split{opacity:.35}
+.hero .orn{justify-content:flex-start}
+.hero .orn:before{width:38px}
+.hero .orn:after{width:80px}
+.hero .lat{font-size:clamp(11px,1.05vw,14px);letter-spacing:.43em;padding-left:.43em;margin-top:25px}
+.hero h1{white-space:nowrap;font-size:clamp(64px,9vw,140px);margin:10px 0 0;letter-spacing:.02em;line-height:1.11}
+.hero .tag{font-size:clamp(18px,2.05vw,26px);letter-spacing:.06em;margin-top:9px;color:#EFE3C9}
+.hero .lead{font-size:clamp(15.5px,1.2vw,18px);line-height:1.95;color:#DBD6CD;max-width:38em;margin:25px 0 0}
+.hero .cta{justify-content:flex-start;gap:12px;margin-top:31px}
+.hero .btn{height:54px;clip-path:none;border:1px solid rgba(216,178,110,.28);padding:0 22px;gap:18px;font-size:15px;letter-spacing:.01em;transition:transform .2s,border-color .2s,background .2s}
+.hero .btn:hover{transform:translateY(-3px)}
+.hero .btn.p{background:#DAB678;color:#18120B;border-color:#DAB678}
+.hero .btn.g{background:rgba(8,15,26,.45);color:#F0DFBE}
+.hero .btn.g:hover{background:rgba(216,178,110,.12);border-color:#DAB678}
+.hero-quick{display:flex;gap:24px;flex-wrap:wrap;margin-top:30px;padding-top:22px;border-top:1px solid rgba(234,215,178,.2)}
+.hero-quick a{font-size:13px;font-weight:600;color:#D3D3D0;display:flex;align-items:center;gap:10px;transition:color .2s}
+.hero-quick a span:first-child{font-family:var(--lat);color:#D6B47B;font-size:12px}
+.hero-quick a:hover{color:#FFF0D6}
+.hero-visual{position:relative;justify-self:end;width:min(100%,505px);height:clamp(380px,60vh,620px);isolation:isolate;overflow:hidden;background:rgba(13,21,31,.4);box-shadow:0 30px 90px rgba(0,0,0,.43)}
+.hero-visual:before{content:"";position:absolute;inset:14px;z-index:2;border:1px solid rgba(244,216,163,.30);pointer-events:none}
+.hero-visual:after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(8,12,20,.28),transparent 25%,transparent 49%,rgba(5,9,17,.84) 100%),linear-gradient(90deg,rgba(8,12,20,.19),transparent 35%,rgba(8,12,20,.13))}
+.hero-visual img{width:100%;height:100%;object-fit:cover;object-position:50% 31%;filter:saturate(.86) contrast(1.06)}
+.hero-visual-caption{position:absolute;z-index:3;bottom:35px;left:34px;right:34px;display:grid;gap:7px}
+.hero-visual-caption span{font-family:var(--lat);font-size:10px;letter-spacing:.2em;color:#D5BE93}
+.hero-visual-caption b{font-family:var(--disp);font-weight:600;font-size:24px;color:#F7F0DE}
+.hero .cue{z-index:3;bottom:25px;left:clamp(26px,5vw,85px);transform:none;align-items:flex-start;font-size:10px;letter-spacing:.2em;font-family:var(--lat);color:#CAB894}
+.hero .cue:after{height:25px}
+.hero .replay{z-index:5;right:clamp(20px,4vw,62px);bottom:24px;background:rgba(5,10,18,.66);border-color:rgba(210,173,105,.28);font-size:12px}
+/* Section titles as chapters of the imperial archive. */
+.sec{padding-top:clamp(78px,8vw,124px);padding-bottom:clamp(78px,8vw,124px)}
+.wrap{max-width:1210px}
+.sh{margin-bottom:clamp(35px,4.5vw,62px)}
+.sh:before{display:block;margin-bottom:17px;font:600 11px var(--lat);letter-spacing:.24em;color:#C9A66C}
+.world .sh:before{content:"CHAPTER I — THE EMPIRE"}
+.regions .sh:before{content:"CHAPTER II — THE LANDS"}
+.people .sh:before{content:"CHAPTER III — THE PEOPLE"}
+.bonds .sh:before{content:"CHAPTER IV — THE TIES"}
+.seals .sh:before{content:"CHAPTER V — THE SEALED"}
+.sh h2{font-size:clamp(36px,4.6vw,54px);font-weight:700;letter-spacing:-.035em}
+.sh p{max-width:39em;font-size:clamp(16px,1.4vw,18px);line-height:1.9}
+.sh .orn{margin-top:18px;color:rgba(217,181,113,.58)}
+/* World cards feel like indexed records; map is a real atlas page. */
+.world{background:radial-gradient(ellipse 80% 45% at 50% 0%,rgba(56,77,99,.13),transparent 75%),#090F1A}
+.pillars{counter-reset:record;gap:18px}
+.pl{position:relative;min-height:278px;padding:38px 32px 34px;counter-increment:record;transition:background .3s,transform .3s;--c:rgba(210,173,105,.42)}
+.pl:before{content:"0" counter(record);display:block;position:absolute;top:25px;right:28px;font:600 12px var(--lat);color:rgba(230,200,150,.62)}
+.pl:hover{transform:translateY(-5px);background-color:rgba(40,50,62,.45)}
+.pl svg{width:40px;height:40px;color:#D8BA83}
+.pl h3{font-size:24px;margin-top:25px}
+.pl p{font-size:15.5px;line-height:1.88;color:#CFD0CF}
+.atlas-preview{max-width:1150px;margin:clamp(58px,8vw,105px) auto 0;border:1px solid rgba(215,185,130,.24);background:#0F1724;padding:clamp(16px,2.8vw,30px)}
+.atlas-heading{display:flex;justify-content:space-between;align-items:end;gap:22px;padding:10px 8px 25px}
+.atlas-overline{font:600 11px var(--lat);color:#CFB47F;letter-spacing:.2em}
+.atlas-heading h3{font:700 clamp(27px,3vw,38px) var(--disp);color:#F2E7D4;margin:8px 0 0}
+.atlas-heading p{margin:9px 0 0;color:#BDC4CB;font-size:15.5px;line-height:1.7}
+.atlas-link{padding:11px 16px;border:1px solid rgba(218,182,120,.38);color:#E9D3A7;white-space:nowrap;font-size:14px;font-weight:600;transition:background .2s}
+.atlas-link:hover{background:rgba(218,182,120,.13)}
+.atlas-image{display:block;position:relative;overflow:hidden;background:#090F19;border:1px solid rgba(230,205,159,.25)}
+.atlas-image img{display:block;width:100%;height:auto;max-height:690px;object-fit:contain;transition:transform .8s ease}
+.atlas-image:hover img{transform:scale(1.022)}
+.atlas-foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#A5AFBA;font-size:12px;margin:16px 8px 3px}
+.atlas-foot span:first-child{font-family:var(--lat);letter-spacing:.15em;color:#CDB47F}
+.report{max-width:780px;margin-top:clamp(68px,8vw,110px);transform:rotate(-.5deg);padding:50px clamp(25px,5vw,62px) 45px;background:radial-gradient(ellipse at 20% 0%,rgba(255,255,255,.36),transparent 56%),linear-gradient(155deg,#EFE2C3,#CCB589);border:1px solid rgba(245,227,193,.7)}
+.report .from{letter-spacing:.15em;font-size:12px;text-transform:uppercase}
+.report h3{font-size:27px}
+.report p{font-size:17.5px;line-height:2}
+.report .wax{width:68px;height:68px;right:-15px;top:-25px}
+/* Interactive regions: individual landscape folios. */
+.regions{background:linear-gradient(180deg,#090F1A,#0D1523 20%,#080D16 100%);padding-bottom:0}
+.rtabs{gap:10px;max-width:1230px;padding-bottom:8px}
+.rtab{position:relative;padding:8px 8px 12px;background:rgba(18,26,39,.8);border:1px solid rgba(235,215,175,.15);color:#C8C4BC;font-size:14px;letter-spacing:.03em;transition:background .2s,border-color .2s}
+.rtab.on{background:rgba(44,43,39,.56);border-color:rgba(224,183,112,.65)}
+.rtab .th{aspect-ratio:16/9;filter:grayscale(.5) brightness(.65);transition:filter .35s}
+.rtab.on .th{box-shadow:none}
+.rtab:hover .th{filter:grayscale(.1) brightness(.88)}
+.rstage{height:clamp(740px,90vh,920px);border-top-color:rgba(210,173,105,.3)}
+.rstage:after{background:linear-gradient(90deg,rgba(7,13,22,.95) 0%,rgba(7,13,22,.86) 30%,rgba(7,13,22,.28) 73%,rgba(7,13,22,.13)),linear-gradient(0deg,#080D16,transparent 24%)}
+.rinfo{width:min(585px,calc(100% - 36px));padding:28px 26px 28px 30px;background:linear-gradient(90deg,rgba(9,14,24,.68),rgba(10,16,26,.22));border-left:2px solid var(--rc)}
+.rinfo h3{font-size:clamp(66px,7vw,100px)}
+.rinfo .about{color:#DFDDD5;font-size:16px;line-height:1.88}
+.rinfo .motto{font-size:20px;border-left:0;padding-left:0}
+.story{background:rgba(7,13,22,.67);border-color:rgba(220,185,126,.24);border-left:2px solid var(--rc)}
+.story p{line-height:1.8}
+.places li{padding:7px 12px;background:rgba(11,18,28,.56);border-color:rgba(229,204,157,.24)}
+/* Character archive: larger artwork, clearer hierarchy, stronger readable panel. */
+.people{background:radial-gradient(ellipse 85% 34% at 50% 50%,rgba(56,61,87,.16),transparent),#090F19}
+.chips{max-width:1050px;gap:7px}
+.chip{height:42px;padding:0 16px;border:1px solid rgba(215,189,145,.23);background:rgba(20,28,39,.8);color:#C8C8C5;font-size:14px}
+.chip.on{background:#D5B174;color:#20170D}
+.cstage{grid-template-columns:minmax(0,.96fr) minmax(0,1.04fr);gap:clamp(34px,5vw,85px);align-items:center}
+.cpor{width:min(100%,490px)}
+.cpor .ln{inset:4% 5% 11%;transform:translate(16px,18px);border-color:rgba(211,178,116,.4)}
+.cpor img{aspect-ratio:3/4;object-position:50% 20%;-webkit-mask:linear-gradient(180deg,rgba(0,0,0,.8),#000 12%,#000 79%,transparent 100%);mask:linear-gradient(180deg,rgba(0,0,0,.8),#000 12%,#000 79%,transparent 100%)}
+.cinfo{border-left:1px solid rgba(219,181,114,.24);padding-left:clamp(24px,3vw,46px)}
+.cinfo .fac{font-size:14px;letter-spacing:.02em}
+.cinfo h3{font-size:clamp(43px,4.5vw,64px);line-height:1.16}
+.cinfo .role{font-size:19px}
+.cinfo .quote{font-size:clamp(18px,1.8vw,22px);margin-top:23px;padding-left:18px}
+.cinfo dl{gap:18px;margin-top:25px}
+.cinfo dl>div{padding-bottom:12px;border-bottom:1px solid rgba(215,189,145,.12)}
+.cinfo dd{font-size:15.5px;line-height:1.8}
+.secret{background:linear-gradient(165deg,rgba(77,30,34,.32),rgba(32,15,21,.72));border-color:rgba(200,88,79,.39)}
+.cnav button{background:rgba(218,181,111,.055)}
+.strip{padding-top:21px;margin-top:54px}
+.ct{width:91px}
+.ct .im{height:121px}
+.ct.on .im{box-shadow:0 0 0 1px var(--gold),0 8px 22px rgba(0,0,0,.28)}
+/* Relations drawn like an illuminated strategy board. */
+.bonds{background:linear-gradient(180deg,#090F19,#0C1422)}
+.bscroll{background:radial-gradient(ellipse at center,rgba(32,49,69,.52),rgba(9,15,26,.75)),repeating-linear-gradient(0deg,transparent 0,transparent 59px,rgba(222,188,125,.035) 60px),repeating-linear-gradient(90deg,transparent 0,transparent 59px,rgba(222,188,125,.035) 60px);border:1px solid rgba(216,183,122,.2)}
+.bside{background:linear-gradient(155deg,#182231,#0C1421);border:1px solid rgba(215,184,132,.27);padding:26px;min-height:250px}
+.bside h3{font-size:27px}
+.bside li{font-size:15px}
+.bside .go{background:#D5B174;padding:12px 17px}
+.blegend{padding-top:15px}
+/* Sealed documents are distinct archival objects instead of generic tiles. */
+.seals{counter-reset:seal;background:radial-gradient(ellipse at 50% 45%,rgba(81,27,39,.2),transparent 64%),#090D16}
+.sgrid{gap:12px}
+.sl{position:relative;counter-increment:seal;min-height:258px;padding:42px 12px 29px;background:linear-gradient(165deg,rgba(48,31,35,.72),rgba(14,20,31,.94));border:1px solid rgba(186,127,116,.27);box-shadow:inset 0 0 30px rgba(5,6,12,.24);transition:transform .25s,border-color .25s}
+.sl:before{content:"RECORD / 0" counter(seal);position:absolute;top:16px;left:15px;color:rgba(220,189,159,.65);font:600 10px var(--lat);letter-spacing:.08em}
+.sl:hover{transform:translateY(-5px);border-color:rgba(222,162,137,.55)}
+.sl .wax{margin:8px 0 5px}
+.sl b{font-size:20px}
+.sl .st{letter-spacing:.07em}
+.sl.open{background:linear-gradient(165deg,rgba(63,28,33,.88),rgba(18,17,26,.97));border-color:rgba(215,109,93,.6)}
+.sl.open:hover{transform:none}
+.final{padding:clamp(120px,15vw,185px) 16px}
+.final:before{background:linear-gradient(180deg,var(--bg) 0%,rgba(7,12,20,.48) 28%,rgba(7,12,20,.62) 67%,var(--bg)),radial-gradient(ellipse at center,rgba(5,9,18,.3),rgba(5,9,18,.86))}
+.final h2{font-size:clamp(34px,4.4vw,56px)}
+footer{background:#080D16}
+/* Responsive reading and touch-target refinements. */
+@media(max-width:980px){
+ .hero .in{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:20px}
+ .hero-visual{height:clamp(360px,52vh,570px)}
+ .hero h1{font-size:clamp(64px,8.5vw,105px)}
+ .hero .lead br{display:none}
+}
+@media(max-width:760px){
+ .nav{height:62px;padding:0 12px}
+ .nav ul{gap:0;overflow-x:auto;scrollbar-width:none}
+ .nav li a{padding:12px 8px;font-size:13px;white-space:nowrap}
+ .logo{font-size:17px;gap:5px;margin-right:8px}
+ .logo svg{width:23px;height:23px}
+ .snd{margin-left:6px}
+ .hero{height:auto;min-height:690px;min-height:100svh;display:block}
+ .hero .bg{background-position:47% center}
+ .hero:before{background:linear-gradient(90deg,rgba(5,10,19,.87),rgba(5,10,19,.57)),linear-gradient(0deg,#080D16,transparent 28%)}
+ .hero:after{inset:75px 15px 65px}
+ .hero .in{display:block;padding:clamp(130px,18vh,180px) 25px 145px;min-height:100svh;max-width:610px}
+ .hero-copy{position:relative;z-index:3}
+ .hero-kicker{font-size:10px;letter-spacing:.12em;gap:7px;margin-bottom:24px}
+ .hero .lat{letter-spacing:.3em;font-size:11px}
+ .hero h1{font-size:clamp(65px,13vw,102px);white-space:normal}
+ .hero .tag{font-size:18px}
+ .hero .lead{font-size:15.5px;line-height:1.9;max-width:26em;margin-top:22px}
+ .hero .cta{gap:10px}
+ .hero .btn{height:49px;padding:0 15px;gap:10px;font-size:14px}
+ .hero .hero-visual{position:absolute;top:9%;right:-17%;z-index:0;height:80%;width:83%;opacity:.34;box-shadow:none;pointer-events:none}
+ .hero-visual:before,.hero-visual-caption{display:none}
+ .hero-visual:after{background:linear-gradient(90deg,#080D16,transparent 35%),linear-gradient(0deg,#080D16,transparent 45%)}
+ .hero .cue{left:25px;bottom:20px}
+ .hero .replay{top:auto;right:16px;bottom:23px;height:36px;font-size:11px;padding:0 10px}
+ .hero-quick{gap:22px}
+ .rstage{height:auto;padding-top:62vw}
+ .rbg{bottom:auto;height:78vw}
+ .rstage:after{background:linear-gradient(180deg,rgba(8,13,22,.04) 0,rgba(8,13,22,.42) 39vw,#080D16 77vw)}
+ .rinfo,.rinfo.anim{position:relative;top:auto;left:auto;transform:none;width:auto;padding:12px 22px 40px;background:none;border:0;animation-name:up}
+ .rinfo h3{font-size:clamp(55px,12vw,85px)}
+ .cstage{grid-template-columns:1fr;gap:0}
+ .cpor{max-width:430px}
+ .cinfo{margin-top:-45px;padding:0 6px;border-left:0;position:relative;z-index:2}
+ .cpor .ln{transform:translate(9px,11px)}
+ .atlas-heading{flex-direction:column;align-items:flex-start}
+ .atlas-link{white-space:normal}
+ .atlas-foot{line-height:1.6}
+ .sgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .sl{min-height:234px}
+}
+@media(max-width:520px){
+ .hero .in{padding-left:21px;padding-right:21px}
+ .hero h1{font-size:clamp(63px,15vw,88px)}
+ .hero .lead{font-size:15px}
+ .hero .cta{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+ .hero .btn{justify-content:center;text-align:center;line-height:1.25;height:58px;padding:0 9px;font-size:13px;gap:6px}
+ .hero-quick{gap:15px}
+ .hero-quick a{font-size:12px}
+ .sh h2{font-size:36px}
+ .sh p{font-size:16px}
+ .pl{min-height:0;padding:31px 26px}
+ .atlas-preview{padding:12px}
+ .atlas-heading{padding:9px 6px 20px}
+ .atlas-heading h3{font-size:27px}
+ .report{padding:41px 25px 35px;transform:none}
+ .report p{font-size:16px}
+ .rtabs{padding-left:16px;padding-right:16px;gap:7px}
+ .rtab{width:122px;flex:none}
+ .cpor{max-width:360px}
+ .cinfo h3{font-size:43px}
+ .cinfo .quote{font-size:19px}
+ .sgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .sl{min-height:235px;padding:43px 10px 23px}
+ .sl b{font-size:19px}
+ .bside{padding:20px}
+}
+@media(prefers-reduced-motion:reduce){
+ .hero .bg{animation:none}
+ .pl:hover,.sl:hover{transform:none}
+ .atlas-image img{transition:none}
+}
+
 </style>
 </head>
 <body>
@@ -502,14 +736,22 @@ html.intro-done .hero .in{animation-duration:1.15s}
 <section class="hero" id="top">
   <div class="bg" aria-hidden="true"></div>
   <div class="in">
-    <div class="orn"><i></i></div>
-    <div class="lat" translate="no">IMPERIUM SOLARIAE</div>
-    <h1>솔라리아</h1>
-    <p class="tag">태양의 제국, 균열의 시대</p>
-    <p class="lead">마물에게 먹히기 직전, 북부 대공의 칼이 당신을 구했다.<br>그런데 숲에서 나온 발자국은 모두, 당신이 있던 자리로만 향해 있었다.</p>
-    <div class="cta"><a class="btn p" data-play href="#">지금 플레이하기</a><a class="btn g" href="#world">세계관 보기</a></div>
+    <div class="hero-copy">
+      <p class="hero-kicker"><span class="hero-kicker-dot" aria-hidden="true"></span> IMPERIAL ARCHIVE <span class="hero-kicker-split">/</span> THE AGE OF RIFTS</p>
+      <div class="orn"><i></i></div>
+      <div class="lat" translate="no">IMPERIUM SOLARIAE</div>
+      <h1>솔라리아</h1>
+      <p class="tag">태양의 제국, 균열의 시대</p>
+      <p class="lead">마물에게 먹히기 직전, 북부 대공의 칼이 당신을 구했다.<br>그런데 숲에서 나온 발자국은 모두, 당신이 있던 자리로만 향해 있었다.</p>
+      <div class="cta"><a class="btn p" data-play href="#">이야기 시작하기 <span aria-hidden="true">↗</span></a><a class="btn g" href="#world">제국의 기록 열람 <span aria-hidden="true">↓</span></a></div>
+      <div class="hero-quick"><a href="#regions"><span>01</span> 제국의 권역 <span aria-hidden="true">↗</span></a><a href="#people"><span>02</span> 인물 기록 <span aria-hidden="true">↗</span></a></div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <img src="img/op/cassian.webp" alt="" fetchpriority="high" width="1660" height="1132">
+      <div class="hero-visual-caption"><span>PROLOGUE — NORTHERN FRONTIER</span><b>눈보라가 그친 자리</b></div>
+    </div>
   </div>
-  <div class="cue">아래로</div>
+  <div class="cue">SCROLL TO EXPLORE</div>
   <button class="replay" data-replay type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12a8 8 0 1 0 2.3-5.6"/><path d="M4 4v4h4"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg>오프닝 다시 보기</button>
 </section>
 
@@ -532,6 +774,16 @@ html.intro-done .hero .in{animation-duration:1.15s}
       <h3>마석</h3>
       <p>마탑이 정제하는 마석은 제국의 등불을 밝힌다. 마석이 어디에서 오는지는 마탑과 황실만이 안다고 한다.</p>
     </article>
+  </div>
+  <div class="atlas-preview" aria-label="솔라리아 제국 지도">
+    <div class="atlas-heading">
+      <div><span class="atlas-overline">THE IMPERIAL ATLAS / 001</span><h3>제국의 지도를 펼치다</h3><p>다섯 권역과 균열. 이 땅에서 모든 이야기가 이어진다.</p></div>
+      <a class="atlas-link" href="#regions">권역별 기록 열람 <span aria-hidden="true">↗</span></a>
+    </div>
+    <a class="atlas-image" href="#regions" aria-label="솔라리아 제국 지도에서 권역별 설명으로 이동">
+      <img src="img/map.jpg" alt="솔라리아 제국의 주요 권역과 지형을 담은 지도" loading="lazy">
+    </a>
+    <p class="atlas-foot"><span>IMPERIUM SOLARIAE</span><span>지도를 누르면 권역 기록으로 이동합니다.</span></p>
   </div>
   <article class="report">
     <span class="wax" aria-hidden="true"></span>
