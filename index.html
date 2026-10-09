@@ -902,7 +902,7 @@ const EDGES=[
 /* sound */
 const SND=(function(){
   const AC=window.AudioContext||window.webkitAudioContext,graph=!!AC&&/^https?:$/.test(location.protocol);
-  const op=new Audio(),bg=new Audio();op.preload='none';bg.preload='none';bg.loop=true;op.src='audio/op.mp3';bg.src='audio/bgm.mp3';let newOpening=false,openingStarted=false;
+  const op=new Audio(),bg=new Audio();op.preload='none';bg.preload='none';bg.loop=true;op.src='audio/op-v2.mp3';bg.src='audio/bgm.mp3';let newOpening=true,openingStarted=false;
   const EL={op,bg},VOL={op:.9,bg:.3},G={},T={};
   let ctx=null,on=false,bgWant=false,disarm=null,wasBg=false;
   const btn=document.getElementById('snd');
@@ -930,7 +930,7 @@ const SND=(function(){
     isNewOpening(){return newOpening},
     opening(cb){on=true;save(true);ui();init();resume();unlockBg();openingStarted=true;
       let fired=false,late=false;const go=()=>{if(!fired){fired=true;cb()}};
-      set('op',VOL.op);try{op.currentTime=newOpening?0:6.05}catch(e){}
+      set('op',VOL.op);try{op.currentTime=0}catch(e){}
       const to=setTimeout(()=>{late=true;op.pause();go()},2500);
       let p;try{p=op.play()}catch(e){}
       if(p&&p.then)p.then(()=>{clearTimeout(to);if(late)op.pause();else go()}).catch(()=>{clearTimeout(to);go()});else{clearTimeout(to);go()}},
@@ -967,9 +967,7 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
   const shots=[...stage.querySelectorAll('.op-shot')],caption=document.getElementById('opCaption');
   const beam=document.getElementById('opBeam'),light=document.getElementById('opLight'),title=document.getElementById('opTitle');
   let started=false,ended=false,withSound=false,startAt=0,raf=0,shot=-1,spoken='',outro=false,bgStarted=false,newMix=false;
-  // The new MP3 is optional until it is uploaded; keep the existing intro working.
-  fetch('audio/op-v2.mp3?assetcheck=2',{method:'HEAD',cache:'no-store'})
-    .then(r=>{if(r.ok&&!started&&!ended)SND.setNewOpening()}).catch(()=>{});
+  // Use the verified new soundtrack directly; no asynchronous HEAD-check race.
   const OLD={start:6.05,beast:8.42,nox:10.55,slash:12.28,cassian:13.45,
     beastLine:[9.10,10.43],noxLine:[10.72,11.90],cassianLine:[16.73,19.12],
     flash:[12.41,12.64],beam:[12.32,13.05],fade:19.50,end:19.80};
@@ -1018,7 +1016,7 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     raf=requestAnimationFrame(frame);
   }
   function begin(sound){
-    withSound=sound;newMix=SND.isNewOpening();C=newMix?NEW:OLD;
+    withSound=sound;newMix=true;C=NEW;
     startAt=performance.now();gate.classList.add('out');paint(C.start);
     raf=requestAnimationFrame(frame);
   }
