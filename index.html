@@ -811,6 +811,102 @@ footer{background:#080D16}
  .atlas-pin:hover .atlas-pin-dot,.atlas-pin.selected .atlas-pin-dot{transform:scale(1.15);box-shadow:0 0 0 3px rgba(5,10,20,.55),0 0 0 5px var(--pin)}
 }
 
+/* Character archive redesign — strictly scoped to #people. */
+#people{background:radial-gradient(ellipse at 50% 36%,rgba(62,79,101,.16),transparent 70%),#080E19}
+#people .wrap{max-width:1250px}
+#people .sh{margin-bottom:28px}
+#people .people-eyebrow{display:flex;justify-content:space-between;gap:15px;margin:0 0 15px;padding-top:15px;border-top:1px solid rgba(221,184,125,.37);font:600 11px var(--lat);letter-spacing:.18em;color:#D5BC8D}
+#people .chips{max-width:none;display:flex;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;gap:7px;margin:0 0 20px;padding-bottom:5px}
+#people .chip{height:42px;flex:none;font-size:13px;padding:0 15px;border-color:rgba(220,184,123,.28);background:rgba(14,23,37,.75);color:#D2D0C8}
+#people .chip:hover{border-color:#E8CE9D;color:#F8E9D0}
+#people .chip.on{background:#E4C991;color:#18130B;border-color:#E4C991}
+#people .people-dossier{--rc:#D9B86C;--people-bg:none;position:relative;isolation:isolate;min-height:600px;overflow:hidden;border:1px solid rgba(221,187,128,.34);background:#111B29}
+#people .people-dossier:before{content:"";position:absolute;z-index:-2;inset:0;background:linear-gradient(90deg,rgba(6,12,23,.72),rgba(6,12,23,.92) 60%),var(--people-bg) center/cover;opacity:.9}
+#people .people-dossier:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 20% 32%,color-mix(in srgb,var(--rc) 16%,transparent),transparent 56%),linear-gradient(0deg,rgba(7,12,22,.82),transparent 29%)}
+#people .people-dossier-top{position:relative;z-index:2;margin:0 clamp(18px,4vw,46px);padding:23px 0 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid rgba(231,198,140,.21)}
+#people .people-dossier-top span{font:600 11px var(--lat);letter-spacing:.17em;color:#E3D0AC}
+#people .people-dossier-top b{font:600 15px var(--lat);color:#EED3A4;letter-spacing:.08em;white-space:nowrap}
+#people .people-watermark{position:absolute;top:55px;right:2%;z-index:0;font:750 clamp(64px,8vw,120px) var(--disp);white-space:nowrap;max-width:90%;overflow:hidden;opacity:.055;line-height:1.15;pointer-events:none;color:#FFF3DE}
+#people .cstage{position:relative;z-index:1;padding:clamp(21px,3vw,37px) clamp(18px,4vw,46px) 49px;grid-template-columns:minmax(0,.93fr) minmax(0,1fr);gap:clamp(28px,5vw,70px);align-items:start}
+#people .cpor{isolation:isolate;width:100%;max-width:465px;aspect-ratio:4/5}
+#people .cpor:before{z-index:-2;inset:-18px;background:radial-gradient(ellipse,color-mix(in srgb,var(--rc) 33%,transparent),transparent 70%)}
+#people .cpor .ln{z-index:-1;inset:3% -2% -2% 4%;transform:translate(11px,11px);border-color:color-mix(in srgb,var(--rc) 58%,transparent)}
+#people .cpor img{width:100%;height:100%;aspect-ratio:auto;object-fit:cover;object-position:50% 21%;-webkit-mask:none;mask:none;border:1px solid rgba(220,190,139,.42);box-shadow:0 22px 60px rgba(0,0,0,.42)}
+#people .cpor-dark{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(9,14,25,.35),transparent 35%,rgba(5,10,19,.89) 100%),linear-gradient(90deg,rgba(5,10,20,.20),transparent 40%)}
+#people .cpor-top,#people .cpor-bottom{position:absolute;z-index:3;left:16px;right:16px;color:#F4E3C4;font:600 10px var(--lat);letter-spacing:.12em;text-shadow:0 2px 7px #060A14}
+#people .cpor-top{top:16px}
+#people .cpor-bottom{bottom:19px}
+#people .cpor.sealed img{filter:blur(13px) brightness(.3);transform:scale(1.02)}
+#people .cpor.sealed{overflow:hidden}
+#people .cpor-seal{position:absolute;z-index:5;top:48%;left:50%;transform:translate(-50%,-50%) rotate(-8deg);border:2px solid #B8898A;background:rgba(26,13,20,.84);padding:13px 17px;color:#F0CAC1;white-space:nowrap;font:700 16px var(--lat)}
+#people .cinfo{padding:5px 0 0;border-left:0;min-width:0;margin:0}
+#people .cinfo .fac{font-size:14px;color:var(--rc);font-weight:750}
+#people .cinfo .fac i{background:var(--rc)}
+#people .cinfo .fac small{font-size:13px;font-weight:500;color:#BAC4CC}
+#people .cinfo h3{font-size:clamp(42px,4.2vw,65px);line-height:1.2;letter-spacing:-.035em;margin-top:17px}
+#people .cinfo .role{font-size:clamp(19px,2vw,22px);margin-top:7px;color:#EFD7A9}
+#people .cinfo blockquote.quote{margin:22px 0 16px;padding:17px 18px 17px 21px;border:1px solid rgba(228,196,141,.25);border-left:3px solid var(--rc);background:rgba(6,12,22,.55);font:500 clamp(18px,1.85vw,23px)/1.8 var(--read);color:#F7EADB}
+#people .cinfo blockquote.quote span{display:inline-block;margin-right:9px;font:700 32px Georgia,serif;color:var(--rc);line-height:.4;vertical-align:-.28em}
+#people .cinfo dl{margin-top:20px;gap:0}
+#people .cinfo dl>div{padding:14px 0;border-bottom:1px solid rgba(220,190,141,.16)}
+#people .cinfo dt{font-size:14px;color:#EDD1A3;display:flex;gap:10px;align-items:baseline}
+#people .cinfo dt small{font:600 11px var(--lat);opacity:.55}
+#people .cinfo dd{margin-top:7px;color:#E1DDD4;font-size:15px;line-height:1.9}
+#people .people-restricted{display:inline-block;margin-top:23px;padding:11px 15px;border:1px solid rgba(204,109,97,.55);background:rgba(61,19,23,.36);color:#E9B5A9;font-size:14px}
+#people .secret{background:linear-gradient(155deg,rgba(74,27,31,.47),rgba(21,12,22,.85));border-color:rgba(203,115,105,.49)}
+#people .secret .hd b small{font:600 10px var(--lat);color:#DDB7B1;opacity:.6;margin-left:6px}
+#people .secret .ob:disabled{display:none}
+#people .secret .tx{font-size:16px}
+#people .cnav{display:flex;align-items:center;gap:8px;margin-top:26px}
+#people .cnav>span{font:600 10px var(--lat);letter-spacing:.12em;color:#B2A58E;margin-right:auto}
+#people .cnav button{min-width:86px;width:auto;height:44px;display:flex;align-items:center;justify-content:center;gap:7px;padding:0 13px;font-size:13px;font-weight:700;border-color:rgba(217,181,122,.43);background:rgba(217,181,122,.07)}
+#people .cnav svg{width:17px;height:17px}
+#people .people-index-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:38px 0 0;padding-bottom:14px;border-bottom:1px solid rgba(220,190,140,.25)}
+#people .people-index-head small{font:600 10px var(--lat);letter-spacing:.15em;color:#D2AE75}
+#people .people-index-head h3{font:700 23px var(--disp);margin:7px 0 0;color:#F7EAD7}
+#people .people-index-head>span{font-size:12px;color:#B9B6B1}
+#people .strip{border-top:0;margin:0;padding:16px 0 12px;gap:11px}
+#people .ct{flex:none;position:relative;width:118px;text-align:left;padding:6px;background:rgba(20,29,43,.68);border:1px solid rgba(219,182,123,.22);transition:transform .2s,border-color .2s}
+#people .ct:hover{transform:translateY(-3px);border-color:rgba(221,186,127,.55)}
+#people .ct.on{background:rgba(223,185,121,.12);border-color:#DAB979}
+#people .ct .im{height:122px;border:0;filter:brightness(.6) saturate(.7)}
+#people .ct.on .im{filter:none;box-shadow:none}
+#people .ct img{height:100%;object-position:50% 16%}
+#people .ct b{padding:0 2px;font-size:12.5px;min-height:2.4em;line-height:1.35;white-space:normal;overflow:visible;text-overflow:clip;color:#EEE5D8}
+#people .ct small{display:block;font-size:11px;line-height:1.45;color:#B5B8BB;margin:5px 2px}
+#people .ct-serial{position:absolute;z-index:2;right:9px;top:9px;background:rgba(7,12,21,.85);padding:4px 6px;color:#F1DEB6;font:600 10px var(--lat)}
+#people .ct.sealed img{filter:blur(7px) brightness(.37)}
+#people .ct.sealed .im:after{content:"◇";background:rgba(6,11,22,.61);font-size:25px}
+#people .people-empty{grid-column:1/-1;text-align:center;padding:80px 20px;color:#DFD7CA}
+@media(max-width:900px){
+ #people .cstage{gap:26px;padding:24px}
+ #people .cinfo h3{font-size:clamp(34px,4.1vw,50px)}
+}
+@media(max-width:760px){
+ #people .people-eyebrow{font-size:10px;letter-spacing:.12em}
+ #people .people-dossier-top{padding:17px 0 14px;margin:0 18px}
+ #people .cstage{display:block;padding:16px 18px 27px}
+ #people .cpor{max-width:430px;aspect-ratio:5/4;overflow:hidden}
+ #people .cpor .ln{display:none}
+ #people .cinfo{margin:0;padding:24px 1px 0}
+ #people .cinfo h3{font-size:clamp(37px,7vw,55px)}
+ #people .cnav>span{display:none}
+ #people .cnav button{flex:1}
+ #people .people-index-head>span{display:none}
+ #people .ct{width:110px}
+ #people .ct .im{height:116px}
+}
+@media(max-width:450px){
+ #people .cstage{padding:12px 14px 23px}
+ #people .people-dossier-top{margin:0 14px}
+ #people .cpor{aspect-ratio:1/1}
+ #people .cinfo dd{font-size:14.5px}
+ #people .cinfo blockquote.quote{font-size:18px;padding:14px}
+ #people .secret{padding:15px}
+ #people .cinfo h3{font-size:clamp(37px,10vw,48px)}
+}
+@media(prefers-reduced-motion:reduce){#people .ct{transition:none}#people .ct:hover{transform:none}}
+
 </style>
 </head>
 <body>
@@ -938,9 +1034,15 @@ footer{background:#080D16}
 <section class="sec people" id="people"><div class="wrap">
   <div class="sh"><h2>인물</h2><div class="orn"><i></i></div>
     <p>제국 곳곳에서, 저마다 숨긴 것이 있는 사람들이 당신을 기다린다.</p></div>
-  <div class="chips" id="chips"></div>
-  <div class="cstage" id="cstage"></div>
-  <div class="strip" id="strip"></div>
+  <div class="people-eyebrow"><span>◆ PERSONNEL ARCHIVE</span><span id="peopleCount">00 FILES</span></div>
+  <div class="chips" id="chips" role="group" aria-label="인물 소속 선택"></div>
+  <div class="people-dossier" id="peopleDossier" tabindex="0" role="region" aria-label="선택한 인물 기록, 좌우 화살표로 인물을 이동할 수 있습니다.">
+    <div class="people-dossier-top"><span>IMPERIAL RECORDS / SOLARIA</span><b id="peoplePage">01 / 01</b></div>
+    <div class="people-watermark" id="peopleWatermark" aria-hidden="true"></div>
+    <div class="cstage" id="cstage" aria-live="polite"></div>
+  </div>
+  <div class="people-index-head"><div><small>ARCHIVE INDEX</small><h3>인물 기록 목록</h3></div><span>인물을 눌러 기록 열람 ↔</span></div>
+  <div class="strip" id="strip" aria-label="인물 목록"></div>
 </div></section>
 
 <section class="sec bonds" id="bonds"><div class="wrap">
@@ -1199,40 +1301,101 @@ function setRegion(k,anim=true){
 rtabs.querySelectorAll('.rtab').forEach(b=>b.onclick=()=>setRegion(b.dataset.r));
 setRegion('north',false);
 
-/* people */
+/* people — dedicated character archive. Faction colors & images, no content changes. */
 const FILTERS=[['main','주요 인물'],['north','북부'],['capital','황도'],['temple','교단'],['tower','마탑'],['south','남부'],['east','동부'],['west','서부'],['all','전체']];
-const chips=$('chips'),cstage=$('cstage'),strip=$('strip');
-let list=[],cur=0,filt='main';
-chips.innerHTML=FILTERS.map(f=>`<button class="chip" data-f="${f[0]}">${f[1]}</button>`).join('');
+const chips=$('chips'),cstage=$('cstage'),strip=$('strip'),dossier=$('peopleDossier');
+const peopleCount=$('peopleCount'),peoplePage=$('peoplePage'),peopleWatermark=$('peopleWatermark');
+let list=[],cur=0,filt='main',swipeX=null,swipeY=null;
+chips.innerHTML=FILTERS.map(f=>'<button type="button" class="chip" data-f="'+f[0]+'" aria-pressed="false">'+f[1]+'</button>').join('');
 chips.querySelectorAll('.chip').forEach(b=>b.onclick=()=>setFilter(b.dataset.f));
 function setFilter(f,no){
-  filt=f; list=P.filter(p=>f==='all'||(f==='main'?p.main:p.aff===f));
-  chips.querySelectorAll('.chip').forEach(b=>b.classList.toggle('on',b.dataset.f===f));
-  strip.innerHTML=list.map((p,i)=>`<button class="ct${p.sealed?' sealed':''}" data-i="${i}"><div class="im"><img src="img/t/${pad(p.no)}.jpg" alt="" loading="lazy"></div><b>${esc(p.sealed?'???':p.name.split(' ')[0])}</b></button>`).join('');
+  filt=f;list=P.filter(p=>f==='all'||(f==='main'?p.main:p.aff===f));
+  chips.querySelectorAll('.chip').forEach(b=>{
+    const active=b.dataset.f===f;
+    b.classList.toggle('on',active);
+    b.setAttribute('aria-pressed',active?'true':'false');
+  });
+  peopleCount.textContent=String(list.length).padStart(2,'0')+' FILES';
+  strip.innerHTML=list.map((p,i)=>{
+    const name=p.sealed?'???':p.name;
+    return '<button type="button" class="ct'+(p.sealed?' sealed':'')+'" data-i="'+i+'" aria-current="false" aria-label="'+esc(name)+' 인물 기록">'+
+      '<span class="ct-serial">'+String(i+1).padStart(2,'0')+'</span>'+
+      '<div class="im"><img src="img/t/'+pad(p.no)+'.jpg" alt="" loading="lazy"></div>'+
+      '<b>'+esc(name)+'</b><small>'+esc(p.sealed?'봉인된 기록':p.role)+'</small></button>';
+  }).join('');
   strip.querySelectorAll('.ct').forEach(b=>b.onclick=()=>setPerson(+b.dataset.i));
-  const i=no?Math.max(0,list.findIndex(p=>p.no===no)):0;
-  setPerson(i,false);
+  const i=no?list.findIndex(p=>p.no===no):-1;
+  if(!list.length){
+    cstage.innerHTML='<div class="people-empty">이 분류에 등록된 인물이 없습니다.</div>';
+    peoplePage.textContent='00 / 00';peopleWatermark.textContent='';return;
+  }
+  setPerson(i>=0?i:0,false);
 }
-const arrow=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="${d}"/></svg>`;
+const arrow=d=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="'+d+'"/></svg>';
 function setPerson(i,anim=true){
-  cur=(i+list.length)%list.length; const p=list[cur];
-  strip.querySelectorAll('.ct').forEach((b,j)=>b.classList.toggle('on',j===cur));
-  const on=strip.querySelector('.ct.on'); if(on) strip.scrollTo({left:on.offsetLeft-strip.clientWidth/2+44,behavior:anim?'smooth':'auto'});
-  cstage.style.setProperty('--rc',COL[p.aff]);
+  if(!list.length)return;
+  cur=(i%list.length+list.length)%list.length;
+  const p=list[cur],sealed=!!p.sealed,name=sealed?'???':p.name,role=sealed?'봉인된 기록':p.role;
   const age=/^\d+$/.test(p.age)?p.age+'세':p.age;
-  const body=p.sealed?`
-      <h3>???</h3><p class="role">봉인된 기록</p>
-      <dl><div><dt>남은 문장</dt><dd>${esc(p.known)}</dd></div><div><dt>기록</dt><dd>이 인물의 기록은 이야기 속에서만 열립니다.</dd></div></dl>`:`
-      <h3>${esc(p.name)}</h3><p class="role">${esc(p.role)}</p>
-      ${p.quote?`<p class="quote">${esc(p.quote)}</p>`:''}
-      <dl><div><dt>외형</dt><dd>${esc(p.look)}</dd></div><div><dt>성품</dt><dd>${esc(p.pers)}</dd></div><div><dt>알려진 사실</dt><dd>${esc(p.known)}</dd></div></dl>
-      ${SECRET[p.no]?`<div class="secret" id="sec"><div class="hd"><i></i><b>감춰진 기록</b><button class="ob" id="ob"><span class="wax sm" aria-hidden="true"></span>봉인 해제</button></div><div class="bd"><div class="bars" aria-hidden="true"><span></span><span></span><span></span></div><p class="tx">${SECRET[p.no]}</p></div></div>`:''}`;
-  cstage.innerHTML=`<div class="cpor${anim?' anim':''}"><span class="ln"></span><img src="img/c/${pad(p.no)}.jpg" alt="${esc(p.sealed?'봉인된 인물':p.name)}"></div>
-    <div class="cinfo${anim?' anim':''}"><div class="fac"><i></i>${AFF[p.aff]}<small>${esc(p.group)}${p.sealed||p.age==='?'?'':' · '+esc(age)}</small></div>${body}
-      <div class="cnav"><button aria-label="이전 인물" id="cp">${arrow('M15 5 8 12l7 7')}</button><button aria-label="다음 인물" id="cn">${arrow('M9 5l7 7-7 7')}</button></div></div>`;
-  $('cp').onclick=()=>setPerson(cur-1);$('cn').onclick=()=>setPerson(cur+1);
-  const ob=$('ob'); if(ob) ob.onclick=()=>$('sec').classList.add('open');
+  const theme={north:'north',capital:'capital',temple:'capital',tower:'capital',south:'south',east:'east',west:'west',rift:'rift'}[p.aff]||'north';
+  dossier.style.setProperty('--rc',COL[p.aff]||'#D9B86C');
+  dossier.style.setProperty('--people-bg','url("img/r/'+theme+'.jpg")');
+  dossier.dataset.faction=p.aff;
+  peopleWatermark.textContent=sealed?'SEALED':name.split(' ')[0];
+  peoplePage.textContent=String(cur+1).padStart(2,'0')+' / '+String(list.length).padStart(2,'0');
+  strip.querySelectorAll('.ct').forEach((b,j)=>{
+    const active=j===cur;b.classList.toggle('on',active);b.setAttribute('aria-current',active?'true':'false');
+  });
+  const active=strip.querySelector('.ct.on');
+  if(active)strip.scrollTo({left:Math.max(0,active.offsetLeft-strip.offsetLeft+active.clientWidth/2-strip.clientWidth/2),behavior:anim&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'auto'});
+  let body='';
+  if(sealed){
+    body='<h3>???</h3><p class="role">봉인된 기록</p><p class="people-restricted">◇ 열람 권한이 없는 기록</p>'+
+      '<dl><div><dt>남은 문장</dt><dd>'+esc(p.known)+'</dd></div><div><dt>기록</dt><dd>이 인물의 기록은 이야기 속에서만 열립니다.</dd></div></dl>';
+  }else{
+    body='<h3>'+esc(p.name)+'</h3><p class="role">'+esc(p.role)+'</p>'+
+      (p.quote?'<blockquote class="quote"><span aria-hidden="true">“</span>'+esc(p.quote)+'</blockquote>':'')+
+      '<dl><div><dt><small>01</small> 외형</dt><dd>'+esc(p.look)+'</dd></div>'+
+      '<div><dt><small>02</small> 성품</dt><dd>'+esc(p.pers)+'</dd></div>'+
+      '<div><dt><small>03</small> 알려진 사실</dt><dd>'+esc(p.known)+'</dd></div></dl>';
+    if(SECRET[p.no]){
+      body+='<div class="secret" id="sec"><div class="hd"><i aria-hidden="true"></i><b>감춰진 기록 <small>CLASSIFIED</small></b>'+
+        '<button type="button" class="ob" id="ob" aria-expanded="false" aria-controls="secretText">'+
+        '<span class="wax sm" aria-hidden="true"></span>봉인 해제</button></div>'+
+        '<div class="bd"><div class="bars" aria-hidden="true"><span></span><span></span><span></span></div>'+
+        '<p class="tx" id="secretText">'+esc(SECRET[p.no])+'</p></div></div>';
+    }
+  }
+  cstage.innerHTML='<div class="cpor'+(anim?' anim':'')+(sealed?' sealed':'')+'">'+
+    '<span class="ln"></span><img src="img/c/'+pad(p.no)+'.jpg" alt="'+esc(sealed?'봉인된 인물':name)+'">'+
+    '<span class="cpor-dark" aria-hidden="true"></span><span class="cpor-top">SOLARIA · DOSSIER '+pad(p.no)+'</span>'+
+    (sealed?'<span class="cpor-seal" aria-hidden="true">RECORD SEALED</span>':'')+
+    '<span class="cpor-bottom">'+esc(AFF[p.aff]||'제국')+' / PERSONNEL RECORD</span></div>'+
+    '<div class="cinfo'+(anim?' anim':'')+'"><div class="fac"><i aria-hidden="true"></i>'+esc(AFF[p.aff]||'제국')+
+    '<small>'+esc(sealed?'접근 제한':p.group)+(sealed||p.age==='?'?'':' · '+esc(age))+'</small></div>'+
+    body+'<div class="cnav"><span>RECORD NAVIGATION</span>'+
+    '<button type="button" aria-label="이전 인물" id="cp">'+arrow('M15 5 8 12l7 7')+'이전</button>'+
+    '<button type="button" aria-label="다음 인물" id="cn">다음'+arrow('M9 5l7 7-7 7')+'</button></div></div>';
+  $('cp').onclick=()=>setPerson(cur-1);
+  $('cn').onclick=()=>setPerson(cur+1);
+  const ob=$('ob');
+  if(ob)ob.onclick=()=>{const sec=$('sec');sec.classList.add('open');ob.setAttribute('aria-expanded','true');ob.disabled=true};
 }
+dossier.addEventListener('keydown',e=>{
+  if(e.target.closest('button,a'))return;
+  if(e.key==='ArrowLeft'){e.preventDefault();setPerson(cur-1)}
+  if(e.key==='ArrowRight'){e.preventDefault();setPerson(cur+1)}
+});
+cstage.addEventListener('touchstart',e=>{
+  if(!e.target.closest('.cpor'))return;
+  swipeX=e.touches[0].clientX;swipeY=e.touches[0].clientY;
+},{passive:true});
+cstage.addEventListener('touchend',e=>{
+  if(swipeX===null||!e.changedTouches.length)return;
+  const dx=e.changedTouches[0].clientX-swipeX,dy=e.changedTouches[0].clientY-swipeY;
+  swipeX=null;swipeY=null;
+  if(Math.abs(dx)>65&&Math.abs(dx)>Math.abs(dy)*1.4)setPerson(cur+(dx<0?1:-1));
+},{passive:true});
 setFilter('main');
 
 /* seals */
