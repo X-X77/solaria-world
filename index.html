@@ -468,6 +468,349 @@ html.intro-done .hero .in{animation-duration:.7s}
 html.intro-done .hero .in{animation-duration:1.15s}
 #intro.op-v2 .op-shot.slash.fast{transition:opacity .25s ease,transform 1s ease}
 
+
+/* Solaria imperial archive design pass */
+/* Sitewide editorial rhythm — opening cinematic remains unchanged. */
+:root{--bg:#080D16;--bg2:#101827;--gold:#D2AD69;--gold-hi:#F1DDB4;--text:#EFEAE0;--sub:#AEB8C7;--line:rgba(210,173,105,.23)}
+body{background:#080D16}
+html{scroll-padding-top:78px}
+.nav{height:70px;padding:0 clamp(16px,3.8vw,62px);background:linear-gradient(180deg,rgba(7,12,21,.75),rgba(7,12,21,.03));transition:background .4s,border-color .4s}
+.nav.solid{background:rgba(8,13,22,.94);border-bottom:1px solid rgba(210,173,105,.22);box-shadow:0 10px 32px rgba(0,0,0,.19)}
+.logo{font-size:21px;letter-spacing:.035em;gap:12px}
+.logo svg{width:28px;height:28px;color:#DDBA7F}
+.nav ul{gap:clamp(3px,1.5vw,23px)}
+.nav li a{font-size:14px;letter-spacing:.04em;font-weight:600;color:#C6C4BE;padding:12px 10px;transition:color .2s}
+.nav li a:hover,.nav li a.on{color:#F6DFB2}
+.nav li a.on:after{height:1px;background:#EBC991;bottom:4px}
+.snd{border-color:rgba(210,173,105,.34)}
+/* Hero: connect the Cassian rescue to the archive instead of dropping onto a dim map. */
+.hero{height:min(920px,100svh);min-height:670px;text-align:left;isolation:isolate}
+.hero .bg{inset:-3%;background:linear-gradient(90deg,rgba(4,9,17,.58),rgba(4,9,17,.12)),url(img/r/north.jpg) center 35%/cover no-repeat;filter:saturate(.78) brightness(.68);animation:kb 40s ease-in-out infinite alternate}
+.hero:before{z-index:1;background:linear-gradient(90deg,rgba(7,12,22,.96) 0%,rgba(7,12,22,.82) 35%,rgba(7,12,22,.52) 72%,rgba(7,12,22,.72) 100%),linear-gradient(0deg,var(--bg) 0%,transparent 24%,transparent 77%,rgba(5,9,18,.50))}
+.hero:after{content:"";position:absolute;inset:82px clamp(16px,3.8vw,62px) 64px;z-index:1;border-left:1px solid rgba(217,181,113,.12);border-right:1px solid rgba(217,181,113,.12);pointer-events:none}
+.hero .in{width:100%;max-width:1440px;padding:80px clamp(30px,5.2vw,76px) 82px;margin:auto;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(30px,5vw,86px);align-items:center}
+.hero-copy{position:relative;z-index:2;min-width:0}
+.hero-kicker{display:flex;align-items:center;gap:12px;font-family:var(--lat);font-size:clamp(10px,.85vw,12px);letter-spacing:.16em;color:#D9C6A0;margin:0 0 33px}
+.hero-kicker-dot{display:inline-block;flex:none;width:6px;height:6px;border-radius:100%;background:#DABB82;box-shadow:0 0 16px rgba(239,208,147,.4)}
+.hero-kicker-split{opacity:.35}
+.hero .orn{justify-content:flex-start}
+.hero .orn:before{width:38px}
+.hero .orn:after{width:80px}
+.hero .lat{font-size:clamp(11px,1.05vw,14px);letter-spacing:.43em;padding-left:.43em;margin-top:25px}
+.hero h1{white-space:nowrap;font-size:clamp(64px,9vw,140px);margin:10px 0 0;letter-spacing:.02em;line-height:1.11}
+.hero .tag{font-size:clamp(18px,2.05vw,26px);letter-spacing:.06em;margin-top:9px;color:#EFE3C9}
+.hero .lead{font-size:clamp(15.5px,1.2vw,18px);line-height:1.95;color:#DBD6CD;max-width:38em;margin:25px 0 0}
+.hero .cta{justify-content:flex-start;gap:12px;margin-top:31px}
+.hero .btn{height:54px;clip-path:none;border:1px solid rgba(216,178,110,.28);padding:0 22px;gap:18px;font-size:15px;letter-spacing:.01em;transition:transform .2s,border-color .2s,background .2s}
+.hero .btn:hover{transform:translateY(-3px)}
+.hero .btn.p{background:#DAB678;color:#18120B;border-color:#DAB678}
+.hero .btn.g{background:rgba(8,15,26,.45);color:#F0DFBE}
+.hero .btn.g:hover{background:rgba(216,178,110,.12);border-color:#DAB678}
+.hero-quick{display:flex;gap:24px;flex-wrap:wrap;margin-top:30px;padding-top:22px;border-top:1px solid rgba(234,215,178,.2)}
+.hero-quick a{font-size:13px;font-weight:600;color:#D3D3D0;display:flex;align-items:center;gap:10px;transition:color .2s}
+.hero-quick a span:first-child{font-family:var(--lat);color:#D6B47B;font-size:12px}
+.hero-quick a:hover{color:#FFF0D6}
+.hero-visual{position:relative;justify-self:end;width:min(100%,505px);height:clamp(380px,60vh,620px);isolation:isolate;overflow:hidden;background:rgba(13,21,31,.4);box-shadow:0 30px 90px rgba(0,0,0,.43)}
+.hero-visual:before{content:"";position:absolute;inset:14px;z-index:2;border:1px solid rgba(244,216,163,.30);pointer-events:none}
+.hero-visual:after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(8,12,20,.28),transparent 25%,transparent 49%,rgba(5,9,17,.84) 100%),linear-gradient(90deg,rgba(8,12,20,.19),transparent 35%,rgba(8,12,20,.13))}
+.hero-visual img{width:100%;height:100%;object-fit:cover;object-position:50% 31%;filter:saturate(.86) contrast(1.06)}
+.hero-visual-caption{position:absolute;z-index:3;bottom:35px;left:34px;right:34px;display:grid;gap:7px}
+.hero-visual-caption span{font-family:var(--lat);font-size:10px;letter-spacing:.2em;color:#D5BE93}
+.hero-visual-caption b{font-family:var(--disp);font-weight:600;font-size:24px;color:#F7F0DE}
+.hero .cue{z-index:3;bottom:25px;left:clamp(26px,5vw,85px);transform:none;align-items:flex-start;font-size:10px;letter-spacing:.2em;font-family:var(--lat);color:#CAB894}
+.hero .cue:after{height:25px}
+.hero .replay{z-index:5;right:clamp(20px,4vw,62px);bottom:24px;background:rgba(5,10,18,.66);border-color:rgba(210,173,105,.28);font-size:12px}
+/* Section titles as chapters of the imperial archive. */
+.sec{padding-top:clamp(78px,8vw,124px);padding-bottom:clamp(78px,8vw,124px)}
+.wrap{max-width:1210px}
+.sh{margin-bottom:clamp(35px,4.5vw,62px)}
+.sh:before{display:block;margin-bottom:17px;font:600 11px var(--lat);letter-spacing:.24em;color:#C9A66C}
+.world .sh:before{content:"CHAPTER I — THE EMPIRE"}
+.regions .sh:before{content:"CHAPTER II — THE LANDS"}
+.people .sh:before{content:"CHAPTER III — THE PEOPLE"}
+.bonds .sh:before{content:"CHAPTER IV — THE TIES"}
+.seals .sh:before{content:"CHAPTER V — THE SEALED"}
+.sh h2{font-size:clamp(36px,4.6vw,54px);font-weight:700;letter-spacing:-.035em}
+.sh p{max-width:39em;font-size:clamp(16px,1.4vw,18px);line-height:1.9}
+.sh .orn{margin-top:18px;color:rgba(217,181,113,.58)}
+/* World cards feel like indexed records; map is a real atlas page. */
+.world{background:radial-gradient(ellipse 80% 45% at 50% 0%,rgba(56,77,99,.13),transparent 75%),#090F1A}
+.pillars{counter-reset:record;gap:18px}
+.pl{position:relative;min-height:278px;padding:38px 32px 34px;counter-increment:record;transition:background .3s,transform .3s;--c:rgba(210,173,105,.42)}
+.pl:before{content:"0" counter(record);display:block;position:absolute;top:25px;right:28px;font:600 12px var(--lat);color:rgba(230,200,150,.62)}
+.pl:hover{transform:translateY(-5px);background-color:rgba(40,50,62,.45)}
+.pl svg{width:40px;height:40px;color:#D8BA83}
+.pl h3{font-size:24px;margin-top:25px}
+.pl p{font-size:15.5px;line-height:1.88;color:#CFD0CF}
+.atlas-preview{max-width:1150px;margin:clamp(58px,8vw,105px) auto 0;border:1px solid rgba(215,185,130,.24);background:#0F1724;padding:clamp(16px,2.8vw,30px)}
+.atlas-heading{display:flex;justify-content:space-between;align-items:end;gap:22px;padding:10px 8px 25px}
+.atlas-overline{font:600 11px var(--lat);color:#CFB47F;letter-spacing:.2em}
+.atlas-heading h3{font:700 clamp(27px,3vw,38px) var(--disp);color:#F2E7D4;margin:8px 0 0}
+.atlas-heading p{margin:9px 0 0;color:#BDC4CB;font-size:15.5px;line-height:1.7}
+.atlas-link{padding:11px 16px;border:1px solid rgba(218,182,120,.38);color:#E9D3A7;white-space:nowrap;font-size:14px;font-weight:600;transition:background .2s}
+.atlas-link:hover{background:rgba(218,182,120,.13)}
+.atlas-image{display:block;position:relative;overflow:hidden;background:#090F19;border:1px solid rgba(230,205,159,.25)}
+.atlas-image img{display:block;width:100%;height:auto;max-height:690px;object-fit:contain;transition:transform .8s ease}
+.atlas-image:hover img{transform:scale(1.022)}
+.atlas-foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#A5AFBA;font-size:12px;margin:16px 8px 3px}
+.atlas-foot span:first-child{font-family:var(--lat);letter-spacing:.15em;color:#CDB47F}
+.report{max-width:780px;margin-top:clamp(68px,8vw,110px);transform:rotate(-.5deg);padding:50px clamp(25px,5vw,62px) 45px;background:radial-gradient(ellipse at 20% 0%,rgba(255,255,255,.36),transparent 56%),linear-gradient(155deg,#EFE2C3,#CCB589);border:1px solid rgba(245,227,193,.7)}
+.report .from{letter-spacing:.15em;font-size:12px;text-transform:uppercase}
+.report h3{font-size:27px}
+.report p{font-size:17.5px;line-height:2}
+.report .wax{width:68px;height:68px;right:-15px;top:-25px}
+/* Interactive regions: individual landscape folios. */
+.regions{background:linear-gradient(180deg,#090F1A,#0D1523 20%,#080D16 100%);padding-bottom:0}
+.rtabs{gap:10px;max-width:1230px;padding-bottom:8px}
+.rtab{position:relative;padding:8px 8px 12px;background:rgba(18,26,39,.8);border:1px solid rgba(235,215,175,.15);color:#C8C4BC;font-size:14px;letter-spacing:.03em;transition:background .2s,border-color .2s}
+.rtab.on{background:rgba(44,43,39,.56);border-color:rgba(224,183,112,.65)}
+.rtab .th{aspect-ratio:16/9;filter:grayscale(.5) brightness(.65);transition:filter .35s}
+.rtab.on .th{box-shadow:none}
+.rtab:hover .th{filter:grayscale(.1) brightness(.88)}
+.rstage{height:clamp(740px,90vh,920px);border-top-color:rgba(210,173,105,.3)}
+.rstage:after{background:linear-gradient(90deg,rgba(7,13,22,.95) 0%,rgba(7,13,22,.86) 30%,rgba(7,13,22,.28) 73%,rgba(7,13,22,.13)),linear-gradient(0deg,#080D16,transparent 24%)}
+.rinfo{width:min(585px,calc(100% - 36px));padding:28px 26px 28px 30px;background:linear-gradient(90deg,rgba(9,14,24,.68),rgba(10,16,26,.22));border-left:2px solid var(--rc)}
+.rinfo h3{font-size:clamp(66px,7vw,100px)}
+.rinfo .about{color:#DFDDD5;font-size:16px;line-height:1.88}
+.rinfo .motto{font-size:20px;border-left:0;padding-left:0}
+.story{background:rgba(7,13,22,.67);border-color:rgba(220,185,126,.24);border-left:2px solid var(--rc)}
+.story p{line-height:1.8}
+.places li{padding:7px 12px;background:rgba(11,18,28,.56);border-color:rgba(229,204,157,.24)}
+/* Character archive: larger artwork, clearer hierarchy, stronger readable panel. */
+.people{background:radial-gradient(ellipse 85% 34% at 50% 50%,rgba(56,61,87,.16),transparent),#090F19}
+.chips{max-width:1050px;gap:7px}
+.chip{height:42px;padding:0 16px;border:1px solid rgba(215,189,145,.23);background:rgba(20,28,39,.8);color:#C8C8C5;font-size:14px}
+.chip.on{background:#D5B174;color:#20170D}
+.cstage{grid-template-columns:minmax(0,.96fr) minmax(0,1.04fr);gap:clamp(34px,5vw,85px);align-items:center}
+.cpor{width:min(100%,490px)}
+.cpor .ln{inset:4% 5% 11%;transform:translate(16px,18px);border-color:rgba(211,178,116,.4)}
+.cpor img{aspect-ratio:3/4;object-position:50% 20%;-webkit-mask:linear-gradient(180deg,rgba(0,0,0,.8),#000 12%,#000 79%,transparent 100%);mask:linear-gradient(180deg,rgba(0,0,0,.8),#000 12%,#000 79%,transparent 100%)}
+.cinfo{border-left:1px solid rgba(219,181,114,.24);padding-left:clamp(24px,3vw,46px)}
+.cinfo .fac{font-size:14px;letter-spacing:.02em}
+.cinfo h3{font-size:clamp(43px,4.5vw,64px);line-height:1.16}
+.cinfo .role{font-size:19px}
+.cinfo .quote{font-size:clamp(18px,1.8vw,22px);margin-top:23px;padding-left:18px}
+.cinfo dl{gap:18px;margin-top:25px}
+.cinfo dl>div{padding-bottom:12px;border-bottom:1px solid rgba(215,189,145,.12)}
+.cinfo dd{font-size:15.5px;line-height:1.8}
+.secret{background:linear-gradient(165deg,rgba(77,30,34,.32),rgba(32,15,21,.72));border-color:rgba(200,88,79,.39)}
+.cnav button{background:rgba(218,181,111,.055)}
+.strip{padding-top:21px;margin-top:54px}
+.ct{width:91px}
+.ct .im{height:121px}
+.ct.on .im{box-shadow:0 0 0 1px var(--gold),0 8px 22px rgba(0,0,0,.28)}
+/* Relations drawn like an illuminated strategy board. */
+.bonds{background:linear-gradient(180deg,#090F19,#0C1422)}
+.bscroll{background:radial-gradient(ellipse at center,rgba(32,49,69,.52),rgba(9,15,26,.75)),repeating-linear-gradient(0deg,transparent 0,transparent 59px,rgba(222,188,125,.035) 60px),repeating-linear-gradient(90deg,transparent 0,transparent 59px,rgba(222,188,125,.035) 60px);border:1px solid rgba(216,183,122,.2)}
+.bside{background:linear-gradient(155deg,#182231,#0C1421);border:1px solid rgba(215,184,132,.27);padding:26px;min-height:250px}
+.bside h3{font-size:27px}
+.bside li{font-size:15px}
+.bside .go{background:#D5B174;padding:12px 17px}
+.blegend{padding-top:15px}
+/* Sealed documents are distinct archival objects instead of generic tiles. */
+.seals{counter-reset:seal;background:radial-gradient(ellipse at 50% 45%,rgba(81,27,39,.2),transparent 64%),#090D16}
+.sgrid{gap:12px}
+.sl{position:relative;counter-increment:seal;min-height:258px;padding:42px 12px 29px;background:linear-gradient(165deg,rgba(48,31,35,.72),rgba(14,20,31,.94));border:1px solid rgba(186,127,116,.27);box-shadow:inset 0 0 30px rgba(5,6,12,.24);transition:transform .25s,border-color .25s}
+.sl:before{content:"RECORD / 0" counter(seal);position:absolute;top:16px;left:15px;color:rgba(220,189,159,.65);font:600 10px var(--lat);letter-spacing:.08em}
+.sl:hover{transform:translateY(-5px);border-color:rgba(222,162,137,.55)}
+.sl .wax{margin:8px 0 5px}
+.sl b{font-size:20px}
+.sl .st{letter-spacing:.07em}
+.sl.open{background:linear-gradient(165deg,rgba(63,28,33,.88),rgba(18,17,26,.97));border-color:rgba(215,109,93,.6)}
+.sl.open:hover{transform:none}
+.final{padding:clamp(120px,15vw,185px) 16px}
+.final:before{background:linear-gradient(180deg,var(--bg) 0%,rgba(7,12,20,.48) 28%,rgba(7,12,20,.62) 67%,var(--bg)),radial-gradient(ellipse at center,rgba(5,9,18,.3),rgba(5,9,18,.86))}
+.final h2{font-size:clamp(34px,4.4vw,56px)}
+footer{background:#080D16}
+/* Responsive reading and touch-target refinements. */
+@media(max-width:980px){
+ .hero .in{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:20px}
+ .hero-visual{height:clamp(360px,52vh,570px)}
+ .hero h1{font-size:clamp(64px,8.5vw,105px)}
+ .hero .lead br{display:none}
+}
+@media(max-width:760px){
+ .nav{height:62px;padding:0 12px}
+ .nav ul{gap:0;overflow-x:auto;scrollbar-width:none}
+ .nav li a{padding:12px 8px;font-size:13px;white-space:nowrap}
+ .logo{font-size:17px;gap:5px;margin-right:8px}
+ .logo svg{width:23px;height:23px}
+ .snd{margin-left:6px}
+ .hero{height:auto;min-height:690px;min-height:100svh;display:block}
+ .hero .bg{background-position:47% center}
+ .hero:before{background:linear-gradient(90deg,rgba(5,10,19,.87),rgba(5,10,19,.57)),linear-gradient(0deg,#080D16,transparent 28%)}
+ .hero:after{inset:75px 15px 65px}
+ .hero .in{display:block;padding:clamp(130px,18vh,180px) 25px 145px;min-height:100svh;max-width:610px}
+ .hero-copy{position:relative;z-index:3}
+ .hero-kicker{font-size:10px;letter-spacing:.12em;gap:7px;margin-bottom:24px}
+ .hero .lat{letter-spacing:.3em;font-size:11px}
+ .hero h1{font-size:clamp(65px,13vw,102px);white-space:normal}
+ .hero .tag{font-size:18px}
+ .hero .lead{font-size:15.5px;line-height:1.9;max-width:26em;margin-top:22px}
+ .hero .cta{gap:10px}
+ .hero .btn{height:49px;padding:0 15px;gap:10px;font-size:14px}
+ .hero .hero-visual{position:absolute;top:9%;right:-17%;z-index:0;height:80%;width:83%;opacity:.34;box-shadow:none;pointer-events:none}
+ .hero-visual:before,.hero-visual-caption{display:none}
+ .hero-visual:after{background:linear-gradient(90deg,#080D16,transparent 35%),linear-gradient(0deg,#080D16,transparent 45%)}
+ .hero .cue{left:25px;bottom:20px}
+ .hero .replay{top:auto;right:16px;bottom:23px;height:36px;font-size:11px;padding:0 10px}
+ .hero-quick{gap:22px}
+ .rstage{height:auto;padding-top:62vw}
+ .rbg{bottom:auto;height:78vw}
+ .rstage:after{background:linear-gradient(180deg,rgba(8,13,22,.04) 0,rgba(8,13,22,.42) 39vw,#080D16 77vw)}
+ .rinfo,.rinfo.anim{position:relative;top:auto;left:auto;transform:none;width:auto;padding:12px 22px 40px;background:none;border:0;animation-name:up}
+ .rinfo h3{font-size:clamp(55px,12vw,85px)}
+ .cstage{grid-template-columns:1fr;gap:0}
+ .cpor{max-width:430px}
+ .cinfo{margin-top:-45px;padding:0 6px;border-left:0;position:relative;z-index:2}
+ .cpor .ln{transform:translate(9px,11px)}
+ .atlas-heading{flex-direction:column;align-items:flex-start}
+ .atlas-link{white-space:normal}
+ .atlas-foot{line-height:1.6}
+ .sgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .sl{min-height:234px}
+}
+@media(max-width:520px){
+ .hero .in{padding-left:21px;padding-right:21px}
+ .hero h1{font-size:clamp(63px,15vw,88px)}
+ .hero .lead{font-size:15px}
+ .hero .cta{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+ .hero .btn{justify-content:center;text-align:center;line-height:1.25;height:58px;padding:0 9px;font-size:13px;gap:6px}
+ .hero-quick{gap:15px}
+ .hero-quick a{font-size:12px}
+ .sh h2{font-size:36px}
+ .sh p{font-size:16px}
+ .pl{min-height:0;padding:31px 26px}
+ .atlas-preview{padding:12px}
+ .atlas-heading{padding:9px 6px 20px}
+ .atlas-heading h3{font-size:27px}
+ .report{padding:41px 25px 35px;transform:none}
+ .report p{font-size:16px}
+ .rtabs{padding-left:16px;padding-right:16px;gap:7px}
+ .rtab{width:122px;flex:none}
+ .cpor{max-width:360px}
+ .cinfo h3{font-size:43px}
+ .cinfo .quote{font-size:19px}
+ .sgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .sl{min-height:235px;padding:43px 10px 23px}
+ .sl b{font-size:19px}
+ .bside{padding:20px}
+}
+@media(prefers-reduced-motion:reduce){
+ .hero .bg{animation:none}
+ .pl:hover,.sl:hover{transform:none}
+ .atlas-image img{transition:none}
+}
+
+
+/* atlas-interactive-2026: imperial geographic atlas */
+.atlas-preview{max-width:1250px}
+.atlas-explorer{border:1px solid rgba(220,185,125,.25);background:#0b1420}
+.atlas-toolbar{display:flex;gap:20px;align-items:center;padding:17px 20px;background:linear-gradient(90deg,#152234,#0f1928);border-bottom:1px solid rgba(220,185,125,.25)}
+.atlas-toolbar-title{font:600 12px var(--lat);white-space:nowrap;letter-spacing:.15em;color:#D8BF8C}
+.atlas-filters{display:flex;gap:6px;flex-wrap:wrap}
+.atlas-filter{font-family:var(--ui);font-size:13px;font-weight:600;padding:9px 11px;color:#C9C9C5;border:1px solid rgba(220,185,125,.22);background:rgba(255,255,255,.025);transition:color .2s,background .2s,border-color .2s}
+.atlas-filter:hover,.atlas-filter[aria-pressed="true"]{color:#17130e;background:#D9B777;border-color:#D9B777}
+.atlas-body{display:grid;grid-template-columns:minmax(0,1fr) 320px;min-height:550px;align-items:stretch}
+.atlas-mapframe{position:relative;min-width:0;background:radial-gradient(ellipse at center,#26394c,#0c1522);isolation:isolate;overflow:hidden}
+.atlas-viewport{width:100%;aspect-ratio:3/2;position:relative;overflow:hidden;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.atlas-viewport.is-dragging{cursor:grabbing}
+.atlas-scene{position:absolute;top:0;left:0;width:100%;aspect-ratio:3/2;transform-origin:top left;will-change:transform}
+.atlas-scene>img{display:block;width:100%;height:100%;object-fit:fill;pointer-events:none;user-select:none}
+.atlas-pins{position:absolute;inset:0}
+.atlas-pin{position:absolute;display:flex;flex-direction:column;align-items:center;gap:7px;width:20px;height:20px;min-width:20px;overflow:visible;transform:translate(-50%,-50%);z-index:2;touch-action:manipulation}
+.atlas-pin-dot{width:19px;height:19px;display:grid;place-items:center;flex:none;background:#151d2a;border:2px solid var(--pin);border-radius:50%;box-shadow:0 0 0 4px rgba(5,10,20,.44),0 0 20px rgba(3,8,15,.7);transition:background .2s,transform .2s,box-shadow .2s}
+.atlas-pin-dot:after{content:"";width:5px;height:5px;display:block;border-radius:50%;background:var(--pin)}
+.atlas-pin-label{position:absolute;top:26px;left:50%;transform:translate(-50%,-4px);white-space:nowrap;pointer-events:none;opacity:0;background:rgba(7,13,22,.94);border:1px solid rgba(222,193,141,.35);padding:5px 8px;font:600 12px var(--ui);color:#F4E9D1;transition:opacity .18s,transform .18s;box-shadow:0 3px 10px rgba(0,0,0,.28)}
+.atlas-pin:hover,.atlas-pin:focus-visible,.atlas-pin.selected{z-index:10}
+.atlas-pin:hover .atlas-pin-dot,.atlas-pin:focus-visible .atlas-pin-dot,.atlas-pin.selected .atlas-pin-dot{background:var(--pin);transform:scale(1.2);box-shadow:0 0 0 5px rgba(5,10,20,.55),0 0 0 7px var(--pin)}
+.atlas-pin.selected .atlas-pin-dot:after,.atlas-pin:hover .atlas-pin-dot:after{background:#151923}
+.atlas-pin.selected .atlas-pin-label,.atlas-pin:hover .atlas-pin-label,.atlas-pin:focus-visible .atlas-pin-label{opacity:1;transform:translate(-50%,0)}
+.atlas-pin.selected{z-index:15}
+.atlas-controls{position:absolute;right:14px;top:14px;z-index:20;display:grid;gap:5px}
+.atlas-controls button{width:38px;height:38px;display:grid;place-items:center;background:rgba(9,16,27,.92);border:1px solid rgba(220,188,131,.5);color:#F0E2C9;font-size:22px;transition:background .2s}
+.atlas-controls button:hover{background:#364355}
+.atlas-guide{position:absolute;bottom:12px;left:14px;right:14px;width:max-content;max-width:calc(100% - 28px);pointer-events:none;padding:7px 10px;background:rgba(7,13,23,.83);color:#E7DBCA;font-size:12px;line-height:1.6}
+.atlas-aside{min-width:0;border-left:1px solid rgba(220,188,131,.3);background:linear-gradient(165deg,#182637,#0b1521);display:flex;flex-direction:column}
+.atlas-detail{padding:28px 22px 20px;min-height:286px;border-bottom:1px solid rgba(220,188,131,.22)}
+.atlas-detail-kicker{font:600 10px var(--lat);letter-spacing:.14em;color:var(--atlas-accent,#D9B777)}
+.atlas-detail h4{font:700 clamp(23px,2.2vw,29px) var(--disp);color:#FAEDD6;line-height:1.3;margin:12px 0 10px}
+.atlas-detail p{font-size:14px;line-height:1.78;margin:0;color:#D2D5D3}
+.atlas-detail-region{font-size:13px!important;color:var(--atlas-accent,#D9B777)!important;margin-bottom:13px!important}
+.atlas-related{padding:13px 0 0;color:#BAC5CE;font-size:12px;line-height:1.7}
+.atlas-related b{font-weight:700;color:#E7D4B0}
+.atlas-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.atlas-actions button{padding:10px 12px;background:rgba(222,184,118,.14);border:1px solid rgba(222,184,118,.45);color:#F2DEB6;font-weight:700;font-size:12px}
+.atlas-actions button:hover{background:rgba(222,184,118,.26)}
+.atlas-directory-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 20px 10px}
+.atlas-directory-head b{font:700 14px var(--disp);color:#EBD9B9}
+.atlas-directory-head small{font-size:11px;color:#AEBAC6}
+.atlas-directory{overflow:auto;max-height:292px;padding:0 11px 17px;scrollbar-width:thin}
+.atlas-directory h5{font-size:12px;margin:14px 9px 8px;color:#C6A873;letter-spacing:.04em;font-weight:700}
+.atlas-dir-entry{width:100%;padding:10px 11px;display:flex;align-items:center;gap:8px;text-align:left;font-size:13px;color:#D5D5D0;border:1px solid transparent}
+.atlas-dir-entry:before{content:"";display:block;flex:none;width:7px;height:7px;background:var(--pin,#D9B777);border-radius:50%}
+.atlas-dir-entry:hover,.atlas-dir-entry[aria-current="true"]{background:rgba(221,183,116,.12);border-color:rgba(221,183,116,.17);color:#FFF1DB}
+.atlas-accuracy{margin:0;padding:12px 18px 14px;border-top:1px solid rgba(220,188,131,.23);background:#0d1725;color:#BDC2C7;font-size:12px;line-height:1.65}
+@media(max-width:1000px){
+ .atlas-body{grid-template-columns:minmax(0,1fr) 285px}
+ .atlas-detail{padding:21px 16px}
+}
+@media(max-width:760px){
+ .atlas-toolbar{align-items:flex-start;flex-direction:column;gap:12px;padding:16px}
+ .atlas-filters{width:100%;flex-wrap:nowrap;overflow-x:auto;padding:0 0 3px;scrollbar-width:thin}
+ .atlas-filter{flex:none;padding:9px 13px}
+ .atlas-body{display:block}
+ .atlas-viewport{aspect-ratio:1/1.14}
+ .atlas-scene{width:max(680px,170vw)}
+ .atlas-aside{border-left:0;border-top:1px solid rgba(220,188,131,.27)}
+ .atlas-detail{min-height:0;padding:23px 20px}
+ .atlas-directory{max-height:205px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px 6px}
+ .atlas-directory h5{grid-column:1/-1}
+ .atlas-dir-entry{font-size:12px}
+ .atlas-guide{font-size:11px}
+}
+@media(max-width:400px){.atlas-directory{grid-template-columns:1fr}.atlas-controls button{width:35px;height:35px}}
+@media(prefers-reduced-motion:reduce){.atlas-pin-dot,.atlas-pin-label{transition:none}}
+
+
+/* Atlas alignment revision: whole map initially visible, no artificial mobile crop. */
+.atlas-viewport{aspect-ratio:3/2}
+.atlas-scene{width:100%;aspect-ratio:3/2}
+.atlas-directory .atlas-unmapped{display:block;margin-left:auto;padding-left:9px;font-size:10px;font-weight:500;color:#9ca7b4;white-space:nowrap}
+.atlas-accuracy{color:#C4C4BF}
+@media(max-width:760px){
+ .atlas-viewport{aspect-ratio:3/2}
+ .atlas-scene{width:100%;aspect-ratio:3/2}
+ .atlas-directory{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .atlas-dir-entry{flex-wrap:wrap;align-content:center;gap:6px}
+ .atlas-directory .atlas-unmapped{width:100%;padding-left:14px;margin-left:0}
+}
+
+/* Atlas fix: map fills its frame (no empty band), pins keep their size when zoomed, lighter pins on phones */
+.atlas-pin{transform:translate(-50%,-50%) scale(var(--pin-s,1))}
+.atlas-guide{transition:opacity .5s ease}.atlas-guide.off{opacity:0}
+.atlas-aside-in{display:flex;flex-direction:column;min-height:0}
+@media(min-width:761px) and (max-width:1100px){
+ .atlas-body{display:block}
+ .atlas-aside{border-left:0;border-top:1px solid rgba(220,188,131,.27)}
+ .atlas-directory{max-height:240px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px 6px}
+ .atlas-directory h5{grid-column:1/-1}
+}
+@media(min-width:1101px){
+ .atlas-body{min-height:0}
+ .atlas-aside{position:relative}
+ .atlas-aside-in{position:absolute;inset:0;overflow-y:auto;scrollbar-width:thin}
+ .atlas-detail{min-height:0;flex:none}
+ .atlas-directory-head{flex:none}
+ .atlas-directory{flex:1 1 auto;min-height:110px;max-height:none}
+}
+@media(max-width:760px){
+ .atlas-pin-dot{width:13px;height:13px;border-width:2px;box-shadow:0 0 0 3px rgba(5,10,20,.45),0 0 12px rgba(3,8,15,.6)}
+ .atlas-pin-dot:after{width:4px;height:4px}
+ .atlas-pin-label{top:17px;padding:3px 7px;font-size:11.5px}
+ .atlas-pin:hover .atlas-pin-dot,.atlas-pin.selected .atlas-pin-dot{transform:scale(1.15);box-shadow:0 0 0 3px rgba(5,10,20,.55),0 0 0 5px var(--pin)}
+}
+
 </style>
 </head>
 <body>
@@ -502,14 +845,22 @@ html.intro-done .hero .in{animation-duration:1.15s}
 <section class="hero" id="top">
   <div class="bg" aria-hidden="true"></div>
   <div class="in">
-    <div class="orn"><i></i></div>
-    <div class="lat" translate="no">IMPERIUM SOLARIAE</div>
-    <h1>솔라리아</h1>
-    <p class="tag">태양의 제국, 균열의 시대</p>
-    <p class="lead">마물에게 먹히기 직전, 북부 대공의 칼이 당신을 구했다.<br>그런데 숲에서 나온 발자국은 모두, 당신이 있던 자리로만 향해 있었다.</p>
-    <div class="cta"><a class="btn p" data-play href="#">지금 플레이하기</a><a class="btn g" href="#world">세계관 보기</a></div>
+    <div class="hero-copy">
+      <p class="hero-kicker"><span class="hero-kicker-dot" aria-hidden="true"></span> IMPERIAL ARCHIVE <span class="hero-kicker-split">/</span> THE AGE OF RIFTS</p>
+      <div class="orn"><i></i></div>
+      <div class="lat" translate="no">IMPERIUM SOLARIAE</div>
+      <h1>솔라리아</h1>
+      <p class="tag">태양의 제국, 균열의 시대</p>
+      <p class="lead">마물에게 먹히기 직전, 북부 대공의 칼이 당신을 구했다.<br>그런데 숲에서 나온 발자국은 모두, 당신이 있던 자리로만 향해 있었다.</p>
+      <div class="cta"><a class="btn p" data-play href="#">이야기 시작하기 <span aria-hidden="true">↗</span></a><a class="btn g" href="#world">제국의 기록 열람 <span aria-hidden="true">↓</span></a></div>
+      <div class="hero-quick"><a href="#regions"><span>01</span> 제국의 권역 <span aria-hidden="true">↗</span></a><a href="#people"><span>02</span> 인물 기록 <span aria-hidden="true">↗</span></a></div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <img src="img/op/cassian.webp" alt="" fetchpriority="high" width="1660" height="1132">
+      <div class="hero-visual-caption"><span>PROLOGUE — NORTHERN FRONTIER</span><b>눈보라가 그친 자리</b></div>
+    </div>
   </div>
-  <div class="cue">아래로</div>
+  <div class="cue">SCROLL TO EXPLORE</div>
   <button class="replay" data-replay type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12a8 8 0 1 0 2.3-5.6"/><path d="M4 4v4h4"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg>오프닝 다시 보기</button>
 </section>
 
@@ -532,6 +883,40 @@ html.intro-done .hero .in{animation-duration:1.15s}
       <h3>마석</h3>
       <p>마탑이 정제하는 마석은 제국의 등불을 밝힌다. 마석이 어디에서 오는지는 마탑과 황실만이 안다고 한다.</p>
     </article>
+  </div>
+  <div class="atlas-preview" aria-label="솔라리아 제국 지도">
+    <div class="atlas-heading">
+      <div><span class="atlas-overline">THE IMPERIAL ATLAS / 001</span><h3>제국의 지도를 펼치다</h3><p>다섯 권역과 균열. 이 땅에서 모든 이야기가 이어진다.</p></div>
+      <a class="atlas-link" href="#regions">권역별 기록 열람 <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="atlas-explorer" id="atlasExplorer">
+      <div class="atlas-toolbar" aria-label="지도 표시 범위">
+        <span class="atlas-toolbar-title">지리 기록</span>
+        <div class="atlas-filters" id="atlasFilters" role="group" aria-label="권역 선택"></div>
+      </div>
+      <div class="atlas-body">
+        <div class="atlas-mapframe">
+          <div class="atlas-viewport" id="atlasViewport" tabindex="0" role="group" aria-label="대륙 지도. 장소 표식을 선택하거나 화살표 키로 지도를 이동하세요.">
+            <div class="atlas-scene" id="atlasScene">
+              <img src="img/map.jpg" alt="솔라리아 제국 지형도. 북쪽 방벽, 서쪽 균열, 중앙 황도, 동부 숲, 남부 항구." loading="lazy" draggable="false">
+              <div class="atlas-pins" id="atlasPins"></div>
+            </div>
+          </div>
+          <div class="atlas-controls" aria-label="지도 확대 및 이동">
+            <button type="button" id="atlasZoomIn" aria-label="지도 확대">+</button>
+            <button type="button" id="atlasZoomOut" aria-label="지도 축소">−</button>
+            <button type="button" id="atlasReset" aria-label="전체 지도 보기" title="전체 지도 보기">⤢</button>
+          </div>
+          <div class="atlas-guide">표식 선택 · 드래그로 이동 · 버튼이나 손가락으로 확대</div>
+        </div>
+        <aside class="atlas-aside" aria-label="지도 장소 기록"><div class="atlas-aside-in">
+          <div class="atlas-detail" id="atlasDetail" aria-live="polite"></div>
+          <div class="atlas-directory-head"><b>지명 색인</b><small id="atlasCount"></small></div>
+          <div class="atlas-directory" id="atlasDirectory" role="group" aria-label="장소 목록"></div>
+        </div></aside>
+      </div>
+    </div>
+    <p class="atlas-foot"><span>IMPERIUM SOLARIAE</span><span>지명 선택 → 장소 기록 → 관련 권역·인물 이동</span></p>
   </div>
   <article class="report">
     <span class="wax" aria-hidden="true"></span>
@@ -902,7 +1287,7 @@ const EDGES=[
 /* sound */
 const SND=(function(){
   const AC=window.AudioContext||window.webkitAudioContext,graph=!!AC&&/^https?:$/.test(location.protocol);
-  const op=new Audio(),bg=new Audio();op.preload='none';bg.preload='none';bg.loop=true;op.src='audio/op.mp3';bg.src='audio/bgm.mp3';let newOpening=false,openingStarted=false;
+  const op=new Audio(),bg=new Audio();op.preload='none';bg.preload='none';bg.loop=true;op.src='audio/op-v2.mp3';bg.src='audio/bgm.mp3';let newOpening=true,openingStarted=false;
   const EL={op,bg},VOL={op:.9,bg:.3},G={},T={};
   let ctx=null,on=false,bgWant=false,disarm=null,wasBg=false;
   const btn=document.getElementById('snd');
@@ -930,7 +1315,7 @@ const SND=(function(){
     isNewOpening(){return newOpening},
     opening(cb){on=true;save(true);ui();init();resume();unlockBg();openingStarted=true;
       let fired=false,late=false;const go=()=>{if(!fired){fired=true;cb()}};
-      set('op',VOL.op);try{op.currentTime=newOpening?0:6.05}catch(e){}
+      set('op',VOL.op);try{op.currentTime=0}catch(e){}
       const to=setTimeout(()=>{late=true;op.pause();go()},2500);
       let p;try{p=op.play()}catch(e){}
       if(p&&p.then)p.then(()=>{clearTimeout(to);if(late)op.pause();else go()}).catch(()=>{clearTimeout(to);go()});else{clearTimeout(to);go()}},
@@ -967,9 +1352,7 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
   const shots=[...stage.querySelectorAll('.op-shot')],caption=document.getElementById('opCaption');
   const beam=document.getElementById('opBeam'),light=document.getElementById('opLight'),title=document.getElementById('opTitle');
   let started=false,ended=false,withSound=false,startAt=0,raf=0,shot=-1,spoken='',outro=false,bgStarted=false,newMix=false;
-  // The new MP3 is optional until it is uploaded; keep the existing intro working.
-  fetch('audio/op-v2.mp3?assetcheck=2',{method:'HEAD',cache:'no-store'})
-    .then(r=>{if(r.ok&&!started&&!ended)SND.setNewOpening()}).catch(()=>{});
+  // Use the verified new soundtrack directly; no asynchronous HEAD-check race.
   const OLD={start:6.05,beast:8.42,nox:10.55,slash:12.28,cassian:13.45,
     beastLine:[9.10,10.43],noxLine:[10.72,11.90],cassianLine:[16.73,19.12],
     flash:[12.41,12.64],beam:[12.32,13.05],fade:19.50,end:19.80};
@@ -1018,7 +1401,7 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     raf=requestAnimationFrame(frame);
   }
   function begin(sound){
-    withSound=sound;newMix=SND.isNewOpening();C=newMix?NEW:OLD;
+    withSound=sound;newMix=true;C=NEW;
     startAt=performance.now();gate.classList.add('out');paint(C.start);
     raf=requestAnimationFrame(frame);
   }
@@ -1043,6 +1426,175 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     if(e.key==='Escape')finish();
     else if(!started&&!ended&&(e.key==='Enter'||e.key===' ')&&!['BUTTON','A'].includes(document.activeElement?.tagName)){e.preventDefault();start(true);}
   });
+})();
+
+
+/* Atlas: every place is anchored on the current img/map.jpg (percent of width / height).
+   main = shown in the whole-map view on phones; a region filter shows every place of that region. */
+(function(){
+  const root=document.getElementById('atlasExplorer');if(!root)return;
+  const viewport=document.getElementById('atlasViewport'),scene=document.getElementById('atlasScene'),pins=document.getElementById('atlasPins');
+  const filters=document.getElementById('atlasFilters'),detail=document.getElementById('atlasDetail'),directory=document.getElementById('atlasDirectory'),count=document.getElementById('atlasCount');
+  const anchors={
+    'north-0':[31,24.8],'north-1':[49.6,18.2,1],'north-2':[53,22.6],'north-3':[27,12.5],'north-4':[49.5,29.8],
+    'capital-0':[51.2,41.5,1],'capital-1':[45.7,41.8],'capital-2':[57,42.6],'capital-3':[61.2,55],'capital-4':[50.5,55.5],
+    'south-0':[71.3,76.3,1],'south-1':[54.5,80.5],'south-2':[47,65.5],'south-3':[34,89],
+    'east-0':[71.5,37.5,1],'east-1':[87.3,40.6],'east-2':[81.6,50.8],'east-3':[78.7,44.3],'east-4':[78.2,56.4],
+    'west-0':[17.8,41.2,1],'west-1':[33,50.3],'west-2':[25.5,57],'west-3':[15.4,52],
+    'rift-0':[12.8,66],'rift-1':[12,11.5],'rift-2':[6,50,1]
+  };
+  const allRegions=['north','capital','south','east','west','rift'];
+  const locations=allRegions.flatMap(region=>REGIONS[region].places
+    .map(([name,desc],index)=>{
+      const id=region+'-'+index,xy=anchors[id]||null;
+      return {id,region,index,name,desc,x:xy?xy[0]:null,y:xy?xy[1]:null,mapped:!!xy,main:!!(xy&&xy[2])};
+    }).filter(p=>p.name!=='???'));
+  const byId=new Map(locations.map(p=>[p.id,p]));
+  const regionNames={all:'전체 지도',north:'북부',capital:'황도',south:'남부',east:'동부',west:'서부',rift:'균열'};
+  const colors={north:'#A6C5DA',capital:'#E3C57E',south:'#7CBFC5',east:'#9AC6A3',west:'#DAAA7E',rift:'#B9A2F5'};
+  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  let selected='north-1',filter='all',scale=1,tx=0,ty=0,dragStart=null,pinch=null;
+  const activePointers=new Map();
+  const wide=()=>innerWidth>760;
+  function visible(p){return p.mapped&&(filter==='all'?(wide()||p.main||p.id===selected):p.region===filter)}
+  function layout(){
+    const w=scene.offsetWidth*scale,h=scene.offsetHeight*scale,vw=viewport.clientWidth,vh=viewport.clientHeight;
+    tx=w<=vw?(vw-w)/2:Math.max(vw-w,Math.min(0,tx));
+    ty=h<=vh?(vh-h)/2:Math.max(vh-h,Math.min(0,ty));
+    scene.style.transform='translate('+tx+'px,'+ty+'px) scale('+scale+')';
+    scene.style.setProperty('--pin-s',(1/scale).toFixed(4));
+  }
+  function reset(){
+    scale=1;tx=0;ty=0;layout();
+  }
+  function focusPin(p){
+    if(!p||!p.mapped)return;
+    // On explicit selection, zoom enough to show the landmark but preserve its surroundings.
+    scale=Math.max(scale,window.innerWidth<=760?1.8:1.35);
+    tx=viewport.clientWidth*.5-(p.x/100)*scene.offsetWidth*scale;
+    ty=viewport.clientHeight*.5-(p.y/100)*scene.offsetHeight*scale;
+    layout();
+  }
+  function fitRegion(k){
+    const ps=locations.filter(p=>p.region===k&&p.mapped);if(!ps.length)return;
+    const xs=ps.map(p=>p.x),ys=ps.map(p=>p.y),pad=8;
+    const x0=Math.max(0,Math.min(...xs)-pad),x1=Math.min(100,Math.max(...xs)+pad),y0=Math.max(0,Math.min(...ys)-pad),y1=Math.min(100,Math.max(...ys)+pad);
+    const w=scene.offsetWidth,h=scene.offsetHeight;
+    scale=Math.min(2.4,Math.max(1,Math.min(viewport.clientWidth/((x1-x0)/100*w),viewport.clientHeight/((y1-y0)/100*h))));
+    tx=viewport.clientWidth/2-((x0+x1)/200)*w*scale;ty=viewport.clientHeight/2-((y0+y1)/200)*h*scale;layout();
+  }
+  function zoom(next,clientX,clientY){
+    next=Math.min(4,Math.max(1,next));
+    const r=viewport.getBoundingClientRect();
+    const x=(clientX??(r.left+r.width/2))-r.left,y=(clientY??(r.top+r.height/2))-r.top;
+    const anchorX=(x-tx)/scale,anchorY=(y-ty)/scale;
+    tx=x-anchorX*next;ty=y-anchorY*next;scale=next;layout();
+  }
+  function renderFilters(){
+    filters.innerHTML=Object.entries(regionNames).map(([k,v])=>
+      '<button type="button" class="atlas-filter" data-region="'+k+'" aria-pressed="'+(filter===k)+'">'+v+'</button>').join('');
+  }
+  function renderPins(){
+    pins.innerHTML=locations.filter(visible).map(p=>
+      '<button type="button" class="atlas-pin'+(p.id===selected?' selected':'')+'" data-place="'+p.id+'" style="left:'+p.x+'%;top:'+p.y+'%;--pin:'+colors[p.region]+'" aria-label="'+esc(p.name)+' 위치" title="'+esc(p.name)+'"><span class="atlas-pin-dot"></span><span class="atlas-pin-label">'+esc(p.name)+'</span></button>').join('');
+  }
+  function renderDirectory(){
+    const arr=filter==='all'?locations:locations.filter(p=>p.region===filter);
+    count.textContent=arr.length+'곳';
+    const groups=filter==='all'?allRegions:[filter];
+    directory.innerHTML=groups.map(k=>{
+      const subset=arr.filter(p=>p.region===k);
+      return '<h5>'+regionNames[k]+'</h5>'+subset.map(p=>
+        '<button type="button" class="atlas-dir-entry" data-place="'+p.id+'" style="--pin:'+colors[k]+'" aria-current="'+(selected===p.id)+'">'+
+        esc(p.name)+(p.mapped?'':' <small class="atlas-unmapped">세부 위치 미확정</small>')+'</button>').join('');
+    }).join('');
+  }
+  function renderDetail(){
+    const p=byId.get(selected);if(!p)return;
+    const peers=regionPeople(p.region).filter(q=>q.main&&!q.sealed).slice(0,3).map(q=>q.name).join(' · ');
+    detail.style.setProperty('--atlas-accent',colors[p.region]);
+    detail.innerHTML='<div class="atlas-detail-kicker">'+esc(REGIONS[p.region].latin)+' / '+String(p.index+1).padStart(2,'0')+'</div>'+
+      '<h4>'+esc(p.name)+'</h4><p class="atlas-detail-region">'+esc(REGIONS[p.region].full)+
+      '</p>'+
+      '<p>'+esc(p.desc)+'</p>'+
+      (peers?'<div class="atlas-related"><b>관련 주요 인물</b><div>'+esc(peers)+'</div></div>':'')+
+      '<div class="atlas-actions"><button type="button" id="atlasGoRegion">권역 기록 보기 ↗</button>'+
+      (peers?'<button type="button" id="atlasGoPeople">인물 기록 보기 ↗</button>':'')+'</div>';
+    detail.querySelector('#atlasGoRegion').onclick=()=>{setRegion(p.region);document.getElementById('regions').scrollIntoView({behavior:'smooth',block:'start'});};
+    const people=detail.querySelector('#atlasGoPeople');
+    if(people)people.onclick=()=>{setFilter(p.region==='capital'?'main':p.region);document.getElementById('people').scrollIntoView({behavior:'smooth',block:'start'});};
+  }
+  function selectPlace(id,focus=true){
+    const p=byId.get(id);if(!p)return;
+    if(filter!=='all'&&filter!==p.region){filter=p.region;renderFilters()}
+    selected=id;renderPins();renderDirectory();renderDetail();
+    if(focus){
+      if(p.mapped)focusPin(p);
+      else {
+        // Never place an invented marker; navigate only to that region's identified anchor.
+        const anchor=locations.find(x=>x.region===p.region&&x.mapped);
+        if(anchor)focusPin(anchor);
+      }
+    }
+  }
+  function selectRegion(k){
+    if(!regionNames[k])return;
+    filter=k;renderFilters();
+    if(filter==='all'){selected='north-1';renderPins();renderDirectory();renderDetail();reset();return}
+    const p=locations.find(x=>x.region===k&&x.main)||locations.find(x=>x.region===k&&x.mapped);
+    if(p){selected=p.id;renderPins();renderDirectory();renderDetail()}
+    fitRegion(k);
+  }
+  filters.addEventListener('click',e=>{const b=e.target.closest('[data-region]');if(b)selectRegion(b.dataset.region)});
+  pins.addEventListener('click',e=>{const b=e.target.closest('[data-place]');if(b){e.preventDefault();selectPlace(b.dataset.place,false)}});
+  directory.addEventListener('click',e=>{const b=e.target.closest('[data-place]');if(b)selectPlace(b.dataset.place,true)});
+  document.getElementById('atlasZoomIn').onclick=()=>zoom(scale*1.28);
+  document.getElementById('atlasZoomOut').onclick=()=>zoom(scale/1.28);
+  document.getElementById('atlasReset').onclick=()=>{filter='all';renderFilters();selected='north-1';renderPins();renderDirectory();renderDetail();reset()};
+  viewport.addEventListener('wheel',e=>{if(!e.ctrlKey)return;e.preventDefault();zoom(scale*(e.deltaY<0?1.12:.89),e.clientX,e.clientY)},{passive:false});
+  viewport.addEventListener('keydown',e=>{
+    const step=42;
+    if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){
+      e.preventDefault();tx+=(e.key==='ArrowLeft'?step:e.key==='ArrowRight'?-step:0);
+      ty+=(e.key==='ArrowUp'?step:e.key==='ArrowDown'?-step:0);layout();
+    }else if(e.key==='+'||e.key==='='){e.preventDefault();zoom(scale*1.2)}
+    else if(e.key==='-'){e.preventDefault();zoom(scale/1.2)}
+    else if(e.key==='0'){e.preventDefault();reset()}
+  });
+  viewport.addEventListener('pointerdown',e=>{
+    if(e.target.closest('.atlas-pin'))return;
+    if(e.pointerType==='mouse'&&e.button!==0)return;
+    activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    try{viewport.setPointerCapture(e.pointerId)}catch(_){}
+    if(activePointers.size===1){dragStart={x:e.clientX,y:e.clientY,tx,ty};viewport.classList.add('is-dragging')}
+    else if(activePointers.size===2){
+      const [a,b]=[...activePointers.values()];pinch={distance:Math.hypot(a.x-b.x,a.y-b.y),scale};dragStart=null;
+    }
+  });
+  viewport.addEventListener('pointermove',e=>{
+    if(!activePointers.has(e.pointerId))return;
+    activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(activePointers.size>=2){
+      const [a,b]=[...activePointers.values()],d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(pinch&&pinch.distance>0)zoom(pinch.scale*d/pinch.distance,(a.x+b.x)/2,(a.y+b.y)/2);
+      return;
+    }
+    if(dragStart){tx=dragStart.tx+e.clientX-dragStart.x;ty=dragStart.ty+e.clientY-dragStart.y;layout()}
+  });
+  function release(e){
+    activePointers.delete(e.pointerId);
+    try{if(viewport.hasPointerCapture(e.pointerId))viewport.releasePointerCapture(e.pointerId)}catch(_){}
+    if(activePointers.size<2)pinch=null;
+    if(activePointers.size===0){dragStart=null;viewport.classList.remove('is-dragging')}
+    else{const p=[...activePointers.values()][0];dragStart={x:p.x,y:p.y,tx,ty}}
+  }
+  viewport.addEventListener('pointerup',release);viewport.addEventListener('pointercancel',release);
+  addEventListener('resize',()=>{renderPins();if(filter==='all')reset();else fitRegion(filter)},{passive:true});
+  const guide=root.querySelector('.atlas-guide');
+  if(guide){const off=()=>guide.classList.add('off');viewport.addEventListener('pointerdown',off,{once:true});root.querySelector('.atlas-controls').addEventListener('click',off,{once:true});
+    if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){setTimeout(off,5000);io.disconnect()}},{threshold:.5});io.observe(viewport)}}
+  renderFilters();renderPins();renderDirectory();renderDetail();
+  requestAnimationFrame(reset);
 })();
 
 </script>
