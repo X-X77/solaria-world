@@ -702,6 +702,76 @@ footer{background:#080D16}
  .atlas-image img{transition:none}
 }
 
+
+/* atlas-interactive-2026: imperial geographic atlas */
+.atlas-preview{max-width:1250px}
+.atlas-explorer{border:1px solid rgba(220,185,125,.25);background:#0b1420}
+.atlas-toolbar{display:flex;gap:20px;align-items:center;padding:17px 20px;background:linear-gradient(90deg,#152234,#0f1928);border-bottom:1px solid rgba(220,185,125,.25)}
+.atlas-toolbar-title{font:600 12px var(--lat);white-space:nowrap;letter-spacing:.15em;color:#D8BF8C}
+.atlas-filters{display:flex;gap:6px;flex-wrap:wrap}
+.atlas-filter{font-family:var(--ui);font-size:13px;font-weight:600;padding:9px 11px;color:#C9C9C5;border:1px solid rgba(220,185,125,.22);background:rgba(255,255,255,.025);transition:color .2s,background .2s,border-color .2s}
+.atlas-filter:hover,.atlas-filter[aria-pressed="true"]{color:#17130e;background:#D9B777;border-color:#D9B777}
+.atlas-body{display:grid;grid-template-columns:minmax(0,1fr) 320px;min-height:550px;align-items:stretch}
+.atlas-mapframe{position:relative;min-width:0;background:radial-gradient(ellipse at center,#26394c,#0c1522);isolation:isolate;overflow:hidden}
+.atlas-viewport{width:100%;aspect-ratio:3/2;position:relative;overflow:hidden;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.atlas-viewport.is-dragging{cursor:grabbing}
+.atlas-scene{position:absolute;top:0;left:0;width:100%;aspect-ratio:3/2;transform-origin:top left;will-change:transform}
+.atlas-scene>img{display:block;width:100%;height:100%;object-fit:fill;pointer-events:none;user-select:none}
+.atlas-pins{position:absolute;inset:0}
+.atlas-pin{position:absolute;display:flex;flex-direction:column;align-items:center;gap:7px;width:20px;height:20px;min-width:20px;overflow:visible;transform:translate(-50%,-50%);z-index:2;touch-action:manipulation}
+.atlas-pin-dot{width:19px;height:19px;display:grid;place-items:center;flex:none;background:#151d2a;border:2px solid var(--pin);border-radius:50%;box-shadow:0 0 0 4px rgba(5,10,20,.44),0 0 20px rgba(3,8,15,.7);transition:background .2s,transform .2s,box-shadow .2s}
+.atlas-pin-dot:after{content:"";width:5px;height:5px;display:block;border-radius:50%;background:var(--pin)}
+.atlas-pin-label{position:absolute;top:26px;left:50%;transform:translate(-50%,-4px);white-space:nowrap;pointer-events:none;opacity:0;background:rgba(7,13,22,.94);border:1px solid rgba(222,193,141,.35);padding:5px 8px;font:600 12px var(--ui);color:#F4E9D1;transition:opacity .18s,transform .18s;box-shadow:0 3px 10px rgba(0,0,0,.28)}
+.atlas-pin:hover,.atlas-pin:focus-visible,.atlas-pin.selected{z-index:10}
+.atlas-pin:hover .atlas-pin-dot,.atlas-pin:focus-visible .atlas-pin-dot,.atlas-pin.selected .atlas-pin-dot{background:var(--pin);transform:scale(1.2);box-shadow:0 0 0 5px rgba(5,10,20,.55),0 0 0 7px var(--pin)}
+.atlas-pin.selected .atlas-pin-dot:after,.atlas-pin:hover .atlas-pin-dot:after{background:#151923}
+.atlas-pin.selected .atlas-pin-label,.atlas-pin:hover .atlas-pin-label,.atlas-pin:focus-visible .atlas-pin-label{opacity:1;transform:translate(-50%,0)}
+.atlas-pin.selected{z-index:15}
+.atlas-controls{position:absolute;right:14px;top:14px;z-index:20;display:grid;gap:5px}
+.atlas-controls button{width:38px;height:38px;display:grid;place-items:center;background:rgba(9,16,27,.92);border:1px solid rgba(220,188,131,.5);color:#F0E2C9;font-size:22px;transition:background .2s}
+.atlas-controls button:hover{background:#364355}
+.atlas-guide{position:absolute;bottom:12px;left:14px;right:14px;width:max-content;max-width:calc(100% - 28px);pointer-events:none;padding:7px 10px;background:rgba(7,13,23,.83);color:#E7DBCA;font-size:12px;line-height:1.6}
+.atlas-aside{min-width:0;border-left:1px solid rgba(220,188,131,.3);background:linear-gradient(165deg,#182637,#0b1521);display:flex;flex-direction:column}
+.atlas-detail{padding:28px 22px 20px;min-height:286px;border-bottom:1px solid rgba(220,188,131,.22)}
+.atlas-detail-kicker{font:600 10px var(--lat);letter-spacing:.14em;color:var(--atlas-accent,#D9B777)}
+.atlas-detail h4{font:700 clamp(23px,2.2vw,29px) var(--disp);color:#FAEDD6;line-height:1.3;margin:12px 0 10px}
+.atlas-detail p{font-size:14px;line-height:1.78;margin:0;color:#D2D5D3}
+.atlas-detail-region{font-size:13px!important;color:var(--atlas-accent,#D9B777)!important;margin-bottom:13px!important}
+.atlas-related{padding:13px 0 0;color:#BAC5CE;font-size:12px;line-height:1.7}
+.atlas-related b{font-weight:700;color:#E7D4B0}
+.atlas-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.atlas-actions button{padding:10px 12px;background:rgba(222,184,118,.14);border:1px solid rgba(222,184,118,.45);color:#F2DEB6;font-weight:700;font-size:12px}
+.atlas-actions button:hover{background:rgba(222,184,118,.26)}
+.atlas-directory-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 20px 10px}
+.atlas-directory-head b{font:700 14px var(--disp);color:#EBD9B9}
+.atlas-directory-head small{font-size:11px;color:#AEBAC6}
+.atlas-directory{overflow:auto;max-height:292px;padding:0 11px 17px;scrollbar-width:thin}
+.atlas-directory h5{font-size:12px;margin:14px 9px 8px;color:#C6A873;letter-spacing:.04em;font-weight:700}
+.atlas-dir-entry{width:100%;padding:10px 11px;display:flex;align-items:center;gap:8px;text-align:left;font-size:13px;color:#D5D5D0;border:1px solid transparent}
+.atlas-dir-entry:before{content:"";display:block;flex:none;width:7px;height:7px;background:var(--pin,#D9B777);border-radius:50%}
+.atlas-dir-entry:hover,.atlas-dir-entry[aria-current="true"]{background:rgba(221,183,116,.12);border-color:rgba(221,183,116,.17);color:#FFF1DB}
+.atlas-accuracy{margin:0;padding:12px 18px 14px;border-top:1px solid rgba(220,188,131,.23);background:#0d1725;color:#BDC2C7;font-size:12px;line-height:1.65}
+@media(max-width:1000px){
+ .atlas-body{grid-template-columns:minmax(0,1fr) 285px}
+ .atlas-detail{padding:21px 16px}
+}
+@media(max-width:760px){
+ .atlas-toolbar{align-items:flex-start;flex-direction:column;gap:12px;padding:16px}
+ .atlas-filters{width:100%;flex-wrap:nowrap;overflow-x:auto;padding:0 0 3px;scrollbar-width:thin}
+ .atlas-filter{flex:none;padding:9px 13px}
+ .atlas-body{display:block}
+ .atlas-viewport{aspect-ratio:1/1.14}
+ .atlas-scene{width:max(680px,170vw)}
+ .atlas-aside{border-left:0;border-top:1px solid rgba(220,188,131,.27)}
+ .atlas-detail{min-height:0;padding:23px 20px}
+ .atlas-directory{max-height:205px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px 6px}
+ .atlas-directory h5{grid-column:1/-1}
+ .atlas-dir-entry{font-size:12px}
+ .atlas-guide{font-size:11px}
+}
+@media(max-width:400px){.atlas-directory{grid-template-columns:1fr}.atlas-controls button{width:35px;height:35px}}
+@media(prefers-reduced-motion:reduce){.atlas-pin-dot,.atlas-pin-label{transition:none}}
+
 </style>
 </head>
 <body>
@@ -780,10 +850,35 @@ footer{background:#080D16}
       <div><span class="atlas-overline">THE IMPERIAL ATLAS / 001</span><h3>제국의 지도를 펼치다</h3><p>다섯 권역과 균열. 이 땅에서 모든 이야기가 이어진다.</p></div>
       <a class="atlas-link" href="#regions">권역별 기록 열람 <span aria-hidden="true">↗</span></a>
     </div>
-    <a class="atlas-image" href="#regions" aria-label="솔라리아 제국 지도에서 권역별 설명으로 이동">
-      <img src="img/map.jpg" alt="솔라리아 제국의 주요 권역과 지형을 담은 지도" loading="lazy">
-    </a>
-    <p class="atlas-foot"><span>IMPERIUM SOLARIAE</span><span>지도를 누르면 권역 기록으로 이동합니다.</span></p>
+    <div class="atlas-explorer" id="atlasExplorer">
+      <div class="atlas-toolbar" aria-label="지도 표시 범위">
+        <span class="atlas-toolbar-title">지리 기록</span>
+        <div class="atlas-filters" id="atlasFilters" role="group" aria-label="권역 선택"></div>
+      </div>
+      <div class="atlas-body">
+        <div class="atlas-mapframe">
+          <div class="atlas-viewport" id="atlasViewport" tabindex="0" role="group" aria-label="대륙 지도. 장소 표식을 선택하거나 화살표 키로 지도를 이동하세요.">
+            <div class="atlas-scene" id="atlasScene">
+              <img src="img/map.jpg" alt="솔라리아 제국 지형도. 북쪽 방벽, 서쪽 균열, 중앙 황도, 동부 숲, 남부 항구." loading="lazy" draggable="false">
+              <div class="atlas-pins" id="atlasPins"></div>
+            </div>
+          </div>
+          <div class="atlas-controls" aria-label="지도 확대 및 이동">
+            <button type="button" id="atlasZoomIn" aria-label="지도 확대">+</button>
+            <button type="button" id="atlasZoomOut" aria-label="지도 축소">−</button>
+            <button type="button" id="atlasReset" aria-label="전체 지도 보기" title="전체 지도 보기">⤢</button>
+          </div>
+          <div class="atlas-guide">표식 선택 · 드래그로 이동 · 버튼이나 손가락으로 확대</div>
+        </div>
+        <aside class="atlas-aside" aria-label="지도 장소 기록">
+          <div class="atlas-detail" id="atlasDetail" aria-live="polite"></div>
+          <div class="atlas-directory-head"><b>지명 색인</b><small id="atlasCount"></small></div>
+          <div class="atlas-directory" id="atlasDirectory" role="group" aria-label="장소 목록"></div>
+        </aside>
+      </div>
+      <p class="atlas-accuracy">지도 표식은 기존 제국 지도와 세계관 설정을 바탕으로 표시한 개략 위치입니다. 성채·건물 등 세부 좌표는 추후 조정될 수 있습니다.</p>
+    </div>
+    <p class="atlas-foot"><span>IMPERIUM SOLARIAE</span><span>지명 선택 → 장소 기록 → 관련 권역·인물 이동</span></p>
   </div>
   <article class="report">
     <span class="wax" aria-hidden="true"></span>
@@ -1293,6 +1388,144 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     if(e.key==='Escape')finish();
     else if(!started&&!ended&&(e.key==='Enter'||e.key===' ')&&!['BUTTON','A'].includes(document.activeElement?.tagName)){e.preventDefault();start(true);}
   });
+})();
+
+
+/* Atlas directory & precise relationship to world lore; pin coordinates are editable approximate map anchors. */
+(function(){
+  const root=document.getElementById('atlasExplorer');if(!root)return;
+  const viewport=document.getElementById('atlasViewport'),scene=document.getElementById('atlasScene'),pins=document.getElementById('atlasPins');
+  const filters=document.getElementById('atlasFilters'),detail=document.getElementById('atlasDetail'),directory=document.getElementById('atlasDirectory'),count=document.getElementById('atlasCount');
+  // [region, place index in REGIONS[region].places, x%, y%, main marker]. Exact text comes from established REGIONS data.
+  const locations=[
+    ['north',0,44,35,1],['north',1,49,40,1],['north',2,53,42,0],['north',3,39,25,1],['north',4,48,50,0],
+    ['capital',0,50,61,1],['capital',1,55,63,0],['capital',2,46,63,0],['capital',3,62,66,0],['capital',4,54,72,0],
+    ['south',0,53,81,1],['south',1,61,83,0],['south',2,65,75,0],['south',3,52,91,0],
+    ['east',0,76,50,1],['east',1,82,54,0],['east',2,73,58,0],['east',3,82,65,0],['east',4,72,68,0],
+    ['west',0,20,54,1],['west',1,31,59,0],['west',2,24,69,0],['west',3,13,56,0],
+    ['rift',0,12,50,0],['rift',1,23,30,1],['rift',2,9,39,0]
+  ].map(([region,index,x,y,main])=>({id:region+'-'+index,region,index,x,y,main,name:REGIONS[region].places[index][0],desc:REGIONS[region].places[index][1]}));
+  const byId=new Map(locations.map(p=>[p.id,p]));
+  const regionNames={all:'주요 거점',north:'북부',capital:'황도',south:'남부',east:'동부',west:'서부',rift:'균열'};
+  const colors={north:'#A6C5DA',capital:'#E3C57E',south:'#7CBFC5',east:'#9AC6A3',west:'#DAAA7E',rift:'#B9A2F5'};
+  const html=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  let selected='north-1',filter='all',scale=1,tx=0,ty=0,dragMoved=false;
+  const activePointers=new Map();let pinch=null,dragStart=null;
+  function visible(p){return filter==='all'?!!p.main:p.region===filter}
+  function layout(){
+    const w=scene.offsetWidth*scale,h=scene.offsetHeight*scale,vw=viewport.clientWidth,vh=viewport.clientHeight;
+    tx=w<=vw?(vw-w)/2:Math.max(vw-w,Math.min(0,tx));
+    ty=h<=vh?(vh-h)/2:Math.max(vh-h,Math.min(0,ty));
+    scene.style.transform='translate('+tx+'px,'+ty+'px) scale('+scale+')';
+  }
+  function focusPin(p){
+    if(!p)return;
+    const w=scene.offsetWidth,h=scene.offsetHeight;
+    tx=viewport.clientWidth*.5-(p.x/100)*w*scale;
+    ty=viewport.clientHeight*.48-(p.y/100)*h*scale;
+    layout();
+  }
+  function zoom(next,clientX,clientY){
+    next=Math.min(3.5,Math.max(.78,next));
+    const r=viewport.getBoundingClientRect();
+    const x=(clientX??(r.left+r.width/2))-r.left,y=(clientY??(r.top+r.height/2))-r.top;
+    const anchorX=(x-tx)/scale,anchorY=(y-ty)/scale;
+    tx=x-anchorX*next;ty=y-anchorY*next;scale=next;layout();
+  }
+  function reset(){scale=1;const p=byId.get(selected);if(innerWidth<=760&&p)focusPin(p);else{tx=0;ty=0;layout()}}
+  function renderFilters(){
+    filters.innerHTML=Object.entries(regionNames).map(([k,v])=>'<button type="button" class="atlas-filter" data-region="'+k+'" aria-pressed="'+(filter===k)+'">'+v+'</button>').join('');
+  }
+  function renderPins(){
+    pins.innerHTML=locations.filter(visible).map(p=>'<button type="button" class="atlas-pin'+(p.id===selected?' selected':'')+'" data-place="'+p.id+'" style="left:'+p.x+'%;top:'+p.y+'%;--pin:'+colors[p.region]+'" aria-label="'+html(p.name)+' 위치" title="'+html(p.name)+'"><span class="atlas-pin-dot"></span><span class="atlas-pin-label">'+html(p.name)+'</span></button>').join('');
+  }
+  function renderDirectory(){
+    const arr=filter==='all'?locations:locations.filter(p=>p.region===filter);
+    count.textContent=arr.length+'개 장소';
+    const groups=filter==='all'?['north','capital','south','east','west','rift']:[filter];
+    directory.innerHTML=groups.map(k=>{
+      const subset=arr.filter(p=>p.region===k);
+      return '<h5>'+regionNames[k]+'</h5>'+subset.map(p=>'<button type="button" class="atlas-dir-entry" data-place="'+p.id+'" style="--pin:'+colors[k]+'" aria-current="'+(selected===p.id)+'">'+html(p.name)+'</button>').join('');
+    }).join('');
+  }
+  function renderDetail(){
+    const p=byId.get(selected);if(!p)return;
+    const peers=regionPeople(p.region).filter(q=>q.main&&!q.sealed).slice(0,3).map(q=>q.name).join(' · ');
+    detail.style.setProperty('--atlas-accent',colors[p.region]);
+    detail.innerHTML='<div class="atlas-detail-kicker">'+html(REGIONS[p.region].latin)+' / '+String(p.index+1).padStart(2,'0')+'</div>'+
+      '<h4>'+html(p.name)+'</h4><p class="atlas-detail-region">'+html(REGIONS[p.region].full)+' · 개략 위치</p>'+
+      '<p>'+html(p.desc)+'</p>'+
+      (peers?'<div class="atlas-related"><b>관련 주요 인물</b><div>'+html(peers)+'</div></div>':'')+
+      '<div class="atlas-actions"><button type="button" id="atlasGoRegion">권역 기록 보기 ↗</button>'+
+      (peers?'<button type="button" id="atlasGoPeople">인물 기록 보기 ↗</button>':'')+'</div>';
+    detail.querySelector('#atlasGoRegion').onclick=()=>{setRegion(p.region);document.getElementById('regions').scrollIntoView({behavior:'smooth',block:'start'});};
+    const people=detail.querySelector('#atlasGoPeople');
+    if(people)people.onclick=()=>{setFilter(p.region==='capital'?'main':p.region);document.getElementById('people').scrollIntoView({behavior:'smooth',block:'start'});};
+  }
+  function selectPlace(id,focus=true){
+    const p=byId.get(id);if(!p)return;
+    if(!visible(p)){filter=p.region;renderFilters();}
+    selected=id;renderPins();renderDirectory();renderDetail();
+    if(focus)focusPin(p);
+  }
+  function selectRegion(k){
+    if(!regionNames[k])return;
+    filter=k;renderFilters();
+    const p=filter==='all'?byId.get('north-1'):locations.find(x=>x.region===k&&x.main)||locations.find(x=>x.region===k);
+    selectPlace(p.id,true);
+    if(filter==='all'&&innerWidth>760)reset();
+  }
+  filters.addEventListener('click',e=>{const b=e.target.closest('[data-region]');if(b)selectRegion(b.dataset.region)});
+  pins.addEventListener('click',e=>{const b=e.target.closest('[data-place]');if(b){e.preventDefault();selectPlace(b.dataset.place,false)}});
+  directory.addEventListener('click',e=>{const b=e.target.closest('[data-place]');if(b)selectPlace(b.dataset.place,true)});
+  document.getElementById('atlasZoomIn').onclick=()=>zoom(scale*1.28);
+  document.getElementById('atlasZoomOut').onclick=()=>zoom(scale/1.28);
+  document.getElementById('atlasReset').onclick=()=>{filter='all';renderFilters();selected='north-1';renderPins();renderDetail();renderDirectory();scale=1;tx=0;ty=0;layout()};
+  viewport.addEventListener('wheel',e=>{if(!e.ctrlKey)return;e.preventDefault();zoom(scale*(e.deltaY<0?1.12:.89),e.clientX,e.clientY)},{passive:false});
+  viewport.addEventListener('keydown',e=>{
+    const step=42;
+    if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){
+      e.preventDefault();tx+=(e.key==='ArrowLeft'?step:e.key==='ArrowRight'?-step:0);
+      ty+=(e.key==='ArrowUp'?step:e.key==='ArrowDown'?-step:0);layout();
+    }else if(e.key==='+'||e.key==='='){e.preventDefault();zoom(scale*1.2)}
+    else if(e.key==='-'){e.preventDefault();zoom(scale/1.2)}
+    else if(e.key==='0'){e.preventDefault();reset()}
+  });
+  viewport.addEventListener('pointerdown',e=>{
+    if(e.target.closest('.atlas-pin'))return;
+    if(e.pointerType==='mouse'&&e.button!==0)return;
+    activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    try{viewport.setPointerCapture(e.pointerId)}catch(_){}
+    if(activePointers.size===1){dragMoved=false;dragStart={x:e.clientX,y:e.clientY,tx,ty};viewport.classList.add('is-dragging')}
+    else if(activePointers.size===2){
+      const [a,b]=[...activePointers.values()];
+      pinch={distance:Math.hypot(a.x-b.x,a.y-b.y),scale};
+      dragStart=null;
+    }
+  });
+  viewport.addEventListener('pointermove',e=>{
+    if(!activePointers.has(e.pointerId))return;
+    activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(activePointers.size>=2){
+      const [a,b]=[...activePointers.values()];
+      const d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(pinch&&pinch.distance>0)zoom(pinch.scale*d/pinch.distance,(a.x+b.x)/2,(a.y+b.y)/2);
+      dragMoved=true;return;
+    }
+    if(dragStart){tx=dragStart.tx+e.clientX-dragStart.x;ty=dragStart.ty+e.clientY-dragStart.y;
+      if(Math.abs(e.clientX-dragStart.x)+Math.abs(e.clientY-dragStart.y)>5)dragMoved=true;layout();}
+  });
+  function release(e){
+    activePointers.delete(e.pointerId);
+    try{if(viewport.hasPointerCapture(e.pointerId))viewport.releasePointerCapture(e.pointerId)}catch(_){}
+    if(activePointers.size<2)pinch=null;
+    if(activePointers.size===0){dragStart=null;viewport.classList.remove('is-dragging');}
+    else{const p=[...activePointers.values()][0];dragStart={x:p.x,y:p.y,tx,ty}}
+  }
+  viewport.addEventListener('pointerup',release);viewport.addEventListener('pointercancel',release);
+  addEventListener('resize',()=>{scale=1;reset()},{passive:true});
+  renderFilters();renderPins();renderDirectory();renderDetail();
+  requestAnimationFrame(()=>{reset()});
 })();
 
 </script>
