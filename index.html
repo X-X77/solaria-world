@@ -398,30 +398,81 @@ html.intro-done .hero .in{animation:heroIn 1.6s cubic-bezier(.2,.7,.2,1) both}
 .gate .gm:hover{color:#E6E0D2}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+
+/* Solaria cinematic opening v2 — isolated from the rest of the site */
+#intro.op-v2{background:#03060c;isolation:isolate}
+#intro.op-v2 .op-stage{position:absolute;inset:0;overflow:hidden;z-index:1}
+#intro.op-v2 .op-shot{position:absolute;inset:0;opacity:0;transform:scale(1.035);transition:opacity .7s ease,transform 5s ease;will-change:opacity,transform}
+#intro.op-v2 .op-shot.active{opacity:1;transform:scale(1.105)}
+#intro.op-v2 .op-shot.fast{transition:opacity .16s ease,transform 1.3s ease}
+#intro.op-v2 .op-shot img{width:100%;height:100%;object-fit:cover;display:block}
+#intro.op-v2 .op-shot.eyes img{object-position:50% 50%}
+#intro.op-v2 .op-shot.beast img{object-position:50% 48%}
+#intro.op-v2 .op-shot.nox img{object-position:50% 31%}
+#intro.op-v2 .op-shot.slash img{object-position:50% 50%}
+#intro.op-v2 .op-shot.cassian img{object-position:50% 35%}
+#intro.op-v2 .op-grade{position:absolute;inset:0;z-index:2;background:linear-gradient(0deg,rgba(2,6,15,.83),transparent 32%,transparent 65%,rgba(2,6,15,.3)),radial-gradient(ellipse at 50% 50%,transparent 24%,rgba(2,6,15,.35) 100%);pointer-events:none}
+#intro.op-v2 .op-snow{position:absolute;inset:-30%;z-index:3;pointer-events:none;opacity:.58;background-image:radial-gradient(1px 1px at 16px 28px,rgba(241,247,255,.9) 98%,transparent),radial-gradient(2px 2px at 82px 94px,rgba(223,234,254,.55) 98%,transparent);background-size:147px 123px,221px 197px;animation:op-fall 9s linear infinite}
+@keyframes op-fall{to{transform:translate(-4%,10%)}}
+#intro.op-v2 .op-stage.nox-time .op-snow{opacity:.14}
+#intro.op-v2 .op-stage.slash-time .op-snow{opacity:.8}
+#intro.op-v2 .op-light{position:absolute;inset:0;background:#e6f1ff;z-index:4;pointer-events:none;opacity:0;transition:opacity .18s ease}
+#intro.op-v2 .op-light.on{opacity:.85;transition:opacity .08s ease}
+#intro.op-v2 .op-beam{position:absolute;z-index:3;top:49%;left:50%;width:165vmax;height:6px;transform:translate(-50%,-50%) rotate(-17deg) scaleX(0);background:linear-gradient(90deg,transparent,#e9f5ff 12%,white 50%,#a4cbff 88%,transparent);filter:drop-shadow(0 0 12px #9bc8ff) drop-shadow(0 0 25px #528dcb);opacity:0;transform-origin:center;pointer-events:none}
+#intro.op-v2 .op-beam.on{opacity:1;transform:translate(-50%,-50%) rotate(-17deg) scaleX(1);transition:transform .18s ease,opacity .12s ease}
+#intro.op-v2 .op-caption{position:absolute;z-index:8;left:50%;bottom:calc(12vh + 6vh);width:min(96%,950px);transform:translateX(-50%) translateY(8px);text-align:center;opacity:0;transition:opacity .35s ease,transform .4s ease;pointer-events:none;font-family:var(--disp);font-weight:700;font-size:clamp(24px,4vw,46px);line-height:1.6;letter-spacing:.08em;color:#f5f0e8;text-shadow:0 3px 18px #02060d,0 0 32px rgba(174,205,241,.5);word-break:keep-all}
+#intro.op-v2 .op-caption.on{opacity:1;transform:translateX(-50%) translateY(0)}
+#intro.op-v2 .op-caption.beast-line{color:#ffdfd7;text-shadow:0 2px 16px #160106,0 0 26px rgba(218,63,57,.55)}
+#intro.op-v2 .op-caption.nox-line{color:#f9e3de;text-shadow:0 2px 16px #100515,0 0 24px rgba(201,101,155,.52)}
+#intro.op-v2 .op-title{position:absolute;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;opacity:0;pointer-events:none;transition:opacity .8s ease;background:radial-gradient(ellipse at center,rgba(5,9,17,.38),rgba(5,9,17,.9) 90%)}
+#intro.op-v2 .op-title.on{opacity:1}
+#intro.op-v2 .op-title b{font-family:var(--disp);font-size:clamp(58px,12vw,146px);color:#f5dfac;text-shadow:0 0 42px rgba(210,172,103,.25);letter-spacing:.07em}
+#intro.op-v2 .op-title small{font-family:var(--lat);font-size:clamp(11px,1.4vw,15px);color:#d4bd86;letter-spacing:.4em}
+#intro.op-v2 .op-gate{position:absolute;inset:0;z-index:11;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:20px;padding:20px;background:radial-gradient(ellipse at 50% 53%,rgba(41,54,80,.22),transparent 72%),rgba(2,5,11,.91);transition:opacity .8s ease}
+#intro.op-v2 .op-gate.out{opacity:0;pointer-events:none}
+#intro.op-v2 .op-gate .op-brand{font-family:var(--lat);letter-spacing:.55em;font-size:13px;color:#d4bb84}
+#intro.op-v2 .op-start{font-family:var(--disp);font-size:clamp(25px,4vw,42px);font-weight:700;color:#f5ecde;padding:12px 28px;border:1px solid rgba(217,184,108,.36);background:rgba(217,184,108,.05);transition:background .25s,border-color .25s}
+#intro.op-v2 .op-start:hover{background:rgba(217,184,108,.13);border-color:#dfc587}
+#intro.op-v2 .op-gate p{font-size:14px;color:#abb5c7;margin:0}
+#intro.op-v2 .op-silent{font-size:14px;font-weight:600;color:#c3c9d3;text-decoration:underline;text-underline-offset:5px;margin-top:3vh;padding:8px}
+#intro.op-v2 .op-skip{position:absolute;z-index:15;right:clamp(14px,3vw,30px);bottom:calc(11vh + 14px);font-size:14px;font-weight:600;color:#ddd7cc;padding:11px 16px;border:1px solid rgba(217,184,108,.4);background:rgba(5,9,18,.72)}
+#intro.op-v2 .op-letterbox{position:absolute;left:0;right:0;height:11vh;z-index:10;background:#000;pointer-events:none}
+#intro.op-v2 .op-letterbox.top{top:0}
+#intro.op-v2 .op-letterbox.bottom{bottom:0}
+@media(max-width:700px){
+ #intro.op-v2 .op-shot.eyes img{object-position:50% 50%}
+ #intro.op-v2 .op-shot.beast img{object-position:50% 46%}
+ #intro.op-v2 .op-shot.nox img{object-position:50% 33%}
+ #intro.op-v2 .op-shot.cassian img{object-position:49% 38%}
+ #intro.op-v2 .op-caption{bottom:calc(11vh + 8vh);font-size:clamp(22px,6vw,30px);width:92%}
+ #intro.op-v2 .op-gate{padding:18px}
+ #intro.op-v2 .op-title b{font-size:clamp(50px,15vw,100px)}
+}
+@media(prefers-reduced-motion:reduce){#intro.op-v2 .op-snow{animation:none}#intro.op-v2 .op-shot,#intro.op-v2 .op-caption,#intro.op-v2 .op-title{transition:none}}
+
 </style>
 </head>
 <body>
-<div id="intro">
-  <div class="stage" id="stage">
-    <div class="fo" id="fo"><div class="cam"><img src="img/op_forest.jpg" alt=""><div class="fe" id="fe"><i></i><i></i></div></div></div>
-    <div class="redin" id="redin"></div>
-    <div class="pov" id="pov"><div class="cam"><img src="img/op_nox.jpg" alt=""></div><div class="tint"></div><div class="vig"></div><div class="grain"></div></div>
-    <div class="slw"><div class="sl8" id="sl8"></div></div>
-    <div class="dk" id="dk"></div>
-    <div class="ln" id="ln"><b>움직이지 마라.</b></div>
+<div id="intro" class="op-v2" aria-label="솔라리아 오프닝">
+  <div class="op-stage" id="opStage" aria-hidden="true">
+    <div class="op-shot eyes active"><img src="img/op/beast-eyes.webp" data-fallback="img/op_forest.jpg" fetchpriority="high" alt=""></div>
+    <div class="op-shot beast"><img src="img/op/beast-approach.webp" data-fallback="img/op_forest.jpg" alt=""></div>
+    <div class="op-shot nox"><img src="img/op/nox.webp" data-fallback="img/op_nox.jpg" alt=""></div>
+    <div class="op-shot slash fast"><img src="img/op/slash.webp" data-fallback="img/op_forest.jpg" alt=""></div>
+    <div class="op-shot cassian"><img src="img/op/cassian.webp" data-fallback="img/op_k.jpg" alt=""></div>
+    <div class="op-grade"></div><div class="op-snow"></div>
+    <div class="op-beam" id="opBeam"></div><div class="op-light" id="opLight"></div>
+    <div class="op-title" id="opTitle"><small>IMPERIUM SOLARIAE</small><b>솔라리아</b></div>
   </div>
-  <canvas id="snow"></canvas>
-  <div class="sub2" id="sub2"><span>『</span><span>ㅊ,</span><span>ㅏ</span><span>ㅈ</span><span>았</span><span>다</span><span>』</span></div>
-  <div class="sub" id="sub"><span>…</span><span>…</span><span>드디어.</span></div>
-  <div class="wf" id="wf"></div>
-  <div class="gate" id="gate">
-    <div class="gl" translate="no">SOLARIA</div>
-    <button class="gt" id="gstart" type="button">화면을 눌러 시작</button>
-    <div class="gs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor" stroke="none"/><path d="M15.5 9a4 4 0 0 1 0 6"/><path d="M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>소리를 켜고 감상하세요</div>
-    <button class="gm" id="gmute" type="button">소리 없이 보기</button>
+  <div class="op-caption" id="opCaption" role="status" aria-live="off"></div>
+  <div class="op-gate" id="opGate">
+    <div class="op-brand" translate="no">SOLARIA</div>
+    <button class="op-start" id="opStart" type="button">오프닝 시작하기</button>
+    <p>소리와 함께 감상하면 더 좋습니다.</p>
+    <button class="op-silent" id="opSilent" type="button">소리 없이 보기</button>
   </div>
-  <div class="lb t"></div><div class="lb b"></div>
-  <button class="skip" id="skip">건너뛰기</button>
+  <div class="op-letterbox top"></div><div class="op-letterbox bottom"></div>
+  <button class="op-skip" id="opSkip" type="button">건너뛰기</button>
 </div>
 
 <header class="nav" id="nav">
@@ -865,6 +916,8 @@ const SND=(function(){
       if(p&&p.then)p.then(()=>{clearTimeout(to);if(late)op.pause();else go()}).catch(()=>{clearTimeout(to);go()});else{clearTimeout(to);go()}},
     silent(){on=false;save(false);ui()},
     introEnd(){if(!on)return;if(!op.paused)opOff(1.4);bgOn(3.5)},
+    openingTime(){return op.currentTime||0;},
+    openingPlaying(){return !op.paused&&!op.ended;},
     arm(){if(pref()!=='1')return;
       const h=e=>{if(btn&&btn.contains(e.target))return;disarm();on=true;ui();bgOn(2.5)};
       disarm=()=>{removeEventListener('click',h,true);removeEventListener('keydown',h,true);disarm=null};
@@ -884,55 +937,90 @@ const PLAY_URL='https://caveduck.io/character-info/94c25e1f-961a-4ff0-a4a5-e9e7d
 
 document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{sessionStorage.removeItem('sol-intro')}catch(e){}location.href=location.pathname});
 
-/* opening: tap to start, found, through the eyes */
+/* Opening v2: visual timing follows the real opening audio clock. */
 (function(){
-  const box=document.getElementById('intro');const R=document.documentElement;
-  if(!box||getComputedStyle(box).display==='none'){if(box)box.remove();R.classList.add('intro-done');SND.arm();return}
-  R.classList.add('intro-on');SND.preload();
-  const T=[];const at=(ms,f)=>T.push(setTimeout(f,ms));let run=true,started=false,ended=false;const $=id=>document.getElementById(id);
-  /* snow */
-  const cv=$('snow'),cx=cv.getContext('2d');let W,H;const fl=[];let wind=1;
-  function size(){const d=Math.min(devicePixelRatio||1,2);W=cv.width=innerWidth*d;H=cv.height=innerHeight*d}
-  size();addEventListener('resize',size);
-  for(let i=0;i<60;i++){const z=Math.random();fl.push({x:Math.random()*1.2,y:Math.random(),r:.6+z*2.2,v:.001+z*.003,w:Math.random()*6.28,a:.07+z*.3,b:z<.35?4:0})}
-  const t0=performance.now();
-  (function loop(t){if(!run)return;const f0=Math.min(1,(t-t0)/1600);cx.clearRect(0,0,W,H);const k=W/innerWidth;
-    for(const f of fl){f.y+=f.v*wind;f.x-=f.v*.4*wind;f.w+=.02;if(f.y>1.03||f.x<-.03){f.y=-.03;f.x=Math.random()*1.25}
-      cx.globalAlpha=f.a*f0;cx.shadowColor='#DCE4F7';cx.shadowBlur=(f.b+f.r)*k;cx.fillStyle='#E6EBF8';cx.beginPath();cx.arc((f.x+Math.sin(f.w)*.006)*W,f.y*H,f.r*k,0,6.283);cx.fill()}
-    requestAnimationFrame(loop)})(t0);
-  const fo=$('fo'),fe=$('fe'),red=$('redin'),pov=$('pov'),sl=$('sl8'),st=$('stage'),sub=$('sub'),snow=$('snow'),gate=$('gate');
-  function timeline(){
-    at(80,()=>box.classList.add('cine'));
-    at(150,()=>fo.classList.add('on'));
-    at(1300,()=>fe.classList.add('on'));
-    at(2700,()=>{fe.classList.add('blink');setTimeout(()=>fe.classList.remove('blink'),300)});
-    const s2=$('sub2'),s2s=[...s2.querySelectorAll('span')];
-    s2s.forEach((s,i)=>{s.style.cssText=`--x:${(Math.random()*3-1.5).toFixed(1)}px;--y:${(Math.random()*3-1.5).toFixed(1)}px`;at(3000+i*150,()=>s.classList.add('on'))});
-    at(4500,()=>{s2.classList.add('off');fo.classList.add('rush');snow.classList.add('hide')});
-    at(4800,()=>red.classList.add('on'));
-    at(5550,()=>{fo.style.display='none';pov.classList.add('on');red.classList.add('off')});
-    const ss=[...sub.querySelectorAll('span')];
-    at(6800,()=>ss[0].classList.add('on'));at(7200,()=>ss[1].classList.add('on'));at(7800,()=>ss[2].classList.add('on'));
-    at(9300,()=>sl.classList.add('go'));
-    at(9440,()=>{$('wf').classList.add('on');st.classList.add('shake');pov.classList.add('cut');sub.classList.add('off');snow.classList.remove('hide');wind=5});
-    at(9600,()=>sl.classList.add('fade'));
-    at(10100,()=>{wind=1.4;$('dk').classList.add('on')});
-    at(10600,()=>$('ln').classList.add('on'));
-    at(12800,()=>{$('dk').classList.add('off');$('ln').classList.add('off')});
-    at(13400,end);
+  const box=document.getElementById('intro'), R=document.documentElement;
+  if(!box)return;
+  if(getComputedStyle(box).display==='none'){
+    box.remove();R.classList.add('intro-done');SND.arm();return;
   }
-  function start(sound){if(started)return;started=true;gate.classList.add('out');
-    if(sound)SND.opening(timeline);else{SND.silent();timeline()}}
-  gate.addEventListener('click',e=>{if(e.target.closest('#gmute'))return;start(true)});
-  $('gmute').addEventListener('click',e=>{e.stopPropagation();start(false)});
-  addEventListener('keydown',e=>{if(!started&&!ended&&(e.key==='Enter'||e.key===' ')&&!(e.target.closest&&e.target.closest('button:not(#gstart)'))){e.preventDefault();start(true)}});
-  function end(){if(ended)return;ended=true;T.forEach(clearTimeout);box.classList.add('out');R.classList.remove('intro-on');R.classList.add('intro-done');
+  R.classList.add('intro-on');
+  SND.preload();
+  const gate=document.getElementById('opGate');
+  const stage=document.getElementById('opStage');
+  const shots=[...stage.querySelectorAll('.op-shot')];
+  const caption=document.getElementById('opCaption');
+  const beam=document.getElementById('opBeam');
+  const light=document.getElementById('opLight');
+  const title=document.getElementById('opTitle');
+  let started=false,ended=false,withSound=false,startAt=0,raf=0,shot=-1,spoken='';
+  /* Timeline seconds, easy to fine-tune if the Suno mix is revised. */
+  const C={beast:6.9,nox:10.25,slash:12.7,cassian:14.3,
+    beastLine:[7.0,9.7],noxLine:[10.15,12.5],cassianLine:[16.05,18.8],
+    flash:[12.83,13.15],beam:[12.70,13.65],title:19.05,end:19.94};
+  stage.querySelectorAll('img[data-fallback]').forEach(img=>{
+    const fallback=()=>{if(img.dataset.fallback){img.src=img.dataset.fallback;delete img.dataset.fallback}};
+    img.addEventListener('error',fallback,{once:true});
+    if(img.complete&&!img.naturalWidth)fallback();
+  });
+  function changeLine(s,cls){
+    const key=s+'|'+cls;
+    if(spoken===key)return;
+    spoken=key;caption.textContent=s;caption.className='op-caption'+(s?' on '+cls:'');
+  }
+  function paint(t){
+    const next=t<C.beast?0:t<C.nox?1:t<C.slash?2:t<C.cassian?3:4;
+    if(next!==shot){
+      shot=next;shots.forEach((el,i)=>el.classList.toggle('active',i===shot));
+      stage.classList.toggle('nox-time',shot===2);
+      stage.classList.toggle('slash-time',shot===3);
+    }
+    light.classList.toggle('on',t>=C.flash[0]&&t<C.flash[1]);
+    beam.classList.toggle('on',t>=C.beam[0]&&t<C.beam[1]);
+    title.classList.toggle('on',t>=C.title);
+    if(t>=C.beastLine[0]&&t<C.beastLine[1])changeLine('『ㅊ,ㅏㅈ았다』','beast-line');
+    else if(t>=C.noxLine[0]&&t<C.noxLine[1])changeLine('드디어.','nox-line');
+    else if(t>=C.cassianLine[0]&&t<C.cassianLine[1])changeLine('움직이지 마라.','cassian-line');
+    else changeLine('','');
+  }
+  function frame(now){
+    if(ended)return;
+    const elapsed=(now-startAt)/1000;
+    const audioIsRunning=withSound&&SND.openingPlaying();
+    const t=audioIsRunning?SND.openingTime():elapsed;
+    paint(Math.min(t,C.end));
+    if(t>=C.end||elapsed>24){finish();return;}
+    raf=requestAnimationFrame(frame);
+  }
+  function begin(sound){
+    withSound=sound;startAt=performance.now();
+    gate.classList.add('out');
+    paint(0);
+    raf=requestAnimationFrame(frame);
+  }
+  function start(sound){
+    if(started||ended)return;
+    started=true;
+    if(sound)SND.opening(()=>begin(true));
+    else{SND.silent();begin(false)}
+  }
+  function finish(){
+    if(ended)return;
+    ended=true;cancelAnimationFrame(raf);
+    box.classList.add('out');R.classList.remove('intro-on');R.classList.add('intro-done');
     try{sessionStorage.setItem('sol-intro','1')}catch(e){}
     if(started)SND.introEnd();else SND.arm();
-    setTimeout(()=>{run=false;box.remove()},1250)}
-  $('skip').onclick=end;
-  addEventListener('keydown',e=>{if(e.key==='Escape')end()});
+    setTimeout(()=>box.remove(),1250);
+  }
+  document.getElementById('opStart').addEventListener('click',()=>start(true));
+  document.getElementById('opSilent').addEventListener('click',()=>start(false));
+  document.getElementById('opSkip').addEventListener('click',finish);
+  addEventListener('keydown',e=>{
+    if(e.key==='Escape')finish();
+    else if(!started&&!ended&&(e.key==='Enter'||e.key===' ')&&!['BUTTON','A'].includes(document.activeElement?.tagName)){e.preventDefault();start(true);}
+  });
 })();
+
 </script>
 </body>
 </html>
