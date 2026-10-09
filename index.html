@@ -451,6 +451,10 @@ html.intro-done .hero .in{animation:heroIn 1.6s cubic-bezier(.2,.7,.2,1) both}
 @media(prefers-reduced-motion:reduce){#intro.op-v2 .op-snow{animation:none}#intro.op-v2 .op-shot,#intro.op-v2 .op-caption,#intro.op-v2 .op-title{transition:none}}
 
 
+/* Monster shot: hold the red-eye discovery through the first spoken word,
+   then reveal the body as the phrase resolves. */
+#intro.op-v2 .op-shot.eyes{transition:opacity .65s ease,transform 3.4s ease}
+#intro.op-v2 .op-shot.beast{transition:opacity .45s ease,transform 2.6s ease}
 /* Opening pacing revision: fast handoff to the existing hero title */
 #intro.op-v2.out{transition:opacity .55s ease}
 html.intro-done .hero .in{animation-duration:.7s}
@@ -964,8 +968,8 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
   let started=false,ended=false,withSound=false,startAt=0,raf=0,shot=-1,spoken='';
   /* Timeline seconds, easy to fine-tune if the Suno mix is revised. */
   const AUDIO_START=6.05; // skip the long instrumental prelude, keep all three spoken lines
-  const C={beast:7.18,nox:10.55,slash:12.28,cassian:13.45,
-    beastLine:[7.32,9.10],noxLine:[10.72,11.90],cassianLine:[16.20,18.55],
+  const C={beast:8.42,nox:10.55,slash:12.28,cassian:13.45,
+    beastLine:[7.24,9.38],noxLine:[10.72,11.90],cassianLine:[16.20,18.55],
     flash:[12.41,12.64],beam:[12.32,13.05],end:19.80};
   stage.querySelectorAll('img[data-fallback]').forEach(img=>{
     const fallback=()=>{if(img.dataset.fallback){img.src=img.dataset.fallback;delete img.dataset.fallback}};
