@@ -772,6 +772,20 @@ footer{background:#080D16}
 @media(max-width:400px){.atlas-directory{grid-template-columns:1fr}.atlas-controls button{width:35px;height:35px}}
 @media(prefers-reduced-motion:reduce){.atlas-pin-dot,.atlas-pin-label{transition:none}}
 
+
+/* Atlas alignment revision: whole map initially visible, no artificial mobile crop. */
+.atlas-viewport{aspect-ratio:3/2}
+.atlas-scene{width:100%;aspect-ratio:3/2}
+.atlas-directory .atlas-unmapped{display:block;margin-left:auto;padding-left:9px;font-size:10px;font-weight:500;color:#9ca7b4;white-space:nowrap}
+.atlas-accuracy{color:#C4C4BF}
+@media(max-width:760px){
+ .atlas-viewport{aspect-ratio:3/2}
+ .atlas-scene{width:100%;aspect-ratio:3/2}
+ .atlas-directory{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .atlas-dir-entry{flex-wrap:wrap;align-content:center;gap:6px}
+ .atlas-directory .atlas-unmapped{width:100%;padding-left:14px;margin-left:0}
+}
+
 </style>
 </head>
 <body>
@@ -1391,71 +1405,88 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
 })();
 
 
-/* Atlas directory & precise relationship to world lore; pin coordinates are editable approximate map anchors. */
+/* Atlas: markers aligned to established Stage 7 map text positions.
+   Unlocated places appear in the directory only, rather than false map pins. */
 (function(){
   const root=document.getElementById('atlasExplorer');if(!root)return;
   const viewport=document.getElementById('atlasViewport'),scene=document.getElementById('atlasScene'),pins=document.getElementById('atlasPins');
   const filters=document.getElementById('atlasFilters'),detail=document.getElementById('atlasDetail'),directory=document.getElementById('atlasDirectory'),count=document.getElementById('atlasCount');
-  // [region, place index in REGIONS[region].places, x%, y%, main marker]. Exact text comes from established REGIONS data.
-  const locations=[
-    ['north',0,44,35,1],['north',1,49,40,1],['north',2,53,42,0],['north',3,39,25,1],['north',4,48,50,0],
-    ['capital',0,50,61,1],['capital',1,55,63,0],['capital',2,46,63,0],['capital',3,62,66,0],['capital',4,54,72,0],
-    ['south',0,53,81,1],['south',1,61,83,0],['south',2,65,75,0],['south',3,52,91,0],
-    ['east',0,76,50,1],['east',1,82,54,0],['east',2,73,58,0],['east',3,82,65,0],['east',4,72,68,0],
-    ['west',0,20,54,1],['west',1,31,59,0],['west',2,24,69,0],['west',3,13,56,0],
-    ['rift',0,12,50,0],['rift',1,23,30,1],['rift',2,9,39,0]
-  ].map(([region,index,x,y,main])=>({id:region+'-'+index,region,index,x,y,main,name:REGIONS[region].places[index][0],desc:REGIONS[region].places[index][1]}));
+  // Coordinates are percentages of the 3:2 source map, cross-checked against the established map layout.
+  // Index refers directly to REGIONS[region].places. null means no defensible exact location on artwork.
+  const anchors={
+    'north-0':[37.7,38.2],'north-1':[39.7,46.1],'north-2':[42.9,39.1],
+    'north-3':[33.1,25.8],'north-4':[47.7,44.3],
+    'capital-0':[49.7,55.4],
+    'south-0':[70.5,85.4],'south-2':[42.9,72.0],
+    'east-0':[71.9,40.8],
+    'west-0':[22.3,62.5],
+    'rift-0':[11,54],'rift-1':[22,33]
+  };
+  const allRegions=['north','capital','south','east','west','rift'];
+  const locations=allRegions.flatMap(region=>REGIONS[region].places
+    .map(([name,desc],index)=>{
+      const id=region+'-'+index,xy=anchors[id]||null;
+      return {id,region,index,name,desc,x:xy?xy[0]:null,y:xy?xy[1]:null,mapped:!!xy};
+    }).filter(p=>p.name!=='???'));
   const byId=new Map(locations.map(p=>[p.id,p]));
-  const regionNames={all:'주요 거점',north:'북부',capital:'황도',south:'남부',east:'동부',west:'서부',rift:'균열'};
+  const regionNames={all:'전체 지도',north:'북부',capital:'황도',south:'남부',east:'동부',west:'서부',rift:'균열'};
   const colors={north:'#A6C5DA',capital:'#E3C57E',south:'#7CBFC5',east:'#9AC6A3',west:'#DAAA7E',rift:'#B9A2F5'};
-  const html=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  let selected='north-1',filter='all',scale=1,tx=0,ty=0,dragMoved=false;
-  const activePointers=new Map();let pinch=null,dragStart=null;
-  function visible(p){return filter==='all'?!!p.main:p.region===filter}
+  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  let selected='north-1',filter='all',scale=1,tx=0,ty=0,dragStart=null,pinch=null;
+  const activePointers=new Map();
+  function visible(p){return p.mapped&&(filter==='all'||p.region===filter)}
   function layout(){
     const w=scene.offsetWidth*scale,h=scene.offsetHeight*scale,vw=viewport.clientWidth,vh=viewport.clientHeight;
     tx=w<=vw?(vw-w)/2:Math.max(vw-w,Math.min(0,tx));
     ty=h<=vh?(vh-h)/2:Math.max(vh-h,Math.min(0,ty));
     scene.style.transform='translate('+tx+'px,'+ty+'px) scale('+scale+')';
   }
+  function reset(){
+    scale=1;tx=0;ty=0;layout();
+  }
   function focusPin(p){
-    if(!p)return;
-    const w=scene.offsetWidth,h=scene.offsetHeight;
-    tx=viewport.clientWidth*.5-(p.x/100)*w*scale;
-    ty=viewport.clientHeight*.48-(p.y/100)*h*scale;
+    if(!p||!p.mapped)return;
+    // On explicit selection, zoom enough to show the landmark but preserve its surroundings.
+    scale=Math.max(scale,window.innerWidth<=760?1.8:1.35);
+    tx=viewport.clientWidth*.5-(p.x/100)*scene.offsetWidth*scale;
+    ty=viewport.clientHeight*.5-(p.y/100)*scene.offsetHeight*scale;
     layout();
   }
   function zoom(next,clientX,clientY){
-    next=Math.min(3.5,Math.max(.78,next));
+    next=Math.min(4,Math.max(1,next));
     const r=viewport.getBoundingClientRect();
     const x=(clientX??(r.left+r.width/2))-r.left,y=(clientY??(r.top+r.height/2))-r.top;
     const anchorX=(x-tx)/scale,anchorY=(y-ty)/scale;
     tx=x-anchorX*next;ty=y-anchorY*next;scale=next;layout();
   }
-  function reset(){scale=1;const p=byId.get(selected);if(innerWidth<=760&&p)focusPin(p);else{tx=0;ty=0;layout()}}
   function renderFilters(){
-    filters.innerHTML=Object.entries(regionNames).map(([k,v])=>'<button type="button" class="atlas-filter" data-region="'+k+'" aria-pressed="'+(filter===k)+'">'+v+'</button>').join('');
+    filters.innerHTML=Object.entries(regionNames).map(([k,v])=>
+      '<button type="button" class="atlas-filter" data-region="'+k+'" aria-pressed="'+(filter===k)+'">'+v+'</button>').join('');
   }
   function renderPins(){
-    pins.innerHTML=locations.filter(visible).map(p=>'<button type="button" class="atlas-pin'+(p.id===selected?' selected':'')+'" data-place="'+p.id+'" style="left:'+p.x+'%;top:'+p.y+'%;--pin:'+colors[p.region]+'" aria-label="'+html(p.name)+' 위치" title="'+html(p.name)+'"><span class="atlas-pin-dot"></span><span class="atlas-pin-label">'+html(p.name)+'</span></button>').join('');
+    pins.innerHTML=locations.filter(visible).map(p=>
+      '<button type="button" class="atlas-pin'+(p.id===selected?' selected':'')+'" data-place="'+p.id+'" style="left:'+p.x+'%;top:'+p.y+'%;--pin:'+colors[p.region]+'" aria-label="'+esc(p.name)+' 위치" title="'+esc(p.name)+'"><span class="atlas-pin-dot"></span><span class="atlas-pin-label">'+esc(p.name)+'</span></button>').join('');
   }
   function renderDirectory(){
     const arr=filter==='all'?locations:locations.filter(p=>p.region===filter);
-    count.textContent=arr.length+'개 장소';
-    const groups=filter==='all'?['north','capital','south','east','west','rift']:[filter];
+    count.textContent=arr.length+'곳 · 표식 '+arr.filter(x=>x.mapped).length+'곳';
+    const groups=filter==='all'?allRegions:[filter];
     directory.innerHTML=groups.map(k=>{
       const subset=arr.filter(p=>p.region===k);
-      return '<h5>'+regionNames[k]+'</h5>'+subset.map(p=>'<button type="button" class="atlas-dir-entry" data-place="'+p.id+'" style="--pin:'+colors[k]+'" aria-current="'+(selected===p.id)+'">'+html(p.name)+'</button>').join('');
+      return '<h5>'+regionNames[k]+'</h5>'+subset.map(p=>
+        '<button type="button" class="atlas-dir-entry" data-place="'+p.id+'" style="--pin:'+colors[k]+'" aria-current="'+(selected===p.id)+'">'+
+        esc(p.name)+(p.mapped?'':' <small class="atlas-unmapped">세부 위치 미확정</small>')+'</button>').join('');
     }).join('');
   }
   function renderDetail(){
     const p=byId.get(selected);if(!p)return;
     const peers=regionPeople(p.region).filter(q=>q.main&&!q.sealed).slice(0,3).map(q=>q.name).join(' · ');
     detail.style.setProperty('--atlas-accent',colors[p.region]);
-    detail.innerHTML='<div class="atlas-detail-kicker">'+html(REGIONS[p.region].latin)+' / '+String(p.index+1).padStart(2,'0')+'</div>'+
-      '<h4>'+html(p.name)+'</h4><p class="atlas-detail-region">'+html(REGIONS[p.region].full)+' · 개략 위치</p>'+
-      '<p>'+html(p.desc)+'</p>'+
-      (peers?'<div class="atlas-related"><b>관련 주요 인물</b><div>'+html(peers)+'</div></div>':'')+
+    detail.innerHTML='<div class="atlas-detail-kicker">'+esc(REGIONS[p.region].latin)+' / '+String(p.index+1).padStart(2,'0')+'</div>'+
+      '<h4>'+esc(p.name)+'</h4><p class="atlas-detail-region">'+esc(REGIONS[p.region].full)+
+      (p.mapped?' · 지도상 개략 위치':' · 세부 위치 미확정')+'</p>'+
+      '<p>'+esc(p.desc)+'</p>'+
+      (peers?'<div class="atlas-related"><b>관련 주요 인물</b><div>'+esc(peers)+'</div></div>':'')+
       '<div class="atlas-actions"><button type="button" id="atlasGoRegion">권역 기록 보기 ↗</button>'+
       (peers?'<button type="button" id="atlasGoPeople">인물 기록 보기 ↗</button>':'')+'</div>';
     detail.querySelector('#atlasGoRegion').onclick=()=>{setRegion(p.region);document.getElementById('regions').scrollIntoView({behavior:'smooth',block:'start'});};
@@ -1464,23 +1495,30 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
   }
   function selectPlace(id,focus=true){
     const p=byId.get(id);if(!p)return;
-    if(!visible(p)){filter=p.region;renderFilters();}
+    if(filter!=='all'&&filter!==p.region){filter=p.region;renderFilters()}
     selected=id;renderPins();renderDirectory();renderDetail();
-    if(focus)focusPin(p);
+    if(focus){
+      if(p.mapped)focusPin(p);
+      else {
+        // Never place an invented marker; navigate only to that region's identified anchor.
+        const anchor=locations.find(x=>x.region===p.region&&x.mapped);
+        if(anchor)focusPin(anchor);
+      }
+    }
   }
   function selectRegion(k){
     if(!regionNames[k])return;
     filter=k;renderFilters();
-    const p=filter==='all'?byId.get('north-1'):locations.find(x=>x.region===k&&x.main)||locations.find(x=>x.region===k);
-    selectPlace(p.id,true);
-    if(filter==='all'&&innerWidth>760)reset();
+    if(filter==='all'){selected='north-1';renderPins();renderDirectory();renderDetail();reset();return}
+    const p=locations.find(x=>x.region===k&&x.mapped)||locations.find(x=>x.region===k);
+    if(p)selectPlace(p.id,true);
   }
   filters.addEventListener('click',e=>{const b=e.target.closest('[data-region]');if(b)selectRegion(b.dataset.region)});
   pins.addEventListener('click',e=>{const b=e.target.closest('[data-place]');if(b){e.preventDefault();selectPlace(b.dataset.place,false)}});
   directory.addEventListener('click',e=>{const b=e.target.closest('[data-place]');if(b)selectPlace(b.dataset.place,true)});
   document.getElementById('atlasZoomIn').onclick=()=>zoom(scale*1.28);
   document.getElementById('atlasZoomOut').onclick=()=>zoom(scale/1.28);
-  document.getElementById('atlasReset').onclick=()=>{filter='all';renderFilters();selected='north-1';renderPins();renderDetail();renderDirectory();scale=1;tx=0;ty=0;layout()};
+  document.getElementById('atlasReset').onclick=()=>{filter='all';renderFilters();selected='north-1';renderPins();renderDirectory();renderDetail();reset()};
   viewport.addEventListener('wheel',e=>{if(!e.ctrlKey)return;e.preventDefault();zoom(scale*(e.deltaY<0?1.12:.89),e.clientX,e.clientY)},{passive:false});
   viewport.addEventListener('keydown',e=>{
     const step=42;
@@ -1496,36 +1534,32 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     if(e.pointerType==='mouse'&&e.button!==0)return;
     activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
     try{viewport.setPointerCapture(e.pointerId)}catch(_){}
-    if(activePointers.size===1){dragMoved=false;dragStart={x:e.clientX,y:e.clientY,tx,ty};viewport.classList.add('is-dragging')}
+    if(activePointers.size===1){dragStart={x:e.clientX,y:e.clientY,tx,ty};viewport.classList.add('is-dragging')}
     else if(activePointers.size===2){
-      const [a,b]=[...activePointers.values()];
-      pinch={distance:Math.hypot(a.x-b.x,a.y-b.y),scale};
-      dragStart=null;
+      const [a,b]=[...activePointers.values()];pinch={distance:Math.hypot(a.x-b.x,a.y-b.y),scale};dragStart=null;
     }
   });
   viewport.addEventListener('pointermove',e=>{
     if(!activePointers.has(e.pointerId))return;
     activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
     if(activePointers.size>=2){
-      const [a,b]=[...activePointers.values()];
-      const d=Math.hypot(a.x-b.x,a.y-b.y);
+      const [a,b]=[...activePointers.values()],d=Math.hypot(a.x-b.x,a.y-b.y);
       if(pinch&&pinch.distance>0)zoom(pinch.scale*d/pinch.distance,(a.x+b.x)/2,(a.y+b.y)/2);
-      dragMoved=true;return;
+      return;
     }
-    if(dragStart){tx=dragStart.tx+e.clientX-dragStart.x;ty=dragStart.ty+e.clientY-dragStart.y;
-      if(Math.abs(e.clientX-dragStart.x)+Math.abs(e.clientY-dragStart.y)>5)dragMoved=true;layout();}
+    if(dragStart){tx=dragStart.tx+e.clientX-dragStart.x;ty=dragStart.ty+e.clientY-dragStart.y;layout()}
   });
   function release(e){
     activePointers.delete(e.pointerId);
     try{if(viewport.hasPointerCapture(e.pointerId))viewport.releasePointerCapture(e.pointerId)}catch(_){}
     if(activePointers.size<2)pinch=null;
-    if(activePointers.size===0){dragStart=null;viewport.classList.remove('is-dragging');}
+    if(activePointers.size===0){dragStart=null;viewport.classList.remove('is-dragging')}
     else{const p=[...activePointers.values()][0];dragStart={x:p.x,y:p.y,tx,ty}}
   }
   viewport.addEventListener('pointerup',release);viewport.addEventListener('pointercancel',release);
-  addEventListener('resize',()=>{scale=1;reset()},{passive:true});
+  addEventListener('resize',reset,{passive:true});
   renderFilters();renderPins();renderDirectory();renderDetail();
-  requestAnimationFrame(()=>{reset()});
+  requestAnimationFrame(reset);
 })();
 
 </script>
