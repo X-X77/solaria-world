@@ -96,3 +96,20 @@
 @media(max-width:980px){#bonds .arcana-layout{grid-template-columns:1fr}#bonds .arcana-dossier{min-height:0}}
 @media(max-width:650px){#bonds .arcana-topline{padding:13px 12px}#bonds .arcana-topline h3{font-size:19px}#bonds .arcana-topline small{font-size:9px}#bonds .arcana-tools button{min-width:31px;height:32px;padding:0 6px}#bonds #bondShowAll{padding:0 8px}#bonds #bsvg{min-width:820px}#bonds .arcana-bottomline{font-size:11px;padding:11px}#bonds .arcana-dossier{border-top:2px solid rgba(214,186,141,.3)}#bonds .arc-connection-list{padding:0 10px}#bonds .arc-dossier-person{padding:18px 14px}}
 @media(prefers-reduced-motion:reduce){#bonds .arc-thread,#bonds .arc-person{transition:none}}
+
+/* Empire-scale overview & cross-region bridges */
+#bonds .arcana-bridges{border-top:1px solid rgba(206,178,137,.24);padding:17px 18px;background:linear-gradient(135deg,#121D31,#13192B)}
+#bonds .arcana-bridges[hidden]{display:none!important}
+#bonds .arc-bridges-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#E9D0A5;font-size:14px;font-weight:750;margin:0 0 13px}
+#bonds .arc-bridges-heading small{font:600 10px var(--lat);color:#AEB9CD;letter-spacing:.08em}
+#bonds .arc-bridge-list{display:flex;gap:10px;overflow-x:auto;padding:3px 0 8px;scrollbar-width:thin}
+#bonds .arc-bridge{flex:0 0 192px;max-width:80%;display:flex;gap:10px;align-items:center;text-align:left;padding:8px;border:1px solid rgba(218,185,137,.25);background:rgba(7,14,26,.75);color:#F2E5D6;cursor:pointer}
+#bonds .arc-bridge:hover{border-color:#DCC292;background:#202B3D}
+#bonds .arc-bridge img{flex:none;width:42px;height:52px;object-fit:cover;object-position:center 18%}
+#bonds .arc-bridge span{display:block;min-width:0}
+#bonds .arc-bridge b{display:block;font-size:13px;line-height:1.5}
+#bonds .arc-bridge small{display:block;margin-top:4px;font-size:11px;line-height:1.5;color:#C8CDD8}
+#bonds .arc-imperial-glyph .arc-glyph-mark{font:52px var(--disp);fill:rgba(219,189,142,.42)}
+#bonds .arc-imperial-glyph .arc-glyph-word{font:600 14px var(--lat);fill:rgba(224,202,165,.54);letter-spacing:.22em}
+#bonds .arc-region-tab.active{box-shadow:inset 0 0 0 1px rgba(240,213,168,.15)}
+@media(max-width:650px){#bonds .arcana-bridges{padding:14px 12px}#bonds .arc-bridge{flex-basis:174px}}

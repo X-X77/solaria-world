@@ -1,13 +1,13 @@
-/* Solaria constellation atlas: restored portrait-link composition, eight regions, no spoilers. */
+/* Solaria constellation atlas: Empire-wide and eight regional views, public-only relationships. */
 (()=>{
 'use strict';
 const tabs=document.getElementById('bondRegionTabs'),svg=document.getElementById('bsvg'),detail=document.getElementById('bondDetail'),scroll=document.getElementById('bondScroller'),board=document.getElementById('bondBoard');
 if(!tabs||!svg||!detail||!scroll||!board||typeof P==='undefined')return;
-const factions=[['north','북부','설원의 맹세'],['capital','황도','황좌를 향한 시선'],['south','남부','황금으로 엮인 약속'],['west','서부','칼끝에 새긴 자치'],['east','동부','숲이 기억하는 이름'],['tower','마탑','별을 읽는 자들'],['temple','교단','기도 아래의 갈등'],['rift','균열','가려진 왕좌']];
+const factions=[['all','제국 전체','제국을 잇는 인연'],['north','북부','설원의 맹세'],['capital','황도','황좌를 향한 시선'],['south','남부','황금으로 엮인 약속'],['west','서부','칼끝에 새긴 자치'],['east','동부','숲이 기억하는 이름'],['tower','마탑','별을 읽는 자들'],['temple','교단','기도 아래의 갈등'],['rift','균열','가려진 왕좌']];
 const relationPairs=[
 [1,2,'대립','서로 다른 방식으로 계승권을 준비하는 남매'],[1,13,'가족','황제의 계승 결정을 기다리는 제1황자'],[2,13,'가족','황제의 결정과 궁정의 움직임을 주시하는 황녀'],
 [1,14,'가족','황후의 아들'],[2,14,'가족','황후의 딸'],[14,19,'가문','황후의 친정인 세베루스 공작가'],[19,20,'가족','세베루스 가문의 공작과 영애'],[1,20,'혼담','확정되지 않은 정치적 혼담 후보'],
-[1,16,'충성','황자 직속 호위기사'],[1,21,'협력','군부의 강경한 지지 세력'],[2,17,'친밀','어릴 적부터 가까운 호위기사와 황녀'],[2,22,'스승','정치와 재무를 가르치는 조언자'],
+[1,16,'충성','황자 직속 호위기사'],[1,21,'협력','군부의 강경한 지지 세력'],[2,17,'친밀','어릴 적부터 가까운 호위기사와 황녀'],[2,22,'사제·호의','정치와 재무를 가르치는 조언자와 가르침을 받는 황녀. 서로의 역량을 인정한다.'],
 [1,15,'중립','근위기사단의 충성 대상은 황제 개인'],[2,15,'중립','근위기사단은 계승전 어느 편도 들지 않음'],
 [13,15,'충성','황제 개인에게 충성하는 근위기사단장'],[15,18,'지휘','기록고 경비기사에게 절차를 강조'],[18,23,'협력','황실 기록고의 경비와 기록관 업무'],[16,17,'경쟁','양 진영 호위기사 사이의 경호 동선 갈등'],
 [21,22,'대립','군비 증액과 재정 부담을 둘러싼 충돌'],[19,22,'협상','재정과 가문 이해관계를 둘러싼 거래'],[20,22,'관계','정략 혼담과 거래의 조건을 검토'],
@@ -16,35 +16,55 @@ const relationPairs=[
 [4,31,'협력','베르가 상단의 주인과 엄격한 실무 담당자'],[4,32,'경쟁','남부 상권을 둘러싼 상단의 정적'],[4,29,'거래','해상 운송과 선원 보호를 둘러싼 조건 협상'],[4,30,'정보','부두의 정보 거래'],[4,33,'협상','곡창 회복과 곡물 유통에 대한 협의'],
 [31,29,'계약','호위 비용과 선원 안전 조항을 확인'],[31,30,'정보','소문의 출처와 정보 가격을 검증'],[31,32,'경계','경쟁 상가의 유리한 제안을 경계'],[31,33,'협상','구호와 상환 조건을 조정'],[32,33,'긴장','곡창 위기를 둘러싼 계약 협상'],[29,30,'정보','항로 소식을 거래하되 서로를 전적으로 믿지 않음'],
 [6,35,'충성·제동','변경백의 부관이며 돌발 출병에 제동을 건다'],[6,34,'협력','광산 이권과 채굴 안전을 두고 협의'],[6,36,'계약','임무별로 계약을 맺는 용병단'],[6,37,'대립','변경의 자치권과 황실의 감독권 갈등'],[6,38,'신뢰','변경백에게 아버지뻘인 토착 귀족'],[34,35,'협력','광산 안전과 군수 공급을 협의'],[34,36,'계약','갱도 호위와 위험 수당의 계약'],[34,37,'대립','생산량 압박과 광부 안전을 둘러싼 대립'],[35,36,'긴장','군의 규율과 용병 계약의 충돌'],[35,38,'조언','변경 운영에 관한 연장자의 조언'],[37,38,'대립','황실의 감독 관행과 서부 토착 관습의 충돌'],
-[5,40,'사제 관계','대마법사의 제자격인 석판 지킴이'],[5,39,'오랜 접점','숲의 질서와 석판을 둘러싼 조심스러운 관계'],[5,41,'오랜 친분','숲 신전의 사제장과 대마법사'],[5,42,'중재','황실 총독과 숲 사이의 완충 역할'],[39,40,'훈육','규율과 호기심으로 충돌하는 족장과 지킴이'],[39,41,'협력·갈등','숲을 지키되 외부인을 대하는 방식이 다름'],[39,42,'대립','출입 허가와 관할권 다툼'],[40,41,'신뢰','고민을 털어놓는 석판 지킴이와 사제장'],[40,42,'경계','석판 관리와 총독부의 조사 권한'],[41,42,'중재','신앙과 행정의 문제를 놓고 협의'],
-[7,8,'후임','마탑주와 후임자로 지목된 천재'],[7,46,'견제','실험 예산과 사고 책임을 둘러싼 논쟁'],[7,47,'평가','재능을 인정받고 싶은 마법사'],[7,48,'조직','마탑주의 지휘 아래 연구하는 구성원'],[8,47,'경쟁','논문·실험 성과를 놓고 다투는 라이벌'],[8,48,'동료','마탑 소수파의 공동 연구자'],[46,47,'평가','무심한 평가와 상처 입는 자존심'],[46,48,'감독','실험 보고서의 누락을 지적하는 이사'],[47,48,'긴장·협력','이론과 실험 방식으로 다투면서도 필요하면 협업'],
+[5,40,'사제·호의','일리아나가 세일라에게 지식과 관찰법을 전하며, 세일라는 스승을 신뢰한다.'],[5,39,'오랜 접점','숲의 질서와 석판을 둘러싼 조심스러운 관계'],[5,41,'오랜 친분','숲 신전의 사제장과 대마법사'],[5,42,'중재','황실 총독과 숲 사이의 완충 역할'],[39,40,'훈육','규율과 호기심으로 충돌하는 족장과 지킴이'],[39,41,'협력·갈등','숲을 지키되 외부인을 대하는 방식이 다름'],[39,42,'대립','출입 허가와 관할권 다툼'],[40,41,'신뢰','고민을 털어놓는 석판 지킴이와 사제장'],[40,42,'경계','석판 관리와 총독부의 조사 권한'],[41,42,'중재','신앙과 행정의 문제를 놓고 협의'],
+[7,8,'사제·호의','마탑주가 후임 노바의 재능을 인정하며 가르치고 시험한다. 엄격한 평가와 신뢰가 공존한다.'],[7,46,'견제','실험 예산과 사고 책임을 둘러싼 논쟁'],[7,47,'평가','재능을 인정받고 싶은 마법사'],[7,48,'조직','마탑주의 지휘 아래 연구하는 구성원'],[8,47,'경쟁','논문·실험 성과를 놓고 다투는 라이벌'],[8,48,'동료','마탑 소수파의 공동 연구자'],[46,47,'평가','무심한 평가와 상처 입는 자존심'],[46,48,'감독','실험 보고서의 누락을 지적하는 이사'],[47,48,'긴장·협력','이론과 실험 방식으로 다투면서도 필요하면 협업'],
 [9,10,'신념 차이','교리와 성녀의 자비가 충돌하기도 함'],[9,45,'충성','교주의 심문과 기록을 담당하는 오른팔'],[9,44,'후원','교단에 많은 물자를 후원하는 후작'],[10,43,'호위','성녀의 안전을 최우선으로 지키는 기사단장'],[10,44,'후원','치유와 구휼 활동을 위한 물자 지원'],[43,45,'조사','현장의 판단과 기록을 서로 검증'],[44,45,'긴장','후원금 집행 기록에 대한 감사와 확인'],
 [3,6,'경쟁·협력','변경을 지키는 서로 다른 지휘관'],[3,4,'교역','북부에 필요한 물자와 운송의 거래'],[4,6,'긴장','마석 거래와 변경의 이해관계'],[4,5,'의견 차이','작물 오염의 원인을 두고 의견 차이'],[5,10,'신앙','숲의 관점과 성녀의 치유가 맞닿는 접점'],[41,10,'조언','성녀에게 조언하는 숲 신전의 사제장'],
 [11,12,'신뢰','마왕과 가장 가까운 측근'],[11,49,'충성','마왕을 섬기는 기사단장'],[11,50,'참모','공존 협상을 설계하는 참모'],[11,52,'의무','마왕궁의 치유와 마력 감별'],[11,53,'보호','마왕궁의 애완 마물'],[12,49,'대립·협력','계략과 군 규율을 두고 충돌'],[12,50,'협력','정무와 정보의 신빙성을 논의'],[12,51,'훈육','정찰병이 사고를 치면 뒷수습하는 측근'],[49,50,'견해 차이','군사적 경계와 공존 협상 사이의 충돌'],[49,52,'의무','부상병의 복귀와 치료를 둘러싼 협의'],[49,51,'훈육','무단 잠입을 꾸짖는 기사단장'],[50,51,'업무','정찰 보고에서 누락된 정보를 점검'],[51,52,'보호','다친 정찰병을 돌보는 의관'],[51,53,'친근','정찰병이 아기 늑대를 알아보고 말을 붙임']
-];
+,
+[13,14,"부부·동반자","황제와 황후. 황궁과 제국의 안정을 함께 책임지지만 정치적 판단은 각자 내린다."],
+[1,3,"포섭 시도","제1황자가 북부 대공을 자신의 계승 진영으로 끌어들이려 한다."],
+[2,3,"포섭 시도","황녀 또한 북부 대공의 지지를 얻으려 한다."],
+[9,1,"후원·호의","교주가 제1황자의 계승을 지지하며 영향력을 더한다."],
+[1,6,"대립","황실의 편입 요구와 변경의 자치권을 둘러싼 갈등."],
+[9,7,"대립","교단과 마탑은 공식적으로 마법과 신앙의 입장을 두고 대립한다."],
+[3,5,"호의·인연","북부 대공가와 숲의 대마법사 사이에 대를 이어 내려온 빚이 있다."],
+[5,2,"호의","대마법사는 황녀에게 호의를 보인다."],
+[5,1,"경계","대마법사는 제1황자의 움직임을 경계한다."],
+[2,4,"협력·거래","황녀와 베르가 상단주 사이에 비공개 거래가 이어진다."]];
 const people=new Map(P.map(p=>[p.no,p]));
 const edges=relationPairs.map(([a,b,type,description])=>({a,b,type,description})).filter(e=>people.has(e.a)&&people.has(e.b));
 const NS='http://www.w3.org/2000/svg';
 const safe=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 const quiet=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const node=(tag,attrs={},text)=>{const el=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,String(v));if(text!==undefined)el.textContent=String(text);return el;};
-const colorType=t=>/대립|충돌|경쟁|긴장|견제|마찰|불신/.test(t)?'hostile':/충성|친밀|전우|협력|후원|가족|돌봄|호위|스승|신뢰|지원|친근|의무|동료/.test(t)?'allied':'complex';
+const colorType=t=>/대립|충돌|경쟁|긴장|견제|마찰|불신/.test(t)?'hostile':/부부|사제|스승|제자|후임|호의|인연|충성|친밀|전우|협력|후원|가족|돌봄|호위|신뢰|지원|친근|의무|동료/.test(t)?'allied':'complex';
 const shown=p=>!p.sealed||!!window.SOLARIA_RIFT_UNLOCKED;
 const visibleName=p=>shown(p)?p.name:'열람 제한';
 const relations=id=>edges.filter(e=>e.a===id||e.b===id).map(e=>({other:people.get(e.a===id?e.b:e.a),type:e.type,description:e.description}));
-const members=key=>P.filter(p=>p.aff===key).sort((a,b)=>Number(b.main)-Number(a.main)||a.no-b.no);
-let region='north',selected=3,photo=null;
+const imperialOrder=[13,14,1,2,3,4,6,5,7,8,9,10];
+const members=key=>key==='all'?imperialOrder.map(id=>people.get(id)).filter(Boolean):P.filter(p=>p.aff===key).sort((a,b)=>Number(b.main)-Number(a.main)||a.no-b.no);
+let region='all',selected=null,photo=null;
 function positions(cast){
- const map=new Map(),main=cast.find(p=>p.main)||cast[0];
- if(!main)return map;
- map.set(main.no,{x:470,y:325});
- const others=cast.filter(p=>p.no!==main.no),count=others.length;
+ const points=new Map(),count=cast.length;
+ if(!count)return points;
+ if(region==='all'){
+  // Equal spacing on the outer orbit prevents a dense 12-person central cluster.
+  cast.forEach((p,i)=>{
+   const theta=-Math.PI/2+i*2*Math.PI/count;
+   points.set(p.no,{x:470+Math.cos(theta)*351,y:326+Math.sin(theta)*226});
+  });
+  return points;
+ }
+ const central=cast.find(p=>p.main)||cast[0];
+ points.set(central.no,{x:470,y:320});
+ const others=cast.filter(p=>p.no!==central.no);
  others.forEach((p,i)=>{
-  const angle=-Math.PI/2+2*Math.PI*i/count;
-  const rx=count>9?347:count>5?330:311,ry=count>9?227:218;
-  map.set(p.no,{x:470+Math.cos(angle)*rx,y:320+Math.sin(angle)*ry});
+  const angle=-Math.PI/2+2*Math.PI*i/others.length;
+  const rx=others.length>9?347:others.length>5?330:311,ry=others.length>9?227:218;
+  points.set(p.no,{x:470+Math.cos(angle)*rx,y:320+Math.sin(angle)*ry});
  });
- return map;
+ return points;
 }
 function renderGraph(){
  const cast=members(region),pts=positions(cast),locked=region==='rift'&&!window.SOLARIA_RIFT_UNLOCKED;
@@ -70,6 +90,12 @@ function renderGraph(){
   geometry.append(node('line',{x1:470-x+470,y1:325-y+325,x2:x,y2:y,class:'orbit-axis'}));
  }
  svg.append(geometry);
+ if(region==='all'){
+  const glyph=node('g',{class:'arc-imperial-glyph','aria-hidden':'true'});
+  glyph.append(node('text',{x:470,y:314,'text-anchor':'middle',class:'arc-glyph-mark'},'✧'));
+  glyph.append(node('text',{x:470,y:344,'text-anchor':'middle',class:'arc-glyph-word'},'SOLARIA'));
+  svg.append(glyph);
+ }
  const lines=node('g',{class:'arc-link-lines'});
  const intra=edges.filter(e=>pts.has(e.a)&&pts.has(e.b));
  intra.forEach(e=>{
@@ -104,7 +130,7 @@ function renderGraph(){
   portraits.append(g);
  });
  svg.append(portraits);
- document.getElementById('arcanaCount').textContent=cast.length+'명 · 권역 내 연결 '+intra.length+'개';
+ document.getElementById('arcanaCount').textContent=cast.length+'명 · '+(region==='all'?'제국 주요 연결 ':'권역 내 연결 ')+intra.length+'개';
 }
 function relatedMarkup(items,caption){
  if(!items.length)return '';
@@ -119,23 +145,33 @@ function renderDetail(){
   detail.innerHTML='<div class="arc-dossier-stamp">RESTRICTED / BEYOND THE RIFT</div><div class="arc-dossier-sealed"><span aria-hidden="true">✧</span><h3>이름 없는 별자리</h3><p>균열 너머의 인물과 관계는 아직 봉인되어 있습니다. 이 기록에는 이야기의 비밀이 포함될 수 있습니다.</p><button type="button" data-unlock>균열의 인물 열람하기 ↗</button></div>';
   return;
  }
- if(!p||p.aff!==region||!shown(p)){
+ if(!p||(region!=='all'&&p.aff!==region)||!shown(p)){
   detail.innerHTML='<div class="arc-dossier-stamp">PERSONNEL / CONNECTIONS</div><div class="arc-dossier-empty"><span aria-hidden="true">✧</span><h3>하나의 별을 선택하세요</h3><p>인물의 초상을 누르면 서로 주고받는 약속과 대립, 다른 권역으로 이어진 관계가 나타납니다.</p></div>';
   return;
  }
- const all=relations(p.no).filter(e=>shown(e.other)),local=all.filter(e=>e.other.aff===region),outside=all.filter(e=>e.other.aff!==region);
+ const all=relations(p.no).filter(e=>shown(e.other)),local=all.filter(e=>e.other.aff===p.aff),outside=all.filter(e=>e.other.aff!==p.aff);
  detail.innerHTML='<div class="arc-dossier-stamp">DOSSIER / '+pad(p.no)+' · '+safe(AFF[p.aff]||'솔라리아')+'</div>'+
  '<div class="arc-dossier-person"><button type="button" class="arc-dossier-photo" data-portrait="'+p.no+'" aria-label="'+safe(p.name)+' 일러스트 크게 보기"><img src="img/t/'+pad(p.no)+'.jpg" alt="" loading="lazy"></button><div><h3>'+safe(p.name)+'</h3><small>'+safe(p.group)+' · '+safe(p.role)+'</small><p>'+safe(p.known)+'</p><button type="button" data-dossier="'+p.no+'" class="arc-profile-link">인물 상세 기록 ↗</button></div></div>'+
  '<div class="arc-relation-summary">공개된 인연 '+all.length+'개 <span>·</span> 권역 내부 '+local.length+'개</div>'+
- (all.length?relatedMarkup(local,'이 권역의 인연')+relatedMarkup(outside,'다른 권역으로 이어진 인연'):'<p class="arc-no-links">공개된 관계가 없습니다. 다른 인물을 선택해 살펴보세요.</p>');
+ (all.length?relatedMarkup(local,'같은 권역의 인연')+relatedMarkup(outside,'다른 권역으로 이어진 인연'):'<p class="arc-no-links">공개된 관계가 없습니다. 다른 인물을 선택해 살펴보세요.</p>');
+}
+function renderBridges(){
+ const root=document.getElementById('arcanaBridges');
+ if(!root)return;
+ const p=people.get(selected);
+ if(!p||region==='all'||!shown(p)){root.hidden=true;root.innerHTML='';return}
+ const others=relations(p.no).filter(e=>e.other.aff!==region&&shown(e.other));
+ root.hidden=!others.length;
+ root.innerHTML=others.length?'<div class="arc-bridges-heading"><span>권역 밖으로 이어진 인연</span><small>'+others.length+' CONNECTIONS</small></div><div class="arc-bridge-list">'+
+ others.map(e=>'<button type="button" class="arc-bridge" data-bridge="'+e.other.no+'"><img src="img/t/'+pad(e.other.no)+'.jpg" alt="" loading="lazy"><span><b>'+safe(e.other.name)+' ↗</b><small>'+safe(AFF[e.other.aff])+' · '+safe(e.type)+'</small></span></button>').join('')+'</div>':'';
 }
 function render(){
  const info=factions.find(x=>x[0]===region);
- board.style.setProperty('--arc-aura',COL[region]||'#D8B88A');
+ board.style.setProperty('--arc-aura',region==='all'?'#D5B88B':COL[region]||'#D8B88A');
  tabs.innerHTML=factions.map(([key,name])=>'<button type="button" class="arc-region-tab'+(key===region?' active':'')+'" data-region="'+key+'" aria-pressed="'+(key===region)+'">'+name+'</button>').join('');
  document.getElementById('bondRegionName').textContent=info[2];
- document.getElementById('arcanaNumber').textContent=String(factions.findIndex(x=>x[0]===region)+1).padStart(2,'0')+' / 08';
- renderGraph();renderDetail();
+ document.getElementById('arcanaNumber').textContent=String(factions.findIndex(x=>x[0]===region)+1).padStart(2,'0')+' / 09';
+ renderGraph();renderDetail();renderBridges();
 }
 function focus(id){
  const p=people.get(Number(id));if(!p)return;
@@ -162,7 +198,11 @@ function unlock(){
 tabs.addEventListener('click',e=>{
  const b=e.target.closest('[data-region]');if(!b)return;
  region=b.dataset.region;const cast=members(region),primary=cast.find(p=>p.main)||cast[0];
- selected=primary?primary.no:null;render();
+ selected=region==='all'?null:(primary?primary.no:null);render();
+});
+document.getElementById('arcanaBridges')?.addEventListener('click',e=>{
+ const b=e.target.closest('[data-bridge]');
+ if(b)focus(b.dataset.bridge);
 });
 detail.addEventListener('click',e=>{
  const u=e.target.closest('[data-unlock]');if(u){unlock();return}
