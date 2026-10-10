@@ -1051,7 +1051,7 @@ footer{background:#080D16}
 <link rel="stylesheet" href="regional-relationships.css">
 <link rel="stylesheet" href="mystic-atmosphere.css?v=stage2-2">
 <link rel="stylesheet" href="rift-contact.css">
-<link rel="stylesheet" href="personnel-archive.css?v=stage2-2">
+<link rel="stylesheet" href="personnel-archive.css?v=portrait-space">
 <style id="polish-2026-10-11">
 /* polish pass: phone nav, line breaks, one label per heading, spacing, soft section edges */
 @media(max-width:400px){
@@ -1619,6 +1619,10 @@ function setPerson(i,anim=true){
     body+'<div class="cnav"><span>RECORD NAVIGATION</span>'+
     '<button type="button" aria-label="이전 인물" id="cp">'+arrow('M15 5 8 12l7 7')+'이전</button>'+
     '<button type="button" aria-label="다음 인물" id="cn">다음'+arrow('M9 5l7 7-7 7')+'</button></div></div>';
+  const supplements=document.createElement('div');
+  supplements.className='personnel-supplements';
+  cstage.querySelectorAll('.cinfo .cast-profile-links,.cinfo .secret,.cinfo .cast-reveal-control,.cinfo .cnav').forEach(node=>supplements.append(node));
+  cstage.append(supplements);
   $('cp').onclick=()=>setPerson(cur-1);
   $('cn').onclick=()=>setPerson(cur+1);
   const castReveal=$('castReveal');
