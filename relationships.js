@@ -120,7 +120,7 @@ function renderGraph(){
   if(locked){
    g.append(node('text',{x:0,y:12,class:'arc-locked-symbol','text-anchor':'middle'},'✧'));
   }else{
-   g.append(node('image',{href:'img/t/'+pad(p.no)+'.jpg',x:-38,y:-49,width:76,height:104,'clip-path':'url(#arc-clip-'+p.no+')',preserveAspectRatio:'xMidYMin slice'}));
+   g.append(node('image',{href:window.SOLARIA_PORTRAIT_SRC(p.no,'t'),x:-38,y:-49,width:76,height:104,'clip-path':'url(#arc-clip-'+p.no+')',preserveAspectRatio:'xMidYMin slice'}));
   }
   g.append(node('circle',{r:39.5,class:'arc-rim'}));
   g.append(node('text',{x:0,y:67,class:'arc-person-name','text-anchor':'middle'},shown(p)?p.name:'???'));
@@ -135,7 +135,7 @@ function renderGraph(){
 function relatedMarkup(items,caption){
  if(!items.length)return '';
  return '<h4 class="arc-dossier-caption">'+caption+' <span>'+items.length+'</span></h4><div class="arc-connection-list">'+
- items.map(({other,type,description})=>'<article class="arc-connection"><button class="arc-related-image" type="button" data-portrait="'+other.no+'" aria-label="'+safe(other.name)+' 일러스트 크게 보기"><img src="img/t/'+pad(other.no)+'.jpg" alt="" loading="lazy"></button>'+
+ items.map(({other,type,description})=>'<article class="arc-connection"><button class="arc-related-image" type="button" data-portrait="'+other.no+'" aria-label="'+safe(other.name)+' 일러스트 크게 보기"><img src="'+window.SOLARIA_PORTRAIT_SRC(other.no,'t')+'" alt="" loading="lazy"></button>'+
  '<div class="arc-connection-copy"><button type="button" data-person="'+other.no+'" class="arc-related-name">'+safe(other.name)+' <span>↗</span></button>'+
  '<small class="'+colorType(type)+'">'+safe(type)+'</small><p>'+safe(description)+'</p></div><button type="button" class="arc-doc" data-dossier="'+other.no+'">도감</button></article>').join('')+'</div>';
 }
@@ -151,7 +151,7 @@ function renderDetail(){
  }
  const all=relations(p.no).filter(e=>shown(e.other)),local=all.filter(e=>e.other.aff===p.aff),outside=all.filter(e=>e.other.aff!==p.aff);
  detail.innerHTML='<div class="arc-dossier-stamp">DOSSIER / '+pad(p.no)+' · '+safe(AFF[p.aff]||'솔라리아')+'</div>'+
- '<div class="arc-dossier-person"><button type="button" class="arc-dossier-photo" data-portrait="'+p.no+'" aria-label="'+safe(p.name)+' 일러스트 크게 보기"><img src="img/t/'+pad(p.no)+'.jpg" alt="" loading="lazy"></button><div><h3>'+safe(p.name)+'</h3><small>'+safe(p.group)+' · '+safe(p.role)+'</small><p>'+safe(p.known)+'</p><button type="button" data-dossier="'+p.no+'" class="arc-profile-link">인물 상세 기록 ↗</button></div></div>'+
+ '<div class="arc-dossier-person"><button type="button" class="arc-dossier-photo" data-portrait="'+p.no+'" aria-label="'+safe(p.name)+' 일러스트 크게 보기"><img src="'+window.SOLARIA_PORTRAIT_SRC(p.no,'t')+'" alt="" loading="lazy"></button><div><h3>'+safe(p.name)+'</h3><small>'+safe(p.group)+' · '+safe(p.role)+'</small><p>'+safe(p.known)+'</p><button type="button" data-dossier="'+p.no+'" class="arc-profile-link">인물 상세 기록 ↗</button></div></div>'+
  '<div class="arc-relation-summary">공개된 인연 '+all.length+'개 <span>·</span> 권역 내부 '+local.length+'개</div>'+
  (all.length?relatedMarkup(local,'같은 권역의 인연')+relatedMarkup(outside,'다른 권역으로 이어진 인연'):'<p class="arc-no-links">공개된 관계가 없습니다. 다른 인물을 선택해 살펴보세요.</p>');
 }
@@ -163,7 +163,7 @@ function renderBridges(){
  const others=relations(p.no).filter(e=>e.other.aff!==region&&shown(e.other));
  root.hidden=!others.length;
  root.innerHTML=others.length?'<div class="arc-bridges-heading"><span>권역 밖으로 이어진 인연</span><small>'+others.length+' CONNECTIONS</small></div><div class="arc-bridge-list">'+
- others.map(e=>'<button type="button" class="arc-bridge" data-bridge="'+e.other.no+'"><img src="img/t/'+pad(e.other.no)+'.jpg" alt="" loading="lazy"><span><b>'+safe(e.other.name)+' ↗</b><small>'+safe(AFF[e.other.aff])+' · '+safe(e.type)+'</small></span></button>').join('')+'</div>':'';
+ others.map(e=>'<button type="button" class="arc-bridge" data-bridge="'+e.other.no+'"><img src="'+window.SOLARIA_PORTRAIT_SRC(e.other.no,'t')+'" alt="" loading="lazy"><span><b>'+safe(e.other.name)+' ↗</b><small>'+safe(AFF[e.other.aff])+' · '+safe(e.type)+'</small></span></button>').join('')+'</div>':'';
 }
 function render(){
  const info=factions.find(x=>x[0]===region);
@@ -220,7 +220,7 @@ document.body.append(gallery);
 function showPhoto(id){
  const p=people.get(Number(id));if(!p||!shown(p))return;
  photo=p;gallery.querySelector('#arcGalleryName').textContent=p.name;gallery.querySelector('#arcGalleryRole').textContent=p.role;
- const img=gallery.querySelector('#arcGalleryImage');img.src='img/c/'+pad(p.no)+'.jpg';img.alt=p.name+' 인물 일러스트';
+ const img=gallery.querySelector('#arcGalleryImage');img.src=window.SOLARIA_PORTRAIT_SRC(p.no,'c');img.alt=p.name+' 인물 일러스트';
  if(!gallery.open)gallery.showModal();
 }
 gallery.addEventListener('click',e=>{

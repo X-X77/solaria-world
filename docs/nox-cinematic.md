@@ -1,6 +1,6 @@
 # Nox hidden cinematic
 
-A completed, unskipped original opening dispatches the existing `solaria:intro-finished` event. One independent cryptographic draw below 0.10 launches the film. Deep links, skipped openings and cancelled hidden films do not grant a new unlock. Previously unlocked browsers keep their unlock and still draw independently on opening completion.
+A completed, unskipped original opening dispatches the existing `solaria:intro-finished` event. One independent cryptographic draw below 0.10 launches the film. Deep links, skipped openings and cancelled hidden films do not grant a new unlock. Previously unlocked browsers keep their unlock and still draw independently on opening completion. They also see “녹스 이벤트 다시 보기” beside the opening replay controls in the hero and footer; this explicitly requested replay starts the film directly without a probability draw. Locked browsers cannot use this replay.
 
 The original opening shots and cues are unchanged. The sound controller adds `hiddenStart` / `hiddenEnd` hooks to pause and silence both original tracks during the hidden film. The MP3 media clock drives the film when playback is available; silent playback uses a monotonic clock with the same cues. Visibility changes pause the clock and preserve mute. Playback rejection, media errors or prolonged buffering fall back to the silent clock. Closing the film restores the original sound preference and page focus.
 

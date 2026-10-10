@@ -27,9 +27,11 @@ with sync_playwright() as p:
   page.clock.run_for(6200);assert page.evaluate('SOLARIA_RIFT_UNLOCKED');assert page.evaluate("localStorage.getItem('solaria-noctis-contact-v1')")=='linked'
   assert page.locator('#riftFilmResult').is_visible();assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
   assert page.locator('.rift-cut').evaluate_all('imgs=>imgs.every(i=>i.naturalWidth>0)')
-  page.locator('#riftAwakeningExplore').click();assert page.locator('#riftAwakening').is_hidden();assert page.locator('#bsvg .arc-person.is-sealed').count()==0
+  page.locator('#riftAwakeningExplore').click();assert page.locator('#riftAwakening').is_hidden();assert page.locator('#chips [data-f="rift"].on').count()==1;assert page.locator('#cstage .cpor img').get_attribute('src')=='img/c/11-unsealed.jpg';assert page.locator('#cstage .cpor.sealed').count()==0;page.evaluate('SOLARIA_ATLAS.focus(11)');assert page.locator('#bsvg .arc-person.is-sealed').count()==0
   assert page.locator('#bsvg [data-person="11"]').count()==1;assert '움브라' not in page.locator('#bondDetail').inner_text();assert page.locator('#bsvg [data-person="53"]').count()==0
   page.evaluate("setFilter('rift',11)");assert '녹스' in page.locator('#cstage').inner_text();assert page.locator('#strip .ct').count()==6
+  for no in [11,12,49,50,51,52]:
+   page.evaluate('(n)=>setFilter("rift",n)',no);page.wait_for_function('document.querySelector("#cstage .cpor img")?.naturalWidth>0');assert page.locator('#cstage .cpor').evaluate('e=>!e.classList.contains("sealed")');assert page.locator('#cstage .cpor img').evaluate('e=>getComputedStyle(e).filter')=='none';assert page.locator('#cstage .cpor img').get_attribute('src')==f'img/c/{no}-unsealed.jpg'
   page.reload(wait_until='domcontentloaded');assert page.evaluate('SOLARIA_RIFT_UNLOCKED');page.evaluate("setFilter('rift',11)");assert '녹스' in page.locator('#cstage').inner_text()
   print('PASS', 'mobile' if mobile else 'desktop','silent full opening, 4 cuts, subtitles, completion-only unlock, persistence, public-only records');page.context.close()
  # Escape during hidden film aborts without granting new unlock.
@@ -38,6 +40,8 @@ with sync_playwright() as p:
  page=new(429496730,linked=True);silent_intro(page);assert page.evaluate('drawCount')==1;assert page.evaluate('SOLARIA_RIFT_UNLOCKED');assert page.locator('#riftAwakening').is_hidden();print('PASS existing unlock preserved; still independent draw');page.context.close()
  # Playback denial must preserve the silent timeline and completion rules.
  page=new();silent_intro(page);page.locator('#riftFilmAudio').evaluate('a=>a.play=()=>Promise.reject(new Error("test autoplay block"))');page.locator('#riftFilmSound').click();assert page.locator('#riftFilmSound').get_attribute('aria-pressed')=='false';page.clock.run_for(23000);assert page.locator('#riftFilmResult').is_visible();assert page.evaluate('SOLARIA_RIFT_UNLOCKED');print('PASS blocked playback: silent fallback completes');page.context.close()
+ # Unlocked visitors replay directly, without another probability draw.
+ page=new(linked=True);page.goto(BASE+'#people',wait_until='domcontentloaded');page.clock.install();assert page.locator('[data-nox-replay]:visible').count()==1;assert page.locator('footer').count()==0;page.locator('#top [data-nox-replay]').click();assert page.locator('#riftAwakening').is_visible();assert page.evaluate('drawCount')==0;page.clock.run_for(23000);assert page.locator('#riftFilmResult').is_visible();page.locator('#riftAwakeningContinue').click();page.locator('#top [data-nox-replay]').click();assert page.locator('#riftAwakening').get_attribute('data-cut')=='1';assert page.locator('#riftFilmResult').is_hidden();assert page.evaluate('drawCount')==0;page.keyboard.press('Escape');assert page.evaluate('SOLARIA_RIFT_UNLOCKED');print('PASS unlocked replay buttons: direct film, reset cues, no draw, unlock retained');page.context.close()
  assert not errors,errors
  print('All silent flow checks passed; JS errors:',errors)
  b.close()
