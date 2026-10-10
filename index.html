@@ -1045,6 +1045,7 @@ footer{background:#080D16}
 <link rel="stylesheet" href="design-unification.css">
 <link rel="stylesheet" href="dossier-expansion.css">
 <link rel="stylesheet" href="regional-relationships.css">
+<link rel="stylesheet" href="mystic-atmosphere.css">
 </head>
 <body>
 <div id="intro" class="op-v2" aria-label="솔라리아 오프닝">
@@ -1201,15 +1202,21 @@ footer{background:#080D16}
 </div></section>
 
 <section class="sec bonds" id="bonds"><div class="wrap">
- <div class="sh"><span class="bonds-chapter">RELATIONSHIPS OF SOLARIA</span><h2>인물 관계도</h2><div class="orn"><i></i></div><p>권역을 고르고 인물을 선택하면 그 사람을 둘러싼 연결과 갈등이 나타납니다.</p></div>
- <div class="bond-intro-line"><span>REGIONAL CONNECTIONS / PERSONNEL ARCHIVE</span><span id="bondNetworkCount">8개 권역</span></div>
+ <div class="sh"><span class="bonds-chapter">THE CELESTIAL THREADS</span><h2>인물 관계도</h2><div class="orn"><i></i></div><p>서로를 끌어당기는 인연, 부딪히는 신념. 권역을 고르면 감춰진 별자리처럼 인물들의 연결이 드러납니다.</p></div>
+ <div class="bond-intro-line"><span>THE THREADS OF SOLARIA / 8 REGIONS</span><span>이름과 초상을 선택해 관계를 살펴보세요</span></div>
  <div class="bond-region-tabs" id="bondRegionTabs" role="group" aria-label="관계도 권역 선택"></div>
- <div class="bond-atlas">
-  <div class="bond-atlas-left"><div class="bond-board-head"><div><small>SELECT A PERSON</small><b id="bondRegionName">북부 관계망</b></div><span id="bondRegionSummary">인물을 선택하세요</span></div>
-  <div class="bond-roster" id="bondRoster"></div></div>
-  <aside class="bond-atlas-detail" id="bondDetail" aria-live="polite"></aside>
+ <div class="arcana-layout">
+  <div class="arcana-board" id="bondBoard">
+   <div class="arcana-topline"><div><small>IMPERIAL CONCORDANCE · <span id="arcanaNumber">I / VIII</span></small><h3 id="bondRegionName">북부의 인연</h3></div><div class="arcana-tools"><button id="bondShowAll" type="button" aria-label="모든 연결 보기">전체 연결</button><button type="button" id="bondScrollLeft" aria-label="관계도 왼쪽으로 이동">‹</button><button type="button" id="bondScrollRight" aria-label="관계도 오른쪽으로 이동">›</button></div></div>
+   <div class="arcana-scroll" id="bondScroller" tabindex="0" aria-label="인물 관계도. 초상을 선택하여 연결을 살펴보세요. 좁은 화면에서는 좌우로 이동할 수 있습니다.">
+    <svg id="bsvg" viewBox="0 0 940 690" role="group" aria-label="인물의 초상과 인연을 연결한 관계도"></svg>
+   </div>
+   <div class="arcana-bottomline"><span>✧ 초상 선택 · 인연 확인</span><span id="arcanaCount">연결</span></div>
+   <div class="arcana-legend" aria-label="관계 색상"><span class="allied">호의·협력</span><span class="hostile">대립·긴장</span><span class="complex">그 밖의 연결</span></div>
+  </div>
+  <aside class="arcana-dossier" id="bondDetail" aria-live="polite"></aside>
  </div>
- <p class="bond-atlas-footnote">연결된 인물은 다른 권역에 있더라도 확인할 수 있습니다. 균열 너머 정보는 선택적으로 열람합니다.</p>
+ <p class="arcana-disclaimer">공개된 인물 관계만 표시합니다. 균열의 기록은 별도 열람 후 확인할 수 있습니다.</p>
 </div></section>
 
 

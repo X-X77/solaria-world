@@ -1,55 +1,98 @@
-/* Regional atlas overrides obsolete SVG-only layout, preserving the site's visual system. */
-#bonds .bond-region-tabs{display:flex;gap:7px;overflow-x:auto;scrollbar-width:thin;padding:5px 0 16px;margin-bottom:18px}
-#bonds .bond-region-tab{flex:none;min-height:42px;padding:10px 16px;background:#151F2D;color:#D6CED0;border:1px solid rgba(213,184,140,.28);font-size:14px;font-weight:700;cursor:pointer}
-#bonds .bond-region-tab.active{background:#DBBF8A;color:#16202B;border-color:#DBBF8A}
-#bonds .bond-atlas{display:grid;grid-template-columns:minmax(300px,.78fr) minmax(0,1.22fr);gap:16px;align-items:start}
-#bonds .bond-atlas-left,#bonds .bond-atlas-detail{border:1px solid rgba(221,187,136,.3);background:#111A28;min-height:540px}
-#bonds .bond-board-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
-#bonds #bondRegionSummary{font-size:12px;color:#B9C2CD}
-#bonds .bond-roster{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:16px}
-#bonds .bond-person{display:flex;align-items:center;gap:10px;text-align:left;background:#182334;border:1px solid rgba(219,188,144,.22);padding:9px;min-width:0;min-height:76px;color:#E9E1D5;cursor:pointer}
-#bonds .bond-person:hover,#bonds .bond-person.selected{border-color:#E2C18D;background:#223147}
-#bonds .bond-person img{width:45px;height:56px;object-fit:cover;object-position:center 15%;flex:none}
-#bonds .bond-person>span:nth-child(2){min-width:0;flex:1}
-#bonds .bond-person b{display:block;font-size:14px;line-height:1.4}
-#bonds .bond-person small{display:block;margin-top:4px;color:#BBC6D0;font-size:12px;line-height:1.5}
-#bonds .bond-person em{font-size:14px;flex:none;color:#D8B98B;font-style:normal}
-#bonds .bond-person-hidden{display:grid;place-items:center;flex:none;width:45px;height:56px;background:#090F1B;color:#C1A9C9;font-size:26px}
-#bonds .bond-detail-stamp{padding:18px 22px;border-bottom:1px solid rgba(213,184,143,.19);font:600 10px var(--lat);letter-spacing:.12em;color:#D7B989}
-#bonds .bond-atlas-detail>h3{padding:0 23px;margin:27px 0 13px;color:#F0DDC4}
-#bonds .bond-atlas-detail>p{margin:20px 23px;line-height:1.9;color:#D0D4D8}
-#bonds .bond-focus-head{display:flex;align-items:flex-start;gap:21px;padding:25px 22px 17px}
-#bonds .bond-portrait-main{flex:none;background:none;border:1px solid rgba(225,188,132,.42);padding:0;cursor:zoom-in}
-#bonds .bond-portrait-main img{height:156px;width:114px;object-fit:cover;object-position:center 18%}
-#bonds .bond-focus-head h3{font:700 clamp(25px,3vw,35px) var(--disp);margin:0;color:#F4E1C3}
-#bonds .bond-focus-head small{display:block;margin:8px 0;color:#DFC59A;font-size:13px}
-#bonds .bond-focus-head p{margin:12px 0;color:#D1D5DA;font-size:14px;line-height:1.8}
-#bonds .bond-focus-head button[data-dossier]{color:#EDCF9C;border:0;border-bottom:1px solid rgba(229,191,134,.55);padding:5px 0;background:none;font-size:12px;cursor:pointer}
-#bonds .bond-total-relations{padding:0 22px 15px;margin:0;color:#AFC0D0;font-size:12px}
-#bonds .bond-group-title{display:flex;justify-content:space-between;margin:15px 20px 10px;padding:14px 0 10px;border-top:1px solid rgba(216,183,130,.3);font-size:16px;color:#E8CEAB}
-#bonds .bond-group-title span{color:#AAB8C9}
-#bonds .bond-connections{display:grid;gap:9px;padding:0 15px 16px}
-#bonds .bond-connection{display:flex;align-items:flex-start;gap:12px;background:#172232;border:1px solid rgba(215,181,130,.2);padding:12px}
-#bonds .bond-face{flex:none;padding:0;border:1px solid rgba(218,187,133,.3);cursor:zoom-in;background:none}
-#bonds .bond-face img{width:55px;height:72px;object-fit:cover;object-position:center 15%}
-#bonds .bond-connection>div{flex:1;min-width:0}
-#bonds .bond-name-link{border:0;background:none;color:#F0E2CC;font-size:15px;font-weight:750;padding:0;cursor:pointer;text-align:left}
-#bonds .bond-connection strong{display:block;font-size:12px;margin:7px 0;color:#DBB98C}
-#bonds .bond-connection p{font-size:13px;line-height:1.8;color:#CCD3DB;margin:0;word-break:keep-all}
-#bonds .bond-doc-link{font-size:12px;border:1px solid rgba(224,187,135,.33);padding:8px;color:#E0C596;background:#0F1929;cursor:pointer}
-#bonds .bond-atlas-footnote{color:#AAB6C6;font-size:12px;line-height:1.8;margin:17px 0 0}
-#bonds .bond-lock-note{grid-column:1/-1;padding:20px;background:#181F2D;border:1px solid rgba(221,181,148,.35)}
-#bonds .bond-lock-note b{font-size:17px;color:#ECD5BD}
-#bonds .bond-lock-note p{font-size:13px;line-height:1.8;color:#CED1D5}
-#bonds .bond-lock-note button,#bonds .bond-unlock{border:1px solid rgba(218,180,143,.55);padding:12px 14px;color:#E6CBA5;background:#252332;cursor:pointer}
-#bonds .bond-unlock{margin:0 23px 25px}
-.bond-gallery-dialog{max-width:min(850px,calc(100vw - 22px));max-height:calc(100dvh - 22px);padding:0;border:1px solid rgba(212,183,144,.5);background:#0D1420;color:#F0E5D7}
-.bond-gallery-dialog::backdrop{background:rgba(4,7,14,.9)}
-.bond-gallery-frame{width:min(690px,calc(100vw - 25px))}
-.bond-gallery-frame header,.bond-gallery-frame footer{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:13px 17px;background:#151E2C}
-.bond-gallery-frame header b{font-size:18px;color:#F1DDC1}
-.bond-gallery-frame button{background:none;color:#E1C399;border:0;border-bottom:1px solid rgba(230,198,145,.5);padding:6px 0;cursor:pointer}
-.bond-gallery-frame img{display:block;width:100%;max-height:calc(100dvh - 155px);object-fit:contain}
-.bond-gallery-frame footer span{font-size:13px;color:#D1D2D6}
-@media(max-width:1000px){#bonds .bond-atlas{grid-template-columns:1fr}#bonds .bond-atlas-left,#bonds .bond-atlas-detail{min-height:0}#bonds .bond-roster{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:650px){#bonds .bond-roster{grid-template-columns:repeat(2,minmax(0,1fr));padding:10px;gap:8px}#bonds .bond-person{padding:7px;gap:7px}#bonds .bond-person img,#bonds .bond-person-hidden{width:39px;height:49px}#bonds .bond-person b{font-size:13px}#bonds .bond-person small{font-size:11px}#bonds .bond-focus-head{gap:12px;padding:19px 15px}#bonds .bond-portrait-main img{width:83px;height:113px}#bonds .bond-group-title{margin-left:15px;margin-right:15px}#bonds .bond-connections{padding:0 10px 13px}#bonds .bond-connection{gap:9px;padding:10px}#bonds .bond-face img{width:43px;height:58px}#bonds .bond-connection p{font-size:12px}#bonds .bond-doc-link{padding:5px}}
+/* Solaria's restored constellation-style relationship diagram */
+#bonds{background:radial-gradient(ellipse 74% 55% at 54% 45%,rgba(75,73,125,.16),transparent 75%),#090F1B}
+#bonds .wrap{max-width:1330px}
+#bonds .bond-intro-line{margin-bottom:13px}
+#bonds .bond-region-tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin;margin:0 0 18px;padding:3px 1px 12px}
+#bonds .arc-region-tab{flex:none;position:relative;min-height:45px;padding:10px 18px;background:rgba(17,24,38,.75);border:1px solid rgba(193,178,164,.19);color:#C6C5CE;font-size:14px;font-weight:700;letter-spacing:.02em;cursor:pointer}
+#bonds .arc-region-tab:hover{border-color:rgba(220,195,154,.7);color:#F5E6D0}
+#bonds .arc-region-tab.active{background:linear-gradient(180deg,rgba(212,184,135,.14),rgba(38,35,52,.5));border-color:#D6BA86;color:#F3DCB7}
+#bonds .arc-region-tab.active:after{content:"";position:absolute;bottom:-1px;left:14px;right:14px;height:2px;background:#E4C88E}
+#bonds .arcana-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(315px,365px);gap:15px;align-items:start}
+#bonds .arcana-board{--arc-aura:#D9B86C;min-width:0;overflow:hidden;border:1px solid rgba(214,185,142,.28);background:#0C1422;box-shadow:inset 0 0 70px rgba(64,54,103,.08)}
+#bonds .arcana-topline{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:18px 20px;border-bottom:1px solid rgba(218,190,149,.23);background:linear-gradient(94deg,rgba(37,38,64,.75),rgba(16,23,37,.9))}
+#bonds .arcana-topline small{display:block;font:600 10px var(--lat);letter-spacing:.14em;color:#C2B39C;margin-bottom:7px}
+#bonds .arcana-topline h3{margin:0;color:#F2E3CB;font:700 21px/1.35 var(--disp)}
+#bonds .arcana-tools{display:flex;gap:5px;align-items:center}
+#bonds .arcana-tools button{min-width:35px;height:35px;padding:0 9px;border:1px solid rgba(213,183,144,.31);background:rgba(10,14,24,.42);color:#E7D3B5;font-size:18px;cursor:pointer}
+#bonds #bondShowAll{font-size:12px;font-weight:750;white-space:nowrap;padding:0 12px}
+#bonds .arcana-tools button:hover{background:rgba(216,185,144,.16)}
+#bonds .arcana-scroll{overflow-x:auto;overflow-y:hidden;background:radial-gradient(ellipse 58% 56% at 50% 48%,rgba(58,59,98,.35),transparent 78%),radial-gradient(ellipse 74% 88% at 45% 45%,#131D31,#09111F 90%);scrollbar-width:thin;scrollbar-color:rgba(213,182,134,.5) #101A29;-webkit-overflow-scrolling:touch}
+#bonds #bsvg{display:block;width:100%;min-width:785px;height:auto}
+#bonds .arc-starfield circle.star-dim{fill:#D7CAD1;opacity:.21}
+#bonds .arc-starfield circle.star-bright{fill:#F1DBAA;opacity:.65}
+#bonds .arc-geometry{opacity:.6}
+#bonds .arc-geometry ellipse,#bonds .arc-geometry circle,#bonds .arc-geometry line{fill:none;stroke:var(--arc-aura);stroke-width:1}
+#bonds .arc-geometry .orbit-main{opacity:.31;stroke-dasharray:2 8}
+#bonds .arc-geometry .orbit-inner{opacity:.15}
+#bonds .arc-geometry .orbit-dashed{stroke-dasharray:3 13;opacity:.3}
+#bonds .arc-geometry .orbit-axis{opacity:.15;stroke-dasharray:2 12}
+#bonds .arc-thread{fill:none;stroke-width:2;stroke-linecap:round;opacity:.28;transition:opacity .28s,stroke-width .28s}
+#bonds .arc-thread.allied{stroke:#DDBB81}
+#bonds .arc-thread.hostile{stroke:#D48686}
+#bonds .arc-thread.complex{stroke:#AAB5DD;stroke-dasharray:6 8}
+#bonds .arc-thread.muted{opacity:.07}
+#bonds .arc-thread.selected{opacity:.95;stroke-width:3}
+#bonds .arc-person{cursor:pointer;outline:0;transition:opacity .2s}
+#bonds .arc-person.is-dim{opacity:.33}
+#bonds .arc-glow{fill:none;stroke:var(--arc-aura);stroke-width:1;stroke-dasharray:3 8;opacity:.28}
+#bonds .arc-outer-ring{fill:none;stroke:var(--arc-aura);stroke-width:1.3;opacity:.8}
+#bonds .arc-portrait-back{fill:#1D2940}
+#bonds .arc-rim{fill:none;stroke:var(--arc-aura);stroke-width:2.6}
+#bonds .arc-person:hover .arc-rim,#bonds .arc-person:focus-visible .arc-rim,#bonds .arc-person.is-selected .arc-rim{stroke-width:5}
+#bonds .arc-person.is-selected .arc-glow{stroke-width:2;stroke-dasharray:none;opacity:.9}
+#bonds .arc-person:focus-visible .arc-glow{opacity:1;stroke-width:3;stroke-dasharray:none}
+#bonds .arc-person-name,#bonds .arc-person-role{paint-order:stroke;stroke:#08101C;stroke-width:4;stroke-linejoin:round;fill:#F0E4D3;letter-spacing:.01em}
+#bonds .arc-person-name{font:750 16px var(--disp)}
+#bonds .arc-person-role{font:600 11px var(--ui);fill:#BCCAD9}
+#bonds .arc-locked-symbol{font:40px var(--disp);fill:#A697C2;opacity:.7}
+#bonds .arcana-bottomline{padding:13px 18px;display:flex;justify-content:space-between;gap:15px;border-top:1px solid rgba(214,186,145,.18);font-size:12px;color:#B9C4D3}
+#bonds .arcana-bottomline span:first-child{color:#E1C89D}
+#bonds .arcana-legend{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;padding:15px;border-top:1px solid rgba(214,186,145,.13);background:#0D1726}
+#bonds .arcana-legend span{font-size:12px;color:#D2D1D2;display:flex;align-items:center;gap:8px}
+#bonds .arcana-legend span:before{content:"";width:23px;height:2px;background:#DDBB81}
+#bonds .arcana-legend .hostile:before{background:#D48686}
+#bonds .arcana-legend .complex:before{background:#AAB5DD}
+#bonds .arcana-dossier{min-height:680px;background:linear-gradient(164deg,#171E32,#0E1725 63%);border:1px solid rgba(216,185,138,.28);overflow:hidden}
+#bonds .arc-dossier-stamp{padding:18px 20px;font:600 10px var(--lat);letter-spacing:.12em;color:#CCB48D;border-bottom:1px solid rgba(214,185,139,.21);background:rgba(7,13,24,.3)}
+#bonds .arc-dossier-empty,#bonds .arc-dossier-sealed{text-align:center;padding:70px 22px}
+#bonds .arc-dossier-empty>span,#bonds .arc-dossier-sealed>span{display:block;font-size:52px;color:#9889AE;opacity:.7}
+#bonds .arc-dossier-empty h3,#bonds .arc-dossier-sealed h3{font:700 23px var(--disp);color:#EEDDC6;margin:12px 0}
+#bonds .arc-dossier-empty p,#bonds .arc-dossier-sealed p{font-size:15px;line-height:1.9;color:#CBD0D8}
+#bonds .arc-dossier-sealed button{border:1px solid rgba(213,180,142,.5);background:rgba(151,113,125,.09);padding:13px 16px;margin-top:12px;color:#EBD0AA;font-size:13px;font-weight:750}
+#bonds .arc-dossier-person{display:flex;align-items:start;gap:14px;padding:23px 19px}
+#bonds .arc-dossier-photo{flex:none;border:1px solid rgba(222,193,145,.43);padding:0;background:#101829;cursor:zoom-in}
+#bonds .arc-dossier-photo img{width:83px;height:115px;object-fit:cover;object-position:center 19%}
+#bonds .arc-dossier-person>div{min-width:0;flex:1}
+#bonds .arc-dossier-person h3{font:700 22px/1.35 var(--disp);color:#F0E2D0;margin:0}
+#bonds .arc-dossier-person small{display:block;margin:7px 0;color:#DFC39A;font-size:12px;line-height:1.6}
+#bonds .arc-dossier-person p{color:#C6CCD5;font-size:13px;line-height:1.8;margin:10px 0}
+#bonds .arc-profile-link{color:#E8C795;font-size:12px;border-bottom:1px solid rgba(218,181,126,.5);padding:6px 0}
+#bonds .arc-relation-summary{margin:0 19px 17px;border-top:1px solid rgba(215,182,132,.18);padding-top:15px;font-size:12px;color:#BFC7D1}
+#bonds .arc-relation-summary span{margin:0 7px;color:#D4B688}
+#bonds .arc-dossier-caption{display:flex;align-items:center;justify-content:space-between;margin:22px 18px 12px;color:#E4CEAA;font-size:14px;font-weight:750}
+#bonds .arc-dossier-caption span{font:600 11px var(--lat);color:#A8B9C7}
+#bonds .arc-connection-list{display:grid;gap:7px;padding:0 13px}
+#bonds .arc-connection{display:flex;align-items:start;gap:10px;padding:12px 10px;background:rgba(8,14,24,.45);border:1px solid rgba(215,184,135,.15)}
+#bonds .arc-related-image{flex:none;background:#131E2E;border:1px solid rgba(220,185,135,.24);padding:0;cursor:zoom-in}
+#bonds .arc-related-image img{width:44px;height:58px;object-fit:cover;object-position:center 18%}
+#bonds .arc-connection-copy{min-width:0;flex:1}
+#bonds .arc-related-name{padding:0;text-align:left;color:#EEDFC7;font-size:13px;font-weight:750}
+#bonds .arc-related-name span{color:#D6B88D}
+#bonds .arc-connection-copy small{display:block;color:#B6C4E0;font-size:11px;margin:4px 0}
+#bonds .arc-connection-copy small.hostile{color:#DBA6A2}
+#bonds .arc-connection-copy small.allied{color:#DCC594}
+#bonds .arc-connection-copy p{color:#C3CCD7;font-size:12px;line-height:1.7;margin:5px 0 0}
+#bonds .arc-doc{flex:none;padding:5px 2px;color:#DCC39B;font-size:11px;align-self:center;border-bottom:1px solid rgba(214,185,142,.44)}
+#bonds .arc-no-links{padding:0 20px;color:#C8CFD6;font-size:14px;line-height:1.8}
+#bonds .arcana-disclaimer{color:#AAB6C6;font-size:12px;line-height:1.8;margin:18px 0 0}
+.arc-gallery{margin:auto;padding:0;max-width:min(820px,calc(100vw - 24px));max-height:calc(100dvh - 24px);background:#101825;color:#F1E4D5;border:1px solid rgba(216,190,148,.55)}
+.arc-gallery::backdrop{background:rgba(3,6,16,.91)}
+.arc-gallery-wrap{width:min(690px,calc(100vw - 26px))}
+.arc-gallery-heading,.arc-gallery-foot{display:flex;align-items:center;justify-content:space-between;gap:15px;background:#171F30;padding:14px 18px}
+.arc-gallery-heading b{font:700 18px var(--disp)}
+.arc-gallery-heading button,.arc-gallery-foot button{border-bottom:1px solid rgba(221,187,138,.55);color:#E3C899;font-size:12px;padding:7px 0}
+.arc-gallery-wrap img{width:100%;max-height:calc(100dvh - 170px);object-fit:contain}
+.arc-gallery-foot span{font-size:12px;color:#C3C9D4}
+@media(max-width:980px){#bonds .arcana-layout{grid-template-columns:1fr}#bonds .arcana-dossier{min-height:0}}
+@media(max-width:650px){#bonds .arcana-topline{padding:13px 12px}#bonds .arcana-topline h3{font-size:19px}#bonds .arcana-topline small{font-size:9px}#bonds .arcana-tools button{min-width:31px;height:32px;padding:0 6px}#bonds #bondShowAll{padding:0 8px}#bonds #bsvg{min-width:820px}#bonds .arcana-bottomline{font-size:11px;padding:11px}#bonds .arcana-dossier{border-top:2px solid rgba(214,186,141,.3)}#bonds .arc-connection-list{padding:0 10px}#bonds .arc-dossier-person{padding:18px 14px}}
+@media(prefers-reduced-motion:reduce){#bonds .arc-thread,#bonds .arc-person{transition:none}}

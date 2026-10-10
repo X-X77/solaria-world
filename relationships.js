@@ -1,9 +1,9 @@
-/* Regional relationship atlas — public-only arcs, all 53 personas. */
+/* Solaria constellation atlas: restored portrait-link composition, eight regions, no spoilers. */
 (()=>{
 'use strict';
-const tabs=document.getElementById('bondRegionTabs'),roster=document.getElementById('bondRoster'),detail=document.getElementById('bondDetail');
-if(!tabs||!roster||!detail)return;
-const factions=[['north','북부'],['capital','황도'],['south','남부'],['west','서부'],['east','동부'],['tower','마탑'],['temple','교단'],['rift','균열']];
+const tabs=document.getElementById('bondRegionTabs'),svg=document.getElementById('bsvg'),detail=document.getElementById('bondDetail'),scroll=document.getElementById('bondScroller'),board=document.getElementById('bondBoard');
+if(!tabs||!svg||!detail||!scroll||!board||typeof P==='undefined')return;
+const factions=[['north','북부','설원의 맹세'],['capital','황도','황좌를 향한 시선'],['south','남부','황금으로 엮인 약속'],['west','서부','칼끝에 새긴 자치'],['east','동부','숲이 기억하는 이름'],['tower','마탑','별을 읽는 자들'],['temple','교단','기도 아래의 갈등'],['rift','균열','가려진 왕좌']];
 const relationPairs=[
 [1,2,'대립','서로 다른 방식으로 계승권을 준비하는 남매'],[1,13,'가족','황제의 계승 결정을 기다리는 제1황자'],[2,13,'가족','황제의 결정과 궁정의 움직임을 주시하는 황녀'],
 [1,14,'가족','황후의 아들'],[2,14,'가족','황후의 딸'],[14,19,'가문','황후의 친정인 세베루스 공작가'],[19,20,'가족','세베루스 가문의 공작과 영애'],[1,20,'혼담','확정되지 않은 정치적 혼담 후보'],
@@ -22,73 +22,173 @@ const relationPairs=[
 [3,6,'경쟁·협력','변경을 지키는 서로 다른 지휘관'],[3,4,'교역','북부에 필요한 물자와 운송의 거래'],[4,6,'긴장','마석 거래와 변경의 이해관계'],[4,5,'의견 차이','작물 오염의 원인을 두고 의견 차이'],[5,10,'신앙','숲의 관점과 성녀의 치유가 맞닿는 접점'],[41,10,'조언','성녀에게 조언하는 숲 신전의 사제장'],
 [11,12,'신뢰','마왕과 가장 가까운 측근'],[11,49,'충성','마왕을 섬기는 기사단장'],[11,50,'참모','공존 협상을 설계하는 참모'],[11,52,'의무','마왕궁의 치유와 마력 감별'],[11,53,'보호','마왕궁의 애완 마물'],[12,49,'대립·협력','계략과 군 규율을 두고 충돌'],[12,50,'협력','정무와 정보의 신빙성을 논의'],[12,51,'훈육','정찰병이 사고를 치면 뒷수습하는 측근'],[49,50,'견해 차이','군사적 경계와 공존 협상 사이의 충돌'],[49,52,'의무','부상병의 복귀와 치료를 둘러싼 협의'],[49,51,'훈육','무단 잠입을 꾸짖는 기사단장'],[50,51,'업무','정찰 보고에서 누락된 정보를 점검'],[51,52,'보호','다친 정찰병을 돌보는 의관'],[51,53,'친근','정찰병이 아기 늑대를 알아보고 말을 붙임']
 ];
-const byId=new Map(P.map(p=>[p.no,p]));
-const edges=relationPairs.map(([a,b,type,desc])=>({a,b,type,desc})).filter(e=>byId.has(e.a)&&byId.has(e.b));
-const esc=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-const nameOf=p=>(p.sealed&&!window.SOLARIA_RIFT_UNLOCKED)?'열람 제한':p.name;
-const isLocked=p=>p.sealed&&!window.SOLARIA_RIFT_UNLOCKED;
-let region='north',selected=3;
-const available=()=>P.filter(p=>p.aff===region).sort((a,b)=>b.main-a.main||a.no-b.no);
-const relationFor=no=>edges.filter(e=>e.a===no||e.b===no).map(e=>({p:byId.get(e.a===no?e.b:e.a),type:e.type,desc:e.desc})).filter(e=>!!e.p);
-function preview(no){
- const p=byId.get(Number(no));
- if(!p)return '';
- const rel=relationFor(p.no).filter(x=>!isLocked(x.p)).slice(0,4);
- return '<h4>이 인물의 관계</h4>'+(rel.length?rel.map(x=>'<button type="button" data-cast-relation="'+x.p.no+'">'+esc(x.p.name)+' · '+esc(x.type)+' ↗</button>').join(''):'<p>아직 공개된 관계가 없습니다.</p>')+
- '<button type="button" data-cast-relation="'+p.no+'">관계도에서 모두 보기 ↗</button>';
+const people=new Map(P.map(p=>[p.no,p]));
+const edges=relationPairs.map(([a,b,type,description])=>({a,b,type,description})).filter(e=>people.has(e.a)&&people.has(e.b));
+const NS='http://www.w3.org/2000/svg';
+const safe=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const quiet=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const node=(tag,attrs={},text)=>{const el=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,String(v));if(text!==undefined)el.textContent=String(text);return el;};
+const colorType=t=>/대립|충돌|경쟁|긴장|견제|마찰|불신/.test(t)?'hostile':/충성|친밀|전우|협력|후원|가족|돌봄|호위|스승|신뢰|지원|친근|의무|동료/.test(t)?'allied':'complex';
+const shown=p=>!p.sealed||!!window.SOLARIA_RIFT_UNLOCKED;
+const visibleName=p=>shown(p)?p.name:'열람 제한';
+const relations=id=>edges.filter(e=>e.a===id||e.b===id).map(e=>({other:people.get(e.a===id?e.b:e.a),type:e.type,description:e.description}));
+const members=key=>P.filter(p=>p.aff===key).sort((a,b)=>Number(b.main)-Number(a.main)||a.no-b.no);
+let region='north',selected=3,photo=null;
+function positions(cast){
+ const map=new Map(),main=cast.find(p=>p.main)||cast[0];
+ if(!main)return map;
+ map.set(main.no,{x:470,y:325});
+ const others=cast.filter(p=>p.no!==main.no),count=others.length;
+ others.forEach((p,i)=>{
+  const angle=-Math.PI/2+2*Math.PI*i/count;
+  const rx=count>9?347:count>5?330:311,ry=count>9?227:218;
+  map.set(p.no,{x:470+Math.cos(angle)*rx,y:320+Math.sin(angle)*ry});
+ });
+ return map;
 }
-function focus(no){
- const p=byId.get(Number(no));if(!p)return;
- if(p.sealed&&!window.SOLARIA_RIFT_UNLOCKED){region='rift';selected=11}else{region=p.aff;selected=p.no}
- render();document.getElementById('bonds')?.scrollIntoView({behavior:'smooth',block:'start'});
+function renderGraph(){
+ const cast=members(region),pts=positions(cast),locked=region==='rift'&&!window.SOLARIA_RIFT_UNLOCKED;
+ svg.replaceChildren();
+ const defs=node('defs');
+ for(const p of cast){
+  if(locked)continue;
+  const clip=node('clipPath',{id:'arc-clip-'+p.no});clip.append(node('circle',{cx:0,cy:0,r:38}));defs.append(clip);
+ }
+ svg.append(defs);
+ const stars=node('g',{class:'arc-starfield','aria-hidden':'true'});
+ for(let i=0;i<54;i++){
+  const x=22+(i*173+39)%890,y=22+(i*131+75)%650;
+  stars.append(node('circle',{cx:x,cy:y,r:i%5===0?1.8:0.8,class:i%6===0?'star-bright':'star-dim'}));
+ }
+ svg.append(stars);
+ const geometry=node('g',{class:'arc-geometry','aria-hidden':'true'});
+ geometry.append(node('ellipse',{cx:470,cy:320,rx:347,ry:231,class:'orbit-main'}));
+ geometry.append(node('circle',{cx:470,cy:325,r:169,class:'orbit-inner'}));
+ geometry.append(node('circle',{cx:470,cy:325,r:179,class:'orbit-dashed'}));
+ for(const a of [0,45,90,135]){
+  const t=a*Math.PI/180,x=470+165*Math.cos(t),y=325+165*Math.sin(t);
+  geometry.append(node('line',{x1:470-x+470,y1:325-y+325,x2:x,y2:y,class:'orbit-axis'}));
+ }
+ svg.append(geometry);
+ const lines=node('g',{class:'arc-link-lines'});
+ const intra=edges.filter(e=>pts.has(e.a)&&pts.has(e.b));
+ intra.forEach(e=>{
+  const a=pts.get(e.a),b=pts.get(e.b),dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy)||1;
+  const bend=Math.min(21,len*.07)*((e.a+e.b)%2===0?1:-1);
+  const mx=(a.x+b.x)/2+(-dy/len)*bend,my=(a.y+b.y)/2+(dx/len)*bend;
+  const path=node('path',{d:'M'+a.x+','+a.y+' Q'+mx+','+my+' '+b.x+','+b.y,class:'arc-thread '+colorType(e.type)+(selected!==null&&(e.a===selected||e.b===selected)?' selected':'')+(selected!==null&&e.a!==selected&&e.b!==selected?' muted':'')});
+  const title=node('title',{},people.get(e.a).name+' ↔ '+people.get(e.b).name+' · '+e.type);
+  path.append(title);lines.append(path);
+ });
+ svg.append(lines);
+ const related=new Set([selected]);
+ intra.forEach(e=>{if(e.a===selected||e.b===selected){related.add(e.a);related.add(e.b)}});
+ const portraits=node('g',{class:'arc-portraits'});
+ cast.forEach(p=>{
+  const pos=pts.get(p.no),isSelected=selected===p.no,dim=selected!==null&&!related.has(p.no);
+  const g=node('g',{transform:'translate('+pos.x+' '+pos.y+')',class:'arc-person'+(isSelected?' is-selected':'')+(dim?' is-dim':'')+(locked?' is-sealed':''),'data-person':p.no,role:'button',tabindex:'0','aria-pressed':String(isSelected),'aria-label':shown(p)?p.name+' 관계 보기':'열람 제한 인물'});
+  const title=node('title',{},visibleName(p));g.append(title);
+  g.append(node('circle',{r:52,class:'arc-glow'}));
+  g.append(node('circle',{r:43,class:'arc-outer-ring'}));
+  g.append(node('circle',{r:38,class:'arc-portrait-back'}));
+  if(locked){
+   g.append(node('text',{x:0,y:12,class:'arc-locked-symbol','text-anchor':'middle'},'✧'));
+  }else{
+   g.append(node('image',{href:'img/t/'+pad(p.no)+'.jpg',x:-38,y:-49,width:76,height:104,'clip-path':'url(#arc-clip-'+p.no+')',preserveAspectRatio:'xMidYMin slice'}));
+  }
+  g.append(node('circle',{r:39.5,class:'arc-rim'}));
+  g.append(node('text',{x:0,y:67,class:'arc-person-name','text-anchor':'middle'},shown(p)?p.name:'???'));
+  g.append(node('text',{x:0,y:85,class:'arc-person-role','text-anchor':'middle'},shown(p)?p.role:'열람 제한'));
+  g.addEventListener('click',()=>{selected=selected===p.no?null:p.no;render()});
+  g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selected=selected===p.no?null:p.no;render()}});
+  portraits.append(g);
+ });
+ svg.append(portraits);
+ document.getElementById('arcanaCount').textContent=cast.length+'명 · 권역 내 연결 '+intra.length+'개';
 }
-function openDossier(no){
- const p=byId.get(Number(no));if(!p||isLocked(p))return;
- if(typeof setFilter==='function')setFilter(p.aff,p.no);
- document.getElementById('people')?.scrollIntoView({behavior:'smooth',block:'start'});
+function relatedMarkup(items,caption){
+ if(!items.length)return '';
+ return '<h4 class="arc-dossier-caption">'+caption+' <span>'+items.length+'</span></h4><div class="arc-connection-list">'+
+ items.map(({other,type,description})=>'<article class="arc-connection"><button class="arc-related-image" type="button" data-portrait="'+other.no+'" aria-label="'+safe(other.name)+' 일러스트 크게 보기"><img src="img/t/'+pad(other.no)+'.jpg" alt="" loading="lazy"></button>'+
+ '<div class="arc-connection-copy"><button type="button" data-person="'+other.no+'" class="arc-related-name">'+safe(other.name)+' <span>↗</span></button>'+
+ '<small class="'+colorType(type)+'">'+safe(type)+'</small><p>'+safe(description)+'</p></div><button type="button" class="arc-doc" data-dossier="'+other.no+'">도감</button></article>').join('')+'</div>';
 }
-function render(){
- tabs.innerHTML=factions.map(([id,label])=>'<button type="button" class="bond-region-tab'+(region===id?' active':'')+'" data-region="'+id+'" aria-pressed="'+(region===id)+'">'+label+'</button>').join('');
- const cast=available();
- document.getElementById('bondRegionName').textContent=(factions.find(x=>x[0]===region)?.[1]||'제국')+' 인물 관계';
- document.getElementById('bondRegionSummary').textContent=cast.length+'명 · 전체 '+P.length+'명';
- const lockedRegion=region==='rift'&&!window.SOLARIA_RIFT_UNLOCKED;
- roster.innerHTML=(lockedRegion?'<div class="bond-lock-note"><b>균열 너머 · 열람 제한</b><p>마왕궁의 인물 기록에는 이야기의 진행에 영향을 줄 수 있는 내용이 포함됩니다.</p><button type="button" data-unlock-rift>스포일러를 확인하고 열람 ↗</button></div>':'')+
- cast.map(p=>{
- const locked=isLocked(p);
- return '<button type="button" class="bond-person'+(selected===p.no?' selected':'')+'" data-person="'+p.no+'" aria-pressed="'+(selected===p.no)+'">'+
- (locked?'<span class="bond-person-hidden">◇</span>':'<img src="img/t/'+pad(p.no)+'.jpg" alt="" loading="lazy">')+
- '<span><b>'+esc(nameOf(p))+'</b><small>'+esc(locked?'비공개 인물':p.role)+'</small></span><em>↗</em></button>';
- }).join('');
- const p=byId.get(selected);
- if(!p||p.aff!==region){selected=cast[0]?.no??3;return render()}
- if(isLocked(p)){
-  detail.innerHTML='<div class="bond-detail-stamp">RESTRICTED / RIFT</div><h3>열람 제한 기록</h3><p>이 인물의 초상과 관계는 선택적으로 열람할 수 있습니다.</p><button class="bond-unlock" type="button" data-unlock-rift>균열 인물 정보 열람 ↗</button>';
+function renderDetail(){
+ const locked=region==='rift'&&!window.SOLARIA_RIFT_UNLOCKED,p=people.get(selected);
+ if(locked){
+  detail.innerHTML='<div class="arc-dossier-stamp">RESTRICTED / BEYOND THE RIFT</div><div class="arc-dossier-sealed"><span aria-hidden="true">✧</span><h3>이름 없는 별자리</h3><p>균열 너머의 인물과 관계는 아직 봉인되어 있습니다. 이 기록에는 이야기의 비밀이 포함될 수 있습니다.</p><button type="button" data-unlock>균열의 인물 열람하기 ↗</button></div>';
   return;
  }
- const relation=relationFor(p.no);
- const visible=relation.filter(x=>!isLocked(x.p));
- const sections=visible.filter(x=>x.p.aff===p.aff),outside=visible.filter(x=>x.p.aff!==p.aff);
- const group=(title,items)=>!items.length?'':'<h4 class="bond-group-title">'+title+' <span>'+items.length+'</span></h4><div class="bond-connections">'+items.map(({p:q,type,desc})=>
- '<article class="bond-connection"><button type="button" class="bond-face" data-portrait="'+q.no+'" aria-label="'+esc(q.name)+' 일러스트 확대"><img src="img/t/'+pad(q.no)+'.jpg" alt="" loading="lazy"></button><div><button type="button" class="bond-name-link" data-select="'+q.no+'">'+esc(q.name)+' ↗</button><strong>'+esc(type)+'</strong><p>'+esc(desc)+'</p></div><button class="bond-doc-link" type="button" data-dossier="'+q.no+'">도감</button></article>').join('')+'</div>';
- detail.innerHTML='<div class="bond-detail-stamp">PERSONNEL CONNECTIONS / '+pad(p.no)+'</div>'+
- '<div class="bond-focus-head"><button class="bond-portrait-main" type="button" data-portrait="'+p.no+'" aria-label="'+esc(p.name)+' 일러스트 확대"><img src="img/t/'+pad(p.no)+'.jpg" alt="" loading="lazy"></button>'+
- '<div><h3>'+esc(p.name)+'</h3><small>'+esc(p.group)+' · '+esc(p.role)+'</small><p>'+esc(p.pers)+'</p><button type="button" data-dossier="'+p.no+'">인물 도감에서 자세히 보기 ↗</button></div></div>'+
- '<p class="bond-total-relations">공개된 관계 '+visible.length+'개 · 지역 내 관계 '+sections.length+'개</p>'+
- (visible.length?group('같은 권역의 관계',sections)+group('다른 권역과의 연결',outside):'<p class="bond-no-record">아직 공개된 직접 관계가 없습니다. 같은 권역 인물을 선택해 살펴보세요.</p>');
+ if(!p||p.aff!==region||!shown(p)){
+  detail.innerHTML='<div class="arc-dossier-stamp">PERSONNEL / CONNECTIONS</div><div class="arc-dossier-empty"><span aria-hidden="true">✧</span><h3>하나의 별을 선택하세요</h3><p>인물의 초상을 누르면 서로 주고받는 약속과 대립, 다른 권역으로 이어진 관계가 나타납니다.</p></div>';
+  return;
+ }
+ const all=relations(p.no).filter(e=>shown(e.other)),local=all.filter(e=>e.other.aff===region),outside=all.filter(e=>e.other.aff!==region);
+ detail.innerHTML='<div class="arc-dossier-stamp">DOSSIER / '+pad(p.no)+' · '+safe(AFF[p.aff]||'솔라리아')+'</div>'+
+ '<div class="arc-dossier-person"><button type="button" class="arc-dossier-photo" data-portrait="'+p.no+'" aria-label="'+safe(p.name)+' 일러스트 크게 보기"><img src="img/t/'+pad(p.no)+'.jpg" alt="" loading="lazy"></button><div><h3>'+safe(p.name)+'</h3><small>'+safe(p.group)+' · '+safe(p.role)+'</small><p>'+safe(p.known)+'</p><button type="button" data-dossier="'+p.no+'" class="arc-profile-link">인물 상세 기록 ↗</button></div></div>'+
+ '<div class="arc-relation-summary">공개된 인연 '+all.length+'개 <span>·</span> 권역 내부 '+local.length+'개</div>'+
+ (all.length?relatedMarkup(local,'이 권역의 인연')+relatedMarkup(outside,'다른 권역으로 이어진 인연'):'<p class="arc-no-links">공개된 관계가 없습니다. 다른 인물을 선택해 살펴보세요.</p>');
 }
-tabs.addEventListener('click',e=>{const b=e.target.closest('[data-region]');if(!b)return;region=b.dataset.region;selected=available()[0]?.no||3;render()});
-roster.addEventListener('click',e=>{const unlock=e.target.closest('[data-unlock-rift]');if(unlock){window.SOLARIA_RIFT_UNLOCKED=true;window.setFilter?.('rift');render();return}const b=e.target.closest('[data-person]');if(b){selected=Number(b.dataset.person);render()}});
-detail.addEventListener('click',e=>{
- if(e.target.closest('[data-unlock-rift]')){window.SOLARIA_RIFT_UNLOCKED=true;window.setFilter?.('rift');render();return}
- const select=e.target.closest('[data-select]');if(select){focus(select.dataset.select);return}
- const dossier=e.target.closest('[data-dossier]');if(dossier){openDossier(dossier.dataset.dossier);return}
- const portrait=e.target.closest('[data-portrait]');if(portrait)showPortrait(portrait.dataset.portrait);
+function render(){
+ const info=factions.find(x=>x[0]===region);
+ board.style.setProperty('--arc-aura',COL[region]||'#D8B88A');
+ tabs.innerHTML=factions.map(([key,name])=>'<button type="button" class="arc-region-tab'+(key===region?' active':'')+'" data-region="'+key+'" aria-pressed="'+(key===region)+'">'+name+'</button>').join('');
+ document.getElementById('bondRegionName').textContent=info[2];
+ document.getElementById('arcanaNumber').textContent=String(factions.findIndex(x=>x[0]===region)+1).padStart(2,'0')+' / 08';
+ renderGraph();renderDetail();
+}
+function focus(id){
+ const p=people.get(Number(id));if(!p)return;
+ region=p.aff;selected=shown(p)?p.no:null;render();
+ document.getElementById('bonds')?.scrollIntoView({behavior:quiet()?'auto':'smooth',block:'start'});
+}
+function preview(no){
+ const p=people.get(Number(no));if(!p)return '';
+ const related=relations(p.no).filter(x=>shown(x.other)).slice(0,4);
+ return '<h4>이 인물의 관계</h4>'+(related.length?related.map(x=>'<button type="button" data-cast-relation="'+x.other.no+'">'+safe(x.other.name)+' · '+safe(x.type)+' ↗</button>').join(''):'<p>공개된 관계가 없습니다.</p>')+
+ '<button type="button" data-cast-relation="'+p.no+'">관계도에서 모두 보기 ↗</button>';
+}
+function openDossier(id){
+ const p=people.get(Number(id));if(!p||!shown(p))return;
+ if(typeof setFilter==='function')setFilter(p.aff,p.no);
+ document.getElementById('people')?.scrollIntoView({behavior:quiet()?'auto':'smooth',block:'start'});
+}
+function unlock(){
+ window.SOLARIA_RIFT_UNLOCKED=true;
+ const p=members('rift').find(x=>x.no===11)||members('rift')[0];
+ region='rift';selected=p?p.no:null;render();
+ if(typeof filt!=='undefined'&&filt==='rift'&&typeof setFilter==='function')setFilter('rift',p?.no);
+}
+tabs.addEventListener('click',e=>{
+ const b=e.target.closest('[data-region]');if(!b)return;
+ region=b.dataset.region;const cast=members(region),primary=cast.find(p=>p.main)||cast[0];
+ selected=primary?primary.no:null;render();
 });
-const dlg=document.createElement('dialog');dlg.className='bond-gallery-dialog';dlg.innerHTML='<div class="bond-gallery-frame"><header><b id="bondGalleryName"></b><button type="button" data-close>닫기 ×</button></header><img id="bondGalleryImage" alt=""><footer><span id="bondGalleryRole"></span><button type="button" data-gallery-dossier>인물 도감 ↗</button></footer></div>';document.body.append(dlg);
-let displayed=null;
-function showPortrait(no){const p=byId.get(Number(no));if(!p||isLocked(p))return;displayed=p;dlg.querySelector('#bondGalleryName').textContent=p.name;dlg.querySelector('#bondGalleryRole').textContent=p.role;const img=dlg.querySelector('img');img.src='img/c/'+pad(p.no)+'.jpg';img.alt=p.name+' 인물 일러스트';if(!dlg.open)dlg.showModal()}
-dlg.addEventListener('click',e=>{if(e.target===dlg||e.target.closest('[data-close]'))dlg.close();if(e.target.closest('[data-gallery-dossier]')&&displayed){dlg.close();openDossier(displayed.no)}});
+detail.addEventListener('click',e=>{
+ const u=e.target.closest('[data-unlock]');if(u){unlock();return}
+ const p=e.target.closest('[data-person]');if(p){focus(p.dataset.person);return}
+ const d=e.target.closest('[data-dossier]');if(d){openDossier(d.dataset.dossier);return}
+ const picture=e.target.closest('[data-portrait]');if(picture)showPhoto(picture.dataset.portrait);
+});
+document.getElementById('bondShowAll')?.addEventListener('click',()=>{selected=null;render()});
+for(const [id,dir] of [['bondScrollLeft',-1],['bondScrollRight',1]]){
+ document.getElementById(id)?.addEventListener('click',()=>scroll.scrollBy({left:scroll.clientWidth*.65*dir,behavior:quiet()?'auto':'smooth'}));
+}
+const gallery=document.createElement('dialog');
+gallery.className='arc-gallery';
+gallery.setAttribute('aria-label','인물 일러스트 크게 보기');
+gallery.innerHTML='<div class="arc-gallery-wrap"><div class="arc-gallery-heading"><b id="arcGalleryName"></b><button type="button" data-close>닫기 ×</button></div><img id="arcGalleryImage" alt=""><div class="arc-gallery-foot"><span id="arcGalleryRole"></span><button type="button" data-gallery-dossier>인물 소개 ↗</button></div></div>';
+document.body.append(gallery);
+function showPhoto(id){
+ const p=people.get(Number(id));if(!p||!shown(p))return;
+ photo=p;gallery.querySelector('#arcGalleryName').textContent=p.name;gallery.querySelector('#arcGalleryRole').textContent=p.role;
+ const img=gallery.querySelector('#arcGalleryImage');img.src='img/c/'+pad(p.no)+'.jpg';img.alt=p.name+' 인물 일러스트';
+ if(!gallery.open)gallery.showModal();
+}
+gallery.addEventListener('click',e=>{
+ if(e.target===gallery||e.target.closest('[data-close]')){gallery.close();return}
+ if(e.target.closest('[data-gallery-dossier]')&&photo){gallery.close();openDossier(photo.no)}
+});
 window.SOLARIA_ATLAS={focus,preview,refresh:render};
 render();
 if(typeof setPerson==='function'&&typeof cur!=='undefined')setPerson(cur,false);
