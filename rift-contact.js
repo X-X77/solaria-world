@@ -10,8 +10,11 @@ let linked=false,attempted=false,active=false,complete=false,frame=0,mediaClock=
 const inertBefore=new Map();
 try{linked=localStorage.getItem(KEY)==='linked'}catch(_){}
 window.SOLARIA_RIFT_UNLOCKED=linked;
+function updateReplayButtons(){document.querySelectorAll('[data-nox-replay]').forEach(b=>b.hidden=!linked)}
+updateReplayButtons();
 function update(){
  window.SOLARIA_RIFT_UNLOCKED=true;
+ updateReplayButtons();
  try{if(typeof filt!=='undefined'&&typeof setFilter==='function')setFilter(filt)}catch(_){}
  try{if(document.querySelector('.rtab.on')?.dataset.r==='rift'&&typeof setRegion==='function')setRegion('rift',false)}catch(_){}
  try{window.SOLARIA_ATLAS?.refresh?.()}catch(_){}
@@ -69,6 +72,7 @@ function reveal(){
  if(active)return;
  active=true;complete=false;mediaClock=false;pausedAt=null;backgroundPause=false;clockOffset=0;clockStart=performance.now();
  previousFocus=document.activeElement;
+ cuts.forEach(el=>el.classList.remove('active'));
  sound=typeof SND!=='undefined'?SND.hiddenStart():false;
  soundButton.disabled=false;veil.hidden=false;veil.classList.add('visible');veil.dataset.complete='false';result.hidden=true;
  document.documentElement.classList.add('rift-event-active');
@@ -117,5 +121,7 @@ document.addEventListener('visibilitychange',()=>{
  if(document.hidden){pausedAt=performance.now();if(mediaClock&&!player.paused){player.pause();backgroundPause=true}}
  else{if(pausedAt!==null){clockStart+=performance.now()-pausedAt;pausedAt=null}if(backgroundPause){backgroundPause=false;player.play().catch(()=>{if(active&&!complete)useSilentClock()})}}
 });
-window.SOLARIA_RIFT_CONTACT={begin:replay,isLinked:()=>linked,navigate};
+function replayFilm(){if(linked&&!document.getElementById('intro'))reveal()}
+document.querySelectorAll('[data-nox-replay]').forEach(b=>b.addEventListener('click',replayFilm));
+window.SOLARIA_RIFT_CONTACT={begin:replay,replayFilm,isLinked:()=>linked,navigate};
 })();
