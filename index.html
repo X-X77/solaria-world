@@ -1036,6 +1036,7 @@ footer{background:#080D16}
 }
 
 </style>
+<link rel="stylesheet" href="archive.css">
 </head>
 <body>
 <div id="intro" class="op-v2" aria-label="솔라리아 오프닝">
@@ -1062,7 +1063,7 @@ footer{background:#080D16}
 
 <header class="nav" id="nav">
   <a class="logo" href="#top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 22 12 12 22 2 12Z"/><path d="M12 7 17 12 12 17 7 12Z" fill="currentColor"/></svg><b>솔라리아</b></a>
-  <ul><li><a href="#world">세계관</a></li><li><a href="#regions">권역</a></li><li><a href="#people">인물</a></li><li><a href="#bonds">관계</a></li><li><a href="#seals">봉인</a></li></ul>
+  <ul><li><a href="#world">세계관</a></li><li><a href="#regions">권역</a></li><li><a href="#people">인물</a></li><li><a href="#bonds">관계</a></li><li><a href="#seals">봉인</a></li><li><a href="#archive">기밀</a></li></ul>
   <button class="snd" id="snd" type="button" aria-pressed="false" aria-label="배경음 켜기" title="배경음 켜기"><i></i><i></i><i></i><i></i></button>
 </header>
 
@@ -1198,6 +1199,13 @@ footer{background:#080D16}
   <div class="sgrid" id="sgrid"></div>
 </div></section>
 
+<section class="sec" id="archive" aria-labelledby="arcTitle"><div class="wrap">
+  <div class="sh"><span class="arc-overline">IMPERIAL SECRET ARCHIVES</span><h2 id="arcTitle">제국의 미해결 기록</h2><div class="orn"><i></i></div><p>세계관과 지도, 인물 도감에 흩어진 흔적을 찾아 기록을 복원하세요.</p></div>
+  <div class="arc-overview" id="arcOverview" aria-label="단서 수집 현황"></div>
+  <div class="arc-layout"><aside class="arc-tabs" id="arcFiles" aria-label="기밀 사건 목록"></aside><div class="arc-paper" id="arcPaper" aria-live="polite"></div></div>
+  <div class="arc-actions"><span>기록은 현재 브라우저에 저장됩니다. 모든 비밀은 공개되지 않습니다.</span><button class="arc-reset" id="arcReset" type="button">수집 기록 초기화</button></div>
+</div></section>
+<div id="arcNotice" class="arc-notice" role="status" aria-live="polite"></div>
 <section class="sec final" id="final">
   <div class="fbg" aria-hidden="true"></div>
   <div class="fin">
@@ -1920,5 +1928,6 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
 })();
 
 </script>
+<script src="archive.js"></script>
 </body>
 </html>
