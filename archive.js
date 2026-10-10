@@ -37,7 +37,7 @@ function render(){
  paper.innerHTML='<div class="arc-head"><span>IMPERIAL ARCHIVE / '+r.number+'</span><span>'+(done?'ACCESS GRANTED':'RESTRICTED')+'</span></div>'+
  '<h3>'+esc(r.title)+'</h3><p class="arc-intro">'+esc(r.lead)+'</p><div class="arc-sub"><span>수집한 단서</span><span>'+amt(r)+' / 3</span></div>'+
  '<div class="arc-clues">'+r.clues.map((c,i)=>'<div class="arc-clue"><b>'+(found.has(c.key)?'✓ '+esc(c.name):'◇ 미발견 단서 '+(i+1))+'</b><small>'+esc(c.place)+'</small>'+
- (found.has(c.key)?'<p>'+esc(c.text)+'</p>':'<a href="#'+c.target+'">조사 힌트 · '+esc(c.hint)+' ↗</a>')+'</div>').join('')+'</div>'+
+ (found.has(c.key)?'<p>'+esc(c.text)+'</p>':'<button type="button" class="arc-hint-go" data-arc-hint="'+c.key+'">이 장소로 바로 이동 ↗ <small>'+esc(c.hint)+'</small></button>')+'</div>').join('')+'</div>'+
  '<div class="arc-reward'+(done?'':' locked')+'"><h4>'+(done?'복원된 기밀 기록':'◇ 기밀 문서 봉인 중')+'</h4><p>'+(done?esc(r.ending):'웹사이트 곳곳에 숨겨진 세 가지 단서를 조사하면 기록이 열립니다.')+'</p></div>';
 }
 function toast(title,msg){
@@ -82,6 +82,45 @@ const personLookup={'카시안 보레알':'n-person','노바':'m-person','셀레
 const mapAction=()=>decorateDynamic('atlasDetail','h4',mapLookup,'map');
 const personAction=()=>decorateDynamic('cstage','.cinfo h3',personLookup,'person');
 function decorate(){decorateWorld();mapAction();personAction()}
+
+/* Direct hint routing. Use the existing map UI, never replace Claude's atlas logic. */
+const hintTargets={
+ 'n-world':{type:'world',selector:'.world-chapter-north'},
+ 'm-world':{type:'world',selector:'.world-chapter-rift'},
+ 'c-world':{type:'world',selector:'.world-chapter-empire'},
+ 'n-map':{type:'map',region:'north',place:'north-3'},
+ 'm-map':{type:'map',region:'capital',place:'capital-1'},
+ 'c-map':{type:'map',region:'capital',place:'capital-0'},
+ 'n-person':{type:'person',faction:'north',no:3},
+ 'm-person':{type:'person',faction:'tower',no:8},
+ 'c-person':{type:'person',faction:'capital',no:2}
+};
+function openHint(key){
+ const dest=hintTargets[key];if(!dest)return;
+ let target=null;
+ if(dest.type==='world'){
+   target=document.querySelector('#world '+dest.selector);
+ }else if(dest.type==='map'){
+   document.querySelector('#atlasFilters [data-region="'+dest.region+'"]')?.click();
+   document.querySelector('#atlasDirectory [data-place="'+dest.place+'"]')?.click();
+   target=document.querySelector('#atlasDetail [data-clue="'+key+'"]')||document.getElementById('atlasDetail');
+ }else if(dest.type==='person'){
+   if(typeof setFilter==='function')setFilter(dest.faction,dest.no);
+   target=document.querySelector('#cstage [data-clue="'+key+'"]')||document.getElementById('peopleDossier');
+ }
+ if(!target)return;
+ target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});
+ if(target.matches('button:not(:disabled)'))target.focus({preventScroll:true});
+ target.classList.remove('arc-spotlight');
+ void target.offsetWidth;
+ target.classList.add('arc-spotlight');
+ setTimeout(()=>target.classList.remove('arc-spotlight'),2400);
+}
+paper.addEventListener('click',e=>{
+ const hint=e.target.closest('[data-arc-hint]');
+ if(hint){e.preventDefault();openHint(hint.dataset.arcHint);}
+});
+
 files.addEventListener('click',e=>{const b=e.target.closest('[data-record]');if(!b)return;selected=b.dataset.record;render()});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-clue]');if(b){e.preventDefault();capture(b.dataset.clue)}});
 document.getElementById('arcReset').addEventListener('click',()=>{
