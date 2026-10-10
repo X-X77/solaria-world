@@ -1,114 +1,43 @@
-
-/* Solaria resonance alignment — custom ring minigame (v2) */
-#resonance{--res-gold:#D8BB8A;background:radial-gradient(ellipse at 48% 30%,rgba(63,50,110,.15),transparent 66%),#0A101C;padding:clamp(80px,10vw,125px) 16px}
-#resonance .wrap{max-width:1170px}
-#resonance .sh{margin-bottom:30px}
-#resonance .res-overline{display:block;color:#D8BE95;font:600 11px var(--lat);letter-spacing:.17em;margin-bottom:14px}
-#resonance .res-panel{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr);border:1px solid rgba(216,181,126,.32);min-height:600px;background:#101A2B}
-#resonance .res-left{display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:17px;min-width:0;padding:23px 24px;background:radial-gradient(ellipse at 50% 47%,rgba(100,83,162,.17),transparent 55%),linear-gradient(155deg,#142133,#080E1A);position:relative;overflow:hidden;border-right:1px solid rgba(217,181,126,.23)}
-#resonance .res-left:before{content:"";position:absolute;inset:15px;border:1px solid rgba(216,181,126,.15);pointer-events:none}
-#resonance .res-left:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(9,16,27,.9),rgba(9,16,27,.64)),url('img/resonance-apparatus.webp') center/cover no-repeat;pointer-events:none;opacity:.13}
-#resonance .res-inscription,#resonance .res-phase,#resonance .res-side-note,#resonance .res-gem{z-index:1;position:relative}
-#resonance .res-inscription{color:#D4BD97;font:600 10px var(--lat);letter-spacing:.2em;text-align:center}
-#resonance .res-gem{--gem:#A9B8ED;width:min(100%,400px);height:400px;max-height:400px;flex:none;display:grid;place-items:center;filter:drop-shadow(0 0 21px color-mix(in srgb,var(--gem) 20%,transparent));transition:filter .6s}
-#resonance .res-gem.res-success{filter:drop-shadow(0 0 38px color-mix(in srgb,var(--gem) 68%,transparent))}
-#resonance .res-game-device{position:relative;width:100%;height:100%;display:grid;place-items:center}
-#resonance .res-game-device:before{content:"";position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle,rgba(166,152,222,.1),transparent 70%);box-shadow:0 0 70px rgba(66,71,113,.14)}
-#resonance .res-axis{position:absolute;z-index:10;top:0;left:50%;height:48%;width:1px;background:linear-gradient(to bottom,#F4D99E 0%,rgba(243,212,152,.18) 68%,transparent);pointer-events:none}
-#resonance .res-axis:before{content:"✦";position:absolute;top:-7px;left:50%;transform:translateX(-50%);color:#FFE4B0;font-size:17px;line-height:1}
-#resonance .res-ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;display:block;padding:0;overflow:visible;cursor:pointer;border:0;background:none;outline-offset:5px;transition:filter .35s}
-#resonance .res-ring:disabled{cursor:default}
-#resonance .res-ring-0{width:84%;height:84%;z-index:2}
-#resonance .res-ring-1{width:65%;height:65%;z-index:3}
-#resonance .res-ring-2{width:45%;height:45%;z-index:4}
-#resonance .res-ring-track{position:absolute;inset:0;display:block;border:2px solid rgba(175,163,222,.69);border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(231,216,255,.24) 0deg 1.1deg,transparent 1.1deg 44.5deg,rgba(231,216,255,.36) 44.5deg 45deg);box-shadow:inset 0 0 22px rgba(130,114,190,.17),0 0 12px rgba(152,133,210,.22);transition:transform .38s cubic-bezier(.2,.8,.2,1),border-color .35s,box-shadow .35s}
-#resonance .res-ring-track:after{content:"";position:absolute;inset:7px;border-radius:50%;border:1px dashed rgba(199,190,221,.24);pointer-events:none}
-#resonance .res-ring-mark{position:absolute;top:-14px;left:50%;transform:translateX(-50%);display:grid;place-items:center;width:28px;height:28px;border-radius:50%;font-size:17px;font-weight:900;color:#130E1F;background:#ECCFA6;border:2px solid #FCE5C6;box-shadow:0 0 15px rgba(235,199,134,.48);line-height:1}
-#resonance .res-ring-1 .res-ring-mark{width:25px;height:25px;top:-13px;font-size:15px}
-#resonance .res-ring-2 .res-ring-mark{width:23px;height:23px;top:-12px;font-size:14px}
-#resonance .res-ring:hover:not(:disabled) .res-ring-track{border-color:#F0D5B0;box-shadow:0 0 24px rgba(220,188,140,.3)}
-#resonance .res-ring.is-aligned .res-ring-track{border-color:#AAE2C8;box-shadow:0 0 22px rgba(154,220,195,.6),inset 0 0 13px rgba(154,220,195,.16)}
-#resonance .res-ring.is-aligned .res-ring-mark{background:#C8FFDE;box-shadow:0 0 20px rgba(154,255,204,.85)}
-#resonance .res-core{position:absolute;z-index:5;left:50%;top:50%;transform:translate(-50%,-50%);width:21%;height:30%;display:grid;place-items:center;pointer-events:none}
-#resonance .res-core-gem{width:100%;height:100%;clip-path:polygon(50% 0,86% 22%,100% 60%,50% 100%,0 60%,14% 22%);background:linear-gradient(115deg,#252F53,var(--gem) 37%,#F2EDFF 49%,var(--gem) 59%,#212849 100%);filter:drop-shadow(0 0 12px var(--gem));animation:resFloat 3.7s ease-in-out infinite}
-#resonance .res-core-aura{position:absolute;inset:-26%;background:radial-gradient(circle,color-mix(in srgb,var(--gem) 28%,transparent),transparent 70%);pointer-events:none}
-#resonance .res-gem.res-success .res-core-aura{animation:resPulse 1.4s ease-in-out infinite}
-#resonance .res-phase{font:600 11px var(--lat);letter-spacing:.14em;color:#E8D4AD;text-align:center}
-#resonance .res-side-note{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;width:100%;font-size:11px;color:#A2AFBC;padding-top:16px;border-top:1px solid rgba(219,185,138,.2)}
-#resonance .res-right{padding:clamp(26px,3.5vw,48px);display:flex;flex-direction:column;justify-content:center;min-width:0}
-#resonance .res-game-overline,#resonance .res-result-type{display:block;color:#DDBF8F;font:600 11px var(--lat);letter-spacing:.16em}
-#resonance .res-right h3{font:700 clamp(28px,3vw,40px)/1.35 var(--disp);color:#F4EADC;margin:16px 0}
-#resonance .res-copy{font:400 15px/1.85 var(--read);color:#CBD3DD;margin:0 0 18px}
-#resonance .res-instructions{border-left:2px solid #D5B77E;background:rgba(7,13,23,.46);padding:16px 18px;margin:17px 0}
-#resonance .res-instructions b{font-size:14px;color:#E8D2A9}
-#resonance .res-instructions p{font:400 14px/1.85 var(--read);color:#D6D9DA;margin:7px 0 0}
-#resonance .res-instructions strong{color:#F2D9A9}
-#resonance .res-game-stat{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:#B8C4D1;margin:23px 0}
-#resonance .res-game-stat strong{color:#EBD4AA}
-#resonance .res-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:24px}
-#resonance .res-primary,#resonance .res-secondary{padding:12px 17px;min-height:45px;border:1px solid #DBBE87;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:750}
-#resonance .res-primary{background:#DFC38D;color:#171B26}
-#resonance .res-secondary{background:transparent;color:#E8D5B6;border-color:rgba(216,188,136,.47)}
-#resonance button:disabled{opacity:.57}
-#resonance .res-game-head{display:flex;justify-content:space-between;gap:10px;color:#D6BC8B;font:600 11px var(--lat);letter-spacing:.09em}
-#resonance .res-progress{margin:14px 0 26px;height:5px;background:#293341;overflow:hidden}
-#resonance .res-progress i{display:block;width:0;height:100%;background:linear-gradient(90deg,#9CB4D4,#D6E9CE);transition:width .35s}
-#resonance .res-ring-controls{display:grid;gap:8px;margin:18px 0}
-#resonance .res-ring-row{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid rgba(216,184,128,.18);background:rgba(6,12,22,.45);padding:12px 14px}
-#resonance .res-ring-label b{display:block;color:#EEDCC1;font-size:15px}
-#resonance .res-ring-state{display:block;color:#A9B7C6;font-size:12px;margin-top:5px}
-#resonance .res-ring-row.is-aligned{border-color:rgba(157,223,180,.46);background:rgba(59,101,85,.13)}
-#resonance .res-ring-row.is-aligned .res-ring-state{color:#ACE3BF}
-#resonance .res-ring-buttons{display:flex;gap:6px;flex:none}
-#resonance .res-turn-btn{width:40px;height:40px;border:1px solid rgba(225,192,136,.46);background:rgba(12,18,29,.72);color:#E9D3AC;font-size:23px}
-#resonance .res-turn-btn:hover:not(:disabled){background:rgba(225,192,136,.22)}
-#resonance .res-game-status{color:#BAC9D3;font-size:13px;line-height:1.75;margin:13px 0 0}
-#resonance .res-result-title{font-size:clamp(34px,3.6vw,51px)!important}
-#resonance .res-result-note{padding:16px 19px;margin:22px 0;background:rgba(6,14,27,.61);border-left:3px solid var(--r-color,#DDC393);font:400 15px/1.9 var(--read);color:#E6DECE}
-#resonance .res-result-links{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0}
-#resonance .res-disclaimer{text-align:center;color:#A5AEBB;font-size:12px;line-height:1.8;margin-top:18px}
-@keyframes resFloat{0%,100%{transform:translateY(5px)}50%{transform:translateY(-9px)}}
-@keyframes resPulse{0%,100%{opacity:.5;transform:scale(.85)}50%{opacity:1;transform:scale(1.2)}}
-@media(max-width:860px){#resonance .res-panel{grid-template-columns:1fr}#resonance .res-left{border-right:0;border-bottom:1px solid rgba(217,181,126,.23);padding:19px;gap:11px}#resonance .res-gem{height:350px;width:min(100%,360px)}#resonance .res-right{padding:30px 24px}}
-@media(max-width:520px){#resonance .res-left{padding:14px 12px}#resonance .res-gem{height:min(89vw,340px);width:min(89vw,340px)}#resonance .res-axis:before{font-size:15px}#resonance .res-ring-mark{width:23px;height:23px;top:-12px}#resonance .res-right{padding:26px 16px}#resonance .res-copy{font-size:14px}#resonance .res-ring-row{padding:11px}#resonance .res-turn-btn{width:37px;height:37px}#resonance .res-inscription{font-size:9px;letter-spacing:.13em}}
-@media(prefers-reduced-motion:reduce){#resonance .res-core-gem,#resonance .res-core-aura{animation:none}#resonance .res-ring-track,#resonance .res-progress i{transition:none}}
-
-/* Forbidden experiment: story interface replaces ring visual */
-#resonance .res-left:after{background:linear-gradient(180deg,rgba(5,12,22,.22),rgba(8,13,25,.75)),url('img/resonance-apparatus.webp') center/cover;opacity:.18}
-#resonance .res-gem{height:365px;max-height:none;filter:none}
-#resonance .forbidden-apparatus{width:100%;height:100%;display:grid;place-items:center;position:relative}
-#resonance .forbidden-circuit{position:absolute;width:75%;aspect-ratio:1;border:1px solid rgba(176,156,217,.36);border-radius:50%}
-#resonance .forbidden-circuit.two{width:59%;border-style:dashed;animation:resTurn 60s linear infinite}
-#resonance .forbidden-gem{height:42%;width:27%;clip-path:polygon(50% 0,85% 23%,100% 65%,50% 100%,0 65%,15% 23%);background:linear-gradient(110deg,#3D326E,#B09CDE 44%,#F6E9FF 50%,#7663A6 57%,#252843);filter:drop-shadow(0 0 24px #8D79C8);animation:resFloat 4s ease-in-out infinite}
-#resonance .forbidden-spark{position:absolute;width:70%;height:70%;border-radius:50%;background:radial-gradient(circle,rgba(167,145,237,.18),transparent 67%);pointer-events:none}
-#resonance[data-experiment-tone=warning] .forbidden-gem,#resonance[data-experiment-tone=critical] .forbidden-gem{background:linear-gradient(110deg,#250B19,#AB3759 43%,#FFB0B1 50%,#681B37 60%,#120919);filter:drop-shadow(0 0 34px #BE3F68)}
-#resonance[data-experiment-tone=warning] .forbidden-spark{background:radial-gradient(circle,rgba(203,54,87,.28),transparent 70%)}
-#resonance[data-experiment-tone=sealed] .forbidden-gem{background:linear-gradient(110deg,#183450,#92C4D8 44%,#F3FBFF 51%,#3A6C9E 61%,#142138)}
-#resonance .forbidden-overline{font:600 11px var(--lat);letter-spacing:.16em;color:#D6BB8E}
-#resonance .forbidden-choices{display:grid;gap:10px;margin:22px 0}
-#resonance .forbidden-choice{width:100%;display:grid;grid-template-columns:1fr auto;gap:4px 12px;border:1px solid rgba(218,182,125,.31);background:rgba(6,13,23,.45);padding:15px 17px;text-align:left}
-#resonance .forbidden-choice:hover{border-color:#E1BD80;background:rgba(211,172,107,.14)}
-#resonance .forbidden-choice b{font-size:16px;color:#F3E5D1}
-#resonance .forbidden-choice span{font-size:13px;line-height:1.6;color:#B8C2CA;grid-column:1}
-#resonance .forbidden-choice em{grid-column:2;grid-row:1 / span 2;font-style:normal;color:#DFC08A}
-#resonance .forbidden-choice.danger{border-color:rgba(222,106,123,.45)}
-#resonance .forbidden-choice.special{border-color:rgba(141,172,224,.48)}
-#resonance .forbidden-console{background:#080F1C;border:1px solid rgba(215,184,141,.27);padding:9px 15px;margin:20px 0}
-#resonance .forbidden-logline{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(215,184,141,.11);font-size:12px;line-height:1.6}
-#resonance .forbidden-logline:last-child{border:0}
-#resonance .forbidden-logline span{color:#A6B4C3}
-#resonance .forbidden-logline b{color:#E2DACD;text-align:right}
-#resonance .forbidden-console.warning b,#resonance .forbidden-console.danger b{color:#EDABBA}
-#resonance .forbidden-report,#resonance .forbidden-reward{background:rgba(7,15,26,.57);border:1px solid rgba(214,178,122,.32);padding:17px 19px;margin:22px 0}
-#resonance .forbidden-report span,#resonance .forbidden-reward b{display:block;color:#E6C48E;margin-bottom:9px;font-size:14px}
-#resonance .forbidden-report p,#resonance .forbidden-reward p{font-size:14px;line-height:1.8;color:#C6D0D9;margin:0}
-#resonance .forbidden-status{display:flex;align-items:center;gap:12px;border-top:1px solid rgba(215,179,120,.2);padding-top:15px;color:#AEC1CA;font-size:13px}
-#resonance .forbidden-status b{margin-left:auto;color:#E0CAAB}
-#resonance .forbidden-dot{width:9px;height:9px;border-radius:50%;background:#A5D7B8}
-#resonance .forbidden-warning-title{color:#EDB3B8!important}
-#resonance .forbidden-whisper,#resonance .forbidden-rare{color:#E0BDCD;font:italic 15px/1.8 var(--read)}
-#resonance .forbidden-rare{padding:12px 15px;border-left:2px solid #C46E99;background:rgba(115,39,74,.2)}
-#resonance .forbidden-result-links{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
-@keyframes resTurn{to{transform:rotate(360deg)}}
-@media(max-width:860px){#resonance .res-gem{height:min(75vw,350px)}}
-@media(prefers-reduced-motion:reduce){#resonance .forbidden-gem,#resonance .forbidden-circuit.two{animation:none}}
+/* Scoped visual experiment: no rules affect other sections. */
+#resonance{--charge:0;--res-light:156,176,255;background:radial-gradient(ellipse at 30% 45%,#22213b55,transparent 65%),#090f1c}
+#resonance .wrap{max-width:1200px}
+#resonance .res-overline{display:block;font:600 10px var(--lat);letter-spacing:.2em;color:#b9b4dc}
+#resonance .res-panel{display:grid;grid-template-columns:1.3fr 1fr;border:1px solid #b6b2d333;background:#101421;overflow:hidden}
+#resonance .res-left{min-width:0;position:relative;background:#090c15}
+#resonance .res-device{display:block;position:relative;width:100%;aspect-ratio:1654 / 1123;isolation:isolate;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:pointer;background:radial-gradient(ellipse,#24253a,#090c15)}
+#resonance .res-device:focus-visible{outline:2px solid #cbd3ff;outline-offset:-5px}
+#resonance .res-device img{width:100%;height:100%;object-fit:cover;pointer-events:none;transition:filter .35s}
+#resonance .res-aura{position:absolute;inset:19% 35% 47% 36%;background:radial-gradient(ellipse at center,rgba(232,244,255,.95),rgba(var(--res-light),.75) 22%,rgba(var(--res-light),.24) 48%,transparent 73%);mix-blend-mode:screen;opacity:calc(.08 + var(--charge)*.8);filter:blur(8px);pointer-events:none;transition:opacity .25s}
+#resonance .res-particles{position:absolute;inset:14% 33% 38%;font-size:25px;line-height:2.4;letter-spacing:20px;color:#d8d4ff;opacity:0;text-shadow:0 0 12px #bfcfff;pointer-events:none}
+#resonance .res-touch-label{position:absolute;bottom:7%;left:10%;right:10%;font:13px var(--read);color:#eee6ff;text-shadow:0 2px 8px #000;pointer-events:none}
+#resonance .res-phase{min-height:3em;margin:0;padding:18px 24px;text-align:center;font-size:12px;letter-spacing:.04em;color:#c7cae8;border-top:1px solid #b6b2d322}
+#resonance .res-right{padding:clamp(24px,4vw,48px);align-self:center;min-width:0}
+#resonance h3{font:600 clamp(25px,3vw,36px)/1.5 var(--disp);color:#eee9ff;margin:16px 0}
+#resonance .res-copy{font:15px/1.9 var(--read);color:#cdcadd}
+#resonance .res-help{font-size:12px;line-height:1.8;color:#969cb5}
+#resonance .res-result{border-top:1px solid #bcb8df44;border-bottom:1px solid #bcb8df22;padding:24px 0;margin:28px 0;min-height:190px}
+#resonance .res-result>span{font-size:10px;letter-spacing:.2em;color:#a7a4bf}
+#resonance h4{font:600 20px var(--disp);color:#dedfff;margin:13px 0}
+#resonance .res-result p{font:14px/1.9 var(--read);color:#babcd0}
+#resonance .res-result small{color:#b4acd8;line-height:1.7}
+#resonance blockquote{margin:20px 0;font:600 24px var(--disp);color:#f1c6ca}
+#resonance .res-archive-link{font-size:12px;color:#c2badc;border-bottom:1px solid #c2badc55;padding-bottom:5px}
+#resonance .res-disclaimer{font-size:11px;color:#9395aa;text-align:center;line-height:1.8;margin-top:20px}
+#resonance[data-state=charging] .res-device img{filter:brightness(calc(1 + var(--charge)*.35));animation:resTension .18s infinite alternate}
+#resonance[data-state=charging] .res-particles{opacity:calc(.15 + var(--charge)*.65);animation:resDrift 3s infinite alternate ease-in-out}
+#resonance[data-state=success] .res-aura{opacity:.65;animation:resBloom 1.3s ease-out}
+#resonance[data-state=unstable]{--res-light:185,114,255}
+#resonance[data-state=unstable] .res-aura{opacity:.8;animation:resFlicker 1.4s ease-out}
+#resonance[data-state=burst],#resonance[data-state=nox]{--res-light:236,44,78}
+#resonance[data-state=burst] .res-aura,#resonance[data-state=nox] .res-aura{opacity:.7;animation:resFlicker .9s ease-out}
+#resonance .res-cracks{position:absolute;inset:10% 42% 38% 43%;pointer-events:none;opacity:0;background:#ff729a;filter:drop-shadow(0 0 7px crimson);clip-path:polygon(47% 0,52% 30%,41% 42%,57% 58%,49% 100%,53% 61%,36% 43%,47% 28%)}
+#resonance[data-state=burst] .res-cracks,#resonance[data-state=nox] .res-cracks{opacity:.9}
+#resonance[data-state=nox] .res-left::after{content:'';position:fixed;z-index:100;inset:0;opacity:0;background:#610b24;pointer-events:none;animation:resFlash .8s both}
+#resonance[data-state=nox] h4,#resonance[data-state=burst] h4{color:#efafb9}
+@keyframes resTension{from{transform:translateX(-.6px)}to{transform:translateX(.6px)}}
+@keyframes resDrift{to{transform:translateY(-22px) rotate(7deg)}}
+@keyframes resBloom{from{transform:scale(.8);opacity:1}to{transform:scale(1);opacity:.65}}
+@keyframes resFlicker{0%,60%{opacity:1}30%,100%{opacity:.4}}
+@keyframes resFlash{0%{opacity:.8}30%{opacity:.08}65%{opacity:.5}100%{opacity:0}}
+@media(max-width:760px){#resonance .res-panel{grid-template-columns:1fr}#resonance .res-device{aspect-ratio:1654 / 1123}#resonance .res-result{min-height:0}}
+@media(prefers-reduced-motion:reduce){#resonance *,#resonance *::after{animation:none!important;transition:none!important}}

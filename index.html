@@ -1064,7 +1064,7 @@ footer{background:#080D16}
 
 <header class="nav" id="nav">
   <a class="logo" href="#top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 22 12 12 22 2 12Z"/><path d="M12 7 17 12 12 17 7 12Z" fill="currentColor"/></svg><b>솔라리아</b></a>
-  <ul><li><a href="#world">세계관</a></li><li><a href="#regions">권역</a></li><li><a href="#people">인물</a></li><li><a href="#bonds">관계</a></li><li><a href="#seals">봉인</a></li><li><a href="#archive">기밀</a></li><li><a href="#resonance">마석 검사</a></li></ul>
+  <ul><li><a href="#world">세계관</a></li><li><a href="#regions">권역</a></li><li><a href="#people">인물</a></li><li><a href="#bonds">관계</a></li><li><a href="#seals">봉인</a></li><li><a href="#archive">기밀</a></li><li><a href="#resonance">마석 공명</a></li></ul>
   <button class="snd" id="snd" type="button" aria-pressed="false" aria-label="배경음 켜기" title="배경음 켜기"><i></i><i></i><i></i><i></i></button>
 </header>
 
@@ -1200,13 +1200,26 @@ footer{background:#080D16}
   <div class="sgrid" id="sgrid"></div>
 </div></section>
 
-<section class="sec resonance" id="resonance" aria-labelledby="resTitle"><div class="wrap">
-<div class="sh"><span class="res-overline">MAGIC STONE RESONANCE EXAMINATION</span><h2 id="resTitle">마탑의 금지된 실험</h2><div class="orn"><i></i></div><p>마탑의 마석이 당신에게 반응합니다. 정상 감응 검사 도중 발생한 이상 현상. 당신의 조치에 따라 서로 다른 실험 기록이 남습니다.</p></div>
+<section class="sec resonance" id="resonance" aria-labelledby="resTitle" data-state="idle"><div class="wrap">
+<div class="sh"><span class="res-overline">MAGIC TOWER · EXPERIMENT 07</span><h2 id="resTitle">마석 공명 실험</h2><div class="orn"><i></i></div><p>손끝에 닿은 파장은, 때로 기록되지 않은 목소리를 깨운다.</p></div>
 <div class="res-panel">
- <div class="res-left"><span class="res-inscription">AURUM · MAGICAL RESEARCH</span><div class="res-gem" id="resGem" aria-hidden="true"><div class="res-shard"></div><div class="res-light"></div></div><p class="res-phase" id="resPhase">THE STONE IS WAITING</p><div class="res-side-note">마탑 중앙 연구실 · 감응 검사 장치 <span>EXAMINATION 01</span></div></div>
- <div class="res-right" id="resContent" aria-live="polite"></div>
+ <div class="res-left">
+  <button class="res-device" id="resDevice" type="button" aria-label="마석 장치를 1.2초 이상 누른 뒤 놓기" aria-describedby="resInstruction">
+   <img src="img/resonance-apparatus.png" alt="푸른 마석을 감싼 금속 고리의 감응 장치" draggable="false">
+   <span class="res-aura" aria-hidden="true"></span><span class="res-particles" aria-hidden="true">✦ · ˚ ✧ · ✦ ˚</span><span class="res-cracks" aria-hidden="true"></span>
+   <span class="res-touch-label">손끝을 대고, 잠시 머물러 주세요</span>
+  </button>
+  <p class="res-phase" id="resPhase" role="status">접촉 대기</p>
+ </div>
+ <div class="res-right">
+  <span class="res-overline">RESONANCE OBSERVATION</span><h3>빛이 응답할 때까지</h3>
+  <p id="resInstruction" class="res-copy">마석에 손을 대고 반응을 유도해 보세요.<br>1.2초 이상 꾹 누른 뒤 손을 떼면, 남겨진 파장을 관측합니다.</p>
+  <p class="res-help">마우스 또는 손가락으로 장치를 누르세요.<br>키보드에서는 장치에 초점을 맞추고 Space 또는 Enter를 길게 누르세요.</p>
+  <div class="res-result" id="resResult" role="status" aria-live="polite" aria-atomic="true"><span>관측 기록</span><h4>아직 닿지 않은 파장</h4><p>연구실은 고요합니다. 마석 안쪽에서 은빛이 희미하게 숨을 쉽니다.</p></div>
+  <a class="res-archive-link" href="#archive">기밀 기록실 열람 ↗</a>
+ </div>
 </div>
-<p class="res-disclaimer">솔라리아 세계관을 바탕으로 한 가상 실험 콘텐츠입니다. 선택한 조치에 따라 기록이 달라집니다.</p>
+<p class="res-disclaimer">관측 결과는 매 시도 독립적으로 결정됩니다. 접촉 시간이나 이전 기록은 확률에 영향을 주지 않습니다.</p>
 </div></section>
 <section class="sec" id="archive" aria-labelledby="arcTitle"><div class="wrap">
   <div class="sh"><span class="arc-overline">IMPERIAL SECRET ARCHIVES</span><h2 id="arcTitle">제국의 미해결 기록</h2><div class="orn"><i></i></div><p>세계관과 지도, 인물 도감에 흩어진 흔적을 찾아 기록을 복원하세요.</p></div>
