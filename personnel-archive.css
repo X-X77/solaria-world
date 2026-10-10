@@ -1,149 +1,122 @@
-/* Layout ownership for the imperial register and constellation reading room.
-   Existing IDs, datasets and controls remain; typography follows the site fonts. */
-#people,#bonds{--record-gold:#d6b980;--record-line:rgba(214,185,128,.32)}
-#people .wrap,#bonds .wrap{max-width:1420px}
-#people .sh{text-align:left;margin:0 0 42px;max-width:none;padding-left:22px;border-left:2px solid #b99a60}
-#people .people-chapter{text-align:left;margin:0 0 16px}
-#people .sh p{margin-left:0;max-width:680px}
-#people .sh .orn{display:none}
-#people .people-eyebrow{border-top:1px solid var(--record-line);padding-top:20px;margin-bottom:17px}
-#people .chip,#bonds .arc-region-tab{background:#0f1a29;border-color:var(--record-line);min-height:44px;transition:background .2s,color .2s,border-color .2s}
-#people .chip.on,#bonds .arc-region-tab.active{background:#d6b980;color:#111a27;border-color:#efd8a7;box-shadow:inset 0 -3px rgba(48,37,20,.2)}
-/* Selected character is the main composition. The thumbnail browser follows. */
-#people .people-dossier{overflow:hidden;border:0;background:#0a1422;box-shadow:0 25px 65px rgba(0,0,0,.3);margin-top:25px}
-#people .people-dossier:before{display:none}
-#people .people-dossier:after{display:none}
-#people .people-dossier-top{border-bottom:1px solid var(--record-line);background:#101b2a;padding:17px 24px}
-#people .cstage{display:grid;grid-template-columns:minmax(0,56%) minmax(0,44%);padding:0;gap:0;align-items:stretch}
-#people .cpor{position:relative;top:auto;align-self:stretch;min-height:620px;height:clamp(620px,75vh,790px);border:0;border-right:1px solid var(--record-line);background:#0b111b}
-#people .cpor img{object-fit:cover;object-position:center 21%;filter:none}
-#people .cpor:before{display:block;content:"";position:absolute;inset:16px;z-index:3;pointer-events:none;border:1px solid rgba(233,203,147,.4)}
-#people .cpor-dark{background:linear-gradient(0deg,rgba(4,9,17,.85),transparent 32%),linear-gradient(90deg,transparent 70%,rgba(4,10,20,.35));pointer-events:none}
-#people .cpor-top{left:30px;top:30px}
-#people .cpor-bottom{left:30px;bottom:31px}
-#people .cinfo{display:flex;flex-direction:column;justify-content:center;min-height:0;padding:clamp(28px,4vw,64px);background:radial-gradient(ellipse at 100% 0,color-mix(in srgb,var(--rc) 12%,transparent),transparent 72%),#0c1726}
-#people .cinfo .fac{font-size:12px;line-height:1.8;border-bottom:1px solid var(--record-line);padding-bottom:21px;gap:8px}
-#people .cinfo h3{font-size:clamp(40px,4.7vw,70px);line-height:1.2;margin:34px 0 12px;letter-spacing:-.04em;word-break:keep-all;overflow-wrap:anywhere}
-#people .cinfo .role{font-size:24px;line-height:1.5;color:#d6b980}
-#people .cinfo blockquote.quote{border:0;border-top:1px solid var(--record-line);margin:38px 0 0;padding:27px 0 0;background:none;font-size:clamp(18px,1.6vw,23px);line-height:1.85}
-#people .cinfo blockquote.quote span{color:#d6b980}
-#people .cpor.anim,#people .cinfo.anim{animation:register-change .24s ease-out both}
-@keyframes register-change{from{opacity:.7;transform:translateY(5px)}to{opacity:1;transform:none}}
-/* A subordinate index, not a second competing feature gallery. */
-#people .personnel-gallery{padding:24px 24px 12px;background:#101a28;border:1px solid var(--record-line);border-top:0}
-#people .people-index-head{margin:0 0 18px;padding:0;border:0}
-#people .people-index-head h3{font-size:21px;margin:6px 0 0}
-#people .people-index-head small{font-size:9px;letter-spacing:.18em}
-#people .people-gallery-actions>span{font-size:11px}
-#people .people-gallery-actions button{width:44px;height:44px}
-#people .people-gallery-actions button:disabled{opacity:.3;cursor:default}
-#people .strip{gap:14px;padding:3px 2px 14px;touch-action:pan-x pan-y;scroll-padding-inline:2px}
-#people .ct{width:112px;border:1px solid rgba(214,185,128,.28);background:#0b1421;box-shadow:none;transition:transform .2s,border-color .2s}
-#people .ct:before{display:none}
-#people .ct .im{aspect-ratio:3/3.4;filter:brightness(.78);position:relative;transition:filter .2s}
-#people .ct img{transition:transform .25s}
-#people .ct b{padding:9px 8px 0;font-size:12px;line-height:1.5}
-#people .ct small{padding:0 8px;margin:4px 0;min-height:29px;font-size:10px;line-height:1.5;color:#bac5d2}
-#people .ct-affiliation{display:block;color:var(--cast-accent,#c8b184);padding:0 8px 9px;font-size:9px;line-height:1.6}
-#people .ct-serial{top:5px;right:5px;font-size:8px;padding:3px 4px}
-#people .ct.on{border-color:#ead19a;background:#202b38;box-shadow:0 0 0 1px #d6b980}
+/* Imperial personnel archive. Loaded after shared theme layers, scoped to the
+   existing people / arcana components. Sealed visibility is controlled by JS. */
+#people,#bonds{--record-gold:#d6b980;--record-line:rgba(214,185,128,.32);--record-paper:#0e1826}
+#people .people-eyebrow,#bonds .bond-intro-line{border-top:1px solid var(--record-line);padding-top:21px;color:#d6bd91}
+#people .chip,#bonds .arc-region-tab{background:linear-gradient(160deg,#162233,#0c1522);border-color:var(--record-line);color:#d5d4cf;transition:background .2s,border-color .2s,color .2s;min-height:44px}
+#people .chip.on,#bonds .arc-region-tab.active{color:#fff0d1;border-color:#d6b980;background:linear-gradient(145deg,#3b3223,#1c2430);box-shadow:inset 0 -3px #d6b980,inset 0 1px rgba(255,237,189,.18)}
+#people .strip{gap:15px;padding:5px 3px 19px;scroll-padding-inline:3px;touch-action:pan-x pan-y}
+#people .ct{width:clamp(170px,15vw,210px);background:linear-gradient(155deg,#182333,#0c1521);border-color:rgba(214,185,128,.4);box-shadow:0 6px 15px rgba(0,0,0,.16);transition:border-color .22s,box-shadow .22s,transform .22s}
+#people .ct .im{aspect-ratio:3/4.15;filter:brightness(.9) saturate(.9);position:relative;transition:filter .22s}
+#people .ct .im:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(0deg,rgba(6,12,23,.42),transparent 40%)}
+#people .ct:before{inset:4px;box-shadow:none;border:1px solid rgba(235,211,166,.09)}
+#people .ct:after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:2px;background:var(--cast-accent,#d6b980);opacity:.55;pointer-events:none}
+#people .ct img{transition:transform .28s ease}
+#people .ct b{padding:15px 15px 0;font-size:16px;line-height:1.5;color:#f1e6d4}
+#people .ct small{padding:0 15px;margin:7px 0 0;min-height:33px;font-size:12px;line-height:1.5;color:#d0d3d8}
+#people .ct-affiliation{display:block;padding:10px 15px 15px;color:var(--cast-accent,#ccb58f);font:600 10px/1.5 var(--ui);letter-spacing:.06em;border-top:1px solid rgba(214,185,128,.13);margin-top:8px}
+#people .ct.on{background:linear-gradient(150deg,#282c31,#132132);border-color:#ecd19a;box-shadow:0 0 0 1px #d6b980,0 8px 24px rgba(0,0,0,.32)}
+#people .ct.on:after{opacity:1;height:3px}
+#people .ct.on .ct-serial{background:#dfc58f;color:#151b25;border-color:#efdaaa}
+#people .people-index-head{padding:22px 0 15px;border-top:1px solid var(--record-line)}
 #people .ct.on .im{filter:none}
-#people .ct.on .ct-serial{background:#d6b980;color:#101825}
-/* Original profile nodes are unfolded into two document chapters. */
-#people .personnel-documents{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:32px;margin-top:44px;align-items:start}
-#people .personnel-documents:empty{display:none}
-#people .personnel-facts{padding:28px 32px;background:linear-gradient(130deg,#152130,#0c1724);border-top:3px solid #b99a60;border-bottom:1px solid var(--record-line)}
-#people .personnel-facts>h4{font:700 24px var(--disp);color:#f0dfc0;margin:0 0 19px}
-#people .personnel-facts dl{margin:0;display:grid;gap:0}
-#people .personnel-facts dl>div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:18px;padding:22px 0;border-top:1px solid var(--record-line)}
-#people .personnel-facts dt{display:flex;align-items:baseline;gap:12px;color:#d6b980;font-size:13px;font-weight:700;line-height:1.7}
-#people .personnel-facts dt small{font:10px var(--lat);color:#aa987b}
-#people .personnel-facts dd{font:15.5px/1.95 var(--read);color:#e0e0da;margin:0;word-break:keep-all;overflow-wrap:anywhere}
-#people .personnel-related{display:grid;gap:24px}
-#people .personnel-related .cast-profile-links{margin:0;padding:28px;border:1px solid var(--record-line);background:#111c2c}
-#people .personnel-related .cast-profile-links h4{font:700 23px var(--disp);margin-bottom:16px}
-#people .cast-profile-links button{min-height:44px;background:#182637}
-#people .personnel-related .secret{margin:0;padding:24px}
-#people .cinfo .cnav{margin-top:30px;flex-wrap:wrap}
-#people .cinfo .cnav>span{flex-basis:100%;margin-bottom:8px}
-#people .people-afterline{margin-top:18px}
-/* Constellation occupies the entire reading room; its document opens below. */
-#bonds .arcana-layout{display:flex;flex-direction:column;gap:0;align-items:stretch}
-#bonds .arcana-board{padding:0;border:1px solid var(--record-line);background:#081221;box-shadow:0 20px 55px rgba(0,0,0,.3)}
-#bonds .arcana-topline{padding:24px 28px;background:linear-gradient(100deg,#242b31,#0d1726);border-top:3px solid #b99a60}
-#bonds .arcana-topline h3{font-size:27px}
-#bonds .arcana-tools button{min-width:44px;min-height:44px}
-#bonds .arc-record-go{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border:1px solid var(--record-line);color:#e6ca99;font-size:13px;white-space:nowrap}
-#bonds .arcana-scroll{background:radial-gradient(ellipse at 50% 50%,rgba(47,67,96,.27),transparent 72%),#07111f;overscroll-behavior-x:contain;touch-action:pan-x pan-y}
-#bonds #bsvg{min-width:860px;max-width:1080px;width:100%;margin:0 auto}
-#bonds .arc-thread{stroke-width:1.3;opacity:.32;transition:opacity .2s,stroke-width .2s;pointer-events:none}
-#bonds .arc-thread.selected{stroke-width:2.8;opacity:1}
-#bonds .arc-thread.muted{opacity:.05}
-#bonds .arc-person.is-dim{opacity:.23}
+#people .ct-serial{background:rgba(7,13,23,.83);border-color:rgba(224,193,137,.55);color:#ecdbb8}
+#people .people-gallery-actions button{width:44px;height:44px}
+#people .people-gallery-actions button:disabled{opacity:.35;cursor:default}
+#people .people-dossier{overflow:clip;border-color:rgba(214,185,128,.5);background:linear-gradient(125deg,#152233,#0d1726);box-shadow:0 22px 65px rgba(0,0,0,.3)}
+#people .people-dossier:before{opacity:.04}
+#people .people-dossier-top{padding-block:19px;background:linear-gradient(110deg,#242a2d,#101a29);border-bottom-color:var(--record-line)}
+#people .cstage{grid-template-columns:minmax(0,44%) minmax(0,56%);padding:22px;gap:24px;align-items:start}
+#people .cpor{position:sticky;top:90px;align-self:start;height:clamp(540px,76vh,820px);min-height:0;border:1px solid var(--record-line);box-shadow:0 15px 40px rgba(0,0,0,.3)}
+#people .cpor img{object-fit:cover;object-position:center 18%}
+#people .cpor:before{display:block;content:"";position:absolute;inset:10px;z-index:3;border:1px solid rgba(224,198,152,.38);pointer-events:none;background:linear-gradient(#d6b980,#d6b980) left top / 30px 1px no-repeat,linear-gradient(#d6b980,#d6b980) right bottom / 30px 1px no-repeat}
+#people .cpor-top,#people .cpor-bottom{left:25px;right:25px}
+#people .cinfo{padding:20px 20px 25px;background:linear-gradient(145deg,rgba(15,26,40,.96),rgba(9,18,31,.96));min-height:0;border:1px solid rgba(214,185,128,.15)}
+#people .cinfo .fac{font-size:12px;line-height:1.7;padding-bottom:17px;border-bottom-color:var(--record-line)}
+#people .cinfo h3{font-size:clamp(38px,4vw,59px);margin-top:24px;line-height:1.2}
+#people .cinfo .role{color:#ddc394;font-size:21px}
+#people .cinfo blockquote.quote{margin-block:24px;padding:15px 19px;border-left-color:var(--record-gold);background:linear-gradient(90deg,rgba(207,171,100,.08),transparent);font-size:20px}
+#people .cinfo dl{gap:0;margin-top:20px}
+#people .cinfo dl>div{display:grid;grid-template-columns:100px minmax(0,1fr);gap:16px;padding:21px 0;border-bottom-color:rgba(214,185,128,.19)}
+#people .cinfo dl dt{font-size:13px;letter-spacing:.05em;color:#dfc591}
+#people .cinfo dl dt small{color:var(--rc);opacity:.9}
+#people .cinfo dl dd{margin:0;font-size:15.5px;line-height:1.95;color:#e0dfda;max-width:60ch;overflow-wrap:anywhere}
+#people .cast-profile-links{border-color:var(--record-line);background:rgba(6,14,24,.54);padding:20px}
+#people .cast-profile-links button{min-height:44px;background:#152235;transition:border-color .2s,background .2s}
+#people .cpor.anim,#people .cinfo.anim{animation:personnel-arrive .26s ease-out both}
+@keyframes personnel-arrive{from{opacity:.6;transform:translateY(5px)}to{opacity:1;transform:none}}
+#bonds .arcana-layout{grid-template-columns:minmax(0,1fr) minmax(350px,390px);gap:20px}
+#bonds .arcana-board,#bonds .arcana-dossier{position:relative;border-color:rgba(214,185,128,.46);box-shadow:0 18px 40px rgba(0,0,0,.25)}
+#bonds .arcana-topline,#bonds .arc-dossier-stamp{background:linear-gradient(115deg,#232b32,#101a2b);border-bottom-color:var(--record-line)}
+#bonds .arcana-topline{padding:25px 22px;box-shadow:inset 0 3px #b99a60}
+#bonds .arcana-topline h3{font-size:25px}
+#bonds .arcana-board{padding:6px;background:#080f1b}
+#bonds .arcana-scroll{box-shadow:inset 0 0 80px rgba(0,0,0,.35)}
+#bonds .arcana-tools button{min-height:44px;min-width:44px;border-color:var(--record-line);transition:background .2s}
+#bonds .arcana-scroll{background:radial-gradient(ellipse at 50% 50%,rgba(89,91,121,.18),transparent 68%),linear-gradient(145deg,#101c2e,#07101c);overscroll-behavior-x:contain;touch-action:pan-x pan-y}
+#bonds .arc-starfield circle.star-bright{opacity:.8}
+#bonds .arc-geometry{opacity:.72}
+#bonds .arc-thread{stroke-width:1.3;opacity:.36;transition:opacity .22s,stroke-width .22s;pointer-events:none}
+#bonds .arc-thread.muted{opacity:.06}
+#bonds .arc-thread.selected{opacity:1;stroke-width:2.7}
+#bonds .arc-person{transition:opacity .22s}
+#bonds .arc-person.is-dim{opacity:.22}
+#bonds .arc-rim{stroke-width:2;transition:stroke-width .2s,stroke .2s}
 #bonds .arc-person.is-selected .arc-rim{stroke:#ecd19a;stroke-width:4}
-#bonds .arc-person.is-selected .arc-glow{stroke:#d6b980;opacity:.55;stroke-width:1.5;stroke-dasharray:none}
-#bonds .arcana-bottomline{padding:17px 27px}
-#bonds .arcana-legend{background:#111c2b;padding:17px}
-#bonds .bond-record-divider{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:39px 0 18px;color:#bda782;font:11px var(--lat);letter-spacing:.16em}
-#bonds .bond-record-divider a{font:13px var(--ui);letter-spacing:0;color:#e3c899;border-bottom:1px solid var(--record-line);padding:8px 0}
-#bonds .arcana-dossier{min-height:0;border:1px solid var(--record-line);background:#101b2b;overflow:hidden;padding-bottom:0}
-#bonds .arc-dossier-stamp{padding:17px 28px;background:#182333;letter-spacing:.18em;border-bottom:1px solid var(--record-line)}
-#bonds .arc-record-cover{display:grid;grid-template-columns:minmax(0,1fr) 200px;align-items:center;padding:30px;background:radial-gradient(ellipse at 0 0,rgba(163,126,65,.14),transparent 68%),#101b2b;gap:25px}
-#bonds .arc-dossier-person{padding:0;align-items:center;gap:34px}
-#bonds .arc-dossier-photo{border:1px solid #b99a60;padding:5px;background:#0a111c}
-#bonds .arc-dossier-photo img{display:block;width:160px;height:220px;object-fit:cover}
-#bonds .arc-dossier-person h3{font-size:clamp(27px,3vw,42px);line-height:1.3;margin:0}
-#bonds .arc-dossier-person small{font-size:14px;margin:12px 0;color:#d6b980}
-#bonds .arc-dossier-person p{font-size:15px;line-height:1.9;color:#d5dce3;max-width:65ch}
-#bonds .arc-profile-link{min-height:44px;padding-block:12px;display:inline-flex;align-items:center}
-#bonds .arc-record-cover .arc-relation-summary{padding:24px;margin:0;border:1px solid var(--record-line);line-height:2;font-size:13px;color:#dfcfaf}
-#bonds .arc-record-chapters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;padding:28px;border-top:1px solid var(--record-line);background:#0c1624}
-#bonds .arc-dossier-caption{font:700 20px var(--disp);margin:0 0 20px;padding-bottom:14px;border-bottom:1px solid var(--record-line);color:#e6ce9e}
-#bonds .arc-connection-list{padding:0;gap:13px}
-#bonds .arc-connection{display:grid;grid-template-columns:58px minmax(0,1fr) 40px;gap:16px;padding:18px;background:#152132;border:1px solid rgba(214,185,128,.19)}
-#bonds .arc-related-image img{display:block;width:56px;height:75px}
-#bonds .arc-related-name{font-size:16px;line-height:1.6}
-#bonds .arc-connection-copy small{font-size:12px;margin:8px 0}
-#bonds .arc-connection-copy p{font-size:14px;line-height:1.85;color:#d0d8e1;margin:8px 0 0;overflow-wrap:anywhere}
+#bonds .arc-person.is-selected .arc-outer-ring{stroke:#ddbf88;opacity:1;stroke-width:1.6}
+#bonds .arc-person.is-selected .arc-glow{stroke:#d6b980;opacity:.45;stroke-width:1.5;stroke-dasharray:none}
+#bonds .arc-person-name{fill:#f5ead7;font-size:16px;stroke-width:5px}
+#bonds .arc-person-role{fill:#c6d1de;stroke-width:4px}
+#bonds .arcana-dossier{background:linear-gradient(150deg,#172335,#0b1422);min-height:580px;padding-bottom:22px}
+#bonds .arc-dossier-stamp{padding:23px 22px;box-shadow:inset 0 3px #b99a60;color:#dcc18f;letter-spacing:.16em}
+#bonds .arc-dossier-person{padding:25px 22px;gap:18px;align-items:flex-start;background:radial-gradient(ellipse at 0 0,rgba(184,146,77,.12),transparent 75%)}
+#bonds .arc-dossier-photo{box-shadow:0 0 0 4px rgba(216,185,128,.06);border-color:#b99a60}
+#bonds .arc-dossier-photo img{display:block;width:88px;height:122px}
+#bonds .arc-dossier-person h3{font-size:26px;color:#fff0d4}
+#bonds .arc-dossier-person small{font-size:12px;line-height:1.75}
+#bonds .arc-dossier-person p{font-size:14px;line-height:1.85;color:#d8dce0}
+#bonds .arc-profile-link{min-height:36px;padding-block:8px}
+#bonds .arc-relation-summary{margin-inline:22px;padding-block:16px 0;border-top-color:var(--record-line)}
+#bonds .arc-dossier-caption{margin:26px 20px 13px;padding:12px 10px;background:rgba(213,180,116,.07);border-bottom:1px solid var(--record-line);font:700 15px var(--disp);color:#e4c995}
+#bonds .arc-connection-list{gap:12px;padding-inline:17px}
+#bonds .arc-connection{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:12px;padding:15px 12px;background:linear-gradient(120deg,rgba(30,42,59,.72),rgba(8,16,28,.65));border-color:rgba(214,185,128,.25)}
+#bonds .arc-related-image img{display:block;width:46px;height:62px}
+#bonds .arc-related-name{font-size:14px;line-height:1.6;min-height:32px}
+#bonds .arc-connection-copy small{font-size:12px;margin-block:6px}
+#bonds .arc-connection-copy p{font-size:13px;line-height:1.9;color:#d5dae0;overflow-wrap:anywhere}
 #bonds .arc-doc{min-height:44px;font-size:12px}
-#bonds .arcana-bridges{margin-top:27px;padding:25px;border:1px solid var(--record-line);background:#152033}
-#bonds .arc-bridges-heading{font:700 21px var(--disp);margin-bottom:18px}
-#bonds .arc-bridge{flex-basis:235px;min-height:88px;padding:12px;gap:14px}
-#bonds .arc-bridge img{width:52px;height:67px}
-#bonds .arc-bridge-list{gap:15px}
-#people button:focus-visible,#bonds button:focus-visible{outline:2px solid #f0d7a2;outline-offset:3px}
-#bonds .arc-person:focus-visible .arc-outer-ring{stroke:#f0d7a2;stroke-width:3;opacity:1}
-@media(hover:hover) and (pointer:fine){#people .ct:hover{transform:translateY(-2px);border-color:#d6b980}#people .ct:hover .im{filter:none}#people .ct:hover img{transform:scale(1.04)}}
-@media(max-width:1050px){
- #people .cstage{grid-template-columns:52% 48%}#people .cinfo{padding:28px}#people .cinfo h3{font-size:43px}
- #people .personnel-documents{gap:20px}#people .personnel-facts{padding:25px 22px}
- #people .personnel-facts dl>div{grid-template-columns:90px minmax(0,1fr);gap:12px}
- #bonds .arc-record-cover{grid-template-columns:1fr}#bonds .arc-record-cover .arc-relation-summary{padding:12px 18px}
+#bonds .arc-bridge{min-height:76px;border-color:var(--record-line)}
+#people button:focus-visible,#bonds button:focus-visible{outline:2px solid #efd5a0;outline-offset:3px}
+#bonds .arc-person:focus-visible .arc-outer-ring{stroke:#f4deb5;stroke-width:3;opacity:1}
+@media(hover:hover) and (pointer:fine){
+ #people .ct:hover{transform:translateY(-2px);border-color:#e1c58e;box-shadow:0 10px 24px rgba(0,0,0,.35)}
+ #people .ct:hover img{transform:scale(1.04)}
+ #people .ct:hover .im{filter:none}
+ #people .ct:hover .im:before{background:linear-gradient(125deg,rgba(248,226,181,.15),transparent 48%),linear-gradient(0deg,rgba(6,12,23,.42),transparent 40%)}
+ #bonds .arc-person:hover .arc-rim{stroke:#ead09a;stroke-width:3.6}
 }
+@media(max-width:1100px){#bonds .arcana-layout{grid-template-columns:1fr}#bonds .arcana-dossier{min-height:0}}
 @media(max-width:750px){
- #people .sh{margin-bottom:30px;padding-left:15px}#people .cstage{display:flex;flex-direction:column}
- #people .cpor{height:auto;min-height:0;aspect-ratio:3/3.5;border-right:0;border-bottom:1px solid var(--record-line);align-self:stretch}
- #people .cpor img{object-position:center 20%}#people .cinfo{padding:26px 22px 31px}
- #people .cinfo h3{font-size:42px;margin-top:24px}#people .cinfo .role{font-size:21px}
- #people .cinfo blockquote.quote{margin-top:24px;padding-top:20px;font-size:18px}
- #people .people-dossier-top{padding:14px 18px;flex-wrap:wrap;gap:8px}
- #people .personnel-gallery{padding:22px 15px 8px}#people .ct{width:100px}#people .strip{gap:12px}
- #people .people-index-head h3{font-size:19px}#people .people-gallery-actions>span{display:none}
- #people .personnel-documents{grid-template-columns:1fr;margin-top:28px;gap:20px}
- #people .personnel-facts{padding:23px 20px}#people .personnel-facts dl>div{grid-template-columns:1fr;gap:9px;padding:19px 0}
- #people .personnel-facts dd{font-size:15px}#people .personnel-related .cast-profile-links{padding:23px 20px}
- #bonds .arcana-topline{padding:17px 14px;flex-wrap:wrap;gap:15px}#bonds .arcana-topline h3{font-size:22px}
- #bonds .arcana-tools{margin-left:auto}#bonds .arcana-bottomline{padding:15px;flex-wrap:wrap}
- #bonds .bond-record-divider{margin-top:30px;font-size:9px;letter-spacing:.08em}
- #bonds .arc-dossier-stamp{padding:16px 18px;font-size:9px}
- #bonds .arc-record-cover{padding:22px 18px;gap:18px}#bonds .arc-dossier-person{gap:20px;align-items:flex-start;flex-direction:column}
- #bonds .arc-dossier-photo img{width:145px;height:195px}#bonds .arc-dossier-person h3{font-size:29px}
- #bonds .arc-dossier-person p{font-size:14px}#bonds .arc-dossier-person small{font-size:13px}
- #bonds .arc-record-chapters{grid-template-columns:1fr;padding:22px 15px;gap:28px}
- #bonds .arc-dossier-caption{font-size:19px}#bonds .arc-connection{grid-template-columns:48px minmax(0,1fr) 31px;padding:15px 10px;gap:10px}
- #bonds .arc-related-image img{width:46px;height:63px}#bonds .arc-related-name{font-size:14px}
- #bonds .arc-connection-copy p{font-size:13px}#bonds .arcana-bridges{padding:21px 15px}
- #bonds .arc-bridges-heading{font-size:18px;flex-wrap:wrap;gap:8px}
+ #people .ct{width:156px}#people .strip{gap:12px}#people .ct .im{aspect-ratio:3/4.15}
+ #people .ct small{font-size:12px}#people .ct b{font-size:14px}
+ #people .cstage{display:flex;padding:12px;gap:0}#people .cpor{position:relative;top:auto;align-self:stretch;aspect-ratio:3/3.6;height:auto;min-height:0}
+ #people .cinfo{padding:27px 9px 24px}#people .cinfo h3{font-size:42px}#people .cinfo .role{font-size:20px}
+ #people .cinfo blockquote.quote{font-size:18px}#people .cinfo dl dd{font-size:15px;margin-top:9px}
+ #people .cinfo dl>div{display:block;padding:18px 0}
+ #people .cinfo blockquote.quote{padding:14px 13px}
+ #people .cast-profile-links{padding:16px 13px}
+ #people .people-dossier-top{flex-wrap:wrap;row-gap:8px}
+ #bonds .arcana-topline{padding:16px 12px;gap:8px;flex-wrap:wrap}
+ #bonds .arcana-tools{margin-left:auto}#bonds #bsvg{min-width:860px}
+ #bonds .arcana-bottomline{flex-wrap:wrap;gap:6px}
+ #bonds .arc-dossier-person{padding:23px 18px;gap:15px}
+ #bonds .arc-dossier-person h3{font-size:24px}
+ #bonds .arc-connection-list{padding-inline:12px}#bonds .arc-connection{padding:13px 10px;gap:9px}
+ #bonds .arc-connection-copy p{font-size:13px}#bonds .arc-dossier-caption{margin-inline:17px}
 }
-@media(hover:none){#people .ct:hover,#people .ct:hover img{transform:none}}
-@media(prefers-reduced-motion:reduce){#people .ct,#people .ct img,#people .ct .im,#people .chip,#bonds .arc-thread,#bonds .arc-person,#bonds .arc-region-tab{transition:none}#people .cpor.anim,#people .cinfo.anim{animation:none}#people .ct:hover,#people .ct:hover img{transform:none}}
+@media(hover:none){#people .ct:hover{transform:none}#people .ct:hover img{transform:none}}
+@media(prefers-reduced-motion:reduce){
+ #people .ct,#people .ct img,#people .ct .im,#people .chip,#people .cast-profile-links button,
+ #bonds .arc-region-tab,#bonds .arc-thread,#bonds .arc-person,#bonds .arc-rim,#bonds .arcana-tools button{transition:none}
+ #people .cpor.anim,#people .cinfo.anim{animation:none}
+ #people .ct:hover,#people .ct:hover img{transform:none}
+}

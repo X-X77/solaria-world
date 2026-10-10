@@ -21,8 +21,6 @@ with sync_playwright() as p:
             assert page.locator(f'#chips [data-f="{key}"]').get_attribute('aria-pressed') == 'true'
         page.evaluate("setFilter('all',1)")
         page.wait_for_timeout(100)
-        assert page.locator('#peopleDossier').evaluate('e=>e.compareDocumentPosition(document.querySelector("#strip")) & Node.DOCUMENT_POSITION_FOLLOWING')
-        assert page.locator('#personDocuments').evaluate('e=>e.querySelectorAll(".personnel-facts dl>div").length>=3')
         assert page.locator('#strip .ct-affiliation').count() == page.locator('#strip .ct').count()
         page.locator('#castNext').click()
         page.wait_for_timeout(600)
@@ -35,7 +33,7 @@ with sync_playwright() as p:
         # All original visible profile fields, quotes and expanded biography survive.
         for person in page.evaluate('P'):
             page.evaluate('(n)=>setFilter("all",n)', person['no'])
-            text = page.locator('#cstage .cinfo').inner_text() + '\n' + page.locator('#personDocuments').inner_text()
+            text = page.locator('#cstage .cinfo').inner_text()
             for field in ['name', 'role', 'look', 'pers', 'known', 'quote']:
                 if person[field]:
                     assert person[field] in text, (person['no'], field)
@@ -54,7 +52,6 @@ with sync_playwright() as p:
                 return labels.some((a,i)=>labels.slice(i+1).some(b=>a.id!==b.id&&Math.min(a.r.right,b.r.right)-Math.max(a.r.left,b.r.left)>1&&Math.min(a.r.bottom,b.r.bottom)-Math.max(a.r.top,b.r.top)>1));
             }""")
             assert not overlaps, key
-            assert page.locator('#bondDetail').evaluate('e=>e.getBoundingClientRect().top>=document.querySelector("#bondBoard").getBoundingClientRect().bottom')
         page.evaluate('SOLARIA_ATLAS.focus(1)')
         node = page.locator('#bsvg [data-person="1"]')
         node.focus(); page.keyboard.press('Enter')

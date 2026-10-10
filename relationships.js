@@ -155,10 +155,10 @@ function renderGraph(){
 }
 function relatedMarkup(items,caption){
  if(!items.length)return '';
- return '<section class="arc-relation-chapter"><h4 class="arc-dossier-caption">'+caption+' <span>'+items.length+'</span></h4><div class="arc-connection-list">'+
+ return '<h4 class="arc-dossier-caption">'+caption+' <span>'+items.length+'</span></h4><div class="arc-connection-list">'+
  items.map(({other,type,description})=>'<article class="arc-connection"><button class="arc-related-image" type="button" data-portrait="'+other.no+'" aria-label="'+safe(other.name)+' 일러스트 크게 보기"><img src="'+window.SOLARIA_PORTRAIT_SRC(other.no,'t')+'" alt="" loading="lazy"></button>'+
  '<div class="arc-connection-copy"><button type="button" data-person="'+other.no+'" class="arc-related-name">'+safe(other.name)+' <span>↗</span></button>'+
- '<small class="'+colorType(type)+'">'+safe(type)+'</small><p>'+safe(description)+'</p></div><button type="button" class="arc-doc" data-dossier="'+other.no+'">도감</button></article>').join('')+'</div></section>';
+ '<small class="'+colorType(type)+'">'+safe(type)+'</small><p>'+safe(description)+'</p></div><button type="button" class="arc-doc" data-dossier="'+other.no+'">도감</button></article>').join('')+'</div>';
 }
 function renderDetail(){
  const locked=region==='rift'&&!window.SOLARIA_RIFT_UNLOCKED,p=people.get(selected);
@@ -172,9 +172,9 @@ function renderDetail(){
  }
  const all=relations(p.no).filter(e=>shown(e.other)),local=all.filter(e=>e.other.aff===p.aff),outside=all.filter(e=>e.other.aff!==p.aff);
  detail.innerHTML='<div class="arc-dossier-stamp">DOSSIER / '+pad(p.no)+' · '+safe(AFF[p.aff]||'솔라리아')+'</div>'+
- '<header class="arc-record-cover"><div class="arc-dossier-person"><button type="button" class="arc-dossier-photo" data-portrait="'+p.no+'" aria-label="'+safe(p.name)+' 일러스트 크게 보기"><img src="'+window.SOLARIA_PORTRAIT_SRC(p.no,'c')+'" alt="" loading="lazy"></button><div><h3>'+safe(p.name)+'</h3><small>'+safe(p.group)+' · '+safe(p.role)+'</small><p>'+safe(p.known)+'</p><button type="button" data-dossier="'+p.no+'" class="arc-profile-link">인물 상세 기록 ↗</button></div></div>'+
- '<div class="arc-relation-summary">공개된 인연 '+all.length+'개 <span>·</span> 권역 내부 '+local.length+'개</div></header><div class="arc-record-chapters">'+
- (all.length?relatedMarkup(local,'같은 권역의 인연')+relatedMarkup(outside,'다른 권역으로 이어진 인연'):'<p class="arc-no-links">공개된 관계가 없습니다. 다른 인물을 선택해 살펴보세요.</p>')+'</div>';
+ '<div class="arc-dossier-person"><button type="button" class="arc-dossier-photo" data-portrait="'+p.no+'" aria-label="'+safe(p.name)+' 일러스트 크게 보기"><img src="'+window.SOLARIA_PORTRAIT_SRC(p.no,'t')+'" alt="" loading="lazy"></button><div><h3>'+safe(p.name)+'</h3><small>'+safe(p.group)+' · '+safe(p.role)+'</small><p>'+safe(p.known)+'</p><button type="button" data-dossier="'+p.no+'" class="arc-profile-link">인물 상세 기록 ↗</button></div></div>'+
+ '<div class="arc-relation-summary">공개된 인연 '+all.length+'개 <span>·</span> 권역 내부 '+local.length+'개</div>'+
+ (all.length?relatedMarkup(local,'같은 권역의 인연')+relatedMarkup(outside,'다른 권역으로 이어진 인연'):'<p class="arc-no-links">공개된 관계가 없습니다. 다른 인물을 선택해 살펴보세요.</p>');
 }
 function renderBridges(){
  const root=document.getElementById('arcanaBridges');
