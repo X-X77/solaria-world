@@ -76,3 +76,13 @@
 @media(max-width:900px){#bonds .bwrap{grid-template-columns:minmax(0,1fr)}#bonds .bside{min-height:0}#bonds .bond-known{max-width:80ch}}
 @media(max-width:650px){#bonds{padding-top:82px}#bonds .bond-intro-line{font-size:9px}#bonds .bond-intro-line span:last-child{font-size:10px}#bonds .bond-board-head{padding:13px 12px}#bonds .bond-board-head b{font-size:17px}#bonds .bond-board-head small{font-size:8px}#bonds #bondAll{padding:0 7px}#bonds .bond-board-tools button{height:32px;min-width:32px;padding:0 6px}#bonds #bsvg{min-width:760px}#bonds .bside{border-top:2px solid rgba(222,191,139,.42)}#bonds .bond-aside-person{padding:18px}#bonds .bond-known{margin:0 18px 17px}#bonds .bswipe{font-size:11px}#bonds .bond-relations,#bonds .bond-support{padding:0 11px}}
 @media(prefers-reduced-motion:reduce){#bonds #bsvg .e,#bonds #bsvg .nd,#bonds .bond-relation,#bonds .bond-support-person{transition:none}}
+
+/* Expanded supporting cast relationships: concise grounded descriptions */
+#bonds .bond-support{gap:8px}
+#bonds .bond-support-person{min-height:92px;padding:12px 11px;align-items:flex-start;gap:12px}
+#bonds .bond-support-person img{width:52px;height:67px;object-position:50% 20%}
+#bonds .bond-support-person b{font-size:14px;line-height:1.45}
+#bonds .bond-support-person .bond-support-label{color:#E3C397;font-weight:700;font-size:12px;margin-top:3px}
+#bonds .bond-support-person .bond-support-detail{color:#BCC7D2;font-size:12px;line-height:1.7;margin-top:6px;max-width:48ch}
+#bonds .bond-support-person em{align-self:center}
+@media(max-width:470px){#bonds .bond-support-person img{width:46px;height:60px}#bonds .bond-support-person{padding:11px 9px}#bonds .bond-support-person .bond-support-detail{font-size:11.5px}}
