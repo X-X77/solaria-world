@@ -21,7 +21,20 @@
  };
  rail.addEventListener('scroll',update,{passive:true});
  if('ResizeObserver' in window)new ResizeObserver(update).observe(rail);
- const observer=new MutationObserver(update);
+ // Add public affiliation metadata without changing setFilter/setPerson or P.
+ const decorate=()=>{
+  rail.querySelectorAll('.ct').forEach(card=>{
+   const person=typeof list!=='undefined'?list[Number(card.dataset.i)]:null;
+   if(!person||(person.sealed&&!window.SOLARIA_RIFT_UNLOCKED))return;
+   card.style.setProperty('--cast-accent',COL[person.aff]||'#d6b980');
+   if(!card.querySelector('.ct-affiliation')){
+    const label=document.createElement('span');label.className='ct-affiliation';
+    label.textContent=AFF[person.aff]||'제국';card.append(label);
+   }
+  });
+  update();
+ };
+ const observer=new MutationObserver(decorate);
  observer.observe(rail,{childList:true});
- update();
+ decorate();
 })();

@@ -103,7 +103,7 @@ function renderGraph(){
   const bend=Math.min(21,len*.07)*((e.a+e.b)%2===0?1:-1);
   const mx=(a.x+b.x)/2+(-dy/len)*bend,my=(a.y+b.y)/2+(dx/len)*bend;
   const path=node('path',{d:'M'+a.x+','+a.y+' Q'+mx+','+my+' '+b.x+','+b.y,class:'arc-thread '+colorType(e.type)+(selected!==null&&(e.a===selected||e.b===selected)?' selected':'')+(selected!==null&&e.a!==selected&&e.b!==selected?' muted':'')});
-  const title=node('title',{},people.get(e.a).name+' ↔ '+people.get(e.b).name+' · '+e.type);
+  const title=node('title',{},visibleName(people.get(e.a))+' ↔ '+visibleName(people.get(e.b))+' · '+e.type);
   path.append(title);lines.append(path);
  });
  svg.append(lines);
@@ -126,10 +126,16 @@ function renderGraph(){
   g.append(node('text',{x:0,y:67,class:'arc-person-name','text-anchor':'middle'},shown(p)?p.name:'???'));
   g.append(node('text',{x:0,y:85,class:'arc-person-role','text-anchor':'middle'},shown(p)?p.role:'열람 제한'));
   g.addEventListener('click',()=>{selected=selected===p.no?null:p.no;render()});
-  g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selected=selected===p.no?null:p.no;render()}});
+  g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selected=selected===p.no?null:p.no;render();svg.querySelector('[data-person="'+p.no+'"]')?.focus({preventScroll:true})}});
   portraits.append(g);
  });
  svg.append(portraits);
+ // Keep the active portrait visible in the existing horizontal mobile scroller.
+ const activePoint=pts.get(selected);
+ if(activePoint&&!locked&&scroll.scrollWidth>scroll.clientWidth){
+  const scale=svg.getBoundingClientRect().width/svg.viewBox.baseVal.width;
+  scroll.scrollTo({left:Math.max(0,activePoint.x*scale-scroll.clientWidth/2),behavior:quiet()?'auto':'smooth'});
+ }
  document.getElementById('arcanaCount').textContent=cast.length+'명 · '+(region==='all'?'제국 주요 연결 ':'권역 내 연결 ')+intra.length+'개';
 }
 function relatedMarkup(items,caption){
