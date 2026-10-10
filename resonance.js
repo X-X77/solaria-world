@@ -3,7 +3,7 @@
 'use strict';
 const root=document.getElementById('resonance');if(!root)return;
 const device=document.getElementById('resDevice'),phase=document.getElementById('resPhase'),panel=document.getElementById('resResult');
-const SAVE='solaria-forbidden-experiment-v1',MIN_HOLD=1200;
+const MIN_HOLD=1200;
 const outcomes=[
  {limit:.14,state:'quiet',title:'무반응',line:'마석은 침묵을 지켰습니다. 외부의 파장에 흔들리지 않는 고요함도 하나의 성질입니다. 아직 드러나지 않은 적성을 천천히 살펴보세요.'},
  {limit:.38,state:'faint',title:'미약 반응',line:'수정 깊숙한 곳에서 작은 빛이 숨을 쉽니다. 지금은 희미하지만, 섬세한 파장을 감지할 가능성이 남아 있습니다.'},
@@ -60,20 +60,6 @@ function makeNoxQuote(){
 
 let started=null,source=null,frame=0,cooldown=0,ready=false;
 function setState(state){root.dataset.state=state}
-function saveSeenRareEvent(key){
- let newDiscovery=false;
- try{
-  let saved=JSON.parse(localStorage.getItem(SAVE)||'null');
-  if(!saved||typeof saved!=='object'||Array.isArray(saved))saved={version:1};
-  newDiscovery=saved.history?.[key]!==true;
-  if(newDiscovery){
-   saved.history={...saved.history,[key]:true};
-   localStorage.setItem(SAVE,JSON.stringify(saved));
-  }
- }catch(e){}
- if(newDiscovery)window.dispatchEvent(new CustomEvent('solaria-forbidden-log'));
- return newDiscovery;
-}
 function evaluateResult(){
  // Three independent draws; neither duration nor saved discovery history changes odds.
  const strengthRoll=randomUnit();
@@ -101,11 +87,6 @@ function renderOutcome({strength,attribute,nox}){
   const warning=document.createElement('p');warning.className='res-system-warning';warning.textContent='SYSTEM WARNING / 기록 외 신호 · 속성 기록 덮어쓰기';panel.append(warning,makeNoxQuote());
  }else{
   const detail=document.createElement('p');detail.className='res-attribute-note';detail.textContent=attribute.name+' · '+attribute.line;panel.append(detail);
- }
- if(nox&&saveSeenRareEvent('rare')){
-  const note=document.createElement('small');
-  note.textContent='금서고에 새로운 음성 기록이 추가되었습니다.';
-  panel.append(note);
  }
  cooldown=performance.now()+900;
 }

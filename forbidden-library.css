@@ -5,7 +5,7 @@
 #archive .arc-overline{font:600 11px var(--lat);letter-spacing:.18em;color:#C9A780}
 #archive .sh{margin-bottom:42px}
 #archive .sh p{max-width:690px}
-#archive #seals,#archive #libSeals,#archive #libCases,#archive #arcExperimentRecords{scroll-margin-top:85px}
+#archive #seals,#archive #libSeals,#archive #libCases{scroll-margin-top:85px}
 #archive .lib-nav{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin:0 0 clamp(52px,7vw,86px)}
 #archive .lib-nav a{display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid rgba(210,176,127,.31);color:#E6D4B5;background:rgba(21,28,38,.76);font-size:13px;font-weight:700}
 #archive .lib-nav a span{color:#D5B47E;font-size:18px;font-family:var(--disp)}
@@ -59,16 +59,6 @@
 #archive .lib-missing{display:block;margin-top:17px;color:#CDB9A6;font-size:12px}
 #archive .lib-caution{display:block;margin-top:10px;font-size:12px;color:#9EA8B6;line-height:1.75}
 
-/* Rare audio archive is not teased or rendered before being genuinely discovered. */
-#archive .arc-experiment-records{margin-top:clamp(70px,10vw,120px);padding:clamp(22px,4vw,45px);background:radial-gradient(ellipse at 90% 10%,rgba(138,52,76,.17),transparent 60%),linear-gradient(145deg,#171C2A,#0C121F);border:1px solid rgba(198,128,140,.36);scroll-margin-top:85px}
-#archive .arc-experiment-head span{font:600 10px var(--lat);letter-spacing:.18em;color:#DCA4A9}
-#archive .arc-experiment-head h3{font:700 clamp(26px,3.25vw,38px) var(--disp);color:#F1D9D7;margin:13px 0 10px}
-#archive .arc-experiment-head p{font:400 14px/1.8 var(--read);color:#B5BAC7;margin:0 0 23px}
-#archive .arc-audio-transcript{max-width:850px;background:rgba(5,9,17,.58);border:1px solid rgba(192,126,138,.25);padding:clamp(18px,3vw,30px)}
-#archive .arc-audio-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:#D5B0B3;font:600 10px var(--lat);letter-spacing:.13em}
-#archive .arc-audio-transcript p{font:400 clamp(15px,1.6vw,18px)/1.9 var(--read);color:#E1D8D7;margin:27px 0 18px}
-#archive .arc-audio-redacted{display:inline-block;padding:12px 16px;color:#DA828F;background:#0B0B13;letter-spacing:.18em;font:600 clamp(14px,2vw,21px) monospace;box-shadow:inset 0 0 0 1px rgba(165,78,105,.3);user-select:none}
-#archive .arc-audio-transcript small{display:block;margin:18px 0 0;color:#B6A6B3;font-size:12px;line-height:1.8}
 @media(max-width:1100px){#archive .sgrid{grid-template-columns:repeat(3,minmax(0,1fr))}#archive .lib-seal{min-height:210px}}
 @media(max-width:740px){
  #archive .sgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
@@ -96,3 +86,26 @@
  #archive .lib-seal-detail{padding:20px 16px}
 }
 @media(prefers-reduced-motion:reduce){#archive .lib-seal{transition:none}#archive .lib-seal:hover{transform:none}}
+
+/* Restricted manuscript: tap the redaction to recover a small readable fragment. */
+#archive .lib-recovery{display:grid;justify-items:start;gap:12px;width:min(100%,660px);margin:23px 0;padding:19px 21px;text-align:left;border:1px solid rgba(220,185,130,.43);border-left:3px solid var(--lib-region-color,#D4B383);background:#151B26;cursor:pointer;color:#EAD5B4}
+#archive .lib-recovery:hover{background:#202632;border-color:#EAD1A7}
+#archive .lib-recovery:focus-visible{outline:2px solid #F5D9AC;outline-offset:3px}
+#archive .lib-recovery .lib-document-damage{display:grid;gap:8px;width:100%;margin:0}
+#archive .lib-recovery .lib-document-damage span{height:12px;min-width:0;width:93%;background:#06080E;border:0}
+#archive .lib-recovery .lib-document-damage span:nth-child(2){width:81%}
+#archive .lib-recovery .lib-document-damage span:nth-child(3){width:57%}
+#archive .lib-recovery>b{font:750 15px/1.5 var(--read);color:#ECD6B7}
+#archive .lib-recovery b i{font-style:normal;margin-left:10px}
+#archive .lib-recovery>small{font:400 12px/1.8 var(--read);color:#C7CAD0}
+#archive .lib-fragment{padding:24px 25px;margin:23px 0;background:#17212D;border:1px solid rgba(224,188,135,.41);border-left:3px solid var(--lib-region-color,#D4B383)}
+#archive .lib-fragment>small{font:650 10px var(--lat);letter-spacing:.14em;color:#DBC39D}
+#archive .lib-fragment h4{color:#F1E2D1;font:700 20px var(--disp);margin:13px 0}
+#archive .lib-fragment>p{font:400 16px/1.95 var(--read);color:#EEEAE4;word-break:keep-all;margin:0 0 18px}
+#archive .lib-fragment-remainder{display:grid;justify-items:start;gap:9px;border-top:1px solid rgba(227,191,145,.2);padding-top:17px}
+#archive .lib-fragment-remainder span{color:#D7B6A5;font-size:12px}
+#archive .lib-fragment-remainder b{font:700 17px monospace;letter-spacing:.13em;background:#080B12;padding:8px 10px;color:#AF8791;user-select:none}
+#archive .lib-fragment-remainder small{color:#C8C1BA;font-size:12px;line-height:1.7}
+#archive .lib-seal.lib-visited:after{content:"◈ 일부 판독";position:absolute;right:7px;top:15px;color:#E7C597;font:750 10px var(--read);letter-spacing:.02em;background:rgba(9,15,25,.75);padding:3px 5px;z-index:2}
+#archive .lib-document-footer{margin-top:17px}
+@media(max-width:740px){#archive .lib-fragment{padding:18px 17px}#archive .lib-fragment>p{font-size:15px}#archive .lib-recovery{padding:17px 16px}}

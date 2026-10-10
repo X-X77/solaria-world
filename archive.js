@@ -141,44 +141,5 @@ if('MutationObserver' in window){
  if(p)new MutationObserver(personAction).observe(p,{childList:true,subtree:true});
 }
 
-/* A single hidden audio record, displayed ONLY after a genuine rare Nox encounter.
-   The original nine clues and all their localStorage progress are unchanged. */
-const rareSlot=section.querySelector('.archive-records-slot');
-const libNav=section.querySelector('.lib-nav');
-function showRareAudio(){
- let discovered=false;
- try{
-  discovered=JSON.parse(localStorage.getItem('solaria-forbidden-experiment-v1')||'null')?.history?.rare===true;
- }catch(e){}
- let audio=document.getElementById('arcExperimentRecords');
- let navLink=libNav.querySelector('[data-rare-audio-link]');
- if(!discovered){
-  if(audio)audio.remove();
-  if(navLink)navLink.remove();
-  return;
- }
- if(!audio){
-  audio=document.createElement('section');
-  audio.id='arcExperimentRecords';
-  audio.className='arc-experiment-records';
-  audio.setAttribute('aria-labelledby','arcUnknownVoice');
-  rareSlot.append(audio);
- }
- audio.innerHTML='<div class="arc-experiment-head"><span>UNLISTED ARCHIVE · EX-07X</span>'+
-  '<h3 id="arcUnknownVoice">정체불명의 음성 기록</h3>'+
-  '<p>마탑 제7실험기에서 채집된 비정규 음성.</p></div>'+
-  '<div class="arc-audio-transcript"><div class="arc-audio-top"><span>RECORDING / CORRUPTED</span><span>발신자 미확인</span></div>'+
-  '<p>장치가 멈춘 직후, 누구도 입력하지 않은 목소리가 기록되었다.</p>'+
-  '<div class="arc-audio-redacted" aria-label="음성 원문은 손상되어 판독할 수 없음">████ ███████ ███</div>'+
-  '<small>발화 내용과 발신자의 정보는 복원할 수 없습니다.</small></div>';
- if(!navLink){
-  navLink=document.createElement('a');
-  navLink.href='#arcExperimentRecords';
-  navLink.dataset.rareAudioLink='';
-  navLink.innerHTML='<span>Ⅲ</span> 비공개 음성 · 01';
-  libNav.append(navLink);
- }
-}
-window.addEventListener('solaria-forbidden-log',showRareAudio);
-render();decorate();showRareAudio();
+render();decorate();
 })();
