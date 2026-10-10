@@ -55,3 +55,18 @@
 #people .secret.open .ob{display:none}
 @media(max-width:520px){#people .secret{padding:17px 14px 21px}#people .secret .hd b{min-width:140px}#people .secret .ob{min-height:42px;padding:7px 10px}#people .secret:before{font-size:8px}}
 @media(prefers-reduced-motion:reduce){#people .secret .ob{transition:none}}
+
+/* Restricted file: quiet editorial link instead of a boxed action button. */
+#people .secret{background:linear-gradient(105deg,rgba(28,25,35,.87),rgba(17,22,34,.91));border:1px solid rgba(199,168,135,.31);border-left:2px solid rgba(214,169,139,.64);box-shadow:none}
+#people .secret .hd{gap:12px}
+#people .secret .hd i{display:none}
+#people .secret .hd b{font:700 18px/1.45 var(--disp);color:#EAD6C1}
+#people .secret .hd b small{color:#AA9796;font:600 9px var(--lat);letter-spacing:.15em}
+#people .secret .ob{background:transparent!important;border:0!important;border-bottom:1px solid rgba(225,190,153,.65)!important;box-shadow:none!important;border-radius:0;padding:7px 0!important;min-height:0!important;display:inline-flex;gap:17px;align-items:center;color:#E4C6A6!important;font:700 13px var(--read);letter-spacing:.06em;margin-left:auto}
+#people .secret .ob:hover{background:transparent!important;border-bottom-color:#FFF2DA!important;color:#FFF2DA!important}
+#people .secret .secret-action-arrow{font-size:14px;color:inherit}
+#people .secret .bars{margin-top:15px}
+#people .secret .bars span{background:#15121B;border:0;height:8px}
+#people .secret:before{color:rgba(215,191,169,.17)}
+#people .secret.open{border-color:rgba(211,175,136,.4);border-left:2px solid #D6B38A;box-shadow:none}
+@media(max-width:520px){#people .secret .hd b{font-size:17px}#people .secret .ob{font-size:12px}}

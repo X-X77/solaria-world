@@ -1553,7 +1553,7 @@ function setPerson(i,anim=true){
     if(SECRET[p.no]){
       body+='<div class="secret" id="sec"><div class="hd"><i aria-hidden="true"></i><b>감춰진 기록 <small>RESTRICTED PERSONNEL FILE</small></b>'+
         '<button type="button" class="ob" id="ob" aria-expanded="false" aria-controls="secretText">'+
-        '<span class="secret-lock" aria-hidden="true">◇</span><span class="secret-action-label">기밀 문서 열람</span><span class="secret-action-arrow" aria-hidden="true">↗</span></button></div>'+
+        '<span class="secret-action-label">기록 열람</span><span class="secret-action-arrow" aria-hidden="true">↗</span></button></div>'+
         '<div class="bd"><div class="bars" aria-hidden="true"><span></span><span></span><span></span></div>'+
         '<p class="tx" id="secretText">'+esc(SECRET[p.no])+'</p></div></div>';
     }

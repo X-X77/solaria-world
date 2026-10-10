@@ -62,6 +62,49 @@ const supporting={
   [43,'호위 · 성기사단장','아드리엘은 성녀를 지키는 성기사단장. 마물에게 가족을 잃었고 신앙에 충실하다.']
  ]
 };
+
+/* Other figures belonging to the same region, not invented personal ties. */
+const regional={
+ 1:[
+  [15,'황제 직속 근위기사단','에밀리아는 황제 개인에게 충성하는 근위기사단장. 계승전에 중립이며 황자의 직속은 아니다.'],
+  [18,'황실 기록고 경비','테오는 황실 기록고를 지키는 평민 출신 기사. 황자와의 개인적 관계는 알려지지 않았다.'],
+  [23,'황실 기록관 가문','카밀라는 몰락한 기록관 가문의 대행. 계승전에 대한 입장은 공개되지 않았다.']
+ ],
+ 2:[
+  [15,'황제 직속 근위기사단','에밀리아는 황제를 섬기며 계승전의 어느 편에도 서지 않는다.'],
+  [18,'황실 기록고 경비','테오는 기록고를 지키는 기사. 황녀와의 개인적 친분은 기록되지 않았다.'],
+  [23,'황실 기록관 가문','카밀라는 몰락한 기록관 가문의 마지막 대행. 궁정의 기록을 둘러싼 인물이다.']
+ ],
+ 3:[
+  [26,'성하 마을 · 약사','리암은 성하 마을 약방의 주인. 북부의 소문과 부상자의 이야기를 접하는 지역 인물이다.'],
+  [53,'동행 · 검은 아기 늑대','움브라는 당신을 따라다니는 늑대. 카시안과의 직접적인 관계는 아직 공개된 기록에 없다.']
+ ],
+ 4:[
+  [29,'남부 함대 · 제독','칼리스타는 해적 출신 제독. 남부의 해상 교역 질서에 영향을 미치지만 상단주와의 친분은 확인되지 않았다.'],
+  [30,'남부 부두 · 정보상','지노는 항구의 소문과 정보를 사고파는 인물. 상단주의 개인적 정보망인지는 밝혀지지 않았다.']
+ ],
+ 5:[
+  [41,'숲 신전 · 사제장','마리엔은 교단과 거리를 두는 숲 신전의 사제장. 같은 숲의 신앙과 역사를 지키는 인물이다.'],
+  [42,'동부 총독부 · 총독','아델리아는 황실이 임명한 총독. 숲의 수호자 일족과 황실 사이에 끼어 있다.']
+ ],
+ 6:[
+  [36,'광산 도시 · 용병단장','렉스는 광산 도시의 계약을 중개하는 용병단장. 변경백의 직속 부하로 확인된 인물은 아니다.']
+ ],
+ 7:[
+  [47,'마탑 인근 · 경쟁 연구자','세바스티안은 노바의 라이벌. 마탑주와 개인적으로 대립한다는 기록은 없다.']
+ ],
+ 8:[
+  [46,'마탑 이사회 · 중립파','이사벨라는 마탑의 중립파 이사. 노바의 개인적 후원 여부는 밝혀지지 않았다.']
+ ],
+ 9:[
+  [43,'교단 성기사단 · 단장','아드리엘은 성녀를 지키는 성기사단장. 교단 소속이지만 교주 개인과의 관계는 별도로 확인되지 않았다.']
+ ],
+ 10:[
+  [44,'교단 후원 가문 · 후작','엘레오노라는 교단의 후원자. 성녀와의 개인적 관계는 알려지지 않았다.'],
+  [45,'대신전 · 주교','로렌조는 교주의 오른팔로 심문과 기록을 맡는다. 성녀와 직접적인 친분은 확인되지 않았다.']
+ ]
+};
+
 let current=null;
 const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
 function svgElement(tag,attrs){
@@ -111,19 +154,34 @@ function resetStyles(){
   el.setAttribute('aria-pressed',String(focused));
  });
 }
+function renderSupporting(cards,type){
+ if(!cards.length)return '';
+ return '<div class="bond-support">'+cards.map(({p,label,detail})=>
+ '<article class="bond-support-person">'+
+ '<button type="button" class="bond-support-photo" data-bond-image="'+p.no+'" aria-label="'+esc(p.name)+' 일러스트 크게 보기" title="초상 크게 보기">'+
+ '<img src="img/t/'+pad(p.no)+'.jpg" alt="" loading="lazy"><span aria-hidden="true">↗</span></button>'+
+ '<div class="bond-support-copy"><b>'+esc(p.name)+'</b><small class="bond-support-label">'+esc(label)+'</small>'+
+ '<small class="bond-support-detail">'+esc(detail)+'</small>'+
+ '<button type="button" class="bond-support-open" data-bond-dossier="'+p.no+'">상세 프로필 ↗</button></div></article>'
+ ).join('')+'</div>';
+}
 function renderPanel(){
  if(current===null){
   side.innerHTML='<div class="bond-aside-kicker">PERSONNEL INTELLIGENCE / 00</div>'+
    '<h3>누구의 관계를 살펴볼까요?</h3>'+
-   '<p class="bond-aside-intro">황실의 대립, 마탑의 후계, 방벽의 빚까지. 인물 초상을 선택하면 알려진 관계와 그를 둘러싼 조연이 열립니다.</p>'+
+   '<p class="bond-aside-intro">황실의 대립, 마탑의 후계, 방벽의 빚까지. 인물을 선택하면 확인된 관계뿐 아니라 같은 지역과 조직에 속한 주변 인물도 나타납니다.</p>'+
    '<div class="bond-stat"><span>주요 인물</span><b>10</b></div><div class="bond-stat"><span>기록된 관계</span><b>'+EDGES.length+'</b></div>'+
    '<button type="button" class="bond-explore" data-bond-select="3">카시안의 관계부터 살펴보기 ↗</button>';
   return;
  }
  const p=person(current),mine=EDGES.filter(e=>e[0]===current||e[1]===current);
- const supportingPeople=(supporting[current]||[]).map(([no,label,detail])=>({p:person(no),label,detail})).filter(o=>o.p);
+ const mapped=(arr)=>arr.map(([no,label,detail])=>({p:person(no),label,detail})).filter(o=>o.p);
+ const supportingPeople=mapped(supporting[current]||[]);
+ const nearby=mapped(regional[current]||[]).filter(o=>!supportingPeople.some(s=>s.p.no===o.p.no));
  side.innerHTML='<div class="bond-aside-kicker">DOSSIER / '+pad(current)+' · '+esc(AFF[p.aff]||'제국')+'</div>'+
- '<div class="bond-aside-person"><img src="img/t/'+pad(current)+'.jpg" alt="" loading="lazy"><div><h3>'+esc(p.name)+'</h3><p class="rl">'+esc(p.role)+'</p><small>'+esc(p.group)+'</small></div></div>'+
+ '<div class="bond-aside-person"><button type="button" class="bond-main-photo" data-bond-image="'+current+'" aria-label="'+esc(p.name)+' 일러스트 크게 보기">'+
+ '<img src="img/t/'+pad(current)+'.jpg" alt="" loading="lazy"><span aria-hidden="true">↗</span></button>'+
+ '<div><h3>'+esc(p.name)+'</h3><p class="rl">'+esc(p.role)+'</p><small>'+esc(p.group)+'</small></div></div>'+
  '<p class="bond-known">'+esc(p.known)+'</p>'+
  '<div class="bond-section-heading"><span>주요 인물과의 관계</span><small>'+mine.length+' CONNECTIONS</small></div>'+
  '<div class="bond-relations">'+mine.map(edge=>{
@@ -132,13 +190,13 @@ function renderPanel(){
   '<span class="bond-relation-mark" aria-hidden="true"></span>'+
   '<span><b>'+esc(other.name)+'</b><small>'+esc(edge[3])+'</small></span><em>↗</em></button>';
  }).join('')+'</div>'+
- (supportingPeople.length?'<div class="bond-section-heading support"><span>이 인물을 둘러싼 사람들</span><small>'+supportingPeople.length+' PROFILES</small></div>'+
- '<div class="bond-support">'+supportingPeople.map(({p:q,label,detail})=>
- '<button type="button" class="bond-support-person" data-bond-dossier="'+q.no+'"><img src="img/t/'+pad(q.no)+'.jpg" alt="" loading="lazy">'+
- '<span><b>'+esc(q.name)+'</b><small class="bond-support-label">'+esc(label)+'</small><small class="bond-support-detail">'+esc(detail)+'</small></span><em aria-hidden="true">↗</em></button>'
- ).join('')+'</div>':'')+
+ (supportingPeople.length?'<div class="bond-section-heading support"><span>직접 연결된 주변 인물</span><small>'+supportingPeople.length+' PROFILES</small></div>'+
+ renderSupporting(supportingPeople,'direct'):'')+
+ (nearby.length?'<div class="bond-section-heading support"><span>같은 권역·조직의 다른 인물</span><small>'+nearby.length+' PROFILES</small></div>'+
+ '<p class="bond-nearby-note">직접적인 친분이나 충성 관계가 확정된 것은 아닙니다.</p>'+
+ renderSupporting(nearby,'regional'):'')+
  '<button type="button" class="bond-explore" data-bond-dossier="'+current+'">선택한 인물의 상세 기록 보기 ↗</button>'+
- '<p class="bond-metadata">확인된 인물 소개를 바탕으로 정리한 관계입니다. 공개되지 않은 비밀은 포함하지 않습니다.</p>';
+ '<p class="bond-metadata">기존 인물 설정에서 확인되는 관계만 기재했습니다. 공개되지 않은 비밀은 포함하지 않습니다.</p>';
 }
 function select(no,scroll=true){
  if(!Object.hasOwn(NODES,Number(no)))return;
@@ -146,16 +204,41 @@ function select(no,scroll=true){
  resetStyles();renderPanel();
  if(current!==null&&scroll)recenter(current,true);
 }
+
+const dialog=document.createElement('dialog');
+dialog.className='bond-portrait-dialog';
+dialog.setAttribute('aria-label','인물 일러스트 확대 보기');
+dialog.innerHTML='<div class="bond-lightbox-shell"><div class="bond-lightbox-top"><div class="bond-lightbox-heading"><small>IMPERIAL PERSONNEL PORTRAIT</small><b id="bondLightboxName"></b></div><button type="button" class="bond-lightbox-close" aria-label="사진 닫기" data-bond-close>닫기 ×</button></div><div class="bond-lightbox-picture"><img id="bondLightboxImage" alt="" /></div><div class="bond-lightbox-bottom"><span id="bondLightboxRole"></span><button type="button" data-bond-lightbox-dossier>인물 소개 보기 ↗</button></div></div>';
+document.body.append(dialog);
+let lightboxPerson=null;
+function showPortrait(no){
+ const p=person(no);if(!p)return;
+ lightboxPerson=p;
+ const pic=dialog.querySelector('#bondLightboxImage');
+ pic.src='img/c/'+pad(p.no)+'.jpg';
+ pic.alt=p.name+' 인물 일러스트';
+ pic.onerror=()=>{if(pic.src.includes('/img/c/')){pic.onerror=null;pic.src='img/t/'+pad(p.no)+'.jpg'}};
+ dialog.querySelector('#bondLightboxName').textContent=p.name;
+ dialog.querySelector('#bondLightboxRole').textContent=p.role+' · '+p.group;
+ if(!dialog.open)dialog.showModal();
+}
+function openDossier(no){
+ const p=person(no);if(!p)return;
+ if(dialog.open)dialog.close();
+ if(typeof setFilter==='function')setFilter(p.main?'main':p.aff,p.no);
+ document.getElementById('people')?.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'});
+}
+dialog.addEventListener('click',e=>{
+ if(e.target===dialog||e.target.closest('[data-bond-close]')){dialog.close();return}
+ if(e.target.closest('[data-bond-lightbox-dossier]')&&lightboxPerson)openDossier(lightboxPerson.no);
+});
 side.addEventListener('click',e=>{
+ const picture=e.target.closest('[data-bond-image]');
+ if(picture){showPortrait(picture.dataset.bondImage);return}
  const main=e.target.closest('[data-bond-select]');
  if(main){select(Number(main.dataset.bondSelect));return}
  const dossier=e.target.closest('[data-bond-dossier]');
- if(dossier){
-  const p=person(dossier.dataset.bondDossier);
-  if(!p)return;
-  if(typeof setFilter==='function')setFilter(p.main?'main':p.aff,p.no);
-  document.getElementById('people')?.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'});
- }
+ if(dossier)openDossier(dossier.dataset.bondDossier);
 });
 document.getElementById('bondAll')?.addEventListener('click',()=>{current=null;resetStyles();renderPanel();recenter(3,false)});
 for(const [id,dir] of [['bondLeft',-1],['bondRight',1]]){
