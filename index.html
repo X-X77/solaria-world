@@ -1261,8 +1261,19 @@ footer{background:#080D16}
 <div id="arcNotice" class="arc-notice" role="status" aria-live="polite"></div>
 
 <div id="riftAwakening" class="rift-awakening" role="dialog" aria-modal="true" aria-labelledby="riftAwakeningTitle" aria-describedby="riftAwakeningText" hidden>
-  <div class="rift-event-visual" aria-hidden="true"><div class="rift-event-presence"></div><div class="rift-event-glow"></div><div class="rift-event-rock left"></div><div class="rift-event-rock right"></div></div>
-  <div class="rift-event-content"><span>UNRECORDED EVENT / ULTRA FISSURAM</span><div class="rift-event-rune">✧</div><h2 id="riftAwakeningTitle">균열이 열렸다.</h2><p id="riftAwakeningText">태양의 빛이 닿지 않는 곳에서,<br>누군가 당신을 부른다.</p><blockquote>“드디어…… 닿았구나.”</blockquote><small>SEALED ARCHIVE · UNBOUND</small><div class="rift-event-actions"><button type="button" id="riftAwakeningExplore">균열 너머의 기록 열람 ↗</button><button type="button" id="riftAwakeningContinue">제국으로 돌아가기</button></div></div>
+ <div class="rift-film" aria-hidden="true">
+  <img class="rift-cut" src="img/op/rift_01_crack.png" alt="">
+  <img class="rift-cut" src="img/op/rift_02_open.png" alt="">
+  <img class="rift-cut" src="img/op/rift_03_nox.png" alt="">
+  <img class="rift-cut" src="img/op/rift_04_seal.png" alt="">
+  <div class="rift-film-glow"></div>
+ </div>
+ <div class="rift-film-toolbar"><span>UNRECORDED / ULTRA FISSURAM</span><div><button type="button" id="riftFilmSound" aria-pressed="false">소리 켜기</button><button type="button" id="riftFilmClose">연출 닫기</button></div></div>
+ <h2 id="riftAwakeningTitle" class="rift-film-title">기록되지 않은 균열</h2>
+ <p id="riftAwakeningText" class="rift-film-status" role="status">검은 침묵 너머에서, 균열이 열린다.</p>
+ <div class="rift-film-caption" aria-live="polite" aria-atomic="true"><span lang="la" id="riftFilmLatin"></span><p id="riftFilmKorean"></p></div>
+ <div class="rift-event-content" id="riftFilmResult" hidden><span>SEALED ARCHIVE · UNBOUND</span><h3>균열의 봉인이 풀렸다.</h3><p>균열 너머의 인물 기록과 별자리가 열렸습니다.</p><div class="rift-event-actions"><button type="button" id="riftAwakeningExplore">균열 기록 열람 ↗</button><button type="button" id="riftAwakeningContinue">제국으로 돌아가기</button></div></div>
+ <audio id="riftFilmAudio" src="audio/nox_rift_event.mp3" preload="none"></audio>
 </div>
 
 <footer>
@@ -1629,7 +1640,7 @@ const SND=(function(){
   const AC=window.AudioContext||window.webkitAudioContext,graph=!!AC&&/^https?:$/.test(location.protocol);
   const op=new Audio(),bg=new Audio();op.preload='none';bg.preload='none';bg.loop=true;op.src='audio/op-v2.mp3';bg.src='audio/bgm.mp3';let newOpening=true,openingStarted=false;
   const EL={op,bg},VOL={op:.9,bg:.3},G={},T={};
-  let ctx=null,on=false,bgWant=false,disarm=null,wasBg=false;
+  let ctx=null,on=false,bgWant=false,disarm=null,wasBg=false,hiddenFilm=false;
   const btn=document.getElementById('snd');
   const save=v=>{try{localStorage.setItem('sol-sound',v?'1':'0')}catch(e){}};
   const pref=()=>{try{return localStorage.getItem('sol-sound')}catch(e){return null}};
@@ -1642,7 +1653,7 @@ const SND=(function(){
     T[k]=setInterval(()=>{const f=Math.min(1,(performance.now()-t0)/(d*1000));el.volume=Math.max(0,Math.min(1,a+(v-a)*f));if(f>=1)clearInterval(T[k])},40)}
   function play(el){try{const p=el.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
   function ui(){if(!btn)return;btn.classList.toggle('on',on);btn.setAttribute('aria-pressed',on?'true':'false');const l=on?'배경음 끄기':'배경음 켜기';btn.setAttribute('aria-label',l);btn.title=l}
-  function bgOn(d){bgWant=true;init();resume();clearTimeout(T.bp);if(bg.paused){set('bg',0);play(bg)}ramp('bg',VOL.bg,d||2)}
+  function bgOn(d){if(hiddenFilm)return;bgWant=true;init();resume();clearTimeout(T.bp);if(bg.paused){set('bg',0);play(bg)}ramp('bg',VOL.bg,d||2)}
   function bgOff(d){bgWant=false;ramp('bg',0,d||.6);clearTimeout(T.bp);T.bp=setTimeout(()=>{if(!bgWant)bg.pause()},(d||.6)*1000+100)}
   function opOff(d){ramp('op',0,d||.6);clearTimeout(T.op);T.op=setTimeout(()=>op.pause(),(d||.6)*1000+100)}
   function unlockBg(){set('bg',0);try{const p=bg.play();if(p&&p.then)p.then(()=>{if(!bgWant){bg.pause();bg.currentTime=0}}).catch(()=>{})}catch(e){}}
@@ -1661,6 +1672,8 @@ const SND=(function(){
       if(p&&p.then)p.then(()=>{clearTimeout(to);if(late)op.pause();else go()}).catch(()=>{clearTimeout(to);go()});else{clearTimeout(to);go()}},
     silent(){on=false;save(false);ui()},
     introEnd(){if(!on)return;if(!op.paused)opOff(newOpening?1.8:1.4);bgOn(newOpening?3.0:3.5)},
+    hiddenStart(){hiddenFilm=true;bgWant=false;clearTimeout(T.bp);clearTimeout(T.op);set('op',0);set('bg',0);op.pause();bg.pause();return on;},
+    hiddenEnd(){hiddenFilm=false;if(on)bgOn(1.5);},
     openingTime(){return op.currentTime||0;},
     openingPlaying(){return !op.paused&&!op.ended;},
     arm(){if(pref()!=='1')return;
