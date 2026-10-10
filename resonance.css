@@ -75,3 +75,8 @@
 @keyframes resHighRadiance{0%,100%{opacity:.85;transform:scale(1.25)}50%{opacity:1;transform:scale(1.48)}}
 @keyframes resUnstableLight{0%,100%{opacity:.4;transform:translate(-3px,1px) scale(.92)}19%{opacity:.8;transform:translate(2px,-2px) scale(1.14)}43%{opacity:.3;transform:translate(-1px,3px) scale(.85)}72%{opacity:.7;transform:translate(3px,-1px) scale(1.08)}}
 @keyframes resUnstableDust{0%,100%{opacity:.2;transform:translate(-2px,0)}35%{opacity:.5;transform:translate(4px,-10px)}68%{opacity:.15;transform:translate(-4px,-4px)}}
+
+/* The source artwork has a lit crystal: suppress both added and painted light on no response. */
+#resonance[data-state=quiet] .res-aura,#resonance[data-state=quiet] .res-particles{opacity:0;animation:none}
+#resonance[data-state=quiet] .res-device img{filter:brightness(.65) saturate(.45)}
+#resonance[data-state=quiet] .res-device::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 18% 30% at 50.5% 36%,rgba(4,8,17,.88),rgba(4,8,17,.5) 50%,transparent 100%)}
