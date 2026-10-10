@@ -72,3 +72,43 @@
 @media(max-width:860px){#resonance .res-panel{grid-template-columns:1fr}#resonance .res-left{border-right:0;border-bottom:1px solid rgba(217,181,126,.23);padding:19px;gap:11px}#resonance .res-gem{height:350px;width:min(100%,360px)}#resonance .res-right{padding:30px 24px}}
 @media(max-width:520px){#resonance .res-left{padding:14px 12px}#resonance .res-gem{height:min(89vw,340px);width:min(89vw,340px)}#resonance .res-axis:before{font-size:15px}#resonance .res-ring-mark{width:23px;height:23px;top:-12px}#resonance .res-right{padding:26px 16px}#resonance .res-copy{font-size:14px}#resonance .res-ring-row{padding:11px}#resonance .res-turn-btn{width:37px;height:37px}#resonance .res-inscription{font-size:9px;letter-spacing:.13em}}
 @media(prefers-reduced-motion:reduce){#resonance .res-core-gem,#resonance .res-core-aura{animation:none}#resonance .res-ring-track,#resonance .res-progress i{transition:none}}
+
+/* Forbidden experiment: story interface replaces ring visual */
+#resonance .res-left:after{background:linear-gradient(180deg,rgba(5,12,22,.22),rgba(8,13,25,.75)),url('img/resonance-apparatus.webp') center/cover;opacity:.18}
+#resonance .res-gem{height:365px;max-height:none;filter:none}
+#resonance .forbidden-apparatus{width:100%;height:100%;display:grid;place-items:center;position:relative}
+#resonance .forbidden-circuit{position:absolute;width:75%;aspect-ratio:1;border:1px solid rgba(176,156,217,.36);border-radius:50%}
+#resonance .forbidden-circuit.two{width:59%;border-style:dashed;animation:resTurn 60s linear infinite}
+#resonance .forbidden-gem{height:42%;width:27%;clip-path:polygon(50% 0,85% 23%,100% 65%,50% 100%,0 65%,15% 23%);background:linear-gradient(110deg,#3D326E,#B09CDE 44%,#F6E9FF 50%,#7663A6 57%,#252843);filter:drop-shadow(0 0 24px #8D79C8);animation:resFloat 4s ease-in-out infinite}
+#resonance .forbidden-spark{position:absolute;width:70%;height:70%;border-radius:50%;background:radial-gradient(circle,rgba(167,145,237,.18),transparent 67%);pointer-events:none}
+#resonance[data-experiment-tone=warning] .forbidden-gem,#resonance[data-experiment-tone=critical] .forbidden-gem{background:linear-gradient(110deg,#250B19,#AB3759 43%,#FFB0B1 50%,#681B37 60%,#120919);filter:drop-shadow(0 0 34px #BE3F68)}
+#resonance[data-experiment-tone=warning] .forbidden-spark{background:radial-gradient(circle,rgba(203,54,87,.28),transparent 70%)}
+#resonance[data-experiment-tone=sealed] .forbidden-gem{background:linear-gradient(110deg,#183450,#92C4D8 44%,#F3FBFF 51%,#3A6C9E 61%,#142138)}
+#resonance .forbidden-overline{font:600 11px var(--lat);letter-spacing:.16em;color:#D6BB8E}
+#resonance .forbidden-choices{display:grid;gap:10px;margin:22px 0}
+#resonance .forbidden-choice{width:100%;display:grid;grid-template-columns:1fr auto;gap:4px 12px;border:1px solid rgba(218,182,125,.31);background:rgba(6,13,23,.45);padding:15px 17px;text-align:left}
+#resonance .forbidden-choice:hover{border-color:#E1BD80;background:rgba(211,172,107,.14)}
+#resonance .forbidden-choice b{font-size:16px;color:#F3E5D1}
+#resonance .forbidden-choice span{font-size:13px;line-height:1.6;color:#B8C2CA;grid-column:1}
+#resonance .forbidden-choice em{grid-column:2;grid-row:1 / span 2;font-style:normal;color:#DFC08A}
+#resonance .forbidden-choice.danger{border-color:rgba(222,106,123,.45)}
+#resonance .forbidden-choice.special{border-color:rgba(141,172,224,.48)}
+#resonance .forbidden-console{background:#080F1C;border:1px solid rgba(215,184,141,.27);padding:9px 15px;margin:20px 0}
+#resonance .forbidden-logline{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(215,184,141,.11);font-size:12px;line-height:1.6}
+#resonance .forbidden-logline:last-child{border:0}
+#resonance .forbidden-logline span{color:#A6B4C3}
+#resonance .forbidden-logline b{color:#E2DACD;text-align:right}
+#resonance .forbidden-console.warning b,#resonance .forbidden-console.danger b{color:#EDABBA}
+#resonance .forbidden-report,#resonance .forbidden-reward{background:rgba(7,15,26,.57);border:1px solid rgba(214,178,122,.32);padding:17px 19px;margin:22px 0}
+#resonance .forbidden-report span,#resonance .forbidden-reward b{display:block;color:#E6C48E;margin-bottom:9px;font-size:14px}
+#resonance .forbidden-report p,#resonance .forbidden-reward p{font-size:14px;line-height:1.8;color:#C6D0D9;margin:0}
+#resonance .forbidden-status{display:flex;align-items:center;gap:12px;border-top:1px solid rgba(215,179,120,.2);padding-top:15px;color:#AEC1CA;font-size:13px}
+#resonance .forbidden-status b{margin-left:auto;color:#E0CAAB}
+#resonance .forbidden-dot{width:9px;height:9px;border-radius:50%;background:#A5D7B8}
+#resonance .forbidden-warning-title{color:#EDB3B8!important}
+#resonance .forbidden-whisper,#resonance .forbidden-rare{color:#E0BDCD;font:italic 15px/1.8 var(--read)}
+#resonance .forbidden-rare{padding:12px 15px;border-left:2px solid #C46E99;background:rgba(115,39,74,.2)}
+#resonance .forbidden-result-links{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+@keyframes resTurn{to{transform:rotate(360deg)}}
+@media(max-width:860px){#resonance .res-gem{height:min(75vw,350px)}}
+@media(prefers-reduced-motion:reduce){#resonance .forbidden-gem,#resonance .forbidden-circuit.two{animation:none}}
