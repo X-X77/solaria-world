@@ -1039,6 +1039,7 @@ footer{background:#080D16}
 <link rel="stylesheet" href="people-redesign.css">
 <link rel="stylesheet" href="archive.css">
 <link rel="stylesheet" href="resonance.css">
+<link rel="stylesheet" href="forbidden-library.css">
 </head>
 <body>
 <div id="intro" class="op-v2" aria-label="솔라리아 오프닝">
@@ -1065,7 +1066,7 @@ footer{background:#080D16}
 
 <header class="nav" id="nav">
   <a class="logo" href="#top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 22 12 12 22 2 12Z"/><path d="M12 7 17 12 12 17 7 12Z" fill="currentColor"/></svg><b>솔라리아</b></a>
-  <ul><li><a href="#world">세계관</a></li><li><a href="#regions">권역</a></li><li><a href="#people">인물</a></li><li><a href="#bonds">관계</a></li><li><a href="#seals">봉인</a></li><li><a href="#archive">기밀</a></li><li><a href="#resonance">마석 공명</a></li></ul>
+  <ul><li><a href="#world">세계관</a></li><li><a href="#regions">권역</a></li><li><a href="#people">인물</a></li><li><a href="#bonds">관계</a></li><li><a href="#seals">금서고</a></li><li><a href="#resonance">마석 공명</a></li></ul>
   <button class="snd" id="snd" type="button" aria-pressed="false" aria-label="배경음 켜기" title="배경음 켜기"><i></i><i></i><i></i><i></i></button>
 </header>
 
@@ -1203,11 +1204,7 @@ footer{background:#080D16}
   <div class="blegend"><span class="r">대립</span><span class="a">협력·호의</span><span class="n">긴장·얽힘</span></div>
 </div></section>
 
-<section class="sec seals" id="seals"><div class="wrap">
-  <div class="sh"><h2>여섯 개의 봉인</h2><div class="orn"><i></i></div>
-    <p>권역마다 하나씩, 봉인된 기록이 남아 있다. 봉인 아래의 진짜 문장은 이야기 속에서, 그것을 쥔 사람에게서만 받을 수 있다.</p></div>
-  <div class="sgrid" id="sgrid"></div>
-</div></section>
+
 
 <section class="sec resonance" id="resonance" aria-labelledby="resTitle" data-state="idle"><div class="wrap">
 <div class="sh"><span class="res-overline">MAGIC TOWER · EXPERIMENT 07</span><h2 id="resTitle">마석 공명 실험</h2><div class="orn"><i></i></div><p>손끝에 닿은 파장은, 때로 기록되지 않은 목소리를 깨운다.</p></div>
@@ -1230,12 +1227,18 @@ footer{background:#080D16}
 </div>
 <p class="res-disclaimer">관측 결과는 매 시도 독립적으로 결정됩니다. 접촉 시간이나 이전 기록은 확률에 영향을 주지 않습니다.</p>
 </div></section>
-<section class="sec" id="archive" aria-labelledby="arcTitle"><div class="wrap">
-  <div class="sh"><span class="arc-overline">IMPERIAL SECRET ARCHIVES</span><h2 id="arcTitle">제국의 미해결 기록</h2><div class="orn"><i></i></div><p>세계관과 지도, 인물 도감에 흩어진 흔적을 찾아 기록을 복원하세요.</p></div>
-  <div class="arc-overview" id="arcOverview" aria-label="단서 수집 현황"></div>
-  <div class="arc-layout"><aside class="arc-tabs" id="arcFiles" aria-label="기밀 사건 목록"></aside><div class="arc-paper" id="arcPaper" aria-live="polite"></div></div>
-  <div class="arc-actions"><span>기록은 현재 브라우저에 저장됩니다. 모든 비밀은 공개되지 않습니다.</span><button class="arc-reset" id="arcReset" type="button">수집 기록 초기화</button></div>
-</div></section>
+<section class="sec forbidden-library" id="archive" aria-labelledby="arcTitle"><div class="wrap"><div class="lib-shelf" id="seals">
+ <div class="sh"><span class="arc-overline">IMPERIAL FORBIDDEN LIBRARY · RESTRICTED ACCESS</span><h2 id="arcTitle">금서고</h2><div class="orn"><i></i></div><p>누군가 지웠지만, 완전히 사라지지 않은 기록들.<br>봉인된 문서를 열고, 제국 곳곳에서 단서를 찾아 사건 파일을 복원하세요.</p></div>
+ <nav class="lib-nav" aria-label="금서고 목차"><a href="#libSeals"><span>Ⅰ</span> 금지 문서 · 06</a><a href="#libCases"><span>Ⅱ</span> 사건 조사 · 03</a><a href="#arcExperimentRecords"><span>Ⅲ</span> 비정규 실험</a></nav>
+ <section class="lib-seal-section" id="libSeals" aria-labelledby="libSealsTitle"><div class="lib-section-head"><div><small>VOLUME I / THE SIX SEALS</small><h3 id="libSealsTitle">열람이 금지된 여섯 기록</h3></div><p>표지를 선택하면 기록 조각이 나타납니다.</p></div>
+   <div class="sgrid" id="sgrid" aria-label="권역별 금지 문서"></div><div class="lib-seal-detail" id="sealDetail" aria-live="polite"></div>
+ </section>
+ <section class="lib-case-section" id="libCases" aria-labelledby="libCasesTitle"><div class="lib-section-head"><div><small>VOLUME II / INCIDENT INVESTIGATION</small><h3 id="libCasesTitle">복원 중인 사건 파일</h3></div><p>단서를 찾을수록 누락된 문장이 복원됩니다.</p></div>
+   <div class="arc-overview" id="arcOverview" aria-label="단서 수집 현황"></div>
+   <div class="arc-layout"><aside class="arc-tabs" id="arcFiles" aria-label="기밀 사건 목록"></aside><div class="arc-paper" id="arcPaper" aria-live="polite"></div></div>
+   <div class="arc-actions"><span>기존 단서와 해금 기록은 브라우저에 그대로 보존됩니다.</span><button class="arc-reset" id="arcReset" type="button">수집 기록 초기화</button></div>
+ </section><div class="archive-records-slot"></div>
+</div></div></section>
 <div id="arcNotice" class="arc-notice" role="status" aria-live="polite"></div>
 <section class="sec final" id="final">
   <div class="fbg" aria-hidden="true"></div>
@@ -1962,5 +1965,6 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
 <script src="archive.js"></script>
 <script src="resonance.js"></script>
 <script src="people-redesign.js"></script>
+<script src="forbidden-library.js"></script>
 </body>
 </html>

@@ -23,6 +23,11 @@ const records=[
    {key:'c-map',place:'제국 지도 · 황궁',hint:'황실이 머무는 제국의 중심',name:'황실의 심장',text:'황궁은 황제의 병상이 자리한 곳이다.',target:'world'},
    {key:'c-person',place:'인물 도감 · 셀레네',hint:'황실의 정보망을 쥔 인물',name:'조용한 경쟁자',text:'셀레네는 사교계와 정보망을 쥔 황녀다.',target:'people'}]}
 ];
+const recovered={
+ a:{code:'NORTH / MISSING ROUTE',title:'방벽을 향하지 않은 행로',fact:'마물의 움직임은 방벽이 아니라 한 사람을 향했다. 그날 북부 대공이 그 사람을 구했다.',question:'만약 목적이 단순한 공격이었다면, 왜 그 한 사람만을 쫓았는가?',missing:'지시자의 흔적 / 추적 목적 / 당시 진술 일부'},
+ b:{code:'TOWER / ORIGIN UNKNOWN',title:'출처가 없는 마석 장부',fact:'마탑이 마석을 정제하고 제국은 그것을 사용한다. 하지만 마석의 원산지는 공개되지 않았다.',question:'제국 전역에 공급되는 마석의 출처를 황실과 마탑만 알고 있는 까닭은 무엇인가?',missing:'원산지 / 최초 공급 경로 / 정제 이전 문서'},
+ c:{code:'PALACE / NO DECREE',title:'작성되지 않은 계승 승인서',fact:'황제는 병상에 있지만 계승자를 정하지 않았다. 황자와 황녀의 권력 기반은 서로 다르게 자라고 있다.',question:'모두가 다음 황제를 준비하는 동안, 정작 황제는 왜 결정을 미루고 있는가?',missing:'황제의 의사 / 최종 승인 문서 / 비공개 조서'}
+};
 const all=records.flatMap(r=>r.clues);const valid=new Set(all.map(c=>c.key));
 const files=document.getElementById('arcFiles'),paper=document.getElementById('arcPaper'),summary=document.getElementById('arcOverview'),notice=document.getElementById('arcNotice');
 let found=new Set(),selected='a',hideNotice=0;
@@ -35,10 +40,12 @@ function render(){
  files.innerHTML=records.map(r=>'<button type="button" class="arc-tab" data-record="'+r.key+'" aria-pressed="'+(selected===r.key)+'"><small>CASE '+r.number+' · '+amt(r)+'/3</small><b>'+esc(r.title)+'</b><em>'+(amt(r)===3?'열람 가능':'미해결 기록')+'</em></button>').join('');
  const r=records.find(r=>r.key===selected),done=amt(r)===3;
  paper.innerHTML='<div class="arc-head"><span>IMPERIAL ARCHIVE / '+r.number+'</span><span>'+(done?'ACCESS GRANTED':'RESTRICTED')+'</span></div>'+
- '<h3>'+esc(r.title)+'</h3><p class="arc-intro">'+esc(r.lead)+'</p><div class="arc-sub"><span>수집한 단서</span><span>'+amt(r)+' / 3</span></div>'+
+ '<div class="lib-document-code">CASE FILE · '+esc(r.number)+'</div><h3>'+esc(r.title)+'</h3><p class="arc-intro">'+esc(r.lead)+'</p><div class="arc-sub"><span>수집한 단서</span><span>'+amt(r)+' / 3</span></div>'+
  '<div class="arc-clues">'+r.clues.map((c,i)=>'<div class="arc-clue"><b>'+(found.has(c.key)?'✓ '+esc(c.name):'◇ 미발견 단서 '+(i+1))+'</b><small>'+esc(c.place)+'</small>'+
  (found.has(c.key)?'<p>'+esc(c.text)+'</p>':'<button type="button" class="arc-hint-go" data-arc-hint="'+c.key+'">이 장소로 바로 이동 ↗ <small>'+esc(c.hint)+'</small></button>')+'</div>').join('')+'</div>'+
- '<div class="arc-reward'+(done?'':' locked')+'"><h4>'+(done?'복원된 기밀 기록':'◇ 기밀 문서 봉인 중')+'</h4><p>'+(done?esc(r.ending):'웹사이트 곳곳에 숨겨진 세 가지 단서를 조사하면 기록이 열립니다.')+'</p></div>';
+ '<div class="arc-reward'+(done?'':' locked')+'"><span class="lib-document-code">'+esc(recovered[r.key].code)+'</span><h4>'+(done?esc(recovered[r.key].title):'훼손된 사건 기록')+'</h4>'+
+ '<p>'+(done?esc(recovered[r.key].fact):'<span class="lib-redaction">█████ █████████ ███████</span>')+'</p>'+
+ (done?'<div class="lib-case-dilemma"><b>아직 풀리지 않은 모순</b><p>'+esc(recovered[r.key].question)+'</p></div><small class="lib-missing">누락된 항목 · '+esc(recovered[r.key].missing)+'</small><small class="lib-caution">이 문서는 확인된 단서와 의문만 담고 있습니다. 결론은 기록되어 있지 않습니다.</small>':'<small class="lib-missing">나머지 단서를 모으면 지워진 기록과 모순된 진술을 복원할 수 있습니다.</small>')+'</div>';
 }
 function toast(title,msg){
  clearTimeout(hideNotice);
@@ -135,13 +142,13 @@ if('MutationObserver' in window){
 }
 
 /* Bonus experimental log records — original nine clues stay untouched. */
-const exHolder=document.createElement('div');exHolder.id='arcExperimentRecords';exHolder.className='arc-experiment-records';section.querySelector('.arc-layout').after(exHolder);
+const exHolder=document.createElement('div');exHolder.id='arcExperimentRecords';exHolder.className='arc-experiment-records';section.querySelector('.archive-records-slot').append(exHolder);
 function renderExperimentalLogs(){
  let hist={};try{hist=JSON.parse(localStorage.getItem('solaria-forbidden-experiment-v1')||'null')?.history||{}}catch(e){}
  const logs=[
   ['force','EX-07A · 폭주 반응','측정 범위를 넘어선 파장이 기존 마석 분류와 일치하지 않았다.'],
   ['seal','EX-07B · 불안정 잔류 기록','어긋난 공명 이후 장치 내부에서 미지의 잔류 신호가 확인되었다.'],
-  ['rare','EX-07X · 기록 외 음성','기록 외 반응에서 녹스의 목소리가 들렸다. “……찾았다.”']
+  ['rare','EX-07X · 기록 외 음성','기록 외 음성이 감지됐다. 발신자의 이름과 음성의 일부는 복원되지 않았다.']
  ];
  exHolder.innerHTML='<div class="arc-experiment-head"><span>EXPERIMENT NO.07 · CLASSIFIED</span><h3>마탑의 비정규 실험 기록</h3><p>실험 중 발견된 문서가 이곳에 보관됩니다.</p></div><div class="arc-experiment-list">'+logs.map(([k,title,desc])=>'<article class="arc-experiment-entry'+(hist[k]?' unlocked':'')+'"><b>'+(hist[k]?'◇ '+title:'◇ 미발견 실험 기록')+'</b><p>'+(hist[k]?desc:'마석 공명 실험에서 발견할 수 있습니다.')+'</p></article>').join('')+'</div><a class="arc-experiment-link" href="#resonance">마석 공명 실험으로 이동 ↗</a>';
 }
