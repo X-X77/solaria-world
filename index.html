@@ -1486,7 +1486,7 @@ function setRegion(k,anim=true){
     <p class="motto">${r.tag}</p><div class="region-story-label">LAND & ATMOSPHERE / 지역 개관</div><p class="about">${r.about}</p>
     <div class="story"><b>이 땅의 이야기</b><p>${STORY[k]}</p></div>
     <div class="region-now"><b>현재 정세</b><ul>${r.now.map(item=>`<li>${esc(item)}</li>`).join('')}</ul></div><div class="region-story-label">KEY LOCATIONS / 주요 거점</div>    <ul class="places">${r.places.filter(p=>p[0]!=='???').slice(0,5).map(p=>`<li>${p[0]}</li>`).join('')}</ul>
-    ${ppl.length?`<div class="who">${show.map(p=>`<button data-no="${p.no}" aria-label="${esc(p.sealed?'봉인된 인물':p.name)}"><img src="img/t/${pad(p.no)}.jpg" alt=""></button>`).join('')}<span class="region-person-count">관련 인물 ${ppl.length}명 · 초상 선택 시 인물 도감으로 이동</span></div>`:`<div class="who"><span style="margin:0">이 땅의 인물은 기록되어 있지 않다.</span></div>`}`;
+    ${ppl.length?`<section class="region-people" aria-label="관련 인물"><div class="region-people-heading"><b>이 지역의 인물</b><small>관련 인물 ${ppl.length}명 · 초상을 누르면 인물 도감으로 이동</small></div><div class="who">${show.map(p=>`<button type="button" class="region-character" data-no="${p.no}" aria-label="${esc(p.name)} · ${esc(p.role)} · 인물 도감 보기"><img src="img/t/${pad(p.no)}.jpg" alt="" loading="lazy"><span class="region-character-text"><b>${esc(p.name)}</b><small>${esc(p.role)}</small></span></button>`).join('')}</div></section>`:`<div class="region-people region-people-empty">공개된 인물 기록이 없습니다.</div>`}`;
   if(anim){info.classList.remove('anim');void info.offsetWidth;info.classList.add('anim')}
   info.querySelectorAll('.who button').forEach(b=>b.onclick=()=>{setFilter(k==='capital'?'capital':k,+b.dataset.no);$('people').scrollIntoView()});
 }
