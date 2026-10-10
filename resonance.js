@@ -9,8 +9,38 @@ const outcomes=[
  {limit:.88,state:'success',title:'강화 공명 반응',line:'푸른빛이 수정 깊숙한 곳까지 번집니다. 맑고 강한 울림이 연구실을 채웠습니다.'},
  {limit:.96,state:'unstable',title:'불안정 반응',line:'보랏빛 파장이 서로 어긋납니다. 장치가 떨리며 정체를 알 수 없는 잔류 신호를 남겼습니다.',record:'seal'},
  {limit:.99,state:'burst',title:'폭주 반응 · 장치 손상',line:'마력이 허용 범위를 넘어섰습니다. 고리에 검붉은 균열이 번지고, 측정값이 끊겼습니다.',record:'force'},
- {limit:1,state:'nox',title:'기록 외 반응 감지',line:'빛이 깨지는 순간, 정지된 장치 너머에서 목소리가 들렸습니다.',quote:'“……찾았다.” — 녹스',record:'rare'}
+ {limit:1,state:'nox',title:'기록 외 반응 감지',line:'빛이 깨지는 순간, 정지된 장치 너머에서 목소리가 들렸습니다.',record:'rare'}
 ];
+const noxReactions=[
+ {id:'dismiss',text:'너무 미미하군.'},
+ {id:'curious',text:'성장할 여지는 있나?'},
+ {id:'heir',text:'역시, 후계자……'}
+];
+function drawNoxReaction(){
+ // One independent uniform choice between the three utterances after the rare 1% event.
+ const n=new Uint32Array(1);crypto.getRandomValues(n);
+ return noxReactions[Math.floor(n[0]/4294967296*noxReactions.length)];
+}
+function makeNoxQuote(){
+ const reaction=drawNoxReaction();
+ const quote=document.createElement('blockquote');
+ quote.className='nox-quote nox-'+reaction.id;
+ if(reaction.id==='heir'){
+  quote.append(document.createTextNode('“역시, '));
+  const distorted=document.createElement('span');
+  distorted.className='nox-redacted';
+  distorted.textContent='후▨자';
+  distorted.setAttribute('aria-label','후계자');
+  quote.append(distorted,document.createTextNode('……”'));
+ }else{
+  quote.textContent='“'+reaction.text+'”';
+ }
+ const who=document.createElement('cite');
+ who.textContent='— 녹스';
+ quote.append(who);
+ return quote;
+}
+
 let started=null,source=null,frame=0,cooldown=0,ready=false;
 function setState(state){root.dataset.state=state}
 function saveSeenRareEvent(key){
@@ -35,7 +65,7 @@ function renderOutcome(o){
  const title=document.createElement('h4');title.textContent=o.title;
  const text=document.createElement('p');text.textContent=o.line;
  panel.append(label,title,text);
- if(o.quote){const quote=document.createElement('blockquote');quote.textContent=o.quote;panel.append(quote)}
+ if(o.state==='nox')panel.append(makeNoxQuote())
  if(o.record){saveSeenRareEvent(o.record);const note=document.createElement('small');note.textContent='발견한 반응이 기밀 기록실에 보관되었습니다.';panel.append(note)}
  cooldown=performance.now()+900;
 }
