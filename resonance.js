@@ -13,14 +13,14 @@ const outcomes=[
  {limit:1,state:'burst',title:'기록 외 이상 반응',line:'분류표에 없는 파장이 관측되었습니다. 수정에 균열이 번지고 측정 장치가 경고를 남깁니다.',record:'force'}
 ];
 const attributes=[
- {name:'불',color:'255,119,76',line:'열을 일으키고 변화를 이끄는 파장입니다.'},
- {name:'물',color:'77,174,255',line:'흐름을 읽고 유연하게 이어지는 파장입니다.'},
- {name:'바람',color:'138,231,205',line:'보이지 않는 움직임을 따라 퍼지는 파장입니다.'},
- {name:'땅',color:'213,169,98',line:'단단한 기반을 세우고 형태를 지탱하는 파장입니다.'},
- {name:'번개',color:'210,157,255',line:'순간의 집중으로 길을 여는 파장입니다.'},
- {name:'얼음',color:'169,232,255',line:'고요한 결정 안에 힘을 응축하는 파장입니다.'},
- {name:'빛',color:'255,238,173',line:'감춰진 흔적을 비추고 밝혀내는 파장입니다.'},
- {name:'그림자',color:'147,114,211',line:'빛이 닿지 않는 경계에 머무는 파장입니다.'}
+ {key:'fire',name:'불',color:'255,119,76',line:'열을 일으키고 변화를 이끄는 파장입니다.'},
+ {key:'water',name:'물',color:'77,174,255',line:'흐름을 읽고 유연하게 이어지는 파장입니다.'},
+ {key:'wind',name:'바람',color:'138,231,205',line:'보이지 않는 움직임을 따라 퍼지는 파장입니다.'},
+ {key:'earth',name:'땅',color:'213,169,98',line:'단단한 기반을 세우고 형태를 지탱하는 파장입니다.'},
+ {key:'lightning',name:'번개',color:'210,157,255',line:'순간의 집중으로 길을 여는 파장입니다.'},
+ {key:'ice',name:'얼음',color:'169,232,255',line:'고요한 결정 안에 힘을 응축하는 파장입니다.'},
+ {key:'light',name:'빛',color:'255,238,173',line:'감춰진 흔적을 비추고 밝혀내는 파장입니다.'},
+ {key:'shadow',name:'그림자',color:'147,114,211',line:'빛이 닿지 않는 경계에 머무는 파장입니다.'}
 ];
 function randomUnit(){const n=new Uint32Array(1);crypto.getRandomValues(n);return n[0]/4294967296}
 const noxReactions=[
@@ -79,6 +79,7 @@ function evaluateResult(){
 }
 function renderOutcome({strength,attribute,nox}){
  setState(nox?'nox':strength.state);
+ root.dataset.element=nox?'nox':attribute.key;
  root.style.setProperty('--res-light',nox?'236,44,78':attribute.color);
  phase.textContent=nox?'시스템 경고 · 기록 외 음성 감지':strength.title+' · '+attribute.name+' 속성';
  panel.replaceChildren();
@@ -110,7 +111,7 @@ function tick(){
 }
 function holdStart(input){
  if(started!==null||performance.now()<cooldown)return false;
- root.style.removeProperty('--res-light');source=input;started=performance.now();ready=false;setState('charging');phase.textContent='접촉 중 · 빛이 모이고 있습니다';tick();return true;
+ delete root.dataset.element;root.style.removeProperty('--res-light');source=input;started=performance.now();ready=false;setState('charging');phase.textContent='접촉 중 · 빛이 모이고 있습니다';tick();return true;
 }
 function holdEnd(cancel=false){
  if(started===null)return;

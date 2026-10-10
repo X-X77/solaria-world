@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1654 1123">
+ <defs><mask id="crystal" maskUnits="userSpaceOnUse" x="0" y="0" width="1654" height="1123">
+ <path fill="white" d="M835 121 876 158 895 230 927 328 966 438 932 508 881 610 850 691 815 651 762 543 707 444 739 346 770 240 790 163Z"/>
+ <!-- Keep the bronze bands crossing the crystal untouched. -->
+ <path fill="none" stroke="black" stroke-width="17" d="M700 379 Q823 462 980 481 M700 497 Q823 544 980 535 M700 544 Q825 575 980 551"/>
+ </mask></defs>
+ <path fill="white" mask="url(#crystal)" d="M0 0H1654V1123H0Z"/>
+</svg>

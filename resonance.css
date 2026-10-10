@@ -80,3 +80,28 @@
 #resonance[data-state=quiet] .res-aura,#resonance[data-state=quiet] .res-particles{opacity:0;animation:none}
 #resonance[data-state=quiet] .res-device img{filter:brightness(.65) saturate(.45)}
 #resonance[data-state=quiet] .res-device::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 18% 30% at 50.5% 36%,rgba(4,8,17,.88),rgba(4,8,17,.5) 50%,transparent 100%)}
+
+/* The mask uses the artwork's coordinates and the same cover positioning as the image. */
+#resonance .res-crystal-tint,#resonance .res-element-shimmer{position:absolute;inset:0;pointer-events:none;mask:url('img/resonance-crystal-mask.svg') center/cover no-repeat;-webkit-mask:url('img/resonance-crystal-mask.svg') center/cover no-repeat;opacity:0}
+#resonance[data-element] .res-crystal-tint{background:rgb(var(--res-light));mix-blend-mode:color;opacity:1}
+#resonance[data-element] .res-element-shimmer{background:linear-gradient(135deg,transparent 20%,rgba(var(--res-light),.5) 50%,transparent 75%);background-size:200% 200%;mix-blend-mode:screen;opacity:.4}
+#resonance[data-state=quiet] .res-crystal-tint,#resonance[data-state=quiet] .res-element-shimmer{opacity:0;animation:none}
+#resonance[data-state=faint] .res-element-shimmer{opacity:.16}
+#resonance[data-state=high] .res-element-shimmer{opacity:.7}
+#resonance[data-element=fire] .res-element-shimmer{animation:resFireFlow 3.2s ease-in-out infinite}
+#resonance[data-element=water] .res-element-shimmer{animation:resWaterFlow 4s ease-in-out infinite alternate}
+#resonance[data-element=wind] .res-element-shimmer{animation:resWindFlow 2.8s linear infinite}
+#resonance[data-element=earth] .res-element-shimmer{animation:resEarthGlow 5s ease-in-out infinite}
+#resonance[data-element=lightning] .res-element-shimmer{animation:resLightning 3.4s ease-in-out infinite}
+#resonance[data-element=ice] .res-element-shimmer{background:radial-gradient(circle at 50.5% 29%,#e8ffff 0 1%,transparent 3%),radial-gradient(circle at 48% 43%,#cffaff 0 1%,transparent 3%),linear-gradient(135deg,transparent,rgba(var(--res-light),.45),transparent);animation:resIceGlint 4.5s ease-in-out infinite}
+#resonance[data-element=light] .res-element-shimmer{animation:resEarthGlow 3.8s ease-in-out infinite}
+#resonance[data-element=shadow] .res-crystal-tint{mix-blend-mode:multiply;background:#765498;animation:resShadowVeil 5s ease-in-out infinite}
+#resonance[data-element=shadow] .res-element-shimmer{opacity:.1}
+#resonance[data-element=nox] .res-element-shimmer{background:rgba(210,30,60,.45)}
+@keyframes resFireFlow{0%,100%{background-position:50% 100%}40%{background-position:40% 35%}75%{background-position:60% 0%}}
+@keyframes resWaterFlow{from{background-position:0% 50%}to{background-position:100% 50%}}
+@keyframes resWindFlow{from{background-position:100% 100%}to{background-position:0% 0%}}
+@keyframes resEarthGlow{0%,100%{filter:brightness(.8)}50%{filter:brightness(1.3)}}
+@keyframes resLightning{0%,100%,35%,65%{filter:brightness(.5)}40%,59%{filter:brightness(2)}}
+@keyframes resIceGlint{0%,100%{filter:brightness(.7)}50%{filter:brightness(1.5)}}
+@keyframes resShadowVeil{0%,100%{filter:brightness(.65)}50%{filter:brightness(.95)}}
