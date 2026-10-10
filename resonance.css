@@ -41,3 +41,15 @@
 @keyframes resFlash{0%{opacity:.8}30%{opacity:.08}65%{opacity:.5}100%{opacity:0}}
 @media(max-width:760px){#resonance .res-panel{grid-template-columns:1fr}#resonance .res-device{aspect-ratio:1654 / 1123}#resonance .res-result{min-height:0}}
 @media(prefers-reduced-motion:reduce){#resonance *,#resonance *::after{animation:none!important;transition:none!important}}
+
+/* Nox hidden event variants — visual state only; rare-event probability unchanged. */
+#resonance .nox-quote{position:relative;margin:22px 0 17px;font:600 clamp(21px,2.25vw,29px)/1.65 var(--disp);letter-spacing:.012em;text-shadow:0 0 19px currentColor}
+#resonance .nox-quote.nox-dismiss{color:#C7C4D5;text-shadow:0 0 12px rgba(171,168,199,.30)}
+#resonance .nox-quote.nox-curious{color:#CDA5F3;text-shadow:0 0 17px rgba(177,107,237,.42)}
+#resonance .nox-quote.nox-heir{color:#F6819B;text-shadow:0 0 17px rgba(226,52,91,.46)}
+#resonance .nox-quote cite{display:block;margin-top:9px;font:600 11px var(--lat);letter-spacing:.18em;color:#BFB4C6;font-style:normal;text-shadow:none}
+#resonance .nox-redacted{display:inline-block;position:relative;color:#FF9BAF;letter-spacing:.11em;text-shadow:-2px 0 #A955E7,2px 0 #DD314E;animation:noxFragment .22s steps(2,end) 12}
+#resonance .nox-redacted:after{content:"";position:absolute;left:0;right:0;top:40%;height:21%;background:repeating-linear-gradient(90deg,rgba(12,10,23,.9) 0 8px,rgba(226,64,102,.62) 8px 12px);opacity:.8;pointer-events:none;animation:noxRedaction 1.6s steps(3,end) 2}
+@keyframes noxFragment{0%,100%{transform:translate(0,0)}25%{transform:translate(-1px,0)}50%{transform:translate(2px,-1px)}75%{transform:translate(0,1px)}}
+@keyframes noxRedaction{0%,100%{opacity:.82}45%{opacity:.24}70%{opacity:1}}
+@media(prefers-reduced-motion:reduce){#resonance .nox-redacted,#resonance .nox-redacted:after{animation:none!important}}
