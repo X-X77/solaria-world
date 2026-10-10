@@ -46,6 +46,12 @@ with sync_playwright() as p:
             page.locator(f'#bondRegionTabs [data-region="{key}"]').click()
             assert page.locator(f'#bondRegionTabs [data-region="{key}"]').get_attribute('aria-pressed') == 'true'
             assert page.locator('#bsvg .arc-person').count() > 0
+            # Original labels must not collide in any of the nine orbit layouts.
+            overlaps = page.locator('#bsvg').evaluate("""svg=>{
+                const labels=[...svg.querySelectorAll('.arc-person-name,.arc-person-role')].map(e=>({id:e.parentElement.dataset.person,r:e.getBoundingClientRect()}));
+                return labels.some((a,i)=>labels.slice(i+1).some(b=>a.id!==b.id&&Math.min(a.r.right,b.r.right)-Math.max(a.r.left,b.r.left)>1&&Math.min(a.r.bottom,b.r.bottom)-Math.max(a.r.top,b.r.top)>1));
+            }""")
+            assert not overlaps, key
         page.evaluate('SOLARIA_ATLAS.focus(1)')
         node = page.locator('#bsvg [data-person="1"]')
         node.focus(); page.keyboard.press('Enter')

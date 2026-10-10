@@ -130,6 +130,21 @@ function renderGraph(){
   portraits.append(g);
  });
  svg.append(portraits);
+ // Wrap long labels without truncating their original text or moving portraits.
+ const wrapLabel=(label,step)=>{
+  if(label.getComputedTextLength()<=142)return false;
+  const text=label.textContent,mid=Math.floor(text.length/2);
+  const spaces=[...text].map((c,i)=>c===' '?i:-1).filter(i=>i>0);
+  const split=spaces.length?spaces.sort((a,b)=>Math.abs(a-mid)-Math.abs(b-mid))[0]+1:mid;
+  label.textContent='';
+  [text.slice(0,split),text.slice(split)].forEach((line,i)=>label.append(node('tspan',{x:0,dy:i?step:0},line)));
+  return true;
+ };
+ portraits.querySelectorAll('.arc-person').forEach(person=>{
+  const name=person.querySelector('.arc-person-name'),role=person.querySelector('.arc-person-role');
+  if(wrapLabel(name,18))role.setAttribute('y',103);
+  wrapLabel(role,14);
+ });
  // Keep the active portrait visible in the existing horizontal mobile scroller.
  const activePoint=pts.get(selected);
  if(activePoint&&!locked&&scroll.scrollWidth>scroll.clientWidth){

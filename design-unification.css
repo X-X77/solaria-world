@@ -34,15 +34,6 @@ body{background:#0B111B;color:var(--text)}
 #regions .rinfo .story,#regions .region-now{border-color:rgba(217,187,143,.23);border-left-color:var(--rc)}
 #regions .rinfo .places li{border-color:rgba(217,187,143,.21)}
 /* Character archive: distinct gallery, restrained neutral lines */
-#people .people-eyebrow{border-top-color:rgba(216,183,136,.22)}
-#people .ct{border-color:rgba(212,183,139,.22);box-shadow:none}
-#people .ct.on{box-shadow:0 0 0 1px #D4B37E}
-#people .people-dossier{background:#111B29;border-color:rgba(219,187,140,.27);box-shadow:0 16px 54px rgba(0,0,0,.23)}
-#people .people-dossier-top{background:rgba(9,15,25,.74);border-bottom-color:rgba(216,183,136,.21)}
-#people .cinfo{background:linear-gradient(90deg,rgba(11,18,30,.95),rgba(11,18,30,.77))}
-#people .cinfo dl>div{padding:18px 0;border-bottom-color:rgba(218,188,140,.17)}
-#people .cinfo dt{font-size:13px}
-#people .cinfo dd{font-size:clamp(15px,1.18vw,16px);line-height:1.93;color:#E2E0DC}
 #people .secret{border-color:rgba(211,175,144,.25);background:#171C29}
 #people .secret .ob{font-size:13px}
 /* Relations: card clarity and readable secondary affiliations */
@@ -74,7 +65,6 @@ footer{border-top:1px solid rgba(217,186,137,.17)}
 @media(max-width:760px){
  .sh p{font-size:15px}
  #top.hero-reimagined .lead{font-size:17px;line-height:1.9}
- #people .cinfo dd{font-size:15px}
  #bonds .bond-support-person .bond-support-detail{font-size:12px}
  #regions .rinfo{box-shadow:none}
 }
