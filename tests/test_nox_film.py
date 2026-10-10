@@ -9,7 +9,7 @@ with sync_playwright() as p:
   page.add_init_script(f'window.drawCount=0;crypto.getRandomValues=a=>{{window.drawCount++;a[0]={roll};return a}};'+("localStorage.setItem('solaria-noctis-contact-v1','linked');" if linked else ''))
   return page
  def silent_intro(page):
-  page.goto(BASE+'?opening=1',wait_until='domcontentloaded');page.clock.install();page.locator('#opSilent').click();page.clock.fast_forward(22450);page.clock.run_for(500)
+  page.goto(BASE+'?opening=1',wait_until='domcontentloaded');page.clock.install();page.locator('#opSilent').click();page.clock.run_for(22450);page.clock.run_for(500)
  # Skip never draws.
  page=new();page.goto(BASE+'?opening=1',wait_until='domcontentloaded');page.clock.install();page.locator('#opSilent').click();page.locator('#opSkip').click();page.clock.fast_forward(26000);assert page.evaluate('drawCount')==0;assert page.locator('#riftAwakening').is_hidden();print('PASS skipped opening: no draw, no event');page.context.close()
  # No opening from deep link.
@@ -21,7 +21,7 @@ with sync_playwright() as p:
   page=new(mobile=mobile);silent_intro(page);assert page.locator('#riftAwakening').is_visible();assert page.evaluate('drawCount')==1;assert not page.evaluate('SOLARIA_RIFT_UNLOCKED');assert page.locator('#riftFilmAudio').evaluate('a=>a.paused')
   assert page.locator('#riftAwakening').get_attribute('data-cut')=='1'
   page.clock.run_for(4500);assert page.locator('#riftAwakening').get_attribute('data-cut')=='2'
-  page.clock.run_for(4800);assert page.locator('#riftAwakening').get_attribute('data-cut')=='3';assert page.locator('#riftFilmKorean').inner_text()=='누가 침묵을 깨뜨렸느냐?'
+  page.clock.run_for(4800);assert page.locator('#riftAwakening').get_attribute('data-cut')=='3';assert page.locator('#riftFilmKorean').inner_text()=='누가 침묵을 깨뜨렸느냐?';assert page.locator('#riftFilmLatin').count()==0
   page.clock.run_for(5600);assert page.locator('#riftFilmKorean').inner_text()=='눈을 돌리지 마라.'
   page.clock.run_for(2000);assert page.locator('#riftAwakening').get_attribute('data-cut')=='4';assert not page.evaluate('SOLARIA_RIFT_UNLOCKED')
   page.clock.run_for(6200);assert page.evaluate('SOLARIA_RIFT_UNLOCKED');assert page.evaluate("localStorage.getItem('solaria-noctis-contact-v1')")=='linked'

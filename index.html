@@ -456,7 +456,7 @@ html.intro-done .hero .in{animation:heroIn 1.6s cubic-bezier(.2,.7,.2,1) both}
 #intro.op-v2 .op-shot.eyes{transition:opacity .65s ease,transform 3.4s ease}
 #intro.op-v2 .op-shot.beast{transition:opacity .45s ease,transform 2.6s ease}
 /* Opening pacing revision: fast handoff to the existing hero title */
-#intro.op-v2.out{transition:opacity .55s ease}
+
 html.intro-done .hero .in{animation-duration:.7s}
 #intro.op-v2 .op-shot.eyes.active{transform:scale(1.085)}
 #intro.op-v2 .op-shot.beast.active{transform:scale(1.13)}
@@ -464,7 +464,10 @@ html.intro-done .hero .in{animation-duration:.7s}
 #intro.op-v2 .op-shot.cassian.active{transform:scale(1.07)}
 
 /* Full-length opening handoff: Cassian's final music tail fades into the hero. */
-#intro.op-v2.out{transition:opacity 2.3s cubic-bezier(.32,0,.16,1)}
+#intro.op-v2 .op-stage{transition:opacity 1.4s ease-in-out}
+#intro.op-v2.ending .op-stage{opacity:0}
+#intro.op-v2.out{transition:opacity 1s ease-in-out}
+@media(prefers-reduced-motion:reduce){#intro.op-v2 .op-stage,#intro.op-v2.out{transition:opacity .15s linear}}
 html.intro-done .hero .in{animation-duration:1.65s}
 /* Opening-to-hero handoff: quiet imperial title reveal, no perpetual glow. */
 @keyframes solaria-title-arrive{0%{opacity:0;transform:translateY(17px);letter-spacing:.14em;filter:blur(3px)}65%{opacity:1;filter:blur(0)}100%{opacity:1;transform:translateY(0);letter-spacing:inherit;filter:blur(0)}}
@@ -1297,14 +1300,14 @@ footer{background:#080D16}
  <div class="rift-film-toolbar"><span>UNRECORDED / ULTRA FISSURAM</span><div><button type="button" id="riftFilmSound" aria-pressed="false">소리 켜기</button><button type="button" id="riftFilmClose">연출 닫기</button></div></div>
  <h2 id="riftAwakeningTitle" class="rift-film-title">기록되지 않은 균열</h2>
  <p id="riftAwakeningText" class="rift-film-status" role="status">검은 침묵 너머에서, 균열이 열린다.</p>
- <div class="rift-film-caption" aria-live="polite" aria-atomic="true"><span lang="la" id="riftFilmLatin"></span><p id="riftFilmKorean"></p></div>
+ <div class="rift-film-caption" aria-live="polite" aria-atomic="true"><p id="riftFilmKorean"></p></div>
  <div class="rift-event-content" id="riftFilmResult" hidden><span>SEALED ARCHIVE · UNBOUND</span><h3>균열의 봉인이 풀렸다.</h3><p>균열 너머의 인물 기록과 별자리가 열렸습니다.</p><div class="rift-event-actions"><button type="button" id="riftAwakeningExplore">균열 인물 도감 보기 ↗</button><button type="button" id="riftAwakeningContinue">제국으로 돌아가기</button></div></div>
  <audio id="riftFilmAudio" src="audio/nox_rift_event.mp3" preload="none"></audio>
 </div>
 
 
 
-<script src="rift-contact.js"></script>
+<script src="rift-contact.js?v=korean-captions"></script>
 <script>
 const REGIONS = {
   north: {
@@ -1699,7 +1702,7 @@ const SND=(function(){
       let p;try{p=op.play()}catch(e){}
       if(p&&p.then)p.then(()=>{clearTimeout(to);if(late)op.pause();else go()}).catch(()=>{clearTimeout(to);go()});else{clearTimeout(to);go()}},
     silent(){on=false;save(false);ui()},
-    introEnd(){if(!on)return;if(!op.paused)opOff(newOpening?1.8:1.4);bgOn(newOpening?3.0:3.5)},
+    introEnd(){if(!on)return;if(!op.paused)opOff(newOpening?2.3:1.4);bgOn(newOpening?3.0:3.5)},
     hiddenStart(){hiddenFilm=true;bgWant=false;clearTimeout(T.bp);clearTimeout(T.op);set('op',0);set('bg',0);op.pause();bg.pause();return on;},
     hiddenEnd(){hiddenFilm=false;if(on)bgOn(1.5);},
     openingTime(){return op.currentTime||0;},
@@ -1732,7 +1735,7 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
   const gate=document.getElementById('opGate'),stage=document.getElementById('opStage');
   const shots=[...stage.querySelectorAll('.op-shot')],caption=document.getElementById('opCaption');
   const beam=document.getElementById('opBeam'),light=document.getElementById('opLight'),title=document.getElementById('opTitle');
-  let started=false,ended=false,withSound=false,startAt=0,raf=0,shot=-1,spoken='',outro=false,bgStarted=false,newMix=false;
+  let started=false,ended=false,withSound=false,startAt=0,raf=0,shot=-1,spoken='',outro=false,bgStarted=false,newMix=false,outroAt=0,handoffTimer=0;
   // Use the verified new soundtrack directly; no asynchronous HEAD-check race.
   const OLD={start:6.05,beast:8.42,nox:10.55,slash:12.28,cassian:13.45,
     beastLine:[9.10,10.43],noxLine:[10.72,11.90],cassianLine:[16.73,19.12],
@@ -1766,8 +1769,11 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
   }
   function startOutro(){
     if(outro)return;
-    outro=true;changeLine('','');box.classList.add('out');
-    R.classList.remove('intro-on');R.classList.add('intro-done');
+    outro=true;outroAt=performance.now();changeLine('','');box.classList.add('ending');
+    const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    handoffTimer=setTimeout(()=>{
+      box.classList.add('out');R.classList.remove('intro-on');R.classList.add('intro-done');
+    },reduced?150:1400);
     try{sessionStorage.setItem('sol-intro','1')}catch(e){}
     if(started){SND.introEnd();bgStarted=true;}
   }
@@ -1795,10 +1801,11 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
   function finish(skipped=false){
     if(ended)return;
     ended=true;cancelAnimationFrame(raf);
-    if(!outro){box.style.transition='opacity .35s ease';startOutro();}
-    R.classList.remove('intro-on');R.classList.add('intro-done');
+    if(!outro)startOutro();
+    if(skipped){clearTimeout(handoffTimer);box.style.transition='opacity .35s ease';box.classList.add('out');R.classList.remove('intro-on');R.classList.add('intro-done');}
     if(started&&!bgStarted)SND.introEnd();else if(!started)SND.arm();
-    const removeAfter=skipped?450:(outro&&newMix?220:450);
+    const duration=matchMedia('(prefers-reduced-motion: reduce)').matches?350:2500;
+    const removeAfter=skipped?450:Math.max(100,duration-(performance.now()-outroAt));
     setTimeout(()=>{box.remove();if(started&&!skipped)document.dispatchEvent(new CustomEvent('solaria:intro-finished'))},removeAfter);
   }
   document.getElementById('opStart').addEventListener('click',()=>start(true));

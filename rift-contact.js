@@ -3,7 +3,7 @@
 const KEY='solaria-noctis-contact-v1',veil=document.getElementById('riftAwakening');
 if(!veil)return;
 const player=document.getElementById('riftFilmAudio'),cuts=[...veil.querySelectorAll('.rift-cut')],result=document.getElementById('riftFilmResult');
-const latin=document.getElementById('riftFilmLatin'),korean=document.getElementById('riftFilmKorean'),status=document.getElementById('riftAwakeningText'),soundButton=document.getElementById('riftFilmSound');
+const korean=document.getElementById('riftFilmKorean'),status=document.getElementById('riftAwakeningText'),soundButton=document.getElementById('riftFilmSound');
 // 22.392s MP3. Spectral voice onsets: 9.20s and 14.60s; closing impact: ~16.65s.
 const CUES={open:4.30,nox:9.18,seal:16.65,end:22.392,lines:[{start:9.20,end:11.25,latin:'Quis silentium rupit?',korean:'누가 침묵을 깨뜨렸느냐?'},{start:14.60,end:16.60,latin:'Noli oculos avertere.',korean:'눈을 돌리지 마라.'}]};
 let linked=false,attempted=false,active=false,complete=false,frame=0,mediaClock=false,sound=false,clockStart=0,clockOffset=0,pausedAt=null,backgroundPause=false,previousFocus=null,loadTimer=0,audioRequest=0;
@@ -43,14 +43,14 @@ function finish(){
  linked=true;try{localStorage.setItem(KEY,'linked')}catch(_){}
  update();
  if(typeof setFilter==='function')setFilter('rift',11);
- veil.dataset.cut='4';veil.dataset.complete='true';latin.textContent='';korean.textContent='';
+ veil.dataset.cut='4';veil.dataset.complete='true';korean.textContent='';
  status.textContent='봉인 해제 · 균열 기록 개방';result.hidden=false;document.getElementById('riftAwakeningExplore').focus({preventScroll:true});
 }
 function paint(t){
  const index=t<CUES.open?0:t<CUES.nox?1:t<CUES.seal?2:3;
  cuts.forEach((el,i)=>el.classList.toggle('active',i===index));veil.dataset.cut=String(index+1);
  const line=CUES.lines.find(l=>t>=l.start&&t<l.end);
- if(latin.textContent!==(line?.latin||'')){latin.textContent=line?.latin||'';korean.textContent=line?.korean||'';}
+ if(korean.textContent!==(line?.korean||''))korean.textContent=line?.korean||'';
 }
 function tick(){
  if(!active||complete)return;
