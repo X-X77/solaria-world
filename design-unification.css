@@ -1,0 +1,81 @@
+/* Solaria editorial coherence pass · 2026-10
+   Visual refinements only: preserves scene image, atlas, archive, game logic and links. */
+:root{--bg:#0B111B;--bg2:#121A27;--gold:#CDAE78;--gold-hi:#EAD4AA;--text:#EEE8DF;--sub:#B8C2CD;--line:rgba(212,184,144,.22)}
+body{background:#0B111B;color:var(--text)}
+/* Shared section rhythm */
+.sec:not(.hero){scroll-margin-top:75px}
+#world,#people,#bonds,#resonance,#archive{background-color:#0B111B}
+.sec>.wrap{max-width:1280px}
+.sh{max-width:760px}
+.sh h2{letter-spacing:-.027em;line-height:1.22}
+.sh p{font-size:clamp(15px,1.4vw,17px);line-height:1.88;color:#C7CBD0;word-break:keep-all}
+.sh .orn{opacity:.65}
+.nav.solid{background:rgba(10,16,26,.95);border-bottom-color:rgba(209,179,132,.23)}
+.nav li a{color:#D8D3C9;font-size:14px;transition:color .2s}
+.nav li a.on{color:#F4DFB7}
+.nav li a.on:after{height:1px;background:#D2AD71}
+.logo{color:#EAD5AE}
+#top.hero-reimagined .lead{max-width:38em;line-height:2.02;font-size:clamp(17px,1.52vw,21px);letter-spacing:0;color:#EEE8E0}
+#top.hero-reimagined .cta{margin-top:35px}
+#top.hero-reimagined .btn{min-height:52px;letter-spacing:.012em}
+#top.hero-reimagined .btn:hover{transform:none}
+#top.hero-reimagined .hero-rule{opacity:.62}
+/* World cards: fewer fake-panel accents, stronger typographic distinction. */
+#world .pl{background:rgba(19,27,39,.74);border:1px solid rgba(208,180,135,.20);box-shadow:none;padding:clamp(24px,2.8vw,34px)}
+#world .pl svg{width:39px;height:39px;opacity:.9}
+#world .pl h3{font-size:clamp(21px,2vw,25px);line-height:1.45}
+#world .pl p{color:#D2D0C9;font-size:15.5px;line-height:1.9}
+#world .report{transform:none;box-shadow:0 18px 45px rgba(0,0,0,.32)}
+#world .report p{line-height:1.95}
+/* Region overview, hero image and atlas preserved. */
+#regions .rtab .th{box-shadow:none}
+#regions .rtab.on .th{box-shadow:0 0 0 1px #E4CAA0}
+#regions .rinfo{border-color:rgba(217,187,143,.25);box-shadow:0 16px 46px rgba(0,0,0,.20)}
+#regions .rinfo .story,#regions .region-now{border-color:rgba(217,187,143,.23);border-left-color:var(--rc)}
+#regions .rinfo .places li{border-color:rgba(217,187,143,.21)}
+/* Character archive: distinct gallery, restrained neutral lines */
+#people .people-eyebrow{border-top-color:rgba(216,183,136,.22)}
+#people .ct{border-color:rgba(212,183,139,.22);box-shadow:none}
+#people .ct.on{box-shadow:0 0 0 1px #D4B37E}
+#people .people-dossier{background:#111B29;border-color:rgba(219,187,140,.27);box-shadow:0 16px 54px rgba(0,0,0,.23)}
+#people .people-dossier-top{background:rgba(9,15,25,.74);border-bottom-color:rgba(216,183,136,.21)}
+#people .cinfo{background:linear-gradient(90deg,rgba(11,18,30,.95),rgba(11,18,30,.77))}
+#people .cinfo dl>div{padding:18px 0;border-bottom-color:rgba(218,188,140,.17)}
+#people .cinfo dt{font-size:13px}
+#people .cinfo dd{font-size:clamp(15px,1.18vw,16px);line-height:1.93;color:#E2E0DC}
+#people .secret{border-color:rgba(211,175,144,.25);background:#171C29}
+#people .secret .ob{font-size:13px}
+/* Relations: card clarity and readable secondary affiliations */
+#bonds .bond-board,#bonds .bside{border-color:rgba(217,185,136,.26)}
+#bonds .bond-board-head{background:#151F2D}
+#bonds .bond-aside-kicker{background:rgba(10,17,28,.55)}
+#bonds .bond-relation,#bonds .bond-support-person{border-color:rgba(213,183,134,.20)}
+#bonds .bond-relation small{font-size:12.5px;line-height:1.7;color:#CDD0D1}
+#bonds .bond-support-person .bond-support-detail{font-size:12.5px;line-height:1.8;color:#CFD1D4}
+#bonds .bond-support-open{font-size:12.5px}
+#bonds .bond-metadata{color:#BAC0C9}
+/* The experiment stays primarily image-led, with fewer competing panel decorations */
+#resonance .res-panel{border-color:rgba(218,183,138,.3)}
+#resonance .res-right{background:#121B29}
+#resonance .res-right p{line-height:1.85}
+#resonance .res-profile>div{border-color:rgba(209,179,139,.2)}
+/* Archive: a clear distinction between volumes and case notes */
+#archive .lib-nav a{background:#141D2A;border-color:rgba(211,182,138,.28)}
+#archive .lib-section-head{border-color:rgba(217,187,140,.25)}
+#archive .lib-seal{box-shadow:none}
+#archive .lib-seal[aria-pressed=true]{box-shadow:0 0 0 1px var(--seal-color)}
+#archive .lib-seal-detail,#archive .arc-paper{box-shadow:none}
+#archive .lib-fragment>p{font-size:16px;line-height:1.95}
+#archive .arc-clue p{line-height:1.82}
+#archive .arc-reward{background:#191F2B;border-color:rgba(208,171,126,.34)}
+/* Primary CTA and footer */
+#final .btn.p{background:#DCC18E;color:#19212C}
+footer{border-top:1px solid rgba(217,186,137,.17)}
+@media(max-width:760px){
+ .sh p{font-size:15px}
+ #top.hero-reimagined .lead{font-size:17px;line-height:1.9}
+ #people .cinfo dd{font-size:15px}
+ #bonds .bond-support-person .bond-support-detail{font-size:12px}
+ #regions .rinfo{box-shadow:none}
+}
+@media(prefers-reduced-motion:reduce){#top.hero-reimagined .btn{transition:none}}
