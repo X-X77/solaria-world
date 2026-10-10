@@ -142,7 +142,7 @@ function relatedMarkup(items,caption){
 function renderDetail(){
  const locked=region==='rift'&&!window.SOLARIA_RIFT_UNLOCKED,p=people.get(selected);
  if(locked){
-  detail.innerHTML='<div class="arc-dossier-stamp">RESTRICTED / BEYOND THE RIFT</div><div class="arc-dossier-sealed"><span aria-hidden="true">✧</span><h3>이름 없는 별자리</h3><p>균열 너머의 인물과 관계는 아직 봉인되어 있습니다. 이 기록에는 이야기의 비밀이 포함될 수 있습니다.</p><button type="button" data-unlock>균열의 인물 열람하기 ↗</button></div>';
+  detail.innerHTML='<div class="arc-dossier-stamp">RESTRICTED / BEYOND THE RIFT</div><div class="arc-dossier-sealed"><span aria-hidden="true">✧</span><h3>이름 없는 별자리</h3><p>균열 너머의 인물과 관계는 아직 봉인되어 있습니다. 마지막 교신석에서 저편의 응답을 받아야 열람할 수 있습니다.</p><button type="button" data-unlock>금지된 교신 시도하기 ↗</button></div>';
   return;
  }
  if(!p||(region!=='all'&&p.aff!==region)||!shown(p)){
@@ -190,10 +190,8 @@ function openDossier(id){
  document.getElementById('people')?.scrollIntoView({behavior:quiet()?'auto':'smooth',block:'start'});
 }
 function unlock(){
- window.SOLARIA_RIFT_UNLOCKED=true;
- const p=members('rift').find(x=>x.no===11)||members('rift')[0];
- region='rift';selected=p?p.no:null;render();
- if(typeof filt!=='undefined'&&filt==='rift'&&typeof setFilter==='function')setFilter('rift',p?.no);
+ // This button only leads to the single contact ritual; it cannot unlock records.
+ window.SOLARIA_RIFT_CONTACT?.begin();
 }
 tabs.addEventListener('click',e=>{
  const b=e.target.closest('[data-region]');if(!b)return;

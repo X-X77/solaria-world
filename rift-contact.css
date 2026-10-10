@@ -1,0 +1,68 @@
+/* Solaria finale: mystical interactive communication to the Rift */
+.rift-contact{position:relative;isolation:isolate;overflow:hidden;padding:clamp(86px,11vw,132px) 18px 100px;background:radial-gradient(ellipse 55% 30% at 50% 35%,rgba(106,68,151,.21),transparent 80%),linear-gradient(180deg,#080E1A,#0E1024 46%,#090D19);border-top:1px solid rgba(171,137,195,.21)}
+.rift-contact:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.45;background-image:radial-gradient(circle at 18% 21%,rgba(255,255,255,.6) 1px,transparent 2px),radial-gradient(circle at 78% 67%,rgba(195,164,229,.45) 1px,transparent 2px);background-size:173px 213px,229px 179px;pointer-events:none}
+.rift-contact:after{content:"";position:absolute;left:50%;bottom:-130px;width:min(75vw,850px);height:400px;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(102,75,147,.16),transparent 67%);pointer-events:none;z-index:-1}
+.rift-contact-container{max-width:1110px;margin:0 auto}
+.rift-contact-head{text-align:center;margin-bottom:35px}
+.rift-contact-kicker,.rift-contact-chapter{display:block;font:600 10px var(--lat);letter-spacing:.21em;color:#D1B791}
+.rift-contact-chapter{margin-top:11px;font-size:10px;color:#9A93B5}
+.rift-contact-head h2{margin:17px 0 9px;color:#F3E6D5;font:700 clamp(35px,5.4vw,57px) var(--disp);text-shadow:0 0 43px rgba(173,132,205,.17)}
+.rift-contact-head p{font:400 clamp(15px,1.8vw,17px)/1.85 var(--read);color:#D6D0DD;margin:0}
+.rift-contact-layout{display:grid;grid-template-columns:minmax(260px,.91fr) minmax(330px,1.09fr);border:1px solid rgba(201,178,204,.3);box-shadow:0 34px 80px rgba(0,0,0,.3),inset 0 0 0 1px rgba(217,193,162,.05);background:rgba(11,16,32,.77)}
+.rift-contact-visual{position:relative;min-height:435px;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle at 50% 44%,rgba(124,77,166,.21),transparent 50%),linear-gradient(145deg,#13182C,#090F1E);border-right:1px solid rgba(195,165,197,.2)}
+.rift-contact-visual:after{content:"";position:absolute;inset:28px;border:1px solid rgba(189,160,212,.11);pointer-events:none}
+.rift-contact-stars{position:absolute;top:38px;color:rgba(227,208,241,.5);font-size:13px;letter-spacing:.35em}
+.rift-contact-ring{position:absolute;top:47%;left:50%;border:1px solid rgba(190,158,223,.38);border-radius:50%;box-shadow:0 0 35px rgba(145,104,196,.10),inset 0 0 22px rgba(126,100,179,.07)}
+.rift-contact .ring-outer{width:315px;height:315px;margin:-157.5px 0 0 -157.5px;border-style:dashed;animation:rift-turn 55s linear infinite}
+.rift-contact .ring-middle{width:252px;height:252px;margin:-126px 0 0 -126px;border:2px solid rgba(204,170,220,.35);outline:1px solid rgba(165,126,188,.16);outline-offset:8px;animation:rift-turn 40s linear reverse infinite}
+.rift-contact .ring-inner{width:194px;height:194px;margin:-97px 0 0 -97px;border:1px solid rgba(231,193,149,.35);animation:rift-pulse 6s ease-in-out infinite}
+.rift-contact-core{position:absolute;top:47%;left:50%;transform:translate(-50%,-50%);width:133px;height:133px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:50%;background:radial-gradient(circle,rgba(74,51,101,.56),rgba(13,19,35,.91) 74%);border:1px solid rgba(217,174,217,.32);box-shadow:0 0 46px rgba(139,96,179,.17)}
+.rift-contact-glyph{font-size:63px;line-height:1;color:#D9C0F0;text-shadow:0 0 22px rgba(213,155,235,.6)}
+.rift-contact-core small{font:600 10px var(--lat);letter-spacing:.18em;color:#D5BF95}
+.rift-contact-ring-caption{position:absolute;bottom:28px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.rift-contact-ring-caption span{font-size:13px;color:#E6D7E9}
+.rift-contact-ring-caption b{color:#9F94B7;font:600 10px var(--lat);letter-spacing:.18em}
+.rift-contact-terminal{padding:clamp(20px,3vw,35px);display:flex;flex-direction:column;align-items:stretch}
+.rift-contact-terminal-top{display:flex;gap:10px;justify-content:space-between;align-items:center;color:#BFB1C7;font:600 10px var(--lat);letter-spacing:.11em;padding:0 0 16px;border-bottom:1px solid rgba(216,182,215,.21)}
+#riftContactIndicator{font-family:var(--ui);letter-spacing:0;color:#BFAAC6;font-size:11px}
+.rift-contact-clue{font:400 clamp(18px,2vw,22px)/1.86 var(--read);color:#F1E7D8;text-align:center;margin:22px 0 13px;word-break:keep-all}
+.rift-contact-instruction{margin:4px 0 12px;text-align:center;color:#C4BCCC;font-size:13px;line-height:1.7}
+.rift-contact-progress{display:flex;justify-content:center;gap:10px;margin:7px 0 21px}
+.rift-contact-progress span{width:39px;height:4px;background:#353047;border:1px solid rgba(188,157,194,.16);transition:background .3s,box-shadow .3s}
+.rift-contact-progress span.lit{background:#D2B3E3;box-shadow:0 0 13px rgba(183,128,221,.5)}
+.rift-contact-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.rift-contact-buttons button{display:flex;align-items:center;justify-content:center;gap:12px;min-height:53px;padding:10px;border:1px solid rgba(187,160,197,.34);background:linear-gradient(145deg,rgba(44,39,63,.63),rgba(15,22,39,.86));color:#E9E1EE;font-size:14px;font-weight:750;transition:background .2s,border-color .2s,box-shadow .2s;cursor:pointer}
+.rift-contact-buttons button span{font-size:23px;line-height:1;color:#D7B9E8}
+.rift-contact-buttons button:hover:not(:disabled),.rift-contact-buttons button:focus-visible{border-color:#DAB9E8;background:rgba(100,73,129,.32);box-shadow:0 0 0 1px rgba(187,156,216,.12)}
+.rift-contact-buttons button:disabled{opacity:.45;cursor:default}
+.rift-contact-message{margin-top:19px;border:1px solid rgba(195,161,204,.22);background:rgba(6,10,22,.65);min-height:62px;padding:13px 16px;color:#C5BED2;font:400 13px/1.85 var(--read)}
+.rift-contact-message .rift-contact-speaker{display:block;color:#CBB1DF;font:600 10px var(--lat);letter-spacing:.13em;margin-bottom:6px}
+.rift-contact-message strong{display:block;color:#F5E8E2;font:600 clamp(17px,2vw,21px)/1.8 var(--read)}
+.rift-contact-message small{display:block;color:#C2BBCD;margin-top:4px;font-size:12px}
+.rift-contact-reset{align-self:flex-end;margin-top:10px;padding:8px 0;color:#BFB6C8;border-bottom:1px solid rgba(195,170,204,.29);font-size:12px}
+.rift-contact-reset[hidden]{display:none}
+.rift-contact-rewards{margin:16px 0 0;padding:14px;border:1px solid rgba(196,164,220,.44);background:rgba(100,67,117,.15)}
+.rift-contact-rewards[hidden]{display:none}
+.rift-contact-rewards p{margin:0 0 12px;color:#EADCEC;font-size:12px;line-height:1.75}
+.rift-contact-rewards p span{color:#D9C292}
+.rift-contact-rewards>div{display:flex;gap:7px;flex-wrap:wrap}
+.rift-contact-rewards button{border:1px solid rgba(220,194,231,.44);color:#F0E2EA;padding:9px 12px;font-weight:650;font-size:12px;background:rgba(19,22,39,.75);cursor:pointer}
+.rift-contact-rewards button:hover{background:rgba(110,72,132,.36)}
+.rift-contact-footnote{margin:19px auto 0;text-align:center;max-width:600px;color:#AFA6BA;font-size:12px;line-height:1.85}
+.rift-contact[data-state="tuning"] .rift-contact-core{box-shadow:0 0 80px rgba(167,121,211,.27)}
+.rift-contact[data-state="linked"] .rift-contact-core{box-shadow:0 0 110px rgba(188,141,218,.38);border-color:#E8D4FA}
+.rift-contact[data-state="linked"] .rift-contact-glyph{color:#F2E6FF}
+.rift-contact[data-state="linked"] #riftContactIndicator{color:#E2C8EA}
+.rift-contact.is-summoned .rift-contact-visual{animation:rift-summoned 1.2s ease-out}
+.people-locked-rift{text-align:center;padding:45px clamp(16px,4vw,42px);color:#E9DFE9}
+.people-locked-rift>span{font-size:51px;color:#C4A3D8}
+.people-locked-rift h3{font:700 clamp(22px,3vw,30px) var(--disp);margin:12px 0}
+.people-locked-rift p{font:400 15px/1.85 var(--read);max-width:420px;margin:0 auto 22px;color:#CBC2D1}
+.people-locked-rift button,.region-contact-go{border:1px solid rgba(216,181,221,.48);background:rgba(75,55,95,.33);color:#E9D7EF;padding:12px 17px;cursor:pointer;font-weight:700}
+.region-locked-note p{margin:0 0 15px;font-size:14px;color:#E4D8E6}
+@keyframes rift-turn{to{transform:rotate(360deg)}}
+@keyframes rift-pulse{50%{opacity:.56;box-shadow:0 0 38px rgba(209,160,230,.25)}}
+@keyframes rift-summoned{0%{filter:brightness(1)}40%{filter:brightness(1.6)}100%{filter:brightness(1)}}
+@media(max-width:850px){.rift-contact-layout{grid-template-columns:1fr}.rift-contact-visual{min-height:305px;border-right:0;border-bottom:1px solid rgba(195,165,197,.2)}.rift-contact .ring-outer{width:232px;height:232px;margin:-116px 0 0 -116px}.rift-contact .ring-middle{width:190px;height:190px;margin:-95px 0 0 -95px}.rift-contact .ring-inner{width:148px;height:148px;margin:-74px 0 0 -74px}.rift-contact-core{width:112px;height:112px}.rift-contact-glyph{font-size:52px}.rift-contact-ring-caption{bottom:12px}.rift-contact-stars{top:16px}}
+@media(max-width:520px){.rift-contact{padding:73px 12px 75px}.rift-contact-head h2{font-size:36px}.rift-contact-head p{font-size:14px}.rift-contact-terminal{padding:20px 16px}.rift-contact-terminal-top{font-size:9px}.rift-contact-buttons button{min-height:49px}.rift-contact-visual{min-height:285px}.rift-contact-clue{font-size:17px}}
+@media(prefers-reduced-motion:reduce){.rift-contact-ring,.rift-contact.is-summoned .rift-contact-visual{animation:none!important}.rift-contact-progress span{transition:none}}

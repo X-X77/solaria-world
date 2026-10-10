@@ -1046,6 +1046,7 @@ footer{background:#080D16}
 <link rel="stylesheet" href="dossier-expansion.css">
 <link rel="stylesheet" href="regional-relationships.css">
 <link rel="stylesheet" href="mystic-atmosphere.css">
+<link rel="stylesheet" href="rift-contact.css">
 </head>
 <body>
 <div id="intro" class="op-v2" aria-label="솔라리아 오프닝">
@@ -1259,12 +1260,57 @@ footer{background:#080D16}
 
 <div id="arcNotice" class="arc-notice" role="status" aria-live="polite"></div>
 
+<section id="rift-contact" class="rift-contact" aria-labelledby="riftContactTitle" data-state="waiting">
+  <div class="rift-contact-container">
+    <div class="rift-contact-head">
+      <span class="rift-contact-kicker">THE LAST FREQUENCY · FORBIDDEN TRANSMISSION</span>
+      <span class="rift-contact-chapter">FINAL CHAPTER / UNKNOWN SIGNAL</span>
+      <h2 id="riftContactTitle">금지된 교신</h2>
+      <p>제국의 모든 길이 끝나는 곳. 그 너머로 목소리를 전할 수 있는 단 하나의 방법.</p>
+    </div>
+    <div class="rift-contact-layout">
+      <div class="rift-contact-visual" aria-hidden="true">
+        <div class="rift-contact-stars">· ✦ · ˚　✧　· ✦　˚ ·</div>
+        <div class="rift-contact-ring ring-outer"></div>
+        <div class="rift-contact-ring ring-middle"></div>
+        <div class="rift-contact-ring ring-inner"></div>
+        <div class="rift-contact-core"><span class="rift-contact-glyph">✧</span><small>FISSURA</small></div>
+        <div class="rift-contact-ring-caption"><span>봉인된 파장</span><b>NO SIGNAL</b></div>
+      </div>
+      <div class="rift-contact-terminal">
+        <div class="rift-contact-terminal-top"><span>RIFT · CHANNEL 00</span><span id="riftContactIndicator">● 연결되지 않음</span></div>
+        <p class="rift-contact-clue">“소리가 멈춘 자리에서 맥을 맞추고,<br>마지막으로 저편을 부르라.”</p>
+        <p class="rift-contact-instruction" id="riftContactInstruction">세 개의 파장을 올바른 순서로 조율하세요.</p>
+        <div class="rift-contact-progress" id="riftContactProgress" aria-label="파장 조율 진행도"><span></span><span></span><span></span></div>
+        <div class="rift-contact-buttons" id="riftContactButtons" role="group" aria-label="교신 파장 선택">
+          <button type="button" data-rift-tone="echo"><span>⌁</span> 메아리</button>
+          <button type="button" data-rift-tone="silence"><span>◯</span> 침묵</button>
+          <button type="button" data-rift-tone="call"><span>✧</span> 호명</button>
+          <button type="button" data-rift-tone="pulse"><span>◇</span> 공명</button>
+        </div>
+        <div class="rift-contact-message" id="riftContactMessage" role="status" aria-live="polite" aria-atomic="true">저편은 아무 말도 하지 않는다. 희미한 잡음만 들린다.</div>
+        <button class="rift-contact-reset" id="riftContactReset" type="button">조율 처음부터 ↺</button>
+        <div class="rift-contact-rewards" id="riftContactRewards" hidden>
+          <p><span>✦</span> 균열의 봉인이 응답했습니다. 이제 관련 기록을 열람할 수 있습니다.</p>
+          <div>
+            <button type="button" data-rift-destination="bonds">균열 관계도 보기 ↗</button>
+            <button type="button" data-rift-destination="people">마왕궁 인물 도감 ↗</button>
+            <button type="button" data-rift-destination="regions">균열 권역 보기 ↗</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="rift-contact-footnote">이 교신의 결과는 이 브라우저에 저장됩니다. 이야기의 핵심 비밀까지 공개되는 것은 아닙니다.</p>
+  </div>
+</section>
+
 <footer>
   <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 22 12 12 22 2 12Z"/><path d="M12 7 17 12 12 17 7 12Z" fill="currentColor"/></svg>솔라리아</div>
   케이브덕 시뮬레이션
   <br><button class="replay2" data-replay type="button">오프닝 다시 보기</button>
 </footer>
 
+<script src="rift-contact.js"></script>
 <script>
 const REGIONS = {
   north: {
@@ -1483,15 +1529,17 @@ function setRegion(k,anim=true){
   rtabs.querySelectorAll('.rtab').forEach(b=>b.classList.toggle('on',b.dataset.r===k));
   rstage.querySelectorAll('.rbg').forEach(b=>b.classList.toggle('on',b.dataset.r===k));
   const ppl=regionPeople(k), visible=ppl.filter(p=>!p.sealed||window.SOLARIA_RIFT_UNLOCKED),show=visible.filter(p=>p.main).concat(visible.filter(p=>!p.main)).slice(0,6);
+  const nowLines=k==='rift'&&window.SOLARIA_RIFT_UNLOCKED?['봉인된 교신석이 응답했다. 균열 너머 인물들의 공개 기록을 확인할 수 있다.','교신은 성립했지만 그 너머의 모든 비밀을 알게 된 것은 아니다.']:r.now;
   const info=$('rinfo');
   info.style.setProperty('--rc',COL[k]);
   info.innerHTML=`<div class="lt" translate="no">${r.latin}</div><h3>${r.name}</h3><p class="full">${r.full}</p>
     <p class="motto">${r.tag}</p><div class="region-story-label">LAND & ATMOSPHERE / 지역 개관</div><p class="about">${r.about}</p>
     <div class="story"><b>이 땅의 이야기</b><p>${STORY[k]}</p></div>
-    <div class="region-now"><b>현재 정세</b><ul>${r.now.map(item=>`<li>${esc(item)}</li>`).join('')}</ul></div><div class="region-story-label">KEY LOCATIONS / 주요 거점</div>    <ul class="places">${r.places.filter(p=>p[0]!=='???').slice(0,5).map(p=>`<li>${p[0]}</li>`).join('')}</ul>
-    ${ppl.length?`<section class="region-people" aria-label="관련 인물"><div class="region-people-heading"><b>이 지역의 인물</b><small>관련 인물 ${ppl.length}명 · 초상을 누르면 인물 도감으로 이동</small></div><div class="who">${!show.length?`<p class="region-locked-note">이 권역의 인물 정보는 관계도의 균열 기록에서 선택적으로 열람할 수 있습니다.</p>`:""}${show.map(p=>`<button type="button" class="region-character" data-no="${p.no}" aria-label="${esc(p.name)} · ${esc(p.role)} · 인물 도감 보기"><img src="img/t/${pad(p.no)}.jpg" alt="" loading="lazy"><span class="region-character-text"><b>${esc(p.name)}</b><small>${esc(p.role)}</small></span></button>`).join('')}</div></section>`:`<div class="region-people region-people-empty">공개된 인물 기록이 없습니다.</div>`}`;
+    <div class="region-now"><b>현재 정세</b><ul>${nowLines.map(item=>`<li>${esc(item)}</li>`).join('')}</ul></div><div class="region-story-label">KEY LOCATIONS / 주요 거점</div>    <ul class="places">${r.places.filter(p=>p[0]!=='???').slice(0,5).map(p=>`<li>${p[0]}</li>`).join('')}</ul>
+    ${ppl.length?`<section class="region-people" aria-label="관련 인물"><div class="region-people-heading"><b>이 지역의 인물</b><small>관련 인물 ${ppl.length}명 · 초상을 누르면 인물 도감으로 이동</small></div><div class="who">${!show.length?`<div class="region-locked-note"><p>이 권역의 인물 기록은 교신이 성립한 뒤에만 열립니다.</p><button class="region-contact-go" type="button" data-region-contact>금지된 교신 시도하기 ↗</button></div>`:""}${show.map(p=>`<button type="button" class="region-character" data-no="${p.no}" aria-label="${esc(p.name)} · ${esc(p.role)} · 인물 도감 보기"><img src="img/t/${pad(p.no)}.jpg" alt="" loading="lazy"><span class="region-character-text"><b>${esc(p.name)}</b><small>${esc(p.role)}</small></span></button>`).join('')}</div></section>`:`<div class="region-people region-people-empty">공개된 인물 기록이 없습니다.</div>`}`;
   if(anim){info.classList.remove('anim');void info.offsetWidth;info.classList.add('anim')}
-  info.querySelectorAll('.who button').forEach(b=>b.onclick=()=>{const who=P.find(p=>p.no===Number(b.dataset.no));setFilter(who?.aff||k,+b.dataset.no);$('people').scrollIntoView()});
+  info.querySelectorAll('.who button[data-no]').forEach(b=>b.onclick=()=>{const who=P.find(p=>p.no===Number(b.dataset.no));setFilter(who?.aff||k,+b.dataset.no);$('people').scrollIntoView()});
+  info.querySelector('[data-region-contact]')?.addEventListener('click',()=>window.SOLARIA_RIFT_CONTACT?.begin());
 }
 rtabs.querySelectorAll('.rtab').forEach(b=>b.onclick=()=>setRegion(b.dataset.r));
 setRegion('north',false);
@@ -1504,7 +1552,7 @@ let list=[],cur=0,filt='main',swipeX=null,swipeY=null;
 chips.innerHTML=FILTERS.map(f=>'<button type="button" class="chip" data-f="'+f[0]+'" aria-pressed="false">'+f[1]+'</button>').join('');
 chips.querySelectorAll('.chip').forEach(b=>b.onclick=()=>setFilter(b.dataset.f));
 function setFilter(f,no){
-  filt=f;list=P.filter(p=>f==='all'||(f==='main'?p.main:p.aff===f));
+  filt=f;list=P.filter(p=>(!p.sealed||window.SOLARIA_RIFT_UNLOCKED)&&(f==='all'||(f==='main'?p.main:p.aff===f)));
   chips.querySelectorAll('.chip').forEach(b=>{
     const active=b.dataset.f===f;
     b.classList.toggle('on',active);
@@ -1521,8 +1569,11 @@ function setFilter(f,no){
   strip.querySelectorAll('.ct').forEach(b=>b.onclick=()=>setPerson(+b.dataset.i));
   const i=no?list.findIndex(p=>p.no===no):-1;
   if(!list.length){
-    cstage.innerHTML='<div class="people-empty">이 분류에 등록된 인물이 없습니다.</div>';
-    peoplePage.textContent='00 / 00';peopleWatermark.textContent='';return;
+    if(f==='rift'&&!window.SOLARIA_RIFT_UNLOCKED){
+      cstage.innerHTML='<div class="people-locked-rift"><span aria-hidden="true">✧</span><h3>균열 너머의 인물 기록</h3><p>봉인이 닫혀 있습니다. 제국의 마지막 교신석에서 저편의 응답을 받아야 열람할 수 있습니다.</p><button type="button" id="riftPeopleContact">금지된 교신 시도하기 ↗</button></div>';
+      const go=$('riftPeopleContact');if(go)go.onclick=()=>window.SOLARIA_RIFT_CONTACT?.begin();
+    }else cstage.innerHTML='<div class="people-empty">이 분류에 등록된 인물이 없습니다.</div>';
+    peoplePage.textContent='00 / 00';peopleWatermark.textContent=f==='rift'?'SEALED':'';return;
   }
   setPerson(i>=0?i:0,false);
 }
@@ -1575,7 +1626,7 @@ function setPerson(i,anim=true){
   $('cp').onclick=()=>setPerson(cur-1);
   $('cn').onclick=()=>setPerson(cur+1);
   const castReveal=$('castReveal');
-  if(castReveal)castReveal.onclick=()=>{window.SOLARIA_RIFT_UNLOCKED=true;setFilter('rift',p.no);window.SOLARIA_ATLAS?.refresh?.()};
+  if(castReveal)castReveal.onclick=()=>window.SOLARIA_RIFT_CONTACT?.begin();
   cstage.querySelectorAll('[data-cast-relation]').forEach(b=>b.onclick=()=>window.SOLARIA_ATLAS?.focus(Number(b.dataset.castRelation)));
   const ob=$('ob');
   if(ob)ob.onclick=()=>{const sec=$('sec');sec.classList.add('open');ob.setAttribute('aria-expanded','true');ob.disabled=true};
