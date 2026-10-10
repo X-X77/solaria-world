@@ -1036,6 +1036,7 @@ footer{background:#080D16}
 }
 
 </style>
+<link rel="stylesheet" href="people-redesign.css">
 <link rel="stylesheet" href="archive.css">
 <link rel="stylesheet" href="resonance.css">
 </head>
@@ -1172,17 +1173,25 @@ footer{background:#080D16}
 </section>
 
 <section class="sec people" id="people"><div class="wrap">
-  <div class="sh"><h2>인물</h2><div class="orn"><i></i></div>
-    <p>제국 곳곳에서, 저마다 숨긴 것이 있는 사람들이 당신을 기다린다.</p></div>
-  <div class="people-eyebrow"><span>◆ PERSONNEL ARCHIVE</span><span id="peopleCount">00 FILES</span></div>
+  <div class="sh"><span class="people-chapter">THE PEOPLE OF SOLARIA · VOL. I</span><h2>인물 도감</h2><div class="orn"><i></i></div>
+    <p>황금빛 옥좌부터 눈 덮인 방벽까지. 제국의 운명을 움직이는 사람들의 기록.</p></div>
+  <div class="people-eyebrow"><span>IMPERIAL CHARACTER ARCHIVE</span><span id="peopleCount">00 FILES</span></div>
   <div class="chips" id="chips" role="group" aria-label="인물 소속 선택"></div>
+  <div class="people-index-head">
+    <div><small>SELECT A CHARACTER</small><h3>누구의 기록을 열람할까요?</h3></div>
+    <div class="people-gallery-actions"><span>초상 선택 · 좌우로 탐색</span>
+      <button id="castPrev" type="button" aria-label="인물 목록 왼쪽으로 이동"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg></button>
+      <button id="castNext" type="button" aria-label="인물 목록 오른쪽으로 이동"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
+    </div>
+  </div>
+  <div class="strip" id="strip" aria-label="인물 초상 선택 목록"></div>
+  <div class="people-section-break" aria-hidden="true"><span></span><i>◆</i><span></span></div>
   <div class="people-dossier" id="peopleDossier" tabindex="0" role="region" aria-label="선택한 인물 기록, 좌우 화살표로 인물을 이동할 수 있습니다.">
-    <div class="people-dossier-top"><span>IMPERIAL RECORDS / SOLARIA</span><b id="peoplePage">01 / 01</b></div>
+    <div class="people-dossier-top"><span>PERSONNEL DOSSIER / IMPERIUM SOLARIAE</span><b id="peoplePage">01 / 01</b></div>
     <div class="people-watermark" id="peopleWatermark" aria-hidden="true"></div>
     <div class="cstage" id="cstage" aria-live="polite"></div>
   </div>
-  <div class="people-index-head"><div><small>ARCHIVE INDEX</small><h3>인물 기록 목록</h3></div><span>인물을 눌러 기록 열람 ↔</span></div>
-  <div class="strip" id="strip" aria-label="인물 목록"></div>
+  <div class="people-afterline"><span>RECORDS ARE NEVER THE WHOLE TRUTH</span><span>기록은 언제나 이야기의 일부만을 담는다.</span></div>
 </div></section>
 
 <section class="sec bonds" id="bonds"><div class="wrap">
@@ -1952,5 +1961,6 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
 </script>
 <script src="archive.js"></script>
 <script src="resonance.js"></script>
+<script src="people-redesign.js"></script>
 </body>
 </html>
