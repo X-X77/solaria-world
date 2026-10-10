@@ -1043,6 +1043,7 @@ footer{background:#080D16}
 <link rel="stylesheet" href="relationships.css">
 <link rel="stylesheet" href="regions-polish.css">
 <link rel="stylesheet" href="design-unification.css">
+<link rel="stylesheet" href="dossier-expansion.css">
 </head>
 <body>
 <div id="intro" class="op-v2" aria-label="솔라리아 오프닝">
@@ -1415,7 +1416,13 @@ const PEOPLE = [
   [46,'이사벨라','여','55','tower','마탑','마탑 이사','짧은 은발, 안경 걸이 줄.','졸린 듯 느릿하다.','마탑 중립파의 이사.','',0,0],
   [47,'세바스티안','남','25','tower','에테리온 백작가','백작가 후계','백금발, 청회색 눈.','오만한 천재.','노바의 라이벌.','',0,0],
   [48,'티토','남','27','tower','마탑','연구원','부스스한 갈색 머리.','호기심 많고 수다스럽다.','노바의 동료 연구원.','',0,0],
-  [53,'움브라','?','?','north','동행','검은 털 아기 늑대','검은 털, 붉은 눈의 아기 늑대. 털색이 특이한 변종이라고 한다.','어린애처럼 들러붙는다. 잘 잊어버린다.','당신을 졸졸 따라다니는 털뭉치. 먼저 물지는 않는다.','',0,0]
+  [53,'움브라','?','?','north','동행','검은 털 아기 늑대','검은 털, 붉은 눈의 아기 늑대. 털색이 특이한 변종이라고 한다.','어린애처럼 들러붙는다. 잘 잊어버린다.','당신을 졸졸 따라다니는 털뭉치. 먼저 물지는 않는다.','',0,0],
+  [11,"녹스","여","외견 30대 초반","rift","균열 너머","마왕","칠흑 장발과 붉은 눈, 작은 곡선 뿔. 검은 드레스와 붉은 안감의 망토, 가느다란 금관.","공적인 자리에서는 말수가 적고 위엄 있다. 신하 앞에서는 흔들리지 않으려 한다.","균열 너머를 다스리는 군주. 인간과의 갈등을 끝낼 길을 찾고 있지만 전쟁을 피할 수 있다고 장담하지 않는다.","왔구나. 오래 기다렸다.",0,1 ],
+  [12,"카론","남","외견 30대 초반","rift","마왕의 측근","궁정 책략가","남색 긴 머리를 낮게 묶고 청록색 눈과 송곳니를 지녔다. 나른한 검은 코트.","능글맞은 농담 뒤에서 상황을 계산한다. 허술해 보여도 중요한 동선은 놓치지 않는다.","마왕궁의 정무와 첩보를 보좌하며 외부를 살핀다.","아이고, 이런 분이 길을 잃으셨나.",0,1 ],
+  [49,"이졸데","여","외견 20대","rift","마족 기사단","기사단장","청흑 장발과 노란 눈, 작은 곡선 뿔. 검보라 갑주 드레스와 마력으로 빚은 검.","원칙적이고 용맹하며 동족의 안전에 예민하다. 인간에게는 쉽게 마음을 열지 않는다.","균열 너머의 기사단을 이끌고 병력과 부상자의 운명을 책임진다.","전투에 앞서, 지킬 자부터 정하라.",0,1 ],
+  [50,"실바누스","남","외견 30대","rift","마왕궁 참모진","참모","은회색 올백 머리와 외눈 안경. 보라 안감의 검은 코트.","느긋하고 정중한 전략가. 상냥한 표정으로도 냉정한 계산을 이어간다.","마왕궁에서 외교와 협상안을 검토한다. 전쟁 밖의 선택지를 찾는다.","가능성과 신뢰는 별개랍니다.",0,1 ],
+  [51,"자일","남","외견 20대 초반","rift","마족 정찰대","정찰병","끝이 짙은 잿빛 금발, 붉은 눈과 송곳니, 작은 꼬리.","장난기가 많고 호기심을 못 참지만 위험을 느끼면 눈치가 빨라진다.","경계를 넘어 정보를 모으는 정찰병. 종종 귀찮은 사고까지 함께 가져온다.","에이, 한 번만 속아 주면 안 돼?",0,1 ],
+  [52,"오필리아","여","외견 20대 중반","rift","마왕궁 의무실","주술의관","한쪽 눈을 가린 긴 보라 머리, 보라색 눈. 흰 가운과 검은 숄.","기묘하게 웃어도 환자에게는 놀랍도록 섬세하다. 새 마력 반응 앞에선 흥분한다.","마력 감별과 부상자의 치료를 맡는다. 수상한 약병 대부분은 평범한 회복제다.","후후, 아프시더라도 치료는 받아야죠.",0,1 ]
 ];
 
 const SEALS = [
@@ -1443,7 +1450,7 @@ const SECRET={
  9:'자애로운 미소 뒤에서, 그는 이미 몇 사람의 이름을 지웠다.',
  10:'마물 곁에 선 당신에게서, 성녀는 이상하게 평온한 기운을 느꼈다.'
 };
-const P=PEOPLE.map(a=>({no:a[0],name:a[1],sex:a[2],age:a[3],aff:a[4],group:a[5],role:a[6],look:a[7],pers:a[8],known:a[9],quote:a[10],main:!!a[11],sealed:!!a[12]}));
+const P=PEOPLE.map(a=>({no:a[0],name:a[1],sex:a[2],age:a[3],aff:a[4],group:a[5],role:a[6],look:a[7],pers:a[8],known:a[9],quote:a[10],main:!!a[11],sealed:!!a[12]})).sort((a,b)=>a.no-b.no);
 const pad=n=>String(n).padStart(2,'0');
 const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 const $=id=>document.getElementById(id);
@@ -1473,22 +1480,22 @@ function setRegion(k,anim=true){
   const r=REGIONS[k];
   rtabs.querySelectorAll('.rtab').forEach(b=>b.classList.toggle('on',b.dataset.r===k));
   rstage.querySelectorAll('.rbg').forEach(b=>b.classList.toggle('on',b.dataset.r===k));
-  const ppl=regionPeople(k), show=ppl.filter(p=>p.main).concat(ppl.filter(p=>!p.main)).slice(0,6);
+  const ppl=regionPeople(k), visible=ppl.filter(p=>!p.sealed||window.SOLARIA_RIFT_UNLOCKED),show=visible.filter(p=>p.main).concat(visible.filter(p=>!p.main)).slice(0,6);
   const info=$('rinfo');
   info.style.setProperty('--rc',COL[k]);
   info.innerHTML=`<div class="lt" translate="no">${r.latin}</div><h3>${r.name}</h3><p class="full">${r.full}</p>
     <p class="motto">${r.tag}</p><div class="region-story-label">LAND & ATMOSPHERE / 지역 개관</div><p class="about">${r.about}</p>
     <div class="story"><b>이 땅의 이야기</b><p>${STORY[k]}</p></div>
     <div class="region-now"><b>현재 정세</b><ul>${r.now.map(item=>`<li>${esc(item)}</li>`).join('')}</ul></div><div class="region-story-label">KEY LOCATIONS / 주요 거점</div>    <ul class="places">${r.places.filter(p=>p[0]!=='???').slice(0,5).map(p=>`<li>${p[0]}</li>`).join('')}</ul>
-    ${ppl.length?`<section class="region-people" aria-label="관련 인물"><div class="region-people-heading"><b>이 지역의 인물</b><small>관련 인물 ${ppl.length}명 · 초상을 누르면 인물 도감으로 이동</small></div><div class="who">${show.map(p=>`<button type="button" class="region-character" data-no="${p.no}" aria-label="${esc(p.name)} · ${esc(p.role)} · 인물 도감 보기"><img src="img/t/${pad(p.no)}.jpg" alt="" loading="lazy"><span class="region-character-text"><b>${esc(p.name)}</b><small>${esc(p.role)}</small></span></button>`).join('')}</div></section>`:`<div class="region-people region-people-empty">공개된 인물 기록이 없습니다.</div>`}`;
+    ${ppl.length?`<section class="region-people" aria-label="관련 인물"><div class="region-people-heading"><b>이 지역의 인물</b><small>관련 인물 ${ppl.length}명 · 초상을 누르면 인물 도감으로 이동</small></div><div class="who">${!show.length?`<p class="region-locked-note">이 권역의 인물 정보는 관계도의 균열 기록에서 선택적으로 열람할 수 있습니다.</p>`:""}${show.map(p=>`<button type="button" class="region-character" data-no="${p.no}" aria-label="${esc(p.name)} · ${esc(p.role)} · 인물 도감 보기"><img src="img/t/${pad(p.no)}.jpg" alt="" loading="lazy"><span class="region-character-text"><b>${esc(p.name)}</b><small>${esc(p.role)}</small></span></button>`).join('')}</div></section>`:`<div class="region-people region-people-empty">공개된 인물 기록이 없습니다.</div>`}`;
   if(anim){info.classList.remove('anim');void info.offsetWidth;info.classList.add('anim')}
-  info.querySelectorAll('.who button').forEach(b=>b.onclick=()=>{setFilter(k==='capital'?'capital':k,+b.dataset.no);$('people').scrollIntoView()});
+  info.querySelectorAll('.who button').forEach(b=>b.onclick=()=>{const who=P.find(p=>p.no===Number(b.dataset.no));setFilter(who?.aff||k,+b.dataset.no);$('people').scrollIntoView()});
 }
 rtabs.querySelectorAll('.rtab').forEach(b=>b.onclick=()=>setRegion(b.dataset.r));
 setRegion('north',false);
 
 /* people — dedicated character archive. Faction colors & images, no content changes. */
-const FILTERS=[['main','주요 인물'],['north','북부'],['capital','황도'],['temple','교단'],['tower','마탑'],['south','남부'],['east','동부'],['west','서부'],['all','전체']];
+const FILTERS=[['main','주요 인물'],['north','북부'],['capital','황도'],['temple','교단'],['tower','마탑'],['south','남부'],['east','동부'],['west','서부'],['rift','균열'],['all','전체']];
 const chips=$('chips'),cstage=$('cstage'),strip=$('strip'),dossier=$('peopleDossier');
 const peopleCount=$('peopleCount'),peoplePage=$('peoplePage'),peopleWatermark=$('peopleWatermark');
 let list=[],cur=0,filt='main',swipeX=null,swipeY=null;
@@ -1503,11 +1510,11 @@ function setFilter(f,no){
   });
   peopleCount.textContent=String(list.length).padStart(2,'0')+' FILES';
   strip.innerHTML=list.map((p,i)=>{
-    const name=p.sealed?'???':p.name;
-    return '<button type="button" class="ct'+(p.sealed?' sealed':'')+'" data-i="'+i+'" aria-current="false" aria-label="'+esc(name)+' 인물 기록">'+
+    const name=p.sealed&&!window.SOLARIA_RIFT_UNLOCKED?'???':p.name;
+    return '<button type="button" class="ct'+(p.sealed&&!window.SOLARIA_RIFT_UNLOCKED?' sealed':'')+'" data-i="'+i+'" aria-current="false" aria-label="'+esc(name)+' 인물 기록">'+
       '<span class="ct-serial">'+String(i+1).padStart(2,'0')+'</span>'+
       '<div class="im"><img src="img/t/'+pad(p.no)+'.jpg" alt="" loading="lazy"></div>'+
-      '<b>'+esc(name)+'</b><small>'+esc(p.sealed?'봉인된 기록':p.role)+'</small></button>';
+      '<b>'+esc(name)+'</b><small>'+esc(p.sealed&&!window.SOLARIA_RIFT_UNLOCKED?'봉인된 기록':p.role)+'</small></button>';
   }).join('');
   strip.querySelectorAll('.ct').forEach(b=>b.onclick=()=>setPerson(+b.dataset.i));
   const i=no?list.findIndex(p=>p.no===no):-1;
@@ -1521,7 +1528,8 @@ const arrow=d=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
 function setPerson(i,anim=true){
   if(!list.length)return;
   cur=(i%list.length+list.length)%list.length;
-  const p=list[cur],sealed=!!p.sealed,name=sealed?'???':p.name,role=sealed?'봉인된 기록':p.role;
+  const p=list[cur],sealed=!!p.sealed&&!window.SOLARIA_RIFT_UNLOCKED,name=sealed?'???':p.name,role=sealed?'봉인된 기록':p.role;
+  const extra=window.SOLARIA_BIO?.[p.no];
   const age=/^\d+$/.test(p.age)?p.age+'세':p.age;
   const theme={north:'north',capital:'capital',temple:'capital',tower:'capital',south:'south',east:'east',west:'west',rift:'rift'}[p.aff]||'north';
   dossier.style.setProperty('--rc',COL[p.aff]||'#D9B86C');
@@ -1537,13 +1545,13 @@ function setPerson(i,anim=true){
   let body='';
   if(sealed){
     body='<h3>???</h3><p class="role">봉인된 기록</p><p class="people-restricted">◇ 열람 권한이 없는 기록</p>'+
-      '<dl><div><dt>남은 문장</dt><dd>'+esc(p.known)+'</dd></div><div><dt>기록</dt><dd>이 인물의 기록은 이야기 속에서만 열립니다.</dd></div></dl>';
+      '<dl><div><dt>기록</dt><dd>균열 너머에서 전해진 문서입니다. 인물의 기본 정보는 선택적으로 열람할 수 있습니다.</dd></div></dl>'+'<button type="button" class="cast-reveal-control" id="castReveal">균열 인물 열람 · 스포일러 포함 ↗</button>';
   }else{
     body='<h3>'+esc(p.name)+'</h3><p class="role">'+esc(p.role)+'</p>'+
-      (p.quote?'<blockquote class="quote"><span aria-hidden="true">“</span>'+esc(p.quote)+'</blockquote>':'')+
+      ((p.quote||extra?.quote)?'<blockquote class="quote"><span aria-hidden="true">“</span>'+esc(p.quote||extra.quote)+'</blockquote>':'')+
       '<dl><div><dt><small>01</small> 외형</dt><dd>'+esc(p.look)+'</dd></div>'+
       '<div><dt><small>02</small> 성품</dt><dd>'+esc(p.pers)+'</dd></div>'+
-      '<div><dt><small>03</small> 알려진 사실</dt><dd>'+esc(p.known)+'</dd></div></dl>';
+      '<div><dt><small>03</small> 알려진 사실</dt><dd>'+esc(p.known)+'</dd></div>'+(extra?'<div><dt><small>04</small> 행동과 말투</dt><dd>'+esc(extra.manner)+'</dd></div>'+'<div><dt><small>05</small> 지금의 관심사</dt><dd>'+esc(extra.goal)+'</dd></div>':'')+'</dl>'+'<div class="cast-profile-links" id="castProfileLinks">'+(window.SOLARIA_ATLAS?.preview(p.no)||'<p>이 인물의 관계 기록을 불러오는 중입니다.</p>')+'</div>';
     if(SECRET[p.no]){
       body+='<div class="secret" id="sec"><div class="hd"><i aria-hidden="true"></i><b>감춰진 기록 <small>RESTRICTED PERSONNEL FILE</small></b>'+
         '<button type="button" class="ob" id="ob" aria-expanded="false" aria-controls="secretText">'+
@@ -1553,7 +1561,7 @@ function setPerson(i,anim=true){
     }
   }
   cstage.innerHTML='<div class="cpor'+(anim?' anim':'')+(sealed?' sealed':'')+'">'+
-    '<span class="ln"></span><img src="img/c/'+pad(p.no)+'.jpg" alt="'+esc(sealed?'봉인된 인물':name)+'">'+
+    '<span class="ln"></span>'+(sealed?'<div class="cast-sealed-art" aria-hidden="true"><span>◇</span><b>SEALED PORTRAIT</b></div>':'<img src="img/c/'+pad(p.no)+'.jpg" alt="'+esc(name)+'">')+
     '<span class="cpor-dark" aria-hidden="true"></span><span class="cpor-top">SOLARIA · DOSSIER '+pad(p.no)+'</span>'+
     (sealed?'<span class="cpor-seal" aria-hidden="true">RECORD SEALED</span>':'')+
     '<span class="cpor-bottom">'+esc(AFF[p.aff]||'제국')+' / PERSONNEL RECORD</span></div>'+
@@ -1564,6 +1572,9 @@ function setPerson(i,anim=true){
     '<button type="button" aria-label="다음 인물" id="cn">다음'+arrow('M9 5l7 7-7 7')+'</button></div></div>';
   $('cp').onclick=()=>setPerson(cur-1);
   $('cn').onclick=()=>setPerson(cur+1);
+  const castReveal=$('castReveal');
+  if(castReveal)castReveal.onclick=()=>{window.SOLARIA_RIFT_UNLOCKED=true;setFilter('rift',p.no);window.SOLARIA_ATLAS?.refresh?.()};
+  cstage.querySelectorAll('[data-cast-relation]').forEach(b=>b.onclick=()=>window.SOLARIA_ATLAS?.focus(Number(b.dataset.castRelation)));
   const ob=$('ob');
   if(ob)ob.onclick=()=>{const sec=$('sec');sec.classList.add('open');ob.setAttribute('aria-expanded','true');ob.disabled=true};
 }
@@ -1938,6 +1949,7 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
 <script src="resonance.js"></script>
 <script src="people-redesign.js"></script>
 <script src="forbidden-library.js"></script>
+<script src="dossier-expansion.js"></script>
 <script src="relationships.js"></script>
 </body>
 </html>
