@@ -464,8 +464,12 @@ html.intro-done .hero .in{animation-duration:.7s}
 #intro.op-v2 .op-shot.cassian.active{transform:scale(1.07)}
 
 /* Full-length opening handoff: Cassian's final music tail fades into the hero. */
-#intro.op-v2.out{transition:opacity 1.85s ease}
-html.intro-done .hero .in{animation-duration:1.15s}
+#intro.op-v2.out{transition:opacity 2.3s cubic-bezier(.32,0,.16,1)}
+html.intro-done .hero .in{animation-duration:1.65s}
+/* Opening-to-hero handoff: quiet imperial title reveal, no perpetual glow. */
+@keyframes solaria-title-arrive{0%{opacity:0;transform:translateY(17px);letter-spacing:.14em;filter:blur(3px)}65%{opacity:1;filter:blur(0)}100%{opacity:1;transform:translateY(0);letter-spacing:inherit;filter:blur(0)}}
+html.intro-done #heroTitle{animation:solaria-title-arrive 1.9s cubic-bezier(.18,.7,.25,1) .18s both}
+@media(prefers-reduced-motion:reduce){html.intro-done #heroTitle{animation:none}}
 #intro.op-v2 .op-shot.slash.fast{transition:opacity .25s ease,transform 1s ease}
 
 
@@ -1748,7 +1752,7 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     flash:[12.41,12.64],beam:[12.32,13.05],fade:19.50,end:19.80};
   const NEW={start:0,beast:3.10,nox:7.60,slash:14.75,cassian:15.70,
     beastLine:[3.65,5.02],noxLine:[9.45,10.76],cassianLine:[17.10,18.62],
-    flash:[14.94,15.17],beam:[14.78,15.39],fade:20.50,end:22.40};
+    flash:[14.94,15.17],beam:[14.78,15.39],fade:20.10,end:22.40};
   let C=OLD;
   stage.querySelectorAll('img[data-fallback]').forEach(img=>{
     const fail=()=>{if(img.dataset.fallback){img.src=img.dataset.fallback;delete img.dataset.fallback;}};
@@ -1807,7 +1811,8 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     if(!outro){box.style.transition='opacity .35s ease';startOutro();}
     R.classList.remove('intro-on');R.classList.add('intro-done');
     if(started&&!bgStarted)SND.introEnd();else if(!started)SND.arm();
-    setTimeout(()=>{box.remove();if(started&&!skipped)document.dispatchEvent(new CustomEvent('solaria:intro-finished'))},outro&&newMix?250:450);
+    const removeAfter=skipped?450:(outro&&newMix?220:450);
+    setTimeout(()=>{box.remove();if(started&&!skipped)document.dispatchEvent(new CustomEvent('solaria:intro-finished'))},removeAfter);
   }
   document.getElementById('opStart').addEventListener('click',()=>start(true));
   document.getElementById('opSilent').addEventListener('click',()=>start(false));
