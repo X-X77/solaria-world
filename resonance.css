@@ -1,43 +1,74 @@
 
-/* Solaria magical-stone examination — self-contained styles */
-#resonance{background:radial-gradient(ellipse at 48% 30%,rgba(63,50,110,.17),transparent 66%),#0B101B;padding:clamp(85px,10vw,130px) 16px}
-#resonance .wrap{max-width:1150px}
-#resonance .sh{margin-bottom:33px}
-#resonance .res-overline{display:block;color:#C6AE8C;font:600 11px var(--lat);letter-spacing:.22em;margin-bottom:15px}
-#resonance .res-panel{display:grid;grid-template-columns:minmax(300px,.86fr) minmax(0,1.14fr);min-height:560px;border:1px solid rgba(215,181,122,.36);background:#101A29}
-#resonance .res-left{display:flex;flex-direction:column;align-items:center;justify-content:space-between;position:relative;overflow:hidden;padding:28px 24px;background:radial-gradient(ellipse at 50% 49%,rgba(92,70,139,.25),transparent 59%),linear-gradient(155deg,#141F32,#090F1B);border-right:1px solid rgba(214,179,122,.25)}
-#resonance .res-left:before{content:"";position:absolute;inset:17px;border:1px solid rgba(214,180,124,.15);pointer-events:none}
-#resonance .res-inscription{font:600 10px var(--lat);letter-spacing:.17em;color:#D0B48B;text-align:center}
-#resonance .res-gem{--gem:#A9B8ED;position:relative;width:min(75%,270px);aspect-ratio:1;display:grid;place-items:center;filter:drop-shadow(0 0 32px color-mix(in srgb,var(--gem) 34%,transparent))}
-#resonance .res-gem:before,#resonance .res-gem:after{content:"";position:absolute;inset:1%;border:1px solid rgba(201,192,211,.28);border-radius:50%}
-#resonance .res-gem:after{inset:12%;border-style:dashed;animation:resTurn 45s linear infinite}
-#resonance .res-shard{position:relative;z-index:2;width:47%;height:70%;clip-path:polygon(50% 0,88% 22%,100% 62%,50% 100%,0 62%,12% 22%);background:linear-gradient(112deg,#25314A 0%,var(--gem) 43%,#FBF5ED 49%,var(--gem) 55%,#2B3453 100%);box-shadow:inset 0 0 27px rgba(255,255,255,.32);animation:resFloat 4s ease-in-out infinite}
-#resonance .res-shard:after{content:"";position:absolute;inset:4%;clip-path:polygon(50% 0,86% 23%,95% 62%,50% 94%,5% 62%,14% 23%);background:linear-gradient(130deg,transparent 35%,rgba(255,255,255,.33) 48%,transparent 64%);border:1px solid rgba(255,255,255,.3)}
-#resonance .res-light{position:absolute;width:78%;height:78%;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--gem) 19%,transparent),transparent 71%)}
-#resonance .res-phase{font:600 11px var(--lat);letter-spacing:.17em;color:#DCC6A2;text-align:center;margin:0}
-#resonance .res-side-note{width:100%;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:#9AA9BA;font-size:11px;letter-spacing:.025em;padding-top:19px;margin-top:28px;border-top:1px solid rgba(220,190,140,.2)}
-#resonance .res-right{padding:clamp(24px,4vw,49px);align-self:center;min-width:0}
-#resonance .res-eyebrow{display:flex;justify-content:space-between;gap:10px;font:600 11px var(--lat);letter-spacing:.13em;color:#D6BA85}
-#resonance .res-progress{height:3px;background:#373D4B;margin:14px 0 33px;overflow:hidden}
-#resonance .res-progress i{display:block;height:100%;background:#D5BC87;transition:width .25s}
-#resonance .res-right h3{font:700 clamp(26px,3.4vw,40px)/1.35 var(--disp);color:#F7EBD8;margin:12px 0 13px;word-break:keep-all}
-#resonance .res-copy{font:400 15px/1.9 var(--read);color:#D0D7DC;margin:0 0 20px}
-#resonance .res-choices{display:grid;gap:10px;margin:29px 0 22px}
-#resonance .res-choice{display:flex;gap:14px;align-items:center;text-align:left;padding:16px;border:1px solid rgba(216,186,139,.24);color:#E2DCD2;background:rgba(5,12,22,.48);font:500 15px/1.65 var(--read);transition:border-color .2s,background .2s}
-#resonance .res-choice span{font:600 12px var(--lat);color:#CDB47E}
-#resonance .res-choice:hover,#resonance .res-choice[aria-pressed=true]{background:rgba(218,186,132,.13);border-color:#D6B982}
-#resonance .res-actions{display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:24px;flex-wrap:wrap}
-#resonance .res-primary,#resonance .res-secondary{min-height:45px;padding:11px 18px;font-size:14px;font-weight:750;border:1px solid #D8BC88;display:inline-flex;align-items:center;justify-content:center;gap:10px}
-#resonance .res-primary{background:#DDC08B;color:#171924}
-#resonance .res-secondary{background:transparent;color:#E5D5B8;border-color:rgba(216,188,136,.45)}
-#resonance .res-primary:disabled{opacity:.4;cursor:not-allowed}
-#resonance .res-result-type{font:600 12px var(--lat);letter-spacing:.19em;color:#DCC494}
-#resonance .res-result-title{font:700 clamp(35px,4vw,51px) var(--disp)!important;margin:14px 0!important}
-#resonance .res-result-note{padding:16px 19px;background:rgba(15,26,41,.8);border-left:2px solid var(--r-color,#D9BB80);margin:24px 0;color:#DDE0DF;font:400 15px/1.85 var(--read)}
-#resonance .res-result-links{display:flex;gap:10px;flex-wrap:wrap;margin:19px 0}
-#resonance .res-disclaimer{color:#99A8B8;font-size:12px;line-height:1.7;text-align:center;margin:20px 0 0}
-@keyframes resFloat{0%,100%{transform:translateY(6px)}50%{transform:translateY(-9px)}}
-@keyframes resTurn{to{transform:rotate(360deg)}}
-@media(max-width:800px){#resonance .res-panel{grid-template-columns:1fr}#resonance .res-left{min-height:295px;border-right:0;border-bottom:1px solid rgba(214,179,122,.25);padding:23px 18px 15px}#resonance .res-gem{width:185px}#resonance .res-side-note{margin-top:13px}#resonance .res-right{padding:27px 22px}}
-@media(max-width:480px){#resonance .res-left{min-height:270px}#resonance .res-gem{width:157px}#resonance .res-choice{padding:13px;font-size:14px}#resonance .res-right{padding:24px 17px}#resonance .res-result-links>*{flex:1}}
-@media(prefers-reduced-motion:reduce){#resonance .res-shard,#resonance .res-gem:after{animation:none}#resonance .res-progress i{transition:none}}
+/* Solaria resonance alignment — custom ring minigame (v2) */
+#resonance{--res-gold:#D8BB8A;background:radial-gradient(ellipse at 48% 30%,rgba(63,50,110,.15),transparent 66%),#0A101C;padding:clamp(80px,10vw,125px) 16px}
+#resonance .wrap{max-width:1170px}
+#resonance .sh{margin-bottom:30px}
+#resonance .res-overline{display:block;color:#D8BE95;font:600 11px var(--lat);letter-spacing:.17em;margin-bottom:14px}
+#resonance .res-panel{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr);border:1px solid rgba(216,181,126,.32);min-height:600px;background:#101A2B}
+#resonance .res-left{display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:17px;min-width:0;padding:23px 24px;background:radial-gradient(ellipse at 50% 47%,rgba(100,83,162,.17),transparent 55%),linear-gradient(155deg,#142133,#080E1A);position:relative;overflow:hidden;border-right:1px solid rgba(217,181,126,.23)}
+#resonance .res-left:before{content:"";position:absolute;inset:15px;border:1px solid rgba(216,181,126,.15);pointer-events:none}
+#resonance .res-left:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(9,16,27,.9),rgba(9,16,27,.64)),url('img/resonance-apparatus.webp') center/cover no-repeat;pointer-events:none;opacity:.13}
+#resonance .res-inscription,#resonance .res-phase,#resonance .res-side-note,#resonance .res-gem{z-index:1;position:relative}
+#resonance .res-inscription{color:#D4BD97;font:600 10px var(--lat);letter-spacing:.2em;text-align:center}
+#resonance .res-gem{--gem:#A9B8ED;width:min(100%,400px);height:400px;max-height:400px;flex:none;display:grid;place-items:center;filter:drop-shadow(0 0 21px color-mix(in srgb,var(--gem) 20%,transparent));transition:filter .6s}
+#resonance .res-gem.res-success{filter:drop-shadow(0 0 38px color-mix(in srgb,var(--gem) 68%,transparent))}
+#resonance .res-game-device{position:relative;width:100%;height:100%;display:grid;place-items:center}
+#resonance .res-game-device:before{content:"";position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle,rgba(166,152,222,.1),transparent 70%);box-shadow:0 0 70px rgba(66,71,113,.14)}
+#resonance .res-axis{position:absolute;z-index:10;top:0;left:50%;height:48%;width:1px;background:linear-gradient(to bottom,#F4D99E 0%,rgba(243,212,152,.18) 68%,transparent);pointer-events:none}
+#resonance .res-axis:before{content:"✦";position:absolute;top:-7px;left:50%;transform:translateX(-50%);color:#FFE4B0;font-size:17px;line-height:1}
+#resonance .res-ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;display:block;padding:0;overflow:visible;cursor:pointer;border:0;background:none;outline-offset:5px;transition:filter .35s}
+#resonance .res-ring:disabled{cursor:default}
+#resonance .res-ring-0{width:84%;height:84%;z-index:2}
+#resonance .res-ring-1{width:65%;height:65%;z-index:3}
+#resonance .res-ring-2{width:45%;height:45%;z-index:4}
+#resonance .res-ring-track{position:absolute;inset:0;display:block;border:2px solid rgba(175,163,222,.69);border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(231,216,255,.24) 0deg 1.1deg,transparent 1.1deg 44.5deg,rgba(231,216,255,.36) 44.5deg 45deg);box-shadow:inset 0 0 22px rgba(130,114,190,.17),0 0 12px rgba(152,133,210,.22);transition:transform .38s cubic-bezier(.2,.8,.2,1),border-color .35s,box-shadow .35s}
+#resonance .res-ring-track:after{content:"";position:absolute;inset:7px;border-radius:50%;border:1px dashed rgba(199,190,221,.24);pointer-events:none}
+#resonance .res-ring-mark{position:absolute;top:-14px;left:50%;transform:translateX(-50%);display:grid;place-items:center;width:28px;height:28px;border-radius:50%;font-size:17px;font-weight:900;color:#130E1F;background:#ECCFA6;border:2px solid #FCE5C6;box-shadow:0 0 15px rgba(235,199,134,.48);line-height:1}
+#resonance .res-ring-1 .res-ring-mark{width:25px;height:25px;top:-13px;font-size:15px}
+#resonance .res-ring-2 .res-ring-mark{width:23px;height:23px;top:-12px;font-size:14px}
+#resonance .res-ring:hover:not(:disabled) .res-ring-track{border-color:#F0D5B0;box-shadow:0 0 24px rgba(220,188,140,.3)}
+#resonance .res-ring.is-aligned .res-ring-track{border-color:#AAE2C8;box-shadow:0 0 22px rgba(154,220,195,.6),inset 0 0 13px rgba(154,220,195,.16)}
+#resonance .res-ring.is-aligned .res-ring-mark{background:#C8FFDE;box-shadow:0 0 20px rgba(154,255,204,.85)}
+#resonance .res-core{position:absolute;z-index:5;left:50%;top:50%;transform:translate(-50%,-50%);width:21%;height:30%;display:grid;place-items:center;pointer-events:none}
+#resonance .res-core-gem{width:100%;height:100%;clip-path:polygon(50% 0,86% 22%,100% 60%,50% 100%,0 60%,14% 22%);background:linear-gradient(115deg,#252F53,var(--gem) 37%,#F2EDFF 49%,var(--gem) 59%,#212849 100%);filter:drop-shadow(0 0 12px var(--gem));animation:resFloat 3.7s ease-in-out infinite}
+#resonance .res-core-aura{position:absolute;inset:-26%;background:radial-gradient(circle,color-mix(in srgb,var(--gem) 28%,transparent),transparent 70%);pointer-events:none}
+#resonance .res-gem.res-success .res-core-aura{animation:resPulse 1.4s ease-in-out infinite}
+#resonance .res-phase{font:600 11px var(--lat);letter-spacing:.14em;color:#E8D4AD;text-align:center}
+#resonance .res-side-note{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;width:100%;font-size:11px;color:#A2AFBC;padding-top:16px;border-top:1px solid rgba(219,185,138,.2)}
+#resonance .res-right{padding:clamp(26px,3.5vw,48px);display:flex;flex-direction:column;justify-content:center;min-width:0}
+#resonance .res-game-overline,#resonance .res-result-type{display:block;color:#DDBF8F;font:600 11px var(--lat);letter-spacing:.16em}
+#resonance .res-right h3{font:700 clamp(28px,3vw,40px)/1.35 var(--disp);color:#F4EADC;margin:16px 0}
+#resonance .res-copy{font:400 15px/1.85 var(--read);color:#CBD3DD;margin:0 0 18px}
+#resonance .res-instructions{border-left:2px solid #D5B77E;background:rgba(7,13,23,.46);padding:16px 18px;margin:17px 0}
+#resonance .res-instructions b{font-size:14px;color:#E8D2A9}
+#resonance .res-instructions p{font:400 14px/1.85 var(--read);color:#D6D9DA;margin:7px 0 0}
+#resonance .res-instructions strong{color:#F2D9A9}
+#resonance .res-game-stat{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:#B8C4D1;margin:23px 0}
+#resonance .res-game-stat strong{color:#EBD4AA}
+#resonance .res-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:24px}
+#resonance .res-primary,#resonance .res-secondary{padding:12px 17px;min-height:45px;border:1px solid #DBBE87;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:750}
+#resonance .res-primary{background:#DFC38D;color:#171B26}
+#resonance .res-secondary{background:transparent;color:#E8D5B6;border-color:rgba(216,188,136,.47)}
+#resonance button:disabled{opacity:.57}
+#resonance .res-game-head{display:flex;justify-content:space-between;gap:10px;color:#D6BC8B;font:600 11px var(--lat);letter-spacing:.09em}
+#resonance .res-progress{margin:14px 0 26px;height:5px;background:#293341;overflow:hidden}
+#resonance .res-progress i{display:block;width:0;height:100%;background:linear-gradient(90deg,#9CB4D4,#D6E9CE);transition:width .35s}
+#resonance .res-ring-controls{display:grid;gap:8px;margin:18px 0}
+#resonance .res-ring-row{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid rgba(216,184,128,.18);background:rgba(6,12,22,.45);padding:12px 14px}
+#resonance .res-ring-label b{display:block;color:#EEDCC1;font-size:15px}
+#resonance .res-ring-state{display:block;color:#A9B7C6;font-size:12px;margin-top:5px}
+#resonance .res-ring-row.is-aligned{border-color:rgba(157,223,180,.46);background:rgba(59,101,85,.13)}
+#resonance .res-ring-row.is-aligned .res-ring-state{color:#ACE3BF}
+#resonance .res-ring-buttons{display:flex;gap:6px;flex:none}
+#resonance .res-turn-btn{width:40px;height:40px;border:1px solid rgba(225,192,136,.46);background:rgba(12,18,29,.72);color:#E9D3AC;font-size:23px}
+#resonance .res-turn-btn:hover:not(:disabled){background:rgba(225,192,136,.22)}
+#resonance .res-game-status{color:#BAC9D3;font-size:13px;line-height:1.75;margin:13px 0 0}
+#resonance .res-result-title{font-size:clamp(34px,3.6vw,51px)!important}
+#resonance .res-result-note{padding:16px 19px;margin:22px 0;background:rgba(6,14,27,.61);border-left:3px solid var(--r-color,#DDC393);font:400 15px/1.9 var(--read);color:#E6DECE}
+#resonance .res-result-links{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0}
+#resonance .res-disclaimer{text-align:center;color:#A5AEBB;font-size:12px;line-height:1.8;margin-top:18px}
+@keyframes resFloat{0%,100%{transform:translateY(5px)}50%{transform:translateY(-9px)}}
+@keyframes resPulse{0%,100%{opacity:.5;transform:scale(.85)}50%{opacity:1;transform:scale(1.2)}}
+@media(max-width:860px){#resonance .res-panel{grid-template-columns:1fr}#resonance .res-left{border-right:0;border-bottom:1px solid rgba(217,181,126,.23);padding:19px;gap:11px}#resonance .res-gem{height:350px;width:min(100%,360px)}#resonance .res-right{padding:30px 24px}}
+@media(max-width:520px){#resonance .res-left{padding:14px 12px}#resonance .res-gem{height:min(89vw,340px);width:min(89vw,340px)}#resonance .res-axis:before{font-size:15px}#resonance .res-ring-mark{width:23px;height:23px;top:-12px}#resonance .res-right{padding:26px 16px}#resonance .res-copy{font-size:14px}#resonance .res-ring-row{padding:11px}#resonance .res-turn-btn{width:37px;height:37px}#resonance .res-inscription{font-size:9px;letter-spacing:.13em}}
+@media(prefers-reduced-motion:reduce){#resonance .res-core-gem,#resonance .res-core-aura{animation:none}#resonance .res-ring-track,#resonance .res-progress i{transition:none}}
