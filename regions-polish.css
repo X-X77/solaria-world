@@ -70,3 +70,71 @@
 #people .secret:before{color:rgba(215,191,169,.17)}
 #people .secret.open{border-color:rgba(211,175,136,.4);border-left:2px solid #D6B38A;box-shadow:none}
 @media(max-width:520px){#people .secret .hd b{font-size:17px}#people .secret .ob{font-size:12px}}
+
+
+/* 2026-10 Region readability pass: scenery as scenery, text in a dedicated reading surface. */
+#regions .rstage{display:flex;align-items:center;justify-content:flex-start;min-height:980px;height:auto;padding:54px max(4vw,calc((100vw - 1280px)/2 + 36px));isolation:isolate}
+#regions .rbg{inset:0;bottom:0;height:100%;background-size:cover;background-position:center}
+#regions .rstage:after{background:linear-gradient(90deg,rgba(5,10,18,.76) 0%,rgba(7,12,21,.43) 46%,rgba(7,12,21,.05) 100%),linear-gradient(0deg,rgba(7,12,21,.58),transparent 38%)}
+#regions .rinfo{position:relative;left:auto;top:auto;transform:none;width:min(660px,56vw);padding:33px 38px 37px;margin:0;max-width:none;background:rgba(8,14,25,.90);border:1px solid rgba(221,185,130,.32);box-shadow:0 20px 65px rgba(0,0,0,.31);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+#regions .rinfo.anim{animation:regionReadIn .45s ease both}
+@keyframes regionReadIn{from{opacity:.6;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+#regions .rinfo .lt{font-size:13px;letter-spacing:.29em;font-weight:750}
+#regions .rinfo h3{font-size:clamp(54px,6vw,78px);line-height:1.1;letter-spacing:-.025em;margin:10px 0 0}
+#regions .rinfo .full{font-size:21px;line-height:1.55;margin:7px 0 0;color:#F0D3A0}
+#regions .rinfo .motto{margin-top:20px;padding-left:16px;font-size:19px;line-height:1.65;color:#F6EADB}
+#regions .region-story-label{font-family:var(--lat);font-size:12px;letter-spacing:.095em;margin-top:27px;line-height:1.55;color:#EAD2AA;font-weight:800}
+#regions .rinfo .about{margin-top:12px;max-width:66ch;font-size:17px;line-height:1.95;letter-spacing:-.004em;color:#EBE7DF;word-break:keep-all;overflow-wrap:break-word}
+#regions .rinfo .story{padding:20px 22px 21px;margin-top:23px;background:#151F2C;border:1px solid rgba(211,180,130,.27);border-left:3px solid var(--rc);backdrop-filter:none;-webkit-backdrop-filter:none}
+#regions .rinfo .story b{display:block;color:#EACB9D;font-size:16px;line-height:1.5;margin-bottom:11px}
+#regions .rinfo .story p{font-size:17px;line-height:1.91;color:#EFE9DF;word-break:keep-all}
+#regions .region-now{margin-top:17px;padding:20px 22px;background:#151F2C;border:1px solid rgba(211,180,130,.27);border-left:3px solid var(--rc)}
+#regions .region-now>b{display:block;font-size:16px;color:#EACB9D;margin-bottom:13px;line-height:1.5}
+#regions .region-now ul{gap:12px}
+#regions .region-now li{padding-left:23px;font-size:15.5px;line-height:1.83;color:#E7E5E1;word-break:keep-all}
+#regions .region-now li:before{font-size:13px;top:2px}
+#regions .rinfo .places{gap:8px;margin-top:14px}
+#regions .rinfo .places li{font-size:14px;font-weight:700;padding:9px 13px;background:#171F2B;color:#F2E7D8;border:1px solid rgba(218,186,138,.34);line-height:1.6}
+#regions .region-people{margin-top:26px;padding:19px 0 0;border-top:1px solid rgba(217,187,144,.33)}
+#regions .region-people-heading{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px 18px}
+#regions .region-people-heading b{font-size:16px;color:#EAD0A4;line-height:1.5}
+#regions .region-people-heading small{font-size:12px;color:#BBC6D3;line-height:1.65}
+#regions .who{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:14px}
+#regions .who .region-character{display:flex;align-items:center;gap:11px;min-height:69px;width:auto;height:auto;margin:0;padding:8px 10px;border-radius:3px;border:1px solid rgba(216,183,132,.25);box-shadow:none;background:#151F2D;text-align:left;min-width:0}
+#regions .who .region-character:hover{transform:none;border-color:#E0C28D;background:#1D2B3A}
+#regions .who .region-character:focus-visible{outline:2px solid #ECD5A9;outline-offset:2px}
+#regions .who .region-character img{display:block;width:47px;height:51px;object-fit:cover;object-position:center 18%;flex:none;border-radius:2px}
+#regions .who .region-character-text{display:block;min-width:0;margin:0;color:#F0E2CA;font-size:14px;line-height:1.45}
+#regions .who .region-character-text b{display:block;font-size:14px;font-weight:800;overflow-wrap:anywhere}
+#regions .who .region-character-text small{display:block;font-size:12px;line-height:1.6;margin-top:3px;color:#B8C6D2}
+#regions .region-people-empty{font-size:15px;color:#C9D1D9}
+@media(max-width:1100px){
+ #regions .rstage{display:block;min-height:0;height:auto;padding:clamp(248px,36vw,388px) 0 0}
+ #regions .rbg{inset:0 0 auto;height:clamp(300px,46vw,475px);bottom:auto;background-position:center 40%}
+ #regions .rstage:after{background:linear-gradient(180deg,rgba(7,12,21,.09) 0,rgba(8,14,25,.18) 15%,#0A101B 43%,#0A101B 100%)}
+ #regions .rinfo{left:auto;top:auto;transform:none;position:relative;margin:0 auto;width:min(760px,calc(100% - 42px));padding:30px 34px 39px;background:#101927;border:1px solid rgba(221,188,136,.35);box-shadow:0 10px 50px rgba(0,0,0,.2);backdrop-filter:none;-webkit-backdrop-filter:none}
+ #regions .rinfo.anim{animation:regionReadIn .45s ease both}
+}
+@media(max-width:760px){
+ #regions .rstage{padding:clamp(215px,53vw,325px) 0 0}
+ #regions .rbg{height:clamp(245px,70vw,420px)}
+ #regions .rstage:after{background:linear-gradient(180deg,rgba(7,12,21,.02) 0,rgba(7,12,21,.10) 19%,#0A101B 42%,#0A101B 100%)}
+ #regions .rinfo{width:calc(100% - 26px);padding:28px 22px 38px}
+ #regions .rinfo h3{font-size:clamp(49px,10.5vw,68px)}
+ #regions .rinfo .full{font-size:19px}
+ #regions .rinfo .motto{font-size:17px}
+ #regions .rinfo .about{font-size:16px;line-height:1.92}
+ #regions .rinfo .story p{font-size:16px}
+ #regions .region-now li{font-size:15px}
+ #regions .rinfo .places li{font-size:13px;padding:8px 11px}
+ #regions .who{gap:8px}
+}
+@media(max-width:460px){
+ #regions .rinfo{padding:25px 16px 31px;width:calc(100% - 20px)}
+ #regions .rinfo h3{font-size:50px}
+ #regions .region-story-label{font-size:11px;letter-spacing:.065em}
+ #regions .rinfo .story,#regions .region-now{padding:16px 14px}
+ #regions .who{grid-template-columns:1fr}
+ #regions .region-people-heading small{flex-basis:100%}
+}
+@media(prefers-reduced-motion:reduce){#regions .rinfo.anim{animation:none}}
