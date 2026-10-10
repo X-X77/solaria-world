@@ -47,3 +47,12 @@
 .arc-notice a{font-size:13px;color:#E7C895;border-bottom:1px solid}
 @media(max-width:800px){#archive .arc-layout{grid-template-columns:1fr}#archive .arc-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}#archive .arc-tab{padding:13px 10px}#archive .arc-tab b{font-size:16px}#archive .arc-paper{min-height:0}}
 @media(max-width:470px){#archive{padding:70px 16px}#archive .arc-tabs{grid-template-columns:1fr}#archive .arc-tab{display:flex;justify-content:space-between;align-items:center;gap:12px}#archive .arc-tab b{font-size:17px}#archive .arc-tab em{display:none}#archive .arc-paper{padding:23px 17px}#archive .arc-clue small{display:block;margin:5px 0 0}}
+
+/* Archive v2 — guided clickable hints and highlighted investigation targets */
+#archive .arc-hint-go{display:flex;flex-direction:column;align-items:flex-start;gap:4px;margin-top:11px;padding:10px 12px;border:1px solid rgba(221,182,119,.43);background:rgba(218,181,113,.075);color:#E8CC9A;text-align:left;font-size:13px;font-weight:750;line-height:1.5;max-width:100%}
+#archive .arc-hint-go small{font-size:11px;font-weight:500;color:#C5CBD1}
+#archive .arc-hint-go:hover{border-color:#E6C996;background:rgba(218,181,113,.16)}
+#world .world-chapter,#atlasDetail,#people .cinfo,.arc-find{scroll-margin-top:100px}
+.arc-spotlight{animation:arcSpotlight 1.1s ease-in-out 2;outline:2px solid #E8C48A;outline-offset:7px}
+@keyframes arcSpotlight{0%,100%{box-shadow:0 0 0 0 rgba(222,185,123,0)}50%{box-shadow:0 0 0 10px rgba(222,185,123,.20)}}
+@media(prefers-reduced-motion:reduce){.arc-spotlight{animation:none}}
