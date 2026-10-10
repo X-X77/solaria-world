@@ -1,7 +1,4 @@
 /* Expanded readable character dossier and intentional rift reveal */
-#people .cinfo dl>div{border-bottom:1px solid rgba(217,185,138,.18);padding:17px 0}
-#people .cinfo dl dt{color:#D8BE94;font-size:13px;font-weight:800}
-#people .cinfo dl dd{max-width:66ch;font-size:15.5px;line-height:1.9;color:#E4DFD7;word-break:keep-all}
 #people .cast-profile-links{margin-top:26px;padding:18px 17px 20px;border:1px solid rgba(214,182,138,.3);background:rgba(12,18,29,.78)}
 #people .cast-profile-links h4{margin:0 0 9px;font-size:16px;color:#F1D7AA;font-weight:750}
 #people .cast-profile-links p{font-size:13px;line-height:1.8;color:#C2C9D2}
@@ -13,4 +10,4 @@
 #people .cast-sealed-art span{font-size:65px;color:#B8A0C8;opacity:.67}
 #people .cast-sealed-art b{letter-spacing:.19em;font:600 12px var(--lat)}
 #regions .region-locked-note{padding:16px 3px;font-size:14px;line-height:1.8;color:#E2D4BC}
-@media(max-width:750px){#people .cast-sealed-art{min-height:260px}#people .cinfo dl dd{font-size:15px}}
+@media(max-width:750px){#people .cast-sealed-art{min-height:260px}}
