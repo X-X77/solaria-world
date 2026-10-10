@@ -1,0 +1,78 @@
+/* Solaria interactive relationship atlas — scoped; no changes to the geographical atlas. */
+#bonds.bonds{padding-top:clamp(90px,10vw,145px);padding-bottom:clamp(90px,11vw,140px);background:radial-gradient(ellipse at 15% 50%,rgba(57,66,101,.14),transparent 58%),linear-gradient(180deg,#090F19,#101825 55%,#090E18)}
+#bonds .wrap{max-width:1320px}
+#bonds .sh{margin-bottom:36px}
+#bonds .bonds-chapter{display:block;text-align:center;margin-bottom:17px;color:#D2B687;font:600 10px var(--lat);letter-spacing:.2em}
+#bonds .sh p{max-width:720px}
+#bonds .bond-intro-line{display:flex;align-items:center;justify-content:space-between;gap:14px;color:#C7B08A;border-top:1px solid rgba(219,185,129,.27);padding:17px 0 23px;font:600 10px var(--lat);letter-spacing:.12em}
+#bonds .bond-intro-line span:last-child{font:500 12px var(--ui);letter-spacing:0;color:#BFC4CA}
+#bonds .bwrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(315px,355px);gap:14px;align-items:start}
+#bonds .bond-board{min-width:0;background:#0C1421;border:1px solid rgba(220,185,132,.32);overflow:hidden}
+#bonds .bond-board-head{padding:15px 19px;display:flex;justify-content:space-between;gap:8px;align-items:center;background:linear-gradient(100deg,#172235,#0D1522);border-bottom:1px solid rgba(223,193,148,.22)}
+#bonds .bond-board-head small{display:block;color:#BEA782;font:600 9px var(--lat);letter-spacing:.13em;margin-bottom:5px}
+#bonds .bond-board-head b{color:#F1E4D1;font:700 19px var(--disp)}
+#bonds .bond-board-tools{display:flex;gap:5px;align-items:center}
+#bonds .bond-board-tools button{height:36px;min-width:36px;display:grid;place-items:center;padding:0 10px;background:rgba(210,183,135,.07);border:1px solid rgba(224,192,143,.34);font-size:18px;color:#E8D4B6}
+#bonds #bondAll{font-size:12px;font-weight:750;padding:0 13px}
+#bonds .bond-board-tools button:hover{background:rgba(217,189,141,.18)}
+#bonds .bscroll{border:0;background:radial-gradient(ellipse at 50% 50%,rgba(43,60,82,.5),rgba(11,19,32,.7) 64%,rgba(7,13,23,.93)),repeating-linear-gradient(0deg,transparent 0 71px,rgba(220,190,133,.05) 72px),repeating-linear-gradient(90deg,transparent 0 71px,rgba(220,190,133,.05) 72px);overscroll-behavior-inline:contain;scrollbar-width:thin;scrollbar-color:rgba(222,190,139,.55) #0A1220;scroll-snap-type:none}
+#bonds #bsvg{width:100%;min-width:790px;height:auto;display:block;overflow:visible}
+#bonds #bsvg .e{opacity:.5;transition:opacity .3s}
+#bonds #bsvg .e line{stroke-width:2.5;stroke-linecap:round;transition:stroke-width .25s}
+#bonds #bsvg .e.r line{stroke:#DA776C}
+#bonds #bsvg .e.a line{stroke:#DFBE7F}
+#bonds #bsvg .e.n line{stroke:#8C9FBE;stroke-dasharray:6 8}
+#bonds #bsvg .bond-shadow{fill:#0C1420}
+#bonds #bsvg .bond-halo{fill:none;stroke-width:1.2;stroke-dasharray:4 9;opacity:.36}
+#bonds #bsvg .nd{cursor:pointer;transition:opacity .25s;outline:none}
+#bonds #bsvg .nd circle.ring{stroke-width:3.2;fill:none;transition:stroke-width .2s}
+#bonds #bsvg .nd text{fill:#FAEEDB;stroke:#0A101A;stroke-width:6px;paint-order:stroke;font:700 21px var(--disp);text-anchor:middle}
+#bonds #bsvg .nd text.r{fill:#BBC7D4;font:600 13.5px var(--ui)}
+#bonds #bsvg .nd:hover .ring,#bonds #bsvg .nd:focus-visible .ring{stroke-width:6}
+#bonds #bsvg .nd:focus-visible .bond-halo{stroke-width:4;opacity:1;stroke-dasharray:none}
+#bonds #bsvg.focus .e{opacity:.09}
+#bonds #bsvg.focus .e.hl{opacity:1}
+#bonds #bsvg.focus .e.hl line{stroke-width:4}
+#bonds #bsvg.focus .nd{opacity:.22}
+#bonds #bsvg.focus .nd.hl{opacity:1}
+#bonds #bsvg .nd.sel .ring{stroke-width:6}
+#bonds #bsvg .nd.sel .bond-halo{opacity:1;stroke-width:2.2;stroke-dasharray:none}
+#bonds .bswipe{display:block;text-align:center;padding:10px 10px 12px;margin:0;color:#AAB7C6;font-size:12px;line-height:1.7;border-top:1px solid rgba(221,187,139,.16)}
+#bonds .bswipe:before,#bonds .bswipe:after{content:none}
+#bonds .blegend{margin:0;padding:13px 15px 17px;justify-content:center;gap:12px 17px;border-top:1px solid rgba(218,178,131,.2);color:#BCC4CF;font-size:12px}
+#bonds .blegend span:before{width:22px}
+#bonds .bside{padding:0;min-height:615px;border:1px solid rgba(220,185,132,.34);background:linear-gradient(155deg,#192437,#0D1625 72%);overflow:hidden}
+#bonds .bond-aside-kicker{font:600 10px var(--lat);letter-spacing:.15em;color:#D5B987;padding:19px 20px 16px;border-bottom:1px solid rgba(217,182,134,.24);background:rgba(4,12,22,.31)}
+#bonds .bside>h3{padding:24px 21px 0;color:#F0E2CC;font:700 23px/1.4 var(--disp)}
+#bonds .bond-aside-intro{padding:0 21px;color:#CDD0D3;font-size:15px;line-height:1.86;margin:18px 0}
+#bonds .bond-stat{display:flex;justify-content:space-between;align-items:center;padding:13px 21px;border-bottom:1px solid rgba(218,182,128,.16);font-size:13px;color:#C4C5C5}
+#bonds .bond-stat b{color:#EBD1A8;font:700 19px var(--disp)}
+#bonds .bond-aside-person{display:flex;gap:15px;padding:21px 21px 18px;align-items:center}
+#bonds .bond-aside-person>img{width:77px;height:99px;flex:none;object-fit:cover;object-position:center 18%;border:1px solid rgba(222,191,137,.52)}
+#bonds .bond-aside-person h3{font:700 23px/1.35 var(--disp);color:#F6E6D1;margin:0}
+#bonds .bond-aside-person .rl{margin:8px 0 0;font-size:13px;color:#E0C595}
+#bonds .bond-aside-person small{display:block;margin-top:6px;font-size:12px;color:#B1BECC}
+#bonds .bond-known{font-size:13px;line-height:1.83;color:#D0D1D1;margin:0 20px 19px;padding:0 0 17px;border-bottom:1px solid rgba(216,183,129,.19)}
+#bonds .bond-section-heading{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:0 19px;margin:18px 0 9px;color:#ECD2A4;font-weight:750;font-size:13px}
+#bonds .bond-section-heading small{font:600 9px var(--lat);letter-spacing:.08em;color:#A7AFB9;text-align:right}
+#bonds .bond-section-heading.support{margin-top:25px}
+#bonds .bond-relations,#bonds .bond-support{display:grid;gap:6px;padding:0 15px}
+#bonds .bond-relation,#bonds .bond-support-person{width:100%;display:flex;align-items:center;gap:10px;min-height:59px;text-align:left;background:rgba(8,14,24,.46);border:1px solid rgba(216,184,128,.15);padding:9px 11px;color:#F0E4D0;transition:background .2s,border-color .2s}
+#bonds .bond-relation:hover,#bonds .bond-support-person:hover{background:rgba(220,185,135,.10);border-color:rgba(219,188,137,.49)}
+#bonds .bond-relation-mark{flex:none;width:10px;height:10px;transform:rotate(45deg);background:#8E9AB4;border:1px solid #8E9AB4;margin-right:4px}
+#bonds .bond-relation.r .bond-relation-mark{background:#D5786E;border-color:#D5786E}
+#bonds .bond-relation.a .bond-relation-mark{background:#E0BF83;border-color:#E0BF83}
+#bonds .bond-relation.n .bond-relation-mark{background:transparent;border-color:#8C9FBE}
+#bonds .bond-relation span:nth-child(2),#bonds .bond-support-person span{display:block;min-width:0;flex:1}
+#bonds .bond-relation b,#bonds .bond-support-person b{display:block;font-size:13px;font-weight:800;color:#EFE2CB}
+#bonds .bond-relation small,#bonds .bond-support-person small{display:block;margin-top:3px;font-size:12px;line-height:1.5;color:#BBC1C8}
+#bonds .bond-relation em,#bonds .bond-support-person em{font:normal 18px var(--ui);color:#D5B78B;flex:none}
+#bonds .bond-support-person{min-height:67px}
+#bonds .bond-support-person img{width:38px;height:46px;object-fit:cover;object-position:center 15%;border:1px solid rgba(224,187,131,.28);flex:none}
+#bonds .bond-explore{display:block;text-align:center;margin:21px 17px 14px;width:calc(100% - 34px);background:#E0BE83;color:#161D28;border:1px solid #F0D5A8;font-size:13px;font-weight:800;padding:13px 12px;line-height:1.6}
+#bonds .bond-explore:hover{background:#F1D59B}
+#bonds .bond-metadata{margin:0 18px 22px;color:#99A7B5;font-size:11px;line-height:1.7}
+@media(max-width:1050px){#bonds .bwrap{grid-template-columns:minmax(0,1fr) 305px}#bonds #bsvg{min-width:730px}}
+@media(max-width:900px){#bonds .bwrap{grid-template-columns:minmax(0,1fr)}#bonds .bside{min-height:0}#bonds .bond-known{max-width:80ch}}
+@media(max-width:650px){#bonds{padding-top:82px}#bonds .bond-intro-line{font-size:9px}#bonds .bond-intro-line span:last-child{font-size:10px}#bonds .bond-board-head{padding:13px 12px}#bonds .bond-board-head b{font-size:17px}#bonds .bond-board-head small{font-size:8px}#bonds #bondAll{padding:0 7px}#bonds .bond-board-tools button{height:32px;min-width:32px;padding:0 6px}#bonds #bsvg{min-width:760px}#bonds .bside{border-top:2px solid rgba(222,191,139,.42)}#bonds .bond-aside-person{padding:18px}#bonds .bond-known{margin:0 18px 17px}#bonds .bswipe{font-size:11px}#bonds .bond-relations,#bonds .bond-support{padding:0 11px}}
+@media(prefers-reduced-motion:reduce){#bonds #bsvg .e,#bonds #bsvg .nd,#bonds .bond-relation,#bonds .bond-support-person{transition:none}}

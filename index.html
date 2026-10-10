@@ -1040,6 +1040,7 @@ footer{background:#080D16}
 <link rel="stylesheet" href="archive.css">
 <link rel="stylesheet" href="resonance.css">
 <link rel="stylesheet" href="forbidden-library.css">
+<link rel="stylesheet" href="relationships.css">
 </head>
 <body>
 <div id="intro" class="op-v2" aria-label="솔라리아 오프닝">
@@ -1196,12 +1197,22 @@ footer{background:#080D16}
 </div></section>
 
 <section class="sec bonds" id="bonds"><div class="wrap">
-  <div class="sh"><h2>관계</h2><div class="orn"><i></i></div>
-    <p>황좌를 두고, 마석을 두고, 오래된 빚을 두고. 제국의 주요 인물들은 이렇게 얽혀 있다.</p></div>
-  <div class="bwrap"><div class="bscroll"><svg id="bsvg" viewBox="0 0 1000 700" role="img" aria-label="주요 인물 관계도"></svg></div>
-    <p class="bswipe">좌우로 밀어서 보기</p>
-    <aside class="bside" id="bside"></aside></div>
-  <div class="blegend"><span class="r">대립</span><span class="a">협력·호의</span><span class="n">긴장·얽힘</span></div>
+  <div class="sh"><span class="bonds-chapter">POWER, LOYALTY & BETRAYAL</span><h2>인물 관계도</h2><div class="orn"><i></i></div>
+    <p>황좌와 북부의 방벽, 마석과 오래된 약속. 한 사람을 선택하면 그 주변의 관계가 드러납니다.</p></div>
+  <div class="bond-intro-line"><span>IMPERIAL RELATIONS / TEN PRINCIPAL FIGURES</span><span>주요 인물 10명 · 알려진 관계만 표시</span></div>
+  <div class="bwrap">
+    <div class="bond-board">
+      <div class="bond-board-head"><div><small>POLITICAL & PERSONAL CONNECTIONS</small><b>제국의 연결망</b></div>
+        <div class="bond-board-tools"><button type="button" id="bondAll" aria-label="전체 관계 보기">전체 보기</button><button type="button" id="bondLeft" aria-label="관계도 왼쪽 이동">‹</button><button type="button" id="bondRight" aria-label="관계도 오른쪽 이동">›</button></div>
+      </div>
+      <div class="bscroll" id="bondScroller" tabindex="0" aria-label="주요 인물 관계도, 가로로 이동하여 살펴보세요">
+        <svg id="bsvg" viewBox="0 0 1000 700" role="group" aria-label="제국 주요 인물 간 관계 연결망, 인물을 클릭하면 관계 정보가 표시됩니다."></svg>
+      </div>
+      <p class="bswipe">인물 초상을 선택하세요 · 화면을 좌우로 밀어서 탐색할 수 있습니다</p>
+      <div class="blegend" aria-label="관계 유형 안내"><span class="r">대립</span><span class="a">협력·호의</span><span class="n">긴장·얽힘</span></div>
+    </div>
+    <aside class="bside" id="bside" aria-label="선택된 인물의 관계와 관련 조연" aria-live="polite"></aside>
+  </div>
 </div></section>
 
 
@@ -1591,41 +1602,7 @@ const EDGES=[
  [3,5,'a','대를 이은 빚'],[3,6,'n','변경의 라이벌'],[3,4,'a','물자 교역'],[4,6,'r','마석 거래 마찰'],
  [4,5,'n','오염을 둘러싼 의심'],[5,2,'a','호의'],[5,1,'n','경계'],[2,4,'a','은밀한 거래']
 ];
-(function(){
-  const svg=$('bsvg'),side=$('bside');const ns='http://www.w3.org/2000/svg';
-  const el=(t,a)=>{const e=document.createElementNS(ns,t);for(const k in a)e.setAttribute(k,a[k]);return e};
-  const defs=el('defs',{});svg.appendChild(defs);
-  const gE=el('g',{}),gN=el('g',{});svg.appendChild(gE);svg.appendChild(gN);
-  EDGES.forEach((e,i)=>{const [a,b,t,l]=e,[x1,y1]=NODES[a],[x2,y2]=NODES[b];
-    const g=el('g',{class:'e '+t,'data-a':a,'data-b':b});g.appendChild(el('line',{x1,y1,x2,y2}));
-    const tx=el('text',{x:(x1+x2)/2,y:(y1+y2)/2});tx.textContent=l;g.appendChild(tx);gE.appendChild(g)});
-  Object.entries(NODES).forEach(([no,[x,y]])=>{const p=P.find(q=>q.no===+no);
-    const cp=el('clipPath',{id:'bc'+no});cp.appendChild(el('circle',{cx:x,cy:y,r:44}));defs.appendChild(cp);
-    const g=el('g',{class:'nd','data-no':no,tabindex:0,role:'button','aria-label':p.name});
-    g.appendChild(el('circle',{cx:x,cy:y,r:47,fill:'#0A0E18'}));
-    const im=el('image',{href:`img/t/${pad(+no)}.jpg`,x:x-44,y:y-58,width:88,height:117,'clip-path':`url(#bc${no})`,preserveAspectRatio:'xMidYMin slice'});g.appendChild(im);
-    g.appendChild(el('circle',{class:'ring',cx:x,cy:y,r:46,stroke:COL[p.aff]}));
-    const t1=el('text',{x,y:y+72});t1.textContent=p.name.split(' ')[0];g.appendChild(t1);
-    const t2=el('text',{x,y:y+94,class:'r'});t2.textContent=p.role;g.appendChild(t2);
-    g.onclick=()=>select(+no);g.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(+no)}};
-    gN.appendChild(g)});
-  const sc=svg.parentNode;
-  function center(x,sm){if(sc.scrollWidth<=sc.clientWidth)return;const k=svg.getBoundingClientRect().width/1000;sc.scrollTo({left:Math.max(0,x*k-sc.clientWidth/2),behavior:sm?'smooth':'auto'})}
-  requestAnimationFrame(()=>center(500));addEventListener('resize',()=>{if(!cur)center(500)});
-  const hint='<p class="hint">인물을 누르면 그 사람을 둘러싼 관계가 보입니다.</p>';side.innerHTML=hint;
-  let cur=0;
-  function select(no){
-    if(cur===no){cur=0;svg.classList.remove('focus');svg.querySelectorAll('.hl,.sel').forEach(x=>x.classList.remove('hl','sel'));side.innerHTML=hint;return}
-    cur=no;center(NODES[no][0],true);svg.classList.add('focus');svg.querySelectorAll('.hl,.sel').forEach(x=>x.classList.remove('hl','sel'));
-    const mine=EDGES.filter(e=>e[0]===no||e[1]===no);
-    svg.querySelectorAll('.e').forEach(g=>{if(+g.dataset.a===no||+g.dataset.b===no)g.classList.add('hl')});
-    const ids=new Set([no]);mine.forEach(e=>{ids.add(e[0]);ids.add(e[1])});
-    svg.querySelectorAll('.nd').forEach(g=>{if(ids.has(+g.dataset.no))g.classList.add('hl');if(+g.dataset.no===no)g.classList.add('sel')});
-    const p=P.find(q=>q.no===no);
-    side.innerHTML=`<h3>${esc(p.name)}</h3><p class="rl">${esc(p.role)}</p><ul>${mine.map(e=>{const o=P.find(q=>q.no===(e[0]===no?e[1]:e[0]));return `<li class="${e[2]}"><i></i><span><b>${esc(o.name.split(' ')[0])}</b>  ${e[3]}</span></li>`}).join('')}</ul><a class="go" href="#people" id="bgo">인물 기록 보기</a>`;
-    $('bgo').onclick=()=>setFilter('main',no);
-  }
-})();
+/* Interactive relationship graph lives in relationships.js. */
 
 /* sound */
 const SND=(function(){
@@ -1966,5 +1943,6 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
 <script src="resonance.js"></script>
 <script src="people-redesign.js"></script>
 <script src="forbidden-library.js"></script>
+<script src="relationships.js"></script>
 </body>
 </html>
