@@ -1037,6 +1037,7 @@ footer{background:#080D16}
 
 </style>
 <link rel="stylesheet" href="archive.css">
+<link rel="stylesheet" href="resonance.css">
 </head>
 <body>
 <div id="intro" class="op-v2" aria-label="솔라리아 오프닝">
@@ -1063,7 +1064,7 @@ footer{background:#080D16}
 
 <header class="nav" id="nav">
   <a class="logo" href="#top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 22 12 12 22 2 12Z"/><path d="M12 7 17 12 12 17 7 12Z" fill="currentColor"/></svg><b>솔라리아</b></a>
-  <ul><li><a href="#world">세계관</a></li><li><a href="#regions">권역</a></li><li><a href="#people">인물</a></li><li><a href="#bonds">관계</a></li><li><a href="#seals">봉인</a></li><li><a href="#archive">기밀</a></li></ul>
+  <ul><li><a href="#world">세계관</a></li><li><a href="#regions">권역</a></li><li><a href="#people">인물</a></li><li><a href="#bonds">관계</a></li><li><a href="#seals">봉인</a></li><li><a href="#archive">기밀</a></li><li><a href="#resonance">마석 검사</a></li></ul>
   <button class="snd" id="snd" type="button" aria-pressed="false" aria-label="배경음 켜기" title="배경음 켜기"><i></i><i></i><i></i><i></i></button>
 </header>
 
@@ -1199,6 +1200,14 @@ footer{background:#080D16}
   <div class="sgrid" id="sgrid"></div>
 </div></section>
 
+<section class="sec resonance" id="resonance" aria-labelledby="resTitle"><div class="wrap">
+<div class="sh"><span class="res-overline">MAGIC STONE RESONANCE EXAMINATION</span><h2 id="resTitle">마석 감응 검사</h2><div class="orn"><i></i></div><p>마탑의 마석이 당신에게 반응합니다. 다섯 가지 질문을 통해 제국에서의 감응 특성을 확인해 보세요.</p></div>
+<div class="res-panel">
+ <div class="res-left"><span class="res-inscription">AURUM · MAGICAL RESEARCH</span><div class="res-gem" id="resGem" aria-hidden="true"><div class="res-shard"></div><div class="res-light"></div></div><p class="res-phase" id="resPhase">THE STONE IS WAITING</p><div class="res-side-note">마탑 중앙 연구실 · 감응 검사 장치 <span>EXAMINATION 01</span></div></div>
+ <div class="res-right" id="resContent" aria-live="polite"></div>
+</div>
+<p class="res-disclaimer">이 검사는 솔라리아 세계관의 체험 콘텐츠이며, 결과는 실제 성격이나 능력을 판정하지 않습니다.</p>
+</div></section>
 <section class="sec" id="archive" aria-labelledby="arcTitle"><div class="wrap">
   <div class="sh"><span class="arc-overline">IMPERIAL SECRET ARCHIVES</span><h2 id="arcTitle">제국의 미해결 기록</h2><div class="orn"><i></i></div><p>세계관과 지도, 인물 도감에 흩어진 흔적을 찾아 기록을 복원하세요.</p></div>
   <div class="arc-overview" id="arcOverview" aria-label="단서 수집 현황"></div>
@@ -1929,5 +1938,6 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
 
 </script>
 <script src="archive.js"></script>
+<script src="resonance.js"></script>
 </body>
 </html>
