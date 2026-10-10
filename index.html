@@ -426,7 +426,9 @@ html.intro-done .hero .in{animation:heroIn 1.6s cubic-bezier(.2,.7,.2,1) both}
 #intro.op-v2 .op-caption.nox-line{color:#f9e3de;text-shadow:0 2px 16px #100515,0 0 24px rgba(201,101,155,.52)}
 #intro.op-v2 .op-title{position:absolute;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;opacity:0;pointer-events:none;transition:opacity .8s ease;background:radial-gradient(ellipse at center,rgba(5,9,17,.38),rgba(5,9,17,.9) 90%)}
 #intro.op-v2 .op-title.on{opacity:1}
-#intro.op-v2 .op-title b{font-family:var(--disp);font-size:clamp(58px,12vw,146px);color:#f5dfac;text-shadow:0 0 42px rgba(210,172,103,.25);letter-spacing:.07em}
+#intro.op-v2 .op-title p{font:400 clamp(17px,2.2vw,25px)/1.9 var(--read);color:#e4dccb;margin:25px 20px 0;letter-spacing:.04em}
+#intro.op-v2 .op-title{background:none;padding:24px}
+#intro.op-v2 .op-title b{font-family:var(--disp);font-size:clamp(44px,9vw,112px);color:#f5dfac;text-shadow:0 0 42px rgba(210,172,103,.25);letter-spacing:.07em}
 #intro.op-v2 .op-title small{font-family:var(--lat);font-size:clamp(11px,1.4vw,15px);color:#d4bd86;letter-spacing:.4em}
 #intro.op-v2 .op-gate{position:absolute;inset:0;z-index:11;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:20px;padding:20px;background:radial-gradient(ellipse at 50% 53%,rgba(41,54,80,.22),transparent 72%),rgba(2,5,11,.91);transition:opacity .8s ease}
 #intro.op-v2 .op-gate.out{opacity:0;pointer-events:none}
@@ -446,7 +448,7 @@ html.intro-done .hero .in{animation:heroIn 1.6s cubic-bezier(.2,.7,.2,1) both}
  #intro.op-v2 .op-shot.cassian img{object-position:49% 38%}
  #intro.op-v2 .op-caption{bottom:calc(11vh + 8vh);font-size:clamp(22px,6vw,30px);width:92%}
  #intro.op-v2 .op-gate{padding:18px}
- #intro.op-v2 .op-title b{font-size:clamp(50px,15vw,100px)}
+ #intro.op-v2 .op-title b{font-size:clamp(40px,11vw,68px)}
 }
 @media(prefers-reduced-motion:reduce){#intro.op-v2 .op-snow{animation:none}#intro.op-v2 .op-shot,#intro.op-v2 .op-caption,#intro.op-v2 .op-title{transition:none}}
 
@@ -466,7 +468,7 @@ html.intro-done .hero .in{animation-duration:.7s}
 /* Full-length opening handoff: Cassian's final music tail fades into the hero. */
 #intro.op-v2 .op-stage{transition:opacity 1.4s ease-in-out}
 #intro.op-v2.ending .op-stage{opacity:0}
-#intro.op-v2.out{transition:opacity 1s ease-in-out}
+#intro.op-v2.out{transition:opacity 1.8s ease-in-out}
 @media(prefers-reduced-motion:reduce){#intro.op-v2 .op-stage,#intro.op-v2.out{transition:opacity .15s linear}}
 html.intro-done .hero .in{animation-duration:1.65s}
 /* Opening-to-hero handoff: quiet imperial title reveal, no perpetual glow. */
@@ -1086,8 +1088,8 @@ footer{background:#080D16}
     <div class="op-shot cassian"><img src="img/op/cassian.webp" data-fallback="img/op_k.jpg" alt=""></div>
     <div class="op-grade"></div><div class="op-snow"></div>
     <div class="op-beam" id="opBeam"></div><div class="op-light" id="opLight"></div>
-    <div class="op-title" id="opTitle"><small>IMPERIUM SOLARIAE</small><b>솔라리아</b></div>
   </div>
+  <div class="op-title" id="opTitle" role="status"><small>IMPERIUM SOLARIAE</small><b>솔라리아 제국</b><p>태양이 비추는 제국에도,<br>빛이 닿지 않는 곳이 있다.</p></div>
   <div class="op-caption" id="opCaption" role="status" aria-live="off"></div>
   <div class="op-gate" id="opGate">
     <div class="op-brand" translate="no">SOLARIA</div>
@@ -1735,7 +1737,7 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
   const gate=document.getElementById('opGate'),stage=document.getElementById('opStage');
   const shots=[...stage.querySelectorAll('.op-shot')],caption=document.getElementById('opCaption');
   const beam=document.getElementById('opBeam'),light=document.getElementById('opLight'),title=document.getElementById('opTitle');
-  let started=false,ended=false,withSound=false,startAt=0,raf=0,shot=-1,spoken='',outro=false,bgStarted=false,newMix=false,outroAt=0,handoffTimer=0;
+  let started=false,ended=false,withSound=false,startAt=0,raf=0,shot=-1,spoken='',outro=false,bgStarted=false,newMix=false,outroAt=0,handoffTimer=0,titleTimer=0;
   // Use the verified new soundtrack directly; no asynchronous HEAD-check race.
   const OLD={start:6.05,beast:8.42,nox:10.55,slash:12.28,cassian:13.45,
     beastLine:[9.10,10.43],noxLine:[10.72,11.90],cassianLine:[16.73,19.12],
@@ -1761,7 +1763,7 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     }
     light.classList.toggle('on',t>=C.flash[0]&&t<C.flash[1]);
     beam.classList.toggle('on',t>=C.beam[0]&&t<C.beam[1]);
-    title.classList.remove('on');
+    if(!outro)title.classList.remove('on');
     if(t>=C.beastLine[0]&&t<C.beastLine[1])changeLine('『ㅊ,ㅏㅈ았다』','beast-line');
     else if(t>=C.noxLine[0]&&t<C.noxLine[1])changeLine('드디어.','nox-line');
     else if(t>=C.cassianLine[0]&&t<C.cassianLine[1])changeLine('움직이지 마라.','cassian-line');
@@ -1771,9 +1773,10 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     if(outro)return;
     outro=true;outroAt=performance.now();changeLine('','');box.classList.add('ending');
     const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    titleTimer=setTimeout(()=>title.classList.add('on'),reduced?150:1400);
     handoffTimer=setTimeout(()=>{
       box.classList.add('out');R.classList.remove('intro-on');R.classList.add('intro-done');
-    },reduced?150:1400);
+    },4700);
     try{sessionStorage.setItem('sol-intro','1')}catch(e){}
     if(started){SND.introEnd();bgStarted=true;}
   }
@@ -1802,9 +1805,9 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     if(ended)return;
     ended=true;cancelAnimationFrame(raf);
     if(!outro)startOutro();
-    if(skipped){clearTimeout(handoffTimer);box.style.transition='opacity .35s ease';box.classList.add('out');R.classList.remove('intro-on');R.classList.add('intro-done');}
+    if(skipped){clearTimeout(handoffTimer);clearTimeout(titleTimer);title.classList.remove('on');box.style.transition='opacity .35s ease';box.classList.add('out');R.classList.remove('intro-on');R.classList.add('intro-done');}
     if(started&&!bgStarted)SND.introEnd();else if(!started)SND.arm();
-    const duration=matchMedia('(prefers-reduced-motion: reduce)').matches?350:2500;
+    const duration=matchMedia('(prefers-reduced-motion: reduce)').matches?5000:6800;
     const removeAfter=skipped?450:Math.max(100,duration-(performance.now()-outroAt));
     setTimeout(()=>{box.remove();if(started&&!skipped)document.dispatchEvent(new CustomEvent('solaria:intro-finished'))},removeAfter);
   }

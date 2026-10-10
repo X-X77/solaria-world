@@ -9,7 +9,7 @@ with sync_playwright() as p:
   page.add_init_script(f'window.drawCount=0;crypto.getRandomValues=a=>{{window.drawCount++;a[0]={roll};return a}};'+("localStorage.setItem('solaria-noctis-contact-v1','linked');" if linked else ''))
   return page
  def silent_intro(page):
-  page.goto(BASE+'?opening=1',wait_until='domcontentloaded');page.clock.install();page.locator('#opSilent').click();page.clock.run_for(22450);page.clock.run_for(500)
+  page.goto(BASE+'?opening=1',wait_until='domcontentloaded');page.clock.install();page.locator('#opSilent').click();page.clock.fast_forward(20000);page.clock.run_for(7500)
  # Skip never draws.
  page=new();page.goto(BASE+'?opening=1',wait_until='domcontentloaded');page.clock.install();page.locator('#opSilent').click();page.locator('#opSkip').click();page.clock.fast_forward(26000);assert page.evaluate('drawCount')==0;assert page.locator('#riftAwakening').is_hidden();print('PASS skipped opening: no draw, no event');page.context.close()
  # No opening from deep link.
