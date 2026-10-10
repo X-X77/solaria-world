@@ -1047,7 +1047,7 @@ footer{background:#080D16}
 <link rel="stylesheet" href="regional-relationships.css">
 <link rel="stylesheet" href="mystic-atmosphere.css?v=stage2-2">
 <link rel="stylesheet" href="rift-contact.css">
-<link rel="stylesheet" href="personnel-archive.css?v=stage2-2">
+<link rel="stylesheet" href="personnel-archive.css?v=stage2-rebuild">
 <style id="polish-2026-10-11">
 /* polish pass: phone nav, line breaks, one label per heading, spacing, soft section edges */
 @media(max-width:400px){
@@ -1207,20 +1207,22 @@ footer{background:#080D16}
     <p>황금빛 옥좌부터 눈 덮인 방벽까지. 제국의 운명을 움직이는 사람들의 기록.</p></div>
   <div class="people-eyebrow"><span>IMPERIAL CHARACTER ARCHIVE</span><span id="peopleCount">00 FILES</span></div>
   <div class="chips" id="chips" role="group" aria-label="인물 소속 선택"></div>
+  <div class="people-dossier" id="peopleDossier" tabindex="0" role="region" aria-label="선택한 인물 기록, 좌우 화살표로 인물을 이동할 수 있습니다.">
+    <div class="people-dossier-top"><span>PERSONNEL DOSSIER / IMPERIUM SOLARIAE</span><b id="peoplePage">01 / 01</b></div>
+    <div class="people-watermark" id="peopleWatermark" aria-hidden="true"></div>
+    <div class="cstage" id="cstage" aria-live="polite"></div>
+  </div>
+  <section class="personnel-gallery" aria-label="다른 인물 탐색">
   <div class="people-index-head">
-    <div><small>SELECT A CHARACTER</small><h3>누구의 기록을 열람할까요?</h3></div>
+    <div><small>CONTINUE THE REGISTER</small><h3>다른 인물의 기록</h3></div>
     <div class="people-gallery-actions"><span>초상 선택 · 좌우로 탐색</span>
       <button id="castPrev" type="button" aria-label="인물 목록 왼쪽으로 이동"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg></button>
       <button id="castNext" type="button" aria-label="인물 목록 오른쪽으로 이동"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
     </div>
   </div>
   <div class="strip" id="strip" aria-label="인물 초상 선택 목록"></div>
-  <div class="people-section-break" aria-hidden="true"><span></span><i>◆</i><span></span></div>
-  <div class="people-dossier" id="peopleDossier" tabindex="0" role="region" aria-label="선택한 인물 기록, 좌우 화살표로 인물을 이동할 수 있습니다.">
-    <div class="people-dossier-top"><span>PERSONNEL DOSSIER / IMPERIUM SOLARIAE</span><b id="peoplePage">01 / 01</b></div>
-    <div class="people-watermark" id="peopleWatermark" aria-hidden="true"></div>
-    <div class="cstage" id="cstage" aria-live="polite"></div>
-  </div>
+  </section>
+  <section class="personnel-documents" id="personDocuments" aria-label="선택한 인물의 상세 기록"></section>
   <div class="people-afterline"><span>RECORDS ARE NEVER THE WHOLE TRUTH</span><span>기록은 언제나 이야기의 일부만을 담는다.</span></div>
 </div></section>
 
@@ -1228,17 +1230,19 @@ footer{background:#080D16}
  <div class="sh"><span class="bonds-chapter">THE CELESTIAL THREADS</span><h2>인물 관계도</h2><div class="orn"><i></i></div><p>서로를 끌어당기는 인연, 부딪히는 신념. 제국 전체부터 각 권역과 세력까지, 별자리를 오가며 인연과 갈등을 탐색하세요.</p></div>
  <div class="bond-intro-line"><span>THE THREADS OF SOLARIA / EMPIRE &amp; 8 REGIONS</span><span>이름과 초상을 선택해 관계를 살펴보세요</span></div>
  <div class="bond-region-tabs" id="bondRegionTabs" role="group" aria-label="관계도 권역 선택"></div>
- <div class="arcana-layout">
+ <div class="arcana-layout constellation-reading-room">
   <div class="arcana-board" id="bondBoard">
-   <div class="arcana-topline"><div><small>IMPERIAL CONCORDANCE · <span id="arcanaNumber">I / VIII</span></small><h3 id="bondRegionName">북부의 인연</h3></div><div class="arcana-tools"><button id="bondShowAll" type="button" aria-label="선택 해제하고 전체 연결 보기">선택 해제</button><button type="button" id="bondScrollLeft" aria-label="관계도 왼쪽으로 이동">‹</button><button type="button" id="bondScrollRight" aria-label="관계도 오른쪽으로 이동">›</button></div></div>
+   <div class="arcana-topline"><div><small>IMPERIAL CONCORDANCE · <span id="arcanaNumber">I / VIII</span></small><h3 id="bondRegionName">북부의 인연</h3></div><div class="arcana-tools"><a class="arc-record-go" href="#bondDetail">기록 ↓</a><button id="bondShowAll" type="button" aria-label="선택 해제하고 전체 연결 보기">선택 해제</button><button type="button" id="bondScrollLeft" aria-label="관계도 왼쪽으로 이동">‹</button><button type="button" id="bondScrollRight" aria-label="관계도 오른쪽으로 이동">›</button></div></div>
    <div class="arcana-scroll" id="bondScroller" tabindex="0" aria-label="인물 관계도. 초상을 선택하여 연결을 살펴보세요. 좁은 화면에서는 좌우로 이동할 수 있습니다.">
     <svg id="bsvg" viewBox="0 0 940 690" role="group" aria-label="인물의 초상과 인연을 연결한 관계도"></svg>
    </div>
-   <div id="arcanaBridges" class="arcana-bridges" aria-label="다른 권역과의 연결" hidden></div>
    <div class="arcana-bottomline"><span>✧ 초상 선택 · 인연 확인</span><span id="arcanaCount">연결</span></div>
    <div class="arcana-legend" aria-label="관계 색상"><span class="allied">호의·협력</span><span class="hostile">대립·긴장</span><span class="complex">그 밖의 연결</span></div>
   </div>
-  <aside class="arcana-dossier" id="bondDetail" aria-live="polite"></aside>
+  <div class="bond-record-divider"><span>Ⅱ / THE OPEN RECORD</span><a href="#bondDetail">선택한 인물의 기록 ↓</a></div>
+  <section class="arcana-dossier" id="bondDetail" aria-live="polite" aria-label="선택 인물의 인연 기록"></section>
+   <div id="arcanaBridges" class="arcana-bridges" aria-label="다른 권역과의 연결" hidden></div>
+
  </div>
  <p class="arcana-disclaimer">부부·사제·가족·동맹과 갈등까지 공개된 관계를 표시합니다. 균열의 기록은 별도 열람 후 확인할 수 있습니다.</p>
 </div></section>
@@ -1561,6 +1565,7 @@ function setFilter(f,no){
   strip.querySelectorAll('.ct').forEach(b=>b.onclick=()=>setPerson(+b.dataset.i));
   const i=no?list.findIndex(p=>p.no===no):-1;
   if(!list.length){
+    $('personDocuments').replaceChildren();
     if(f==='rift'&&!window.SOLARIA_RIFT_UNLOCKED){
       cstage.innerHTML='<div class="people-locked-rift"><span aria-hidden="true">✧</span><h3>균열 너머의 인물 기록</h3><p>아직 봉인된 인물 기록입니다. 오프닝을 끝까지 감상한 뒤 드물게 균열이 열리면 공개됩니다.</p><button type="button" id="riftPeopleContact">오프닝 다시 보기 ↗</button></div>';
       const go=$('riftPeopleContact');if(go)go.onclick=()=>window.SOLARIA_RIFT_CONTACT?.begin();
@@ -1615,15 +1620,27 @@ function setPerson(i,anim=true){
     body+'<div class="cnav"><span>RECORD NAVIGATION</span>'+
     '<button type="button" aria-label="이전 인물" id="cp">'+arrow('M15 5 8 12l7 7')+'이전</button>'+
     '<button type="button" aria-label="다음 인물" id="cn">다음'+arrow('M9 5l7 7-7 7')+'</button></div></div>';
+  // Keep the selected portrait and identity in the hero; unfold original records
+  // below the miniature browser. Move nodes instead of copying or rewriting data.
+  const documents=$('personDocuments'),info=cstage.querySelector('.cinfo');
+  documents.replaceChildren();
+  const facts=document.createElement('section');facts.className='personnel-facts';
+  const heading=document.createElement('h4');heading.textContent='인물 상세 기록';facts.append(heading);
+  const dl=info.querySelector('dl');if(dl)facts.append(dl);
+  const links=document.createElement('section');links.className='personnel-related';
+  for(const selector of ['.cast-profile-links','.secret','.cast-reveal-control']){
+    const el=info.querySelector(selector);if(el)links.append(el);
+  }
+  documents.append(facts,links);
   $('cp').onclick=()=>setPerson(cur-1);
   $('cn').onclick=()=>setPerson(cur+1);
   const castReveal=$('castReveal');
   if(castReveal)castReveal.onclick=()=>window.SOLARIA_RIFT_CONTACT?.begin();
-  cstage.querySelectorAll('[data-cast-relation]').forEach(b=>b.onclick=()=>window.SOLARIA_ATLAS?.focus(Number(b.dataset.castRelation)));
+  document.getElementById('people').querySelectorAll('[data-cast-relation]').forEach(b=>b.onclick=()=>window.SOLARIA_ATLAS?.focus(Number(b.dataset.castRelation)));
   const ob=$('ob');
   if(ob)ob.onclick=()=>{const sec=$('sec');sec.classList.add('open');ob.setAttribute('aria-expanded','true');ob.disabled=true};
 }
-dossier.addEventListener('keydown',e=>{
+document.getElementById('people').addEventListener('keydown',e=>{
   if(e.target.closest('button,a'))return;
   if(e.key==='ArrowLeft'){e.preventDefault();setPerson(cur-1)}
   if(e.key==='ArrowRight'){e.preventDefault();setPerson(cur+1)}
@@ -1997,6 +2014,6 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
 <script src="people-redesign.js"></script>
 <script src="forbidden-library.js"></script>
 <script src="dossier-expansion.js"></script>
-<script src="relationships.js?v=stage2-2"></script>
+<script src="relationships.js?v=stage2-rebuild"></script>
 </body>
 </html>
