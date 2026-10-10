@@ -48,7 +48,12 @@ function makeNoxQuote(){
   quote.textContent='“'+reaction.text+'”';
  }
  const who=document.createElement('cite');
- who.textContent='— 녹스';
+ who.append(document.createTextNode('— '));
+ const hiddenName=document.createElement('span');
+ hiddenName.className='nox-redacted';
+ hiddenName.textContent='▨▨';
+ hiddenName.setAttribute('aria-label','녹스');
+ who.append(hiddenName);
  quote.append(who);
  return quote;
 }
