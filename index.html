@@ -1047,6 +1047,26 @@ footer{background:#080D16}
 <link rel="stylesheet" href="regional-relationships.css">
 <link rel="stylesheet" href="mystic-atmosphere.css">
 <link rel="stylesheet" href="rift-contact.css">
+<style id="polish-2026-10-11">
+/* polish pass: phone nav, line breaks, one label per heading, spacing, soft section edges */
+@media(max-width:400px){
+ .nav{padding:0 10px}
+ .nav .logo{margin-right:4px}
+ .nav li a{padding:12px 4.5px;letter-spacing:0}
+ .snd{margin-left:4px}
+}
+@media(max-width:760px){.hero .lead br{display:inline}}
+.sh h2,.sh p{text-wrap:balance}
+#world .world-kicker,#people .people-chapter,#bonds .bonds-chapter,#people .people-index-head small,#bonds .bond-intro-line span:first-child{display:none}
+#bonds .bond-intro-line{justify-content:flex-end}
+#people .people-index-head h3{margin-top:0}
+#world,#people,#bonds.bonds,#archive.forbidden-library,#resonance{padding-top:clamp(64px,7vw,104px);padding-bottom:clamp(64px,7vw,104px)}
+@media(max-width:650px){#bonds .arcana-topline small{font-size:0;letter-spacing:0}#bonds .arcana-topline small span{font-size:10px;letter-spacing:.16em}}
+.sh{margin-bottom:clamp(28px,3.6vw,48px)}
+#world::before,#people::before,#bonds::before,#archive::before,#resonance::before{
+ -webkit-mask-image:linear-gradient(180deg,transparent,#000 240px,#000 calc(100% - 240px),transparent);
+ mask-image:linear-gradient(180deg,transparent,#000 240px,#000 calc(100% - 240px),transparent)}
+</style>
 </head>
 <body>
 <div id="intro" class="op-v2" aria-label="솔라리아 오프닝">
@@ -1085,7 +1105,7 @@ footer{background:#080D16}
       <div class="hero-rule" aria-hidden="true"><span></span><i></i><span></span></div>
       <h1 id="heroTitle">솔라리아</h1>
       <p class="tag">태양의 제국, 균열의 시대</p>
-      <p class="lead">누군가는 옥좌를 원했고,<br>누군가는 진실을 감췄으며,<br>누군가는 오직 당신을 기다렸다.</p>
+      <p class="lead">누군가는 옥좌를 원했고, <br>누군가는 진실을 감췄으며, <br>누군가는 오직 당신을 기다렸다.</p>
       <div class="cta">
         <a class="btn p" href="#world">제국 탐험하기 <span aria-hidden="true">↗</span></a>
         <a class="btn g" href="#people">인물 기록 열람 <span aria-hidden="true">↗</span></a>
@@ -1096,6 +1116,7 @@ footer{background:#080D16}
   <div class="hero-place" aria-hidden="true"><span>NORTHERN FRONTIER</span><b>보레알 대공령 · 글라시스 방벽</b></div>
   <div class="cue">SCROLL TO EXPLORE</div>
   <button class="replay" data-replay type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12a8 8 0 1 0 2.3-5.6"/><path d="M4 4v4h4"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg>오프닝 다시 보기</button>
+  <button class="replay nox-replay" data-nox-replay type="button" hidden>녹스 이벤트 다시 보기</button>
 </section>
 
 <section class="sec world" id="world"><div class="wrap">
@@ -1103,7 +1124,7 @@ footer{background:#080D16}
     <p>태양은 수백 년 동안 이 제국을 비췄다. 빛이 오래 머문 만큼, 그늘도 깊어졌다.</p></div>
   <div class="world-prologue" aria-label="제국 기록 서문">
   <span class="world-kicker">THE CHRONICLES OF SOLARIA</span>
-  <p>태양이 비추는 제국에도, 빛이 닿지 않는 곳이 있다.</p>
+  <p>태양이 비추는 제국에도,<br>빛이 닿지 않는 곳이 있다.</p>
   <span class="world-prologue-line" aria-hidden="true"></span>
 </div>
 <div class="world-chapters">
@@ -1203,7 +1224,7 @@ footer{background:#080D16}
 </div></section>
 
 <section class="sec bonds" id="bonds"><div class="wrap">
- <div class="sh"><span class="bonds-chapter">THE CELESTIAL THREADS</span><h2>인물 관계도</h2><div class="orn"><i></i></div><p>서로를 끌어당기는 인연, 부딪히는 신념. 제국 전체와 여덟 권역의 별자리를 오가며 인연과 갈등을 탐색하세요.</p></div>
+ <div class="sh"><span class="bonds-chapter">THE CELESTIAL THREADS</span><h2>인물 관계도</h2><div class="orn"><i></i></div><p>서로를 끌어당기는 인연, 부딪히는 신념. 제국 전체부터 각 권역과 세력까지, 별자리를 오가며 인연과 갈등을 탐색하세요.</p></div>
  <div class="bond-intro-line"><span>THE THREADS OF SOLARIA / EMPIRE &amp; 8 REGIONS</span><span>이름과 초상을 선택해 관계를 살펴보세요</span></div>
  <div class="bond-region-tabs" id="bondRegionTabs" role="group" aria-label="관계도 권역 선택"></div>
  <div class="arcana-layout">
@@ -1272,15 +1293,11 @@ footer{background:#080D16}
  <h2 id="riftAwakeningTitle" class="rift-film-title">기록되지 않은 균열</h2>
  <p id="riftAwakeningText" class="rift-film-status" role="status">검은 침묵 너머에서, 균열이 열린다.</p>
  <div class="rift-film-caption" aria-live="polite" aria-atomic="true"><span lang="la" id="riftFilmLatin"></span><p id="riftFilmKorean"></p></div>
- <div class="rift-event-content" id="riftFilmResult" hidden><span>SEALED ARCHIVE · UNBOUND</span><h3>균열의 봉인이 풀렸다.</h3><p>균열 너머의 인물 기록과 별자리가 열렸습니다.</p><div class="rift-event-actions"><button type="button" id="riftAwakeningExplore">균열 기록 열람 ↗</button><button type="button" id="riftAwakeningContinue">제국으로 돌아가기</button></div></div>
+ <div class="rift-event-content" id="riftFilmResult" hidden><span>SEALED ARCHIVE · UNBOUND</span><h3>균열의 봉인이 풀렸다.</h3><p>균열 너머의 인물 기록과 별자리가 열렸습니다.</p><div class="rift-event-actions"><button type="button" id="riftAwakeningExplore">균열 인물 도감 보기 ↗</button><button type="button" id="riftAwakeningContinue">제국으로 돌아가기</button></div></div>
  <audio id="riftFilmAudio" src="audio/nox_rift_event.mp3" preload="none"></audio>
 </div>
 
-<footer>
-  <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 22 12 12 22 2 12Z"/><path d="M12 7 17 12 12 17 7 12Z" fill="currentColor"/></svg>솔라리아</div>
-  케이브덕 시뮬레이션
-  <br><button class="replay2" data-replay type="button">오프닝 다시 보기</button>
-</footer>
+
 
 <script src="rift-contact.js"></script>
 <script>
@@ -1472,6 +1489,8 @@ const SECRET={
 };
 const P=PEOPLE.map(a=>({no:a[0],name:a[1],sex:a[2],age:a[3],aff:a[4],group:a[5],role:a[6],look:a[7],pers:a[8],known:a[9],quote:a[10],main:!!a[11],sealed:!!a[12]})).sort((a,b)=>a.no-b.no);
 const pad=n=>String(n).padStart(2,'0');
+// Keep sealed assets until this browser has completed the hidden film.
+window.SOLARIA_PORTRAIT_SRC=(no,kind='c')=>'img/'+kind+'/'+pad(no)+([11,12,49,50,51,52].includes(Number(no))&&window.SOLARIA_RIFT_UNLOCKED?'-unsealed':'')+'.jpg';
 const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 const $=id=>document.getElementById(id);
 
@@ -1508,7 +1527,7 @@ function setRegion(k,anim=true){
     <p class="motto">${r.tag}</p><div class="region-story-label">LAND & ATMOSPHERE / 지역 개관</div><p class="about">${r.about}</p>
     <div class="story"><b>이 땅의 이야기</b><p>${STORY[k]}</p></div>
     <div class="region-now"><b>현재 정세</b><ul>${nowLines.map(item=>`<li>${esc(item)}</li>`).join('')}</ul></div><div class="region-story-label">KEY LOCATIONS / 주요 거점</div>    <ul class="places">${r.places.filter(p=>p[0]!=='???').slice(0,5).map(p=>`<li>${p[0]}</li>`).join('')}</ul>
-    ${ppl.length?`<section class="region-people" aria-label="관련 인물"><div class="region-people-heading"><b>이 지역의 인물</b><small>관련 인물 ${ppl.length}명 · 초상을 누르면 인물 도감으로 이동</small></div><div class="who">${!show.length?`<div class="region-locked-note"><p>이 권역은 봉인되어 있습니다. 오프닝이 끝나면 드물게 균열이 열릴 수 있습니다.</p><button class="region-contact-go" type="button" data-region-contact>오프닝 다시 보기 ↗</button></div>`:""}${show.map(p=>`<button type="button" class="region-character" data-no="${p.no}" aria-label="${esc(p.name)} · ${esc(p.role)} · 인물 도감 보기"><img src="img/t/${pad(p.no)}.jpg" alt="" loading="lazy"><span class="region-character-text"><b>${esc(p.name)}</b><small>${esc(p.role)}</small></span></button>`).join('')}</div></section>`:`<div class="region-people region-people-empty">공개된 인물 기록이 없습니다.</div>`}`;
+    ${ppl.length?`<section class="region-people" aria-label="관련 인물"><div class="region-people-heading"><b>이 지역의 인물</b><small>관련 인물 ${ppl.length}명 · 초상을 누르면 인물 도감으로 이동</small></div><div class="who">${!show.length?`<div class="region-locked-note"><p>이 권역은 봉인되어 있습니다. 오프닝이 끝나면 드물게 균열이 열릴 수 있습니다.</p><button class="region-contact-go" type="button" data-region-contact>오프닝 다시 보기 ↗</button></div>`:""}${show.map(p=>`<button type="button" class="region-character" data-no="${p.no}" aria-label="${esc(p.name)} · ${esc(p.role)} · 인물 도감 보기"><img src="${window.SOLARIA_PORTRAIT_SRC(p.no,"t")}" alt="" loading="lazy"><span class="region-character-text"><b>${esc(p.name)}</b><small>${esc(p.role)}</small></span></button>`).join('')}</div></section>`:`<div class="region-people region-people-empty">공개된 인물 기록이 없습니다.</div>`}`;
   if(anim){info.classList.remove('anim');void info.offsetWidth;info.classList.add('anim')}
   info.querySelectorAll('.who button[data-no]').forEach(b=>b.onclick=()=>{const who=P.find(p=>p.no===Number(b.dataset.no));setFilter(who?.aff||k,+b.dataset.no);$('people').scrollIntoView()});
   info.querySelector('[data-region-contact]')?.addEventListener('click',()=>window.SOLARIA_RIFT_CONTACT?.begin());
@@ -1535,7 +1554,7 @@ function setFilter(f,no){
     const name=p.sealed&&!window.SOLARIA_RIFT_UNLOCKED?'???':p.name;
     return '<button type="button" class="ct'+(p.sealed&&!window.SOLARIA_RIFT_UNLOCKED?' sealed':'')+'" data-i="'+i+'" aria-current="false" aria-label="'+esc(name)+' 인물 기록">'+
       '<span class="ct-serial">'+String(i+1).padStart(2,'0')+'</span>'+
-      '<div class="im"><img src="img/t/'+pad(p.no)+'.jpg" alt="" loading="lazy"></div>'+
+      '<div class="im"><img src="'+window.SOLARIA_PORTRAIT_SRC(p.no,'t')+'" alt="" loading="lazy"></div>'+
       '<b>'+esc(name)+'</b><small>'+esc(p.sealed&&!window.SOLARIA_RIFT_UNLOCKED?'봉인된 기록':p.role)+'</small></button>';
   }).join('');
   strip.querySelectorAll('.ct').forEach(b=>b.onclick=()=>setPerson(+b.dataset.i));
@@ -1586,7 +1605,7 @@ function setPerson(i,anim=true){
     }
   }
   cstage.innerHTML='<div class="cpor'+(anim?' anim':'')+(sealed?' sealed':'')+'">'+
-    '<span class="ln"></span>'+(sealed?'<div class="cast-sealed-art" aria-hidden="true"><span>◇</span><b>SEALED PORTRAIT</b></div>':'<img src="img/c/'+pad(p.no)+'.jpg" alt="'+esc(name)+'">')+
+    '<span class="ln"></span>'+(sealed?'<div class="cast-sealed-art" aria-hidden="true"><span>◇</span><b>SEALED PORTRAIT</b></div>':'<img src="'+window.SOLARIA_PORTRAIT_SRC(p.no,'c')+'" alt="'+esc(name)+'">')+
     '<span class="cpor-dark" aria-hidden="true"></span><span class="cpor-top">SOLARIA · DOSSIER '+pad(p.no)+'</span>'+
     (sealed?'<span class="cpor-seal" aria-hidden="true">RECORD SEALED</span>':'')+
     '<span class="cpor-bottom">'+esc(AFF[p.aff]||'제국')+' / PERSONNEL RECORD</span></div>'+
