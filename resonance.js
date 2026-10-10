@@ -1,128 +1,162 @@
-/* Solaria — magical resonance alignment minigame v2. No personality quiz. */
+/* Solaria — forbidden resonance experiment v3: scripted branching event */
 (()=>{
 'use strict';
 const root=document.getElementById('resonance');
 if(!root)return;
-const area=document.getElementById('resContent'),gem=document.getElementById('resGem'),phaseText=document.getElementById('resPhase');
-const storage='solaria-resonance-alignment-v1';
-const values=[
- {key:'north',title:'빙설의 수호석',latin:'BOREAL · GUARDIAN',color:'#A7CEEC',region:'north',person:'카시안 보레알',faction:'north',no:3,desc:'차갑고 단단한 수호의 파장. 북부의 마석처럼 오래 버티며 흔들리지 않는 울림이 감지되었습니다.'},
- {key:'capital',title:'태양의 권능석',latin:'AURUM · SOVEREIGN',color:'#E5C278',region:'capital',person:'아우구스 솔라리아',faction:'capital',no:1,desc:'금빛으로 맥동하는 권능의 파장. 제국의 중심에서 울리는 태양 마석의 공명을 감지했습니다.'},
- {key:'tower',title:'성운의 탐구석',latin:'ARCANA · SCHOLAR',color:'#BCA9EB',region:'capital',person:'노바',faction:'tower',no:8,desc:'별빛처럼 분기하는 탐구의 파장. 아직 밝혀지지 않은 마력 구조와 반응하는 공명입니다.'},
- {key:'east',title:'녹음의 공명석',latin:'AURORA · WARDEN',color:'#98CAA2',region:'east',person:'일리아나',faction:'east',no:5,desc:'고요하면서도 오래 이어지는 숲의 파장. 고대의 녹음과 비슷한 회복의 울림이 감지되었습니다.'},
- {key:'west',title:'황혼의 결단석',latin:'VESPER · VANGUARD',color:'#E3A579',region:'west',person:'발레리아 베스퍼',faction:'west',no:6,desc:'날카롭고 빠르게 떨리는 황혼의 파장. 서부 변경의 거친 마석과 유사한 반응이 나타났습니다.'},
- {key:'south',title:'조류의 교섭석',latin:'AUSTRAL · VOYAGER',color:'#87C8CF',region:'south',person:'루치안 베르가',faction:'south',no:4,desc:'흐름을 따라 변하는 조류의 파장. 남부의 항로처럼 자유롭게 이어지는 마력의 결이 감지되었습니다.'}
-];
-let mode='idle',steps=[3,6,2],moves=0,result=null,lock=false,winTimer=0;
-try{const saved=JSON.parse(localStorage.getItem(storage)||'null');if(saved&&saved.result&&values.some(t=>t.key===saved.result)){result=values.find(t=>t.key===saved.result);mode='result'}}catch(e){}
-function persist(){try{localStorage.setItem(storage,JSON.stringify({result:result?.key||null}))}catch(e){}}
-function crystalMarkup(){
- gem.innerHTML='<div class="res-game-device" aria-label="3개의 마력 고리를 기준선에 정렬하는 장치">'+
- '<span class="res-axis" aria-hidden="true"></span>'+
- [0,1,2].map(i=>'<button type="button" class="res-ring res-ring-'+i+'" data-res-ring="'+i+'" aria-label="제'+(i+1)+'고리 시계 방향 회전" title="이 고리를 눌러 시계 방향 회전"><span class="res-ring-track"><span class="res-ring-mark">◆</span></span></button>').join('')+
- '<div class="res-core"><div class="res-core-gem"></div><span class="res-core-aura"></span></div>'+
- '</div>';
- updateDevice();
-}
-function updateDevice(){
- gem.style.setProperty('--gem',result?.color||'#A9B8ED');
- gem.classList.toggle('res-success',mode==='resolving'||mode==='result');
- for(let i=0;i<3;i++){
-  const ring=gem.querySelector('[data-res-ring="'+i+'"]');if(!ring)continue;
-  const done=steps[i]===0;
-  ring.classList.toggle('is-aligned',done);
-  ring.disabled=mode!=='playing'||done;
-  ring.querySelector('.res-ring-track').style.transform='rotate('+(steps[i]*45)+'deg)';
-  ring.setAttribute('aria-label','제'+(i+1)+'고리 '+(done?'정렬 완료':'현재 '+steps[i]*45+'도, 클릭하여 시계 방향 회전'));
+const area=document.getElementById('resContent'),gem=document.getElementById('resGem'),phase=document.getElementById('resPhase');
+const SAVE='solaria-forbidden-experiment-v1';
+const variants={
+ boost:{name:'출력 증폭',line:'마력 출력이 허용 범위를 넘어섭니다. 수정 내부의 빛이 붉게 갈라집니다.',code:'OUTPUT +25%',effect:'과출력으로 장치의 손상 위험이 높아졌습니다.',route:'west',stone:'황혼의 결단석',note:'증폭된 파장이 서부의 거친 마석과 유사합니다.'},
+ hold:{name:'현상 유지',line:'출력은 안정적입니다. 그러나 마석 내부에서 외부 파장이 관측됩니다.',code:'OUTPUT NORMAL',effect:'기록이 안정적으로 보존되었으나 간섭은 사라지지 않았습니다.',route:'north',stone:'빙설의 수호석',note:'고요한 파장이 북부의 수호석과 유사합니다.'},
+ stabilize:{name:'안정화 각인',line:'각인이 작동합니다. 마석의 외곽은 가라앉았지만 중심에서 미지의 신호가 남습니다.',code:'SEALING GLYPH',effect:'간섭을 억제했으나 잔류 신호가 내부에 갇혔습니다.',route:'tower',stone:'성운의 탐구석',note:'잔류 파장을 분석한 결과 마탑의 탐구석과 유사합니다.'}
+};
+const contacts={
+ west:{region:'west',faction:'west',no:6,person:'발레리아 베스퍼'},
+ north:{region:'north',faction:'north',no:3,person:'카시안 보레알'},
+ tower:{region:'capital',faction:'tower',no:8,person:'노바'}
+};
+let phaseKey='intro',first=null,last=null,rare=false,history={force:false,seal:false,rare:false},timer=0;
+try{
+ const saved=JSON.parse(localStorage.getItem(SAVE)||'null');
+ if(saved&&typeof saved==='object'){
+  for(const name of ['force','seal','rare'])history[name]=!!saved.history?.[name];
+  const v=saved.last;
+  if(v&&variants[v.first]&&['force','stop','seal'].includes(v.last)){
+   first=v.first;last=v.last;rare=!!v.rare;phaseKey='end';
+  }
  }
+}catch(e){}
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function persist(){
+ try{localStorage.setItem(SAVE,JSON.stringify({version:1,last:first&&last?{first,last,rare}:null,history}))}catch(e){}
 }
-function begin(){
- clearTimeout(winTimer);
- mode='playing';lock=false;moves=0;result=null;
- steps=Array.from({length:3},()=>1+Math.floor(Math.random()*7));
- crystalMarkup();render();
+function announceArchive(){
+ window.dispatchEvent(new CustomEvent('solaria-forbidden-log',{detail:{history:{...history}}}));
+}
+function decorate(){
+ root.dataset.experimentPhase=phaseKey;
+ root.dataset.experimentTone=phaseKey==='end'?(last==='force'?'critical':last==='seal'?'sealed':'safe'):phaseKey==='warning'||phaseKey==='decision'?'warning':'normal';
+ gem.innerHTML='<div class="forbidden-apparatus" aria-hidden="true"><span class="forbidden-circuit one"></span><span class="forbidden-circuit two"></span><span class="forbidden-gem"></span><span class="forbidden-spark"></span></div>';
+ phase.textContent={
+  intro:'SPECIMEN READY · EXPERIMENT 07',
+  calibration:'MEASUREMENT IN PROGRESS',
+  warning:'UNKNOWN INTERFERENCE',
+  decision:'EMERGENCY PROTOCOL',
+  end:last==='force'?'UNCLASSIFIED · FILE SEALED':last==='seal'?'SEAL COMPLETE':'PROCEDURE TERMINATED'
+ }[phaseKey]||'EXPERIMENT 07';
+}
+function button(action,title,description,tone=''){
+ return '<button type="button" class="forbidden-choice '+tone+'" data-forbidden="'+action+'"><b>'+esc(title)+'</b><span>'+esc(description)+'</span><em aria-hidden="true">↗</em></button>';
+}
+function miniLog(code,value){
+ return '<div class="forbidden-logline"><span>'+esc(code)+'</span><b>'+esc(value)+'</b></div>';
+}
+function start(){
+ clearTimeout(timer);first=null;last=null;rare=Math.random()<0.08;
+ phaseKey='calibration';render();
+}
+function decide(value){
+ if(phaseKey!=='calibration'||!variants[value])return;
+ first=value;phaseKey='warning';render();
+}
+function finish(value){
+ if(phaseKey!=='decision'||!['force','stop','seal'].includes(value))return;
+ last=value;phaseKey='end';
+ if(value==='force')history.force=true;
+ if(value==='seal')history.seal=true;
+ if(rare)history.rare=true;
+ persist();announceArchive();render();
 }
 function reset(){
- clearTimeout(winTimer);
- result=null;mode='idle';steps=[3,6,2];moves=0;lock=false;
- try{localStorage.removeItem(storage)}catch(e){}
- crystalMarkup();render();
+ clearTimeout(timer);first=null;last=null;rare=false;phaseKey='intro';persist();render();
 }
-function turn(index,delta){
- if(mode!=='playing'||lock||!Number.isInteger(index)||index<0||index>2||steps[index]===0)return;
- steps[index]=(steps[index]+delta+8)%8;moves++;
- updateDevice();
- renderProgress();
- if(steps.every(v=>v===0)){
-  lock=true;mode='resolving';phaseText.textContent='RESONANCE STABILIZED';
-  gem.classList.add('res-success');
-  const status=area.querySelector('.res-game-status');
-  if(status)status.textContent='모든 고리가 정렬되었습니다. 마석이 파장을 판독하고 있습니다.';
-  area.querySelectorAll('.res-turn-btn').forEach(b=>b.disabled=true);
-  winTimer=setTimeout(()=>{
-   // A stone's resonance is an in-world random magical reading, not a personality diagnosis.
-   result=values[Math.floor(Math.random()*values.length)];mode='result';persist();updateDevice();render();
-  },1150);
- }
+function displayIntro(){
+ return '<span class="forbidden-overline">MAGIC TOWER / EXPERIMENT NO.07</span>'+
+  '<h3>마탑의 금지된 실험</h3>'+
+  '<p class="res-copy">제7실험기의 정상 감응 검사 기록이 일부 훼손되었습니다. 현재 관측된 이상 현상의 원인은 확인되지 않았습니다.</p>'+
+  '<div class="forbidden-report"><span>실험 경고</span><p>마석의 중심부에서 원인 불명의 간섭이 반복되고 있습니다. 검사를 계속한다면 대응 조치는 관측자가 직접 결정해야 합니다.</p></div>'+
+  '<div class="forbidden-status"><span>장치 상태</span><b>가동 대기</b><span class="forbidden-dot"></span></div>'+
+  '<div class="res-actions"><button type="button" class="res-primary" data-forbidden="start">감응 실험 시작 ↗</button>'+
+  (history.force||history.seal?'<a class="res-secondary" href="#archive">보관된 기록 열람 ↗</a>':'')+'</div>';
 }
-function renderProgress(){
- const n=steps.filter(v=>v===0).length;
- phaseText.textContent=n===3?'RESONANCE STABILIZED':'ALIGNMENT '+String(n).padStart(2,'0')+' / 03';
- const counter=document.getElementById('resAligned'),bar=document.getElementById('resProgressBar');
- if(counter)counter.textContent=n+' / 3 정렬';
- if(bar)bar.style.width=(n/3*100)+'%';
- steps.forEach((v,i)=>{
-  const line=area.querySelector('[data-res-row="'+i+'"]');
-  if(!line)return;
-  const done=v===0;
-  line.classList.toggle('is-aligned',done);
-  const st=line.querySelector('.res-ring-state');if(st)st.textContent=done?'✓ 정렬 완료':'미정렬 · 조율 필요';
-  line.querySelectorAll('.res-turn-btn').forEach(b=>b.disabled=done);
- });
- const st=area.querySelector('.res-game-status');
- if(st&&!lock)st.textContent=n?'빛이 안정되고 있습니다. 남은 고리를 조율하세요.':'고리의 마력 표식을 위쪽 기준선에 맞춰 주세요.';
+function displayCalibration(){
+ return '<span class="forbidden-overline">PHASE Ⅰ / INITIAL OBSERVATION</span>'+
+  '<h3>마력이 흐르기 시작합니다.</h3>'+
+  '<div class="forbidden-console">'+miniLog('00:01','마력 흐름 안정')+miniLog('00:03','외부 간섭 미약')+miniLog('00:04','출력 조정 명령 대기')+'</div>'+
+  '<p class="res-copy">중앙 마석이 희미하게 발광합니다. 연구실은 조용합니다. 지금 어떤 조치를 취하시겠습니까?</p>'+
+  '<div class="forbidden-choices">'+
+   button('boost','출력을 조금 더 높인다','간섭의 정체를 확인하기 위해 출력을 올린다.')+
+   button('hold','현재 상태를 유지한다','측정값이 충분히 쌓일 때까지 기다린다.')+
+   button('stabilize','안정화 각인을 삽입한다','장치가 흔들리기 전에 보호 각인을 사용한다.')+
+  '</div>';
+}
+function displayWarning(){
+ const v=variants[first];
+ return '<span class="forbidden-overline">PHASE Ⅱ / ANOMALOUS SIGNAL</span>'+
+  '<h3 class="forbidden-warning-title">비정상적인 파장 감지</h3>'+
+  '<div class="forbidden-console warning">'+miniLog('01:09',v.code)+miniLog('01:11','기존 마석 분류와 불일치')+miniLog('01:12','외부 간섭 경고')+
+  (rare?miniLog('01:13','관측자가 먼저 관측되었습니다'):'')+'</div>'+
+  '<p class="res-copy">'+esc(v.line)+'</p>'+
+  '<p class="forbidden-whisper">'+(rare?'「…드디어.」 — 출처를 특정할 수 없는 음성 기록':'기록되지 않은 짧은 울림이 관측실을 지나갑니다.')+'</p>'+
+  '<div class="res-actions"><button type="button" class="res-primary" data-forbidden="continue">대응 조치 결정 ↗</button></div>';
+}
+function displayDecision(){
+ return '<span class="forbidden-overline">PHASE Ⅲ / EMERGENCY PROTOCOL</span>'+
+  '<h3>장치가 정지를 거부합니다.</h3>'+
+  '<p class="res-copy">'+esc(variants[first].effect)+' 마석의 가장 안쪽에서 붉은 빛이 한 번 깜빡였습니다.</p>'+
+  '<div class="forbidden-console danger">'+miniLog('경고','측정 불가능한 파장 감지')+miniLog('명령','관측자 결정 대기')+'</div>'+
+  '<div class="forbidden-choices">'+
+  button('force','실험을 강행한다','안전을 포기하고 원인을 끝까지 관측한다.','danger')+
+  button('stop','즉시 장치를 정지한다','측정 가능한 값만 남기고 검사를 종료한다.')+
+  button('seal','봉인 절차를 실행한다','알 수 없는 신호를 장치 안에 가둔다.','special')+
+  '</div>';
+}
+function displayEnd(){
+ const v=variants[first];
+ const common='<span class="forbidden-overline">EXPERIMENT RESULT / '+(last==='force'?'UNCLASSIFIED':last==='stop'?'NORMAL RECORD':'SEALED EVIDENCE')+'</span>';
+ const rareNote=rare?'<p class="forbidden-rare">[추가 음성 기록] “관측자가 먼저 관측되었다.” 연구실의 누구도 이 문장을 입력하지 않았다.</p>':'';
+ if(last==='force')return common+
+  '<h3 class="forbidden-warning-title">결과: 분류 불가</h3>'+
+  '<div class="forbidden-console danger">'+miniLog('출력','측정 범위를 초과했습니다')+miniLog('대상','기존 마석 계열과 일치하지 않음')+miniLog('처리','기밀 등급 자동 상향')+'</div>'+
+  '<p class="res-copy">'+esc(v.effect)+' 기록의 마지막에는 관측실 외부에서 발생한 것으로 보이는 신호가 남아 있습니다. 그것이 무엇인지는 밝혀지지 않았습니다.</p>'+
+  rareNote+
+  '<div class="forbidden-reward"><b>◆ 비정규 기록 EX-07 획득</b><p>분류 불가 반응 보고서가 기밀 기록실에 보관되었습니다.</p></div>'+endActions();
+ if(last==='seal')return common+
+  '<h3>결과: 임시 봉인 성공</h3>'+
+  '<div class="forbidden-console sealed">'+miniLog('각인','봉인 조치 완료')+miniLog('잔류','내부 신호 감쇠')+miniLog('로그','정지 후 추가 기록 확인')+'</div>'+
+  '<p class="res-copy">마석이 어두워집니다. 모든 장치가 멈춘 뒤에도 기록 장치의 잉크가 잠깐 움직였습니다. '+esc(v.effect)+'</p>'+
+  rareNote+
+  '<div class="forbidden-reward"><b>◆ 비정규 기록 EX-07 획득</b><p>봉인 후 잔류 신호 보고서가 기밀 기록실에 보관되었습니다.</p></div>'+endActions();
+ const c=contacts[v.route];
+ return common+'<h3>결과: 일반 공명 확인</h3>'+
+ '<div class="forbidden-console safe">'+miniLog('차단','외부 간섭 측정 중단')+miniLog('잔여 값','정상 범위 내 기록 확보')+'</div>'+
+ '<p class="res-copy">장치가 천천히 멈춥니다. '+esc(v.note)+'</p>'+
+ '<div class="forbidden-reward"><b>◇ '+esc(v.stone)+'</b><p>정상 공명값을 복구했습니다. 단, 외부 간섭의 원인은 확인하지 못했습니다.</p></div>'+
+ '<div class="forbidden-result-links"><button type="button" class="res-secondary" data-res-region="'+c.region+'">관련 권역 보기 ↗</button><button type="button" class="res-secondary" data-res-person="'+v.route+'">'+esc(c.person)+' 기록 ↗</button></div>'+endActions();
+}
+function endActions(){
+ return '<div class="res-actions"><button type="button" class="res-primary" data-forbidden="restart">다른 선택으로 다시 실험 ↻</button>'+
+ ((last==='force'||last==='seal')?'<a class="res-secondary" href="#archive">기밀 기록실 확인 ↗</a>':'')+'</div>';
 }
 function render(){
- if(mode==='idle'){
-  phaseText.textContent='RESONANCE DEVICE / STANDBY';
-  area.innerHTML='<span class="res-game-overline">AURUM · ARCANE EXAMINATION</span><h3>마석 공명 조율</h3>'+
-  '<p class="res-copy">마석은 질문하지 않습니다. 대신 당신의 손길에 따라 세 개의 마력 고리가 반응합니다.</p>'+
-  '<div class="res-instructions"><b>검사 방법</b><p>고리를 클릭하거나 좌우 화살표로 회전시키세요. 각 고리의 빛나는 ◆ 표식이 <strong>맨 위의 기준선</strong>에 닿으면 자동으로 고정됩니다.</p></div>'+
-  '<div class="res-game-stat"><span>조율 단계</span><strong>3개의 마력 고리</strong></div>'+
-  '<div class="res-actions"><button type="button" class="res-primary" data-res-start>장치 활성화 ↗</button></div>';
- }else if(mode==='playing'||mode==='resolving'){
-  area.innerHTML='<div class="res-game-head"><span>MAGIC STONE ALIGNMENT</span><b id="resAligned">0 / 3 정렬</b></div>'+
-   '<div class="res-progress"><i id="resProgressBar"></i></div>'+
-   '<h3>공명 고리를 맞춰 주세요</h3><p class="res-copy">각 고리의 <strong>◆ 표식</strong>을 위쪽 기준선에 맞추면 됩니다. 왼쪽 장치의 고리를 직접 눌러도 회전해요.</p>'+
-   '<div class="res-ring-controls">'+[0,1,2].map(i=>'<div class="res-ring-row" data-res-row="'+i+'">'+
-   '<div class="res-ring-label"><b>제 '+['Ⅰ','Ⅱ','Ⅲ'][i]+' 고리</b><small class="res-ring-state">미정렬 · 조율 필요</small></div>'+
-   '<div class="res-ring-buttons"><button class="res-turn-btn" type="button" data-res-turn="'+i+'" data-res-dir="-1" aria-label="제'+(i+1)+'고리 반시계 방향 회전">↶</button>'+
-   '<button class="res-turn-btn" type="button" data-res-turn="'+i+'" data-res-dir="1" aria-label="제'+(i+1)+'고리 시계 방향 회전">↷</button></div></div>').join('')+'</div>'+
-   '<p class="res-game-status" role="status">고리의 마력 표식을 위쪽 기준선에 맞춰 주세요.</p>'+
-   '<div class="res-actions"><button type="button" class="res-secondary" data-res-restart>처음부터 다시 조율</button></div>';
-  renderProgress();
- }else if(mode==='result'){
-  const t=result;phaseText.textContent='RESONANCE CONFIRMED';
-  area.innerHTML='<span class="res-result-type">EXAMINATION COMPLETE · '+t.latin+'</span>'+
-  '<h3 class="res-result-title">'+t.title+'</h3>'+
-  '<p class="res-copy">세 개의 공명 고리가 하나의 파장으로 결합되었습니다.</p>'+
-  '<div class="res-result-note" style="--r-color:'+t.color+'">'+t.desc+'</div>'+
-  '<p class="res-game-status">이 결과는 성격 진단이 아닌, 마석이 이번 조율에서 보여준 가상의 공명 기록입니다.</p>'+
-  '<div class="res-result-links"><button class="res-secondary" type="button" data-res-region="'+t.region+'">관련 권역 보기 ↗</button>'+
-  '<button class="res-secondary" type="button" data-res-person="'+t.key+'">'+t.person+' 기록 ↗</button></div>'+
-  '<div class="res-actions"><button class="res-primary" type="button" data-res-restart>다시 조율하기 ↻</button></div>';
- }
- updateDevice();
+ decorate();
+ area.innerHTML=phaseKey==='intro'?displayIntro():phaseKey==='calibration'?displayCalibration():phaseKey==='warning'?displayWarning():phaseKey==='decision'?displayDecision():displayEnd();
 }
 root.addEventListener('click',e=>{
- const start=e.target.closest('[data-res-start]');if(start){begin();return}
- const restart=e.target.closest('[data-res-restart]');if(restart){reset();return}
- const direct=e.target.closest('[data-res-ring]');if(direct){turn(+direct.dataset.resRing,1);return}
- const b=e.target.closest('[data-res-turn]');if(b){const idx=+b.dataset.resTurn,dir=+b.dataset.resDir;turn(idx,dir);return}
+ const choice=e.target.closest('[data-forbidden]');
+ if(choice){
+  const act=choice.dataset.forbidden;
+  if(act==='start')start();
+  else if(['boost','hold','stabilize'].includes(act))decide(act);
+  else if(act==='continue'&&phaseKey==='warning'){phaseKey='decision';render()}
+  else if(['force','stop','seal'].includes(act))finish(act);
+  else if(act==='restart')reset();
+  return;
+ }
  const reg=e.target.closest('[data-res-region]');
  if(reg){if(typeof setRegion==='function')setRegion(reg.dataset.resRegion,false);document.getElementById('regions')?.scrollIntoView({behavior:'smooth',block:'start'});return}
  const person=e.target.closest('[data-res-person]');
- if(person){const t=values.find(x=>x.key===person.dataset.resPerson);if(t&&typeof setFilter==='function')setFilter(t.faction,t.no);document.getElementById('people')?.scrollIntoView({behavior:'smooth',block:'start'});}
+ if(person){const c=contacts[person.dataset.resPerson];if(c&&typeof setFilter==='function')setFilter(c.faction,c.no);document.getElementById('people')?.scrollIntoView({behavior:'smooth',block:'start'});}
 });
-crystalMarkup();render();
+render();announceArchive();
 })();
