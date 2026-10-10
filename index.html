@@ -1474,6 +1474,8 @@ const SECRET={
 };
 const P=PEOPLE.map(a=>({no:a[0],name:a[1],sex:a[2],age:a[3],aff:a[4],group:a[5],role:a[6],look:a[7],pers:a[8],known:a[9],quote:a[10],main:!!a[11],sealed:!!a[12]})).sort((a,b)=>a.no-b.no);
 const pad=n=>String(n).padStart(2,'0');
+// Keep sealed assets until this browser has completed the hidden film.
+window.SOLARIA_PORTRAIT_SRC=(no,kind='c')=>'img/'+kind+'/'+pad(no)+([11,12,49,50,51,52].includes(Number(no))&&window.SOLARIA_RIFT_UNLOCKED?'-unsealed':'')+'.jpg';
 const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 const $=id=>document.getElementById(id);
 
@@ -1510,7 +1512,7 @@ function setRegion(k,anim=true){
     <p class="motto">${r.tag}</p><div class="region-story-label">LAND & ATMOSPHERE / 지역 개관</div><p class="about">${r.about}</p>
     <div class="story"><b>이 땅의 이야기</b><p>${STORY[k]}</p></div>
     <div class="region-now"><b>현재 정세</b><ul>${nowLines.map(item=>`<li>${esc(item)}</li>`).join('')}</ul></div><div class="region-story-label">KEY LOCATIONS / 주요 거점</div>    <ul class="places">${r.places.filter(p=>p[0]!=='???').slice(0,5).map(p=>`<li>${p[0]}</li>`).join('')}</ul>
-    ${ppl.length?`<section class="region-people" aria-label="관련 인물"><div class="region-people-heading"><b>이 지역의 인물</b><small>관련 인물 ${ppl.length}명 · 초상을 누르면 인물 도감으로 이동</small></div><div class="who">${!show.length?`<div class="region-locked-note"><p>이 권역은 봉인되어 있습니다. 오프닝이 끝나면 드물게 균열이 열릴 수 있습니다.</p><button class="region-contact-go" type="button" data-region-contact>오프닝 다시 보기 ↗</button></div>`:""}${show.map(p=>`<button type="button" class="region-character" data-no="${p.no}" aria-label="${esc(p.name)} · ${esc(p.role)} · 인물 도감 보기"><img src="img/t/${pad(p.no)}.jpg" alt="" loading="lazy"><span class="region-character-text"><b>${esc(p.name)}</b><small>${esc(p.role)}</small></span></button>`).join('')}</div></section>`:`<div class="region-people region-people-empty">공개된 인물 기록이 없습니다.</div>`}`;
+    ${ppl.length?`<section class="region-people" aria-label="관련 인물"><div class="region-people-heading"><b>이 지역의 인물</b><small>관련 인물 ${ppl.length}명 · 초상을 누르면 인물 도감으로 이동</small></div><div class="who">${!show.length?`<div class="region-locked-note"><p>이 권역은 봉인되어 있습니다. 오프닝이 끝나면 드물게 균열이 열릴 수 있습니다.</p><button class="region-contact-go" type="button" data-region-contact>오프닝 다시 보기 ↗</button></div>`:""}${show.map(p=>`<button type="button" class="region-character" data-no="${p.no}" aria-label="${esc(p.name)} · ${esc(p.role)} · 인물 도감 보기"><img src="${window.SOLARIA_PORTRAIT_SRC(p.no,"t")}" alt="" loading="lazy"><span class="region-character-text"><b>${esc(p.name)}</b><small>${esc(p.role)}</small></span></button>`).join('')}</div></section>`:`<div class="region-people region-people-empty">공개된 인물 기록이 없습니다.</div>`}`;
   if(anim){info.classList.remove('anim');void info.offsetWidth;info.classList.add('anim')}
   info.querySelectorAll('.who button[data-no]').forEach(b=>b.onclick=()=>{const who=P.find(p=>p.no===Number(b.dataset.no));setFilter(who?.aff||k,+b.dataset.no);$('people').scrollIntoView()});
   info.querySelector('[data-region-contact]')?.addEventListener('click',()=>window.SOLARIA_RIFT_CONTACT?.begin());
@@ -1537,7 +1539,7 @@ function setFilter(f,no){
     const name=p.sealed&&!window.SOLARIA_RIFT_UNLOCKED?'???':p.name;
     return '<button type="button" class="ct'+(p.sealed&&!window.SOLARIA_RIFT_UNLOCKED?' sealed':'')+'" data-i="'+i+'" aria-current="false" aria-label="'+esc(name)+' 인물 기록">'+
       '<span class="ct-serial">'+String(i+1).padStart(2,'0')+'</span>'+
-      '<div class="im"><img src="img/t/'+pad(p.no)+'.jpg" alt="" loading="lazy"></div>'+
+      '<div class="im"><img src="'+window.SOLARIA_PORTRAIT_SRC(p.no,'t')+'" alt="" loading="lazy"></div>'+
       '<b>'+esc(name)+'</b><small>'+esc(p.sealed&&!window.SOLARIA_RIFT_UNLOCKED?'봉인된 기록':p.role)+'</small></button>';
   }).join('');
   strip.querySelectorAll('.ct').forEach(b=>b.onclick=()=>setPerson(+b.dataset.i));
@@ -1588,7 +1590,7 @@ function setPerson(i,anim=true){
     }
   }
   cstage.innerHTML='<div class="cpor'+(anim?' anim':'')+(sealed?' sealed':'')+'">'+
-    '<span class="ln"></span>'+(sealed?'<div class="cast-sealed-art" aria-hidden="true"><span>◇</span><b>SEALED PORTRAIT</b></div>':'<img src="img/c/'+pad(p.no)+'.jpg" alt="'+esc(name)+'">')+
+    '<span class="ln"></span>'+(sealed?'<div class="cast-sealed-art" aria-hidden="true"><span>◇</span><b>SEALED PORTRAIT</b></div>':'<img src="'+window.SOLARIA_PORTRAIT_SRC(p.no,'c')+'" alt="'+esc(name)+'">')+
     '<span class="cpor-dark" aria-hidden="true"></span><span class="cpor-top">SOLARIA · DOSSIER '+pad(p.no)+'</span>'+
     (sealed?'<span class="cpor-seal" aria-hidden="true">RECORD SEALED</span>':'')+
     '<span class="cpor-bottom">'+esc(AFF[p.aff]||'제국')+' / PERSONNEL RECORD</span></div>'+
