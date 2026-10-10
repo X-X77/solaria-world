@@ -91,4 +91,5 @@ function showPortrait(no){const p=byId.get(Number(no));if(!p||isLocked(p))return
 dlg.addEventListener('click',e=>{if(e.target===dlg||e.target.closest('[data-close]'))dlg.close();if(e.target.closest('[data-gallery-dossier]')&&displayed){dlg.close();openDossier(displayed.no)}});
 window.SOLARIA_ATLAS={focus,preview,refresh:render};
 render();
+if(typeof setPerson==='function'&&typeof cur!=='undefined')setPerson(cur,false);
 })();
