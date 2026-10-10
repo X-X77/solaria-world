@@ -1,0 +1,57 @@
+
+/* Region presentation refinement — preserve existing backgrounds and atlas. */
+#regions{background:#0A101B}
+#regions .sh{margin-bottom:38px}
+#regions .rtabs{max-width:1240px;gap:9px;margin-bottom:18px}
+#regions .rtab{gap:10px;color:#C9D1D5;font-weight:750;font-size:14px}
+#regions .rtab .th{aspect-ratio:16/8.7;border:1px solid rgba(214,183,129,.2);filter:grayscale(.55) brightness(.55);transition:filter .3s,border-color .3s,box-shadow .3s}
+#regions .rtab.on .th{border-color:#E9CD91;filter:none;box-shadow:0 0 0 1px #D8BC84}
+#regions .rstage{min-height:800px;height:clamp(800px,94vh,1050px)}
+#regions .rinfo{width:min(610px,calc(100% - 32px));background:linear-gradient(90deg,rgba(7,13,23,.30),transparent)}
+#regions .rinfo h3{font-size:clamp(55px,7vw,88px)}
+#regions .rinfo .about{max-width:55ch;font-size:15.5px;line-height:1.8;color:#E0DCD3}
+#regions .region-story-label{font:600 10px var(--lat);letter-spacing:.17em;color:#DCC49A;margin-top:22px}
+#regions .rinfo .story{margin-top:18px;padding:14px 18px;background:rgba(9,16,27,.72);border:1px solid rgba(219,185,131,.23);border-left:3px solid var(--rc)}
+#regions .rinfo .story b{font-size:12.5px}
+#regions .rinfo .story p{font-size:15px;line-height:1.76}
+#regions .region-now{margin-top:19px;padding:15px 19px;background:rgba(9,16,27,.72);border-left:2px solid var(--rc);border-top:1px solid rgba(219,185,131,.16)}
+#regions .region-now>b{display:block;font-size:13px;color:#E8D1AB;margin-bottom:10px}
+#regions .region-now ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+#regions .region-now li{position:relative;padding-left:15px;color:#D5D6D6;font-size:13px;line-height:1.65}
+#regions .region-now li:before{content:"◇";position:absolute;left:0;color:var(--rc);font-size:11px}
+#regions .rinfo .places{gap:6px;margin-top:11px}
+#regions .rinfo .places li{font-size:12px;padding:6px 10px;background:rgba(8,14,24,.66);border-color:rgba(220,184,123,.2)}
+#regions .who{margin-top:16px;flex-wrap:wrap;gap:5px}
+#regions .who button{width:43px;height:43px;margin-left:0}
+#regions .who .region-person-count{margin:0 0 0 8px;font-size:12px;color:#C6CDDA;flex-basis:auto}
+@media(max-width:760px){
+ #regions .sh{margin-bottom:28px}
+ #regions .rstage{height:auto;min-height:0;padding-top:64vw}
+ #regions .rinfo{width:auto;max-width:none;background:none;padding:0 19px 48px}
+ #regions .rinfo h3{font-size:clamp(49px,11vw,75px)}
+ #regions .rinfo .about{font-size:14.5px}
+ #regions .region-now{padding:13px 14px}
+ #regions .region-now li{font-size:12.5px}
+ #regions .rinfo .story p{font-size:14.5px}
+ #regions .who .region-person-count{flex-basis:100%;margin:7px 0 0}
+}
+@media(max-width:420px){#regions .rstage{padding-top:67vw}#regions .rinfo{padding-left:16px;padding-right:16px}#regions .rtab{font-size:12px}}
+/* Restricted character dossier — elegant document access control, no fake wax seal. */
+#people .secret{position:relative;margin-top:29px;padding:20px 21px 22px;background:linear-gradient(125deg,rgba(32,23,34,.94),rgba(19,20,34,.93));border:1px solid rgba(205,139,136,.43);box-shadow:inset 3px 0 0 rgba(216,145,132,.65)}
+#people .secret:before{content:"RESTRICTED ACCESS";position:absolute;right:17px;bottom:11px;font:600 9px var(--lat);letter-spacing:.17em;color:rgba(225,163,147,.26);pointer-events:none}
+#people .secret .hd{display:flex;align-items:center;flex-wrap:wrap;gap:12px}
+#people .secret .hd i{width:9px;height:9px;background:#E8B09A;box-shadow:0 0 12px rgba(232,122,120,.36)}
+#people .secret .hd b{flex:1;font:700 15px var(--disp);color:#F2D7C4}
+#people .secret .hd b small{display:block;margin-top:5px;font:600 9px var(--lat);letter-spacing:.12em;color:#BA9A9B}
+#people .secret .ob{margin-left:0;display:inline-flex;align-items:center;justify-content:space-between;gap:11px;min-height:44px;padding:8px 12px;background:rgba(224,186,144,.07);border:1px solid rgba(233,184,153,.53);color:#F5D5BD;font-size:12px;font-weight:800;letter-spacing:.02em;transition:background .25s,border-color .25s}
+#people .secret .ob:hover{background:rgba(233,184,153,.19);border-color:#F5D5BD}
+#people .secret .ob:focus-visible{outline:2px solid #F6DBC0;outline-offset:3px}
+#people .secret .secret-lock{font-size:20px;line-height:1;color:#E6AE92}
+#people .secret .secret-action-arrow{color:#DEB29F;font-size:15px}
+#people .secret .bars{gap:8px}
+#people .secret .bars span{height:10px;background:linear-gradient(90deg,#100E16,#23141E);box-shadow:none}
+#people .secret .tx{font-size:16px;line-height:1.86;color:#FFE5D7;padding-top:10px}
+#people .secret.open{border-color:rgba(230,185,146,.57);box-shadow:inset 3px 0 0 #E3B88C,0 7px 24px rgba(0,0,0,.18)}
+#people .secret.open .ob{display:none}
+@media(max-width:520px){#people .secret{padding:17px 14px 21px}#people .secret .hd b{min-width:140px}#people .secret .ob{min-height:42px;padding:7px 10px}#people .secret:before{font-size:8px}}
+@media(prefers-reduced-motion:reduce){#people .secret .ob{transition:none}}
