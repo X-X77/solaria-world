@@ -914,6 +914,79 @@ footer{background:#080D16}
  #people .ct:hover{transform:none}
 }
 
+
+/* HERO REDESIGN 2026-10 — full-bleed Boreal fortress image; other site sections untouched */
+#top.hero-reimagined{position:relative;display:flex;align-items:center;justify-content:flex-start;text-align:left;min-height:680px;height:100svh;max-height:none;isolation:isolate;overflow:hidden;background:#0B1422}
+#top.hero-reimagined .bg{
+  position:absolute;inset:-1%;z-index:0;
+  background-image:linear-gradient(90deg,rgba(5,12,24,.83) 0%,rgba(7,15,29,.78) 28%,rgba(7,15,29,.48) 48%,rgba(7,15,29,.08) 79%,rgba(7,15,29,.05) 100%),url('img/solaria-north-hero.webp'),url('img/r/north.jpg');
+  background-size:cover,cover,cover;background-position:center,center 47%,center 47%;background-repeat:no-repeat;
+  filter:none;opacity:1;animation:none;transform:none
+}
+#top.hero-reimagined:before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,#080D16 0%,rgba(8,13,22,.12) 23%,transparent 61%),linear-gradient(180deg,rgba(5,10,19,.30),transparent 24%);pointer-events:none}
+#top.hero-reimagined:after{content:"";position:absolute;inset:80px clamp(18px,4vw,64px) 65px;z-index:1;border-left:1px solid rgba(225,203,159,.16);border-right:1px solid rgba(225,203,159,.07);pointer-events:none}
+#top.hero-reimagined .in{width:min(100%,1440px);max-width:1440px;min-height:0;display:block;margin:0 auto;padding:110px clamp(34px,8vw,122px) 120px;position:relative;z-index:2}
+#top.hero-reimagined .hero-copy{max-width:720px;width:100%;margin:0;padding:0;position:relative;z-index:3}
+#top.hero-reimagined .hero-kicker{font:600 11px var(--lat);letter-spacing:.19em;align-items:center;gap:12px;color:#E3CFAB;margin:0 0 21px}
+#top.hero-reimagined .hero-kicker-dot{background:#E4C489;width:5px;height:5px}
+#top.hero-reimagined .hero-rule{display:flex;align-items:center;gap:13px;width:170px;color:#D2B785;margin:0 0 24px}
+#top.hero-reimagined .hero-rule span{height:1px;background:linear-gradient(90deg,#D6B884,rgba(214,184,132,.06));width:85px}
+#top.hero-reimagined .hero-rule span:last-child{width:23px;background:rgba(214,184,132,.43)}
+#top.hero-reimagined .hero-rule i{display:block;flex:none;width:7px;height:7px;border:1px solid #D6B884;transform:rotate(45deg)}
+#top.hero-reimagined h1{font:750 clamp(64px,8.1vw,116px)/1.13 var(--disp);letter-spacing:-.035em;color:#FFF3DA;-webkit-text-fill-color:#FFF3DA;background:none;filter:none;text-shadow:0 5px 28px rgba(2,7,14,.38);margin:0;white-space:nowrap}
+#top.hero-reimagined .tag{font:600 clamp(19px,2.05vw,27px)/1.65 var(--disp);letter-spacing:.02em;color:#E9DABF;margin:11px 0 0}
+#top.hero-reimagined .lead{font:400 clamp(17px,1.5vw,21px)/1.95 var(--read);color:#E0E4E5;letter-spacing:.015em;text-shadow:0 2px 12px rgba(0,0,0,.43);max-width:30em;margin:27px 0 0}
+#top.hero-reimagined .cta{display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;gap:12px;margin-top:34px}
+#top.hero-reimagined .btn{display:inline-flex;align-items:center;justify-content:center;gap:21px;clip-path:none;min-height:54px;height:auto;padding:14px 24px;font-size:15px;font-weight:700;letter-spacing:.008em;border-radius:0;transition:background .2s,border-color .2s,transform .2s}
+#top.hero-reimagined .btn:hover{transform:translateY(-2px)}
+#top.hero-reimagined .btn.p{background:#DEC391;border:1px solid #DEC391;color:#172030}
+#top.hero-reimagined .btn.g{background:rgba(8,15,27,.24);border:1px solid rgba(231,209,168,.55);color:#F3E5CF}
+#top.hero-reimagined .btn.g:hover{background:rgba(8,15,27,.53);border-color:#E6CF9F}
+#top.hero-reimagined .hero-below{display:flex;gap:14px;align-items:center;margin-top:22px}
+#top.hero-reimagined .hero-below-line{display:inline-block;width:32px;height:1px;background:#D5B67F}
+#top.hero-reimagined .hero-below a{padding:8px 5px;font-size:14px;font-weight:600;color:#E6D8BF}
+#top.hero-reimagined .hero-below a:hover{color:#FFF0D0}
+#top.hero-reimagined .hero-place{position:absolute;z-index:3;right:clamp(40px,7vw,130px);bottom:105px;text-align:right;display:grid;gap:8px;text-shadow:0 3px 15px rgba(2,7,14,.7)}
+#top.hero-reimagined .hero-place span{font:600 10px var(--lat);letter-spacing:.23em;color:#E4D5B4}
+#top.hero-reimagined .hero-place b{font:600 14px var(--disp);color:#F4EAD8}
+#top.hero-reimagined .cue{z-index:4;left:clamp(30px,5vw,80px);bottom:24px;transform:none;align-items:flex-start;font-size:10px;letter-spacing:.22em;color:#D5C7AA}
+#top.hero-reimagined .cue:after{height:22px}
+#top.hero-reimagined .replay{z-index:5;bottom:21px;right:clamp(19px,4vw,62px);background:rgba(7,14,26,.59);border-color:rgba(231,206,165,.42);font-size:12px}
+@media(max-width:850px){
+ #top.hero-reimagined .in{padding:135px 50px 150px}
+ #top.hero-reimagined .bg{background-position:center,59% 47%,59% 47%}
+ #top.hero-reimagined .hero-place{right:42px;bottom:101px}
+ #top.hero-reimagined h1{font-size:clamp(62px,9vw,100px)}
+}
+@media(max-width:650px){
+ #top.hero-reimagined{min-height:700px;height:100svh;max-height:none}
+ #top.hero-reimagined .bg{inset:0;background-image:linear-gradient(180deg,rgba(6,13,25,.51) 0%,rgba(7,15,28,.31) 25%,rgba(7,14,27,.67) 47%,rgba(6,13,25,.89) 77%,#080D16 100%),url('img/solaria-north-hero.webp'),url('img/r/north.jpg');background-position:center,65% 40%,65% 40%;background-size:cover;animation:none}
+ #top.hero-reimagined:before{background:linear-gradient(0deg,#080D16 0%,transparent 26%)}
+ #top.hero-reimagined:after{inset:75px 15px 62px}
+ #top.hero-reimagined .in{width:100%;margin:auto 0;padding:100px 28px 118px;display:flex;flex-direction:column;justify-content:flex-end;min-height:100%}
+ #top.hero-reimagined .hero-copy{max-width:510px}
+ #top.hero-reimagined .hero-kicker{font-size:9px;letter-spacing:.12em;gap:9px;margin-bottom:19px}
+ #top.hero-reimagined .hero-rule{margin-bottom:20px}
+ #top.hero-reimagined h1{font-size:clamp(60px,13.8vw,92px);white-space:normal}
+ #top.hero-reimagined .tag{font-size:clamp(18px,4.3vw,23px);margin-top:5px}
+ #top.hero-reimagined .lead{font-size:16px;line-height:1.8;margin-top:21px}
+ #top.hero-reimagined .cta{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:28px}
+ #top.hero-reimagined .btn{gap:6px;padding:13px 8px;min-height:52px;text-align:center;font-size:13px}
+ #top.hero-reimagined .hero-below{margin-top:15px}
+ #top.hero-reimagined .hero-below a{font-size:13px}
+ #top.hero-reimagined .hero-place{display:none}
+ #top.hero-reimagined .cue{bottom:22px;left:27px;font-size:9px}
+ #top.hero-reimagined .replay{bottom:18px;right:18px;height:34px;padding:0 9px;font-size:11px}
+}
+@media(max-width:380px){
+ #top.hero-reimagined .in{padding-left:22px;padding-right:22px}
+ #top.hero-reimagined .hero-kicker{font-size:8px;letter-spacing:.09em}
+ #top.hero-reimagined h1{font-size:59px}
+ #top.hero-reimagined .cta{grid-template-columns:1fr}
+ #top.hero-reimagined .btn{min-height:44px}
+}
+@media(prefers-reduced-motion:reduce){#top.hero-reimagined .bg{animation:none}#top.hero-reimagined .btn{transition:none}}
+
 </style>
 </head>
 <body>
@@ -945,24 +1018,23 @@ footer{background:#080D16}
   <button class="snd" id="snd" type="button" aria-pressed="false" aria-label="배경음 켜기" title="배경음 켜기"><i></i><i></i><i></i><i></i></button>
 </header>
 
-<section class="hero" id="top">
+<section class="hero hero-reimagined" id="top" aria-labelledby="heroTitle">
   <div class="bg" aria-hidden="true"></div>
   <div class="in">
     <div class="hero-copy">
-      <p class="hero-kicker"><span class="hero-kicker-dot" aria-hidden="true"></span> IMPERIAL ARCHIVE <span class="hero-kicker-split">/</span> THE AGE OF RIFTS</p>
-      <div class="orn"><i></i></div>
-      <div class="lat" translate="no">IMPERIUM SOLARIAE</div>
-      <h1>솔라리아</h1>
+      <p class="hero-kicker"><span class="hero-kicker-dot" aria-hidden="true"></span> IMPERIUM SOLARIAE <span class="hero-kicker-split">/</span> THE AGE OF RIFTS</p>
+      <div class="hero-rule" aria-hidden="true"><span></span><i></i><span></span></div>
+      <h1 id="heroTitle">솔라리아</h1>
       <p class="tag">태양의 제국, 균열의 시대</p>
-      <p class="lead">마물에게 먹히기 직전, 북부 대공의 칼이 당신을 구했다.<br>그런데 숲에서 나온 발자국은 모두, 당신이 있던 자리로만 향해 있었다.</p>
-      <div class="cta"><a class="btn p" data-play href="#">이야기 시작하기 <span aria-hidden="true">↗</span></a><a class="btn g" href="#world">제국의 기록 열람 <span aria-hidden="true">↓</span></a></div>
-      <div class="hero-quick"><a href="#regions"><span>01</span> 제국의 권역 <span aria-hidden="true">↗</span></a><a href="#people"><span>02</span> 인물 기록 <span aria-hidden="true">↗</span></a></div>
-    </div>
-    <div class="hero-visual" aria-hidden="true">
-      <img src="img/op/cassian.webp" alt="" fetchpriority="high" width="1660" height="1132">
-      <div class="hero-visual-caption"><span>PROLOGUE — NORTHERN FRONTIER</span><b>눈보라가 그친 자리</b></div>
+      <p class="lead">당신을 찾아온 것은,<br>마물만이 아니었다.</p>
+      <div class="cta">
+        <a class="btn p" href="#world">제국 탐험하기 <span aria-hidden="true">↗</span></a>
+        <a class="btn g" href="#people">인물 기록 열람 <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="hero-below"><span class="hero-below-line" aria-hidden="true"></span><a data-play href="#">이야기 시작하기 <span aria-hidden="true">↗</span></a></div>
     </div>
   </div>
+  <div class="hero-place" aria-hidden="true"><span>NORTHERN FRONTIER</span><b>보레알 대공령 · 글라시스 방벽</b></div>
   <div class="cue">SCROLL TO EXPLORE</div>
   <button class="replay" data-replay type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12a8 8 0 1 0 2.3-5.6"/><path d="M4 4v4h4"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg>오프닝 다시 보기</button>
 </section>
