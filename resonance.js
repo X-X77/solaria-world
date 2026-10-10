@@ -1,76 +1,128 @@
-
-/* Magical stone attunement — fictional world experience, no account required. */
+/* Solaria — magical resonance alignment minigame v2. No personality quiz. */
 (()=>{
 'use strict';
-const root=document.getElementById('resonance');if(!root)return;
-const el=document.getElementById('resContent'),gem=document.getElementById('resGem'),phase=document.getElementById('resPhase');
-const key='solaria-resonance-v1';
-const types={
- north:{title:'빙설의 수호석',code:'BOREAL · GUARDIAN',color:'#A7CEEC',intro:'소란이 닥칠수록 먼저 주변을 지키려는 마음에 마석이 응답했습니다.',note:'북부의 차가운 마석은 오래 버티는 결의를 알아봅니다. 당신에게서 감지된 파장은 단단하고 조용합니다.',region:'north',person:'카시안 보레알',personNo:3,group:'north'},
- capital:{title:'태양의 권능석',code:'AURUM · SOVEREIGN',color:'#E5C278',intro:'질서를 세우고 선택의 결과를 감당하려는 마음에 마석이 공명했습니다.',note:'황도의 태양 마석은 선명한 의지에 반응합니다. 그 빛은 눈부시지만, 때로는 그늘을 길게 드리웁니다.',region:'capital',person:'아우구스 솔라리아',personNo:1,group:'capital'},
- tower:{title:'성운의 탐구석',code:'ARCANA · SCHOLAR',color:'#BCABE6',intro:'알려지지 않은 것을 이해하려는 호기심에 마석이 반응했습니다.',note:'마탑의 기록에 따르면 이 파장은 탐구와 해석의 성질을 띱니다. 답을 찾기 위해 더 깊은 질문을 던지는 유형입니다.',region:'capital',person:'노바',personNo:8,group:'tower'},
- east:{title:'녹음의 공명석',code:'AURORA · WARDEN',color:'#98CBA3',intro:'변화를 서두르기보다 생명의 흐름을 살피는 마음에 마석이 공명했습니다.',note:'동부의 숲은 모든 것을 기억합니다. 이 감응은 기다림과 회복, 오래된 기억을 보듬는 힘을 연상시킵니다.',region:'east',person:'일리아나',personNo:5,group:'east'},
- west:{title:'황혼의 결단석',code:'VESPER · VANGUARD',color:'#E2A878',intro:'위험 앞에서 물러서지 않는 선택이 강한 파장을 만들었습니다.',note:'서부 변경에서 발견되는 거친 감응은 행동과 결단을 상징합니다. 결과를 두려워하면서도 길을 여는 사람의 빛입니다.',region:'west',person:'발레리아 베스퍼',personNo:6,group:'west'},
- south:{title:'조류의 교섭석',code:'AUSTRAL · VOYAGER',color:'#86C7CE',intro:'사람 사이에 다리를 놓고 새로운 기회를 찾는 마음에 마석이 반응했습니다.',note:'남부의 바다처럼 유연하게 움직이는 감응입니다. 낯선 사람과 낯선 이야기 사이에서 가능성을 발견합니다.',region:'south',person:'루치안 베르가',personNo:4,group:'south'}
-};
-const questions=[
- {title:'성문 밖에서 낯선 사람이 도움을 요청한다면?',opts:[['먼저 위험을 막고 안전한 곳으로 데려간다','north'],['상황을 파악한 뒤 책임질 수 있는 선택을 한다','capital'],['왜 여기까지 왔는지 원인을 조사한다','tower'],['당장의 상태를 돌보고 이야기를 들어준다','east']]},
- {title:'당신에게 낯선 지역으로 떠날 기회가 생겼다.',opts:[['아무도 가려 하지 않는 변경으로 향한다','west'],['항구에서 다양한 사람과 정보를 모은다','south'],['오래된 숲과 잊힌 유적을 살펴본다','east'],['마탑에서 관련 문헌부터 조사한다','tower']]},
- {title:'위험한 비밀을 알게 되었다면?',opts:[['사람들이 다치기 전에 단호하게 움직인다','north'],['정식 권한을 가진 사람과 질서를 세운다','capital'],['증거를 모아 진실을 확인한다','tower'],['신뢰할 수 있는 사람과 정보를 교환한다','south']]},
- {title:'함께하는 사람들 사이에 갈등이 생겼다.',opts:[['중재하며 서로의 입장을 이어 준다','south'],['기다리고 경청해 감정을 가라앉힌다','east'],['문제를 정면으로 마주하고 결정한다','west'],['모두에게 공정한 원칙을 마련한다','capital']]},
- {title:'당신이 가장 소중하게 생각하는 것은?',opts:[['지키겠다는 약속','north'],['스스로 내리는 결단','west'],['아직 발견하지 못한 지식','tower'],['사람과 사람을 잇는 인연','south'],['오래 이어질 평온','east'],['흔들리지 않는 책임','capital']]}
+const root=document.getElementById('resonance');
+if(!root)return;
+const area=document.getElementById('resContent'),gem=document.getElementById('resGem'),phaseText=document.getElementById('resPhase');
+const storage='solaria-resonance-alignment-v1';
+const values=[
+ {key:'north',title:'빙설의 수호석',latin:'BOREAL · GUARDIAN',color:'#A7CEEC',region:'north',person:'카시안 보레알',faction:'north',no:3,desc:'차갑고 단단한 수호의 파장. 북부의 마석처럼 오래 버티며 흔들리지 않는 울림이 감지되었습니다.'},
+ {key:'capital',title:'태양의 권능석',latin:'AURUM · SOVEREIGN',color:'#E5C278',region:'capital',person:'아우구스 솔라리아',faction:'capital',no:1,desc:'금빛으로 맥동하는 권능의 파장. 제국의 중심에서 울리는 태양 마석의 공명을 감지했습니다.'},
+ {key:'tower',title:'성운의 탐구석',latin:'ARCANA · SCHOLAR',color:'#BCA9EB',region:'capital',person:'노바',faction:'tower',no:8,desc:'별빛처럼 분기하는 탐구의 파장. 아직 밝혀지지 않은 마력 구조와 반응하는 공명입니다.'},
+ {key:'east',title:'녹음의 공명석',latin:'AURORA · WARDEN',color:'#98CAA2',region:'east',person:'일리아나',faction:'east',no:5,desc:'고요하면서도 오래 이어지는 숲의 파장. 고대의 녹음과 비슷한 회복의 울림이 감지되었습니다.'},
+ {key:'west',title:'황혼의 결단석',latin:'VESPER · VANGUARD',color:'#E3A579',region:'west',person:'발레리아 베스퍼',faction:'west',no:6,desc:'날카롭고 빠르게 떨리는 황혼의 파장. 서부 변경의 거친 마석과 유사한 반응이 나타났습니다.'},
+ {key:'south',title:'조류의 교섭석',latin:'AUSTRAL · VOYAGER',color:'#87C8CF',region:'south',person:'루치안 베르가',faction:'south',no:4,desc:'흐름을 따라 변하는 조류의 파장. 남부의 항로처럼 자유롭게 이어지는 마력의 결이 감지되었습니다.'}
 ];
-let answers=[],step=0,finalType=null;
-try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(saved&&Array.isArray(saved.answers)&&saved.answers.length===5&&saved.answers.every((a,i)=>questions[i].opts.some(o=>o[1]===a))){answers=saved.answers;step=5;finalType=typeof saved.type==='string'&&types[saved.type]?saved.type:null}}catch(e){}
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));
-function chooseType(){
- const scores=Object.fromEntries(Object.keys(types).map(k=>[k,0]));
- answers.forEach(k=>{scores[k]=(scores[k]||0)+1});
- const max=Math.max(...Object.values(scores));
- // Stable ties: earlier answers carry more weight, then established order.
- return Object.keys(types).filter(k=>scores[k]===max).sort((a,b)=>answers.indexOf(a)-answers.indexOf(b))[0]||'north';
+let mode='idle',steps=[3,6,2],moves=0,result=null,lock=false,winTimer=0;
+try{const saved=JSON.parse(localStorage.getItem(storage)||'null');if(saved&&saved.result&&values.some(t=>t.key===saved.result)){result=values.find(t=>t.key===saved.result);mode='result'}}catch(e){}
+function persist(){try{localStorage.setItem(storage,JSON.stringify({result:result?.key||null}))}catch(e){}}
+function crystalMarkup(){
+ gem.innerHTML='<div class="res-game-device" aria-label="3개의 마력 고리를 기준선에 정렬하는 장치">'+
+ '<span class="res-axis" aria-hidden="true"></span>'+
+ [0,1,2].map(i=>'<button type="button" class="res-ring res-ring-'+i+'" data-res-ring="'+i+'" aria-label="제'+(i+1)+'고리 시계 방향 회전" title="이 고리를 눌러 시계 방향 회전"><span class="res-ring-track"><span class="res-ring-mark">◆</span></span></button>').join('')+
+ '<div class="res-core"><div class="res-core-gem"></div><span class="res-core-aura"></span></div>'+
+ '</div>';
+ updateDevice();
 }
-function save(){try{localStorage.setItem(key,JSON.stringify({answers,type:finalType}))}catch(e){}}
-function render(){
- const done=step>=questions.length;
- gem.style.setProperty('--gem',done&&types[finalType]?types[finalType].color:'#A9B8ED');
- phase.textContent=done?'RESONANCE CONFIRMED':'AWAITING RESONANCE';
- if(done){
-  if(!finalType)finalType=chooseType();
-  const t=types[finalType];save();
-  el.innerHTML='<span class="res-result-type">EXAMINATION COMPLETE / '+esc(t.code)+'</span>'+
-   '<h3 class="res-result-title">'+esc(t.title)+'</h3><p class="res-copy">'+esc(t.intro)+'</p>'+
-   '<div class="res-result-note" style="--r-color:'+t.color+'">'+esc(t.note)+'</div>'+
-   '<div class="res-result-links"><button type="button" class="res-secondary" data-res-region="'+t.region+'">관련 권역 보기 ↗</button><button type="button" class="res-secondary" data-res-person="'+finalType+'">'+esc(t.person)+' 기록 ↗</button></div>'+
-   '<div class="res-actions"><button type="button" class="res-primary" id="resRestart">다시 검사하기 ↻</button></div>';
-  el.querySelector('#resRestart').onclick=()=>{answers=[];step=0;finalType=null;try{localStorage.removeItem(key)}catch(e){}render()};
-  return;
+function updateDevice(){
+ gem.style.setProperty('--gem',result?.color||'#A9B8ED');
+ gem.classList.toggle('res-success',mode==='resolving'||mode==='result');
+ for(let i=0;i<3;i++){
+  const ring=gem.querySelector('[data-res-ring="'+i+'"]');if(!ring)continue;
+  const done=steps[i]===0;
+  ring.classList.toggle('is-aligned',done);
+  ring.disabled=mode!=='playing'||done;
+  ring.querySelector('.res-ring-track').style.transform='rotate('+(steps[i]*45)+'deg)';
+  ring.setAttribute('aria-label','제'+(i+1)+'고리 '+(done?'정렬 완료':'현재 '+steps[i]*45+'도, 클릭하여 시계 방향 회전'));
  }
- const q=questions[step];
- el.innerHTML='<div class="res-eyebrow"><span>RESONANCE TEST</span><span>QUESTION '+String(step+1).padStart(2,'0')+' / 05</span></div>'+
- '<div class="res-progress"><i style="width:'+((step+1)/questions.length*100)+'%"></i></div>'+
- '<h3>'+esc(q.title)+'</h3><p class="res-copy">가장 마음이 끌리는 선택지를 골라 주세요.</p>'+
- '<div class="res-choices">'+q.opts.map((o,i)=>'<button type="button" class="res-choice" data-res-choice="'+i+'" aria-pressed="'+(answers[step]===o[1])+'"><span>'+String.fromCharCode(65+i)+'</span>'+esc(o[0])+'</button>').join('')+'</div>'+
- '<div class="res-actions">'+(step?'<button type="button" class="res-secondary" id="resBack">← 이전</button>':'')+'<button type="button" class="res-primary" id="resNext" '+(answers[step]?'':'disabled')+'>'+(step===4?'감응 결과 확인 ↗':'다음 질문 ↗')+'</button></div>';
- el.querySelectorAll('[data-res-choice]').forEach(b=>b.onclick=()=>{
-  answers[step]=q.opts[+b.dataset.resChoice][1];
-  el.querySelectorAll('[data-res-choice]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
-  el.querySelector('#resNext').disabled=false;
- });
- const back=el.querySelector('#resBack');
- if(back)back.onclick=()=>{step--;render()};
- el.querySelector('#resNext').onclick=()=>{
-  if(!answers[step])return;
-  step++;
-  if(step>=questions.length)finalType=chooseType();
-  render();
- };
 }
-el.addEventListener('click',e=>{
- const r=e.target.closest('[data-res-region]');
- if(r){if(typeof setRegion==='function')setRegion(r.dataset.resRegion,false);document.getElementById('regions').scrollIntoView({behavior:'smooth'});}
- const p=e.target.closest('[data-res-person]');
- if(p){const t=types[p.dataset.resPerson];if(t&&typeof setFilter==='function')setFilter(t.group,t.personNo);document.getElementById('people').scrollIntoView({behavior:'smooth'});}
+function begin(){
+ clearTimeout(winTimer);
+ mode='playing';lock=false;moves=0;result=null;
+ steps=Array.from({length:3},()=>1+Math.floor(Math.random()*7));
+ crystalMarkup();render();
+}
+function reset(){
+ clearTimeout(winTimer);
+ result=null;mode='idle';steps=[3,6,2];moves=0;lock=false;
+ try{localStorage.removeItem(storage)}catch(e){}
+ crystalMarkup();render();
+}
+function turn(index,delta){
+ if(mode!=='playing'||lock||!Number.isInteger(index)||index<0||index>2||steps[index]===0)return;
+ steps[index]=(steps[index]+delta+8)%8;moves++;
+ updateDevice();
+ renderProgress();
+ if(steps.every(v=>v===0)){
+  lock=true;mode='resolving';phaseText.textContent='RESONANCE STABILIZED';
+  gem.classList.add('res-success');
+  const status=area.querySelector('.res-game-status');
+  if(status)status.textContent='모든 고리가 정렬되었습니다. 마석이 파장을 판독하고 있습니다.';
+  area.querySelectorAll('.res-turn-btn').forEach(b=>b.disabled=true);
+  winTimer=setTimeout(()=>{
+   // A stone's resonance is an in-world random magical reading, not a personality diagnosis.
+   result=values[Math.floor(Math.random()*values.length)];mode='result';persist();updateDevice();render();
+  },1150);
+ }
+}
+function renderProgress(){
+ const n=steps.filter(v=>v===0).length;
+ phaseText.textContent=n===3?'RESONANCE STABILIZED':'ALIGNMENT '+String(n).padStart(2,'0')+' / 03';
+ const counter=document.getElementById('resAligned'),bar=document.getElementById('resProgressBar');
+ if(counter)counter.textContent=n+' / 3 정렬';
+ if(bar)bar.style.width=(n/3*100)+'%';
+ steps.forEach((v,i)=>{
+  const line=area.querySelector('[data-res-row="'+i+'"]');
+  if(!line)return;
+  const done=v===0;
+  line.classList.toggle('is-aligned',done);
+  const st=line.querySelector('.res-ring-state');if(st)st.textContent=done?'✓ 정렬 완료':'미정렬 · 조율 필요';
+  line.querySelectorAll('.res-turn-btn').forEach(b=>b.disabled=done);
+ });
+ const st=area.querySelector('.res-game-status');
+ if(st&&!lock)st.textContent=n?'빛이 안정되고 있습니다. 남은 고리를 조율하세요.':'고리의 마력 표식을 위쪽 기준선에 맞춰 주세요.';
+}
+function render(){
+ if(mode==='idle'){
+  phaseText.textContent='RESONANCE DEVICE / STANDBY';
+  area.innerHTML='<span class="res-game-overline">AURUM · ARCANE EXAMINATION</span><h3>마석 공명 조율</h3>'+
+  '<p class="res-copy">마석은 질문하지 않습니다. 대신 당신의 손길에 따라 세 개의 마력 고리가 반응합니다.</p>'+
+  '<div class="res-instructions"><b>검사 방법</b><p>고리를 클릭하거나 좌우 화살표로 회전시키세요. 각 고리의 빛나는 ◆ 표식이 <strong>맨 위의 기준선</strong>에 닿으면 자동으로 고정됩니다.</p></div>'+
+  '<div class="res-game-stat"><span>조율 단계</span><strong>3개의 마력 고리</strong></div>'+
+  '<div class="res-actions"><button type="button" class="res-primary" data-res-start>장치 활성화 ↗</button></div>';
+ }else if(mode==='playing'||mode==='resolving'){
+  area.innerHTML='<div class="res-game-head"><span>MAGIC STONE ALIGNMENT</span><b id="resAligned">0 / 3 정렬</b></div>'+
+   '<div class="res-progress"><i id="resProgressBar"></i></div>'+
+   '<h3>공명 고리를 맞춰 주세요</h3><p class="res-copy">각 고리의 <strong>◆ 표식</strong>을 위쪽 기준선에 맞추면 됩니다. 왼쪽 장치의 고리를 직접 눌러도 회전해요.</p>'+
+   '<div class="res-ring-controls">'+[0,1,2].map(i=>'<div class="res-ring-row" data-res-row="'+i+'">'+
+   '<div class="res-ring-label"><b>제 '+['Ⅰ','Ⅱ','Ⅲ'][i]+' 고리</b><small class="res-ring-state">미정렬 · 조율 필요</small></div>'+
+   '<div class="res-ring-buttons"><button class="res-turn-btn" type="button" data-res-turn="'+i+'" data-res-dir="-1" aria-label="제'+(i+1)+'고리 반시계 방향 회전">↶</button>'+
+   '<button class="res-turn-btn" type="button" data-res-turn="'+i+'" data-res-dir="1" aria-label="제'+(i+1)+'고리 시계 방향 회전">↷</button></div></div>').join('')+'</div>'+
+   '<p class="res-game-status" role="status">고리의 마력 표식을 위쪽 기준선에 맞춰 주세요.</p>'+
+   '<div class="res-actions"><button type="button" class="res-secondary" data-res-restart>처음부터 다시 조율</button></div>';
+  renderProgress();
+ }else if(mode==='result'){
+  const t=result;phaseText.textContent='RESONANCE CONFIRMED';
+  area.innerHTML='<span class="res-result-type">EXAMINATION COMPLETE · '+t.latin+'</span>'+
+  '<h3 class="res-result-title">'+t.title+'</h3>'+
+  '<p class="res-copy">세 개의 공명 고리가 하나의 파장으로 결합되었습니다.</p>'+
+  '<div class="res-result-note" style="--r-color:'+t.color+'">'+t.desc+'</div>'+
+  '<p class="res-game-status">이 결과는 성격 진단이 아닌, 마석이 이번 조율에서 보여준 가상의 공명 기록입니다.</p>'+
+  '<div class="res-result-links"><button class="res-secondary" type="button" data-res-region="'+t.region+'">관련 권역 보기 ↗</button>'+
+  '<button class="res-secondary" type="button" data-res-person="'+t.key+'">'+t.person+' 기록 ↗</button></div>'+
+  '<div class="res-actions"><button class="res-primary" type="button" data-res-restart>다시 조율하기 ↻</button></div>';
+ }
+ updateDevice();
+}
+root.addEventListener('click',e=>{
+ const start=e.target.closest('[data-res-start]');if(start){begin();return}
+ const restart=e.target.closest('[data-res-restart]');if(restart){reset();return}
+ const direct=e.target.closest('[data-res-ring]');if(direct){turn(+direct.dataset.resRing,1);return}
+ const b=e.target.closest('[data-res-turn]');if(b){const idx=+b.dataset.resTurn,dir=+b.dataset.resDir;turn(idx,dir);return}
+ const reg=e.target.closest('[data-res-region]');
+ if(reg){if(typeof setRegion==='function')setRegion(reg.dataset.resRegion,false);document.getElementById('regions')?.scrollIntoView({behavior:'smooth',block:'start'});return}
+ const person=e.target.closest('[data-res-person]');
+ if(person){const t=values.find(x=>x.key===person.dataset.resPerson);if(t&&typeof setFilter==='function')setFilter(t.faction,t.no);document.getElementById('people')?.scrollIntoView({behavior:'smooth',block:'start'});}
 });
-render();
+crystalMarkup();render();
 })();
