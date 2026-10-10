@@ -38,7 +38,9 @@ function finish(){
  if(!active||complete)return;
  complete=true;audioRequest++;cancelAnimationFrame(frame);player.pause();clearTimeout(loadTimer);soundButton.disabled=true;
  linked=true;try{localStorage.setItem(KEY,'linked')}catch(_){}
- update();veil.dataset.cut='4';veil.dataset.complete='true';latin.textContent='';korean.textContent='';
+ update();
+ if(typeof setFilter==='function')setFilter('rift',11);
+ veil.dataset.cut='4';veil.dataset.complete='true';latin.textContent='';korean.textContent='';
  status.textContent='봉인 해제 · 균열 기록 개방';result.hidden=false;document.getElementById('riftAwakeningExplore').focus({preventScroll:true});
 }
 function paint(t){
@@ -76,7 +78,7 @@ function reveal(){
  tick();
 }
 function replay(){
- if(linked){navigate('bonds');return}
+ if(linked){navigate('people');return}
  try{sessionStorage.removeItem('sol-intro')}catch(_){}
  const url=new URL(location.href);url.searchParams.set('opening','1');url.hash='';location.href=url.toString();
 }
@@ -100,7 +102,7 @@ soundButton.addEventListener('click',()=>{
  if(sound){sound=false;player.muted=true;soundUI()}else playSound();
 });
 document.getElementById('riftFilmClose').addEventListener('click',close);
-document.getElementById('riftAwakeningExplore').addEventListener('click',()=>navigate('bonds'));
+document.getElementById('riftAwakeningExplore').addEventListener('click',()=>navigate('people'));
 document.getElementById('riftAwakeningContinue').addEventListener('click',close);
 veil.addEventListener('keydown',e=>{
  if(e.key==='Escape'){e.preventDefault();close();return}

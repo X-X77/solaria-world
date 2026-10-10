@@ -27,9 +27,11 @@ with sync_playwright() as p:
   page.clock.run_for(6200);assert page.evaluate('SOLARIA_RIFT_UNLOCKED');assert page.evaluate("localStorage.getItem('solaria-noctis-contact-v1')")=='linked'
   assert page.locator('#riftFilmResult').is_visible();assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
   assert page.locator('.rift-cut').evaluate_all('imgs=>imgs.every(i=>i.naturalWidth>0)')
-  page.locator('#riftAwakeningExplore').click();assert page.locator('#riftAwakening').is_hidden();assert page.locator('#bsvg .arc-person.is-sealed').count()==0
+  page.locator('#riftAwakeningExplore').click();assert page.locator('#riftAwakening').is_hidden();assert page.locator('#chips [data-f="rift"].on').count()==1;assert page.locator('#cstage .cpor img').get_attribute('src')=='img/c/11.jpg';assert page.locator('#cstage .cpor.sealed').count()==0;page.evaluate('SOLARIA_ATLAS.focus(11)');assert page.locator('#bsvg .arc-person.is-sealed').count()==0
   assert page.locator('#bsvg [data-person="11"]').count()==1;assert '움브라' not in page.locator('#bondDetail').inner_text();assert page.locator('#bsvg [data-person="53"]').count()==0
   page.evaluate("setFilter('rift',11)");assert '녹스' in page.locator('#cstage').inner_text();assert page.locator('#strip .ct').count()==6
+  for no in [11,12,49,50,51,52]:
+   page.evaluate('(n)=>setFilter("rift",n)',no);page.wait_for_function('document.querySelector("#cstage .cpor img")?.naturalWidth>0');assert page.locator('#cstage .cpor').evaluate('e=>!e.classList.contains("sealed")');assert page.locator('#cstage .cpor img').evaluate('e=>getComputedStyle(e).filter')=='none'
   page.reload(wait_until='domcontentloaded');assert page.evaluate('SOLARIA_RIFT_UNLOCKED');page.evaluate("setFilter('rift',11)");assert '녹스' in page.locator('#cstage').inner_text()
   print('PASS', 'mobile' if mobile else 'desktop','silent full opening, 4 cuts, subtitles, completion-only unlock, persistence, public-only records');page.context.close()
  # Escape during hidden film aborts without granting new unlock.
