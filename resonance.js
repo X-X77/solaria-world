@@ -9,8 +9,8 @@ const outcomes=[
  {limit:.38,state:'faint',title:'미약 반응',line:'수정 깊숙한 곳에서 작은 빛이 숨을 쉽니다. 지금은 희미하지만, 섬세한 파장을 감지할 가능성이 남아 있습니다.'},
  {limit:.69,state:'success',title:'안정 반응',line:'마력이 일정한 리듬으로 흐릅니다. 흔들림 없이 파장을 유지하는 균형 잡힌 공명입니다.'},
  {limit:.89,state:'high',title:'고출력 반응',line:'마석 중심에서 강한 빛이 솟아납니다. 풍부한 마력을 다루기 위한 제어와 수련이 필요합니다.'},
- {limit:.99,state:'unstable',title:'불안정 반응',line:'서로 다른 파장이 부딪칩니다. 변동이 큰 마력도 자신만의 흐름을 찾으면 새로운 가능성이 됩니다.',record:'seal'},
- {limit:1,state:'burst',title:'기록 외 이상 반응',line:'분류표에 없는 파장이 관측되었습니다. 수정에 균열이 번지고 측정 장치가 경고를 남깁니다.',record:'force'}
+ {limit:.99,state:'unstable',title:'불안정 반응',line:'서로 다른 파장이 부딪칩니다. 변동이 큰 마력도 자신만의 흐름을 찾으면 새로운 가능성이 됩니다.'},
+ {limit:1,state:'burst',title:'기록 외 이상 반응',line:'분류표에 없는 파장이 관측되었습니다. 수정에 균열이 번지고 측정 장치가 경고를 남깁니다.'}
 ];
 const attributes=[
  {key:'fire',name:'불',color:'255,119,76',line:'열을 일으키고 변화를 이끄는 파장입니다.'},
@@ -61,13 +61,18 @@ function makeNoxQuote(){
 let started=null,source=null,frame=0,cooldown=0,ready=false;
 function setState(state){root.dataset.state=state}
 function saveSeenRareEvent(key){
+ let newDiscovery=false;
  try{
   let saved=JSON.parse(localStorage.getItem(SAVE)||'null');
   if(!saved||typeof saved!=='object'||Array.isArray(saved))saved={version:1};
-  saved.history={...saved.history,[key]:true};
-  localStorage.setItem(SAVE,JSON.stringify(saved));
+  newDiscovery=saved.history?.[key]!==true;
+  if(newDiscovery){
+   saved.history={...saved.history,[key]:true};
+   localStorage.setItem(SAVE,JSON.stringify(saved));
+  }
  }catch(e){}
- window.dispatchEvent(new CustomEvent('solaria-forbidden-log'));
+ if(newDiscovery)window.dispatchEvent(new CustomEvent('solaria-forbidden-log'));
+ return newDiscovery;
 }
 function evaluateResult(){
  // Three independent draws; neither duration nor saved discovery history changes odds.
@@ -97,9 +102,11 @@ function renderOutcome({strength,attribute,nox}){
  }else{
   const detail=document.createElement('p');detail.className='res-attribute-note';detail.textContent=attribute.name+' · '+attribute.line;panel.append(detail);
  }
- const records=new Set([strength.record,nox?'rare':null].filter(Boolean));
- for(const key of records)saveSeenRareEvent(key);
- if(records.size){const note=document.createElement('small');note.textContent='발견한 반응이 기밀 기록실에 보관되었습니다.';panel.append(note)}
+ if(nox&&saveSeenRareEvent('rare')){
+  const note=document.createElement('small');
+  note.textContent='금서고에 새로운 음성 기록이 추가되었습니다.';
+  panel.append(note);
+ }
  cooldown=performance.now()+900;
 }
 function tick(){
