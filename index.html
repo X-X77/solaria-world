@@ -1044,6 +1044,7 @@ footer{background:#080D16}
 <link rel="stylesheet" href="regions-polish.css">
 <link rel="stylesheet" href="design-unification.css">
 <link rel="stylesheet" href="dossier-expansion.css">
+<link rel="stylesheet" href="regional-relationships.css">
 </head>
 <body>
 <div id="intro" class="op-v2" aria-label="솔라리아 오프닝">
@@ -1200,22 +1201,15 @@ footer{background:#080D16}
 </div></section>
 
 <section class="sec bonds" id="bonds"><div class="wrap">
-  <div class="sh"><span class="bonds-chapter">POWER, LOYALTY & BETRAYAL</span><h2>인물 관계도</h2><div class="orn"><i></i></div>
-    <p>황좌와 북부의 방벽, 마석과 오래된 약속. 한 사람을 선택하면 그 주변의 관계가 드러납니다.</p></div>
-  <div class="bond-intro-line"><span>IMPERIAL RELATIONS / TEN PRINCIPAL FIGURES</span><span>주요 인물 10명 · 알려진 관계만 표시</span></div>
-  <div class="bwrap">
-    <div class="bond-board">
-      <div class="bond-board-head"><div><small>POLITICAL & PERSONAL CONNECTIONS</small><b>제국의 연결망</b></div>
-        <div class="bond-board-tools"><button type="button" id="bondAll" aria-label="전체 관계 보기">전체 보기</button><button type="button" id="bondLeft" aria-label="관계도 왼쪽 이동">‹</button><button type="button" id="bondRight" aria-label="관계도 오른쪽 이동">›</button></div>
-      </div>
-      <div class="bscroll" id="bondScroller" tabindex="0" aria-label="주요 인물 관계도, 가로로 이동하여 살펴보세요">
-        <svg id="bsvg" viewBox="0 0 1000 700" role="group" aria-label="제국 주요 인물 간 관계 연결망, 인물을 클릭하면 관계 정보가 표시됩니다."></svg>
-      </div>
-      <p class="bswipe">인물 초상을 선택하세요 · 화면을 좌우로 밀어서 탐색할 수 있습니다</p>
-      <div class="blegend" aria-label="관계 유형 안내"><span class="r">대립</span><span class="a">협력·호의</span><span class="n">긴장·얽힘</span></div>
-    </div>
-    <aside class="bside" id="bside" aria-label="선택된 인물의 관계와 관련 조연" aria-live="polite"></aside>
-  </div>
+ <div class="sh"><span class="bonds-chapter">RELATIONSHIPS OF SOLARIA</span><h2>인물 관계도</h2><div class="orn"><i></i></div><p>권역을 고르고 인물을 선택하면 그 사람을 둘러싼 연결과 갈등이 나타납니다.</p></div>
+ <div class="bond-intro-line"><span>REGIONAL CONNECTIONS / PERSONNEL ARCHIVE</span><span id="bondNetworkCount">8개 권역</span></div>
+ <div class="bond-region-tabs" id="bondRegionTabs" role="group" aria-label="관계도 권역 선택"></div>
+ <div class="bond-atlas">
+  <div class="bond-atlas-left"><div class="bond-board-head"><div><small>SELECT A PERSON</small><b id="bondRegionName">북부 관계망</b></div><span id="bondRegionSummary">인물을 선택하세요</span></div>
+  <div class="bond-roster" id="bondRoster"></div></div>
+  <aside class="bond-atlas-detail" id="bondDetail" aria-live="polite"></aside>
+ </div>
+ <p class="bond-atlas-footnote">연결된 인물은 다른 권역에 있더라도 확인할 수 있습니다. 균열 너머 정보는 선택적으로 열람합니다.</p>
 </div></section>
 
 

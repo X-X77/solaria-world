@@ -1,0 +1,55 @@
+/* Regional atlas overrides obsolete SVG-only layout, preserving the site's visual system. */
+#bonds .bond-region-tabs{display:flex;gap:7px;overflow-x:auto;scrollbar-width:thin;padding:5px 0 16px;margin-bottom:18px}
+#bonds .bond-region-tab{flex:none;min-height:42px;padding:10px 16px;background:#151F2D;color:#D6CED0;border:1px solid rgba(213,184,140,.28);font-size:14px;font-weight:700;cursor:pointer}
+#bonds .bond-region-tab.active{background:#DBBF8A;color:#16202B;border-color:#DBBF8A}
+#bonds .bond-atlas{display:grid;grid-template-columns:minmax(300px,.78fr) minmax(0,1.22fr);gap:16px;align-items:start}
+#bonds .bond-atlas-left,#bonds .bond-atlas-detail{border:1px solid rgba(221,187,136,.3);background:#111A28;min-height:540px}
+#bonds .bond-board-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#bonds #bondRegionSummary{font-size:12px;color:#B9C2CD}
+#bonds .bond-roster{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:16px}
+#bonds .bond-person{display:flex;align-items:center;gap:10px;text-align:left;background:#182334;border:1px solid rgba(219,188,144,.22);padding:9px;min-width:0;min-height:76px;color:#E9E1D5;cursor:pointer}
+#bonds .bond-person:hover,#bonds .bond-person.selected{border-color:#E2C18D;background:#223147}
+#bonds .bond-person img{width:45px;height:56px;object-fit:cover;object-position:center 15%;flex:none}
+#bonds .bond-person>span:nth-child(2){min-width:0;flex:1}
+#bonds .bond-person b{display:block;font-size:14px;line-height:1.4}
+#bonds .bond-person small{display:block;margin-top:4px;color:#BBC6D0;font-size:12px;line-height:1.5}
+#bonds .bond-person em{font-size:14px;flex:none;color:#D8B98B;font-style:normal}
+#bonds .bond-person-hidden{display:grid;place-items:center;flex:none;width:45px;height:56px;background:#090F1B;color:#C1A9C9;font-size:26px}
+#bonds .bond-detail-stamp{padding:18px 22px;border-bottom:1px solid rgba(213,184,143,.19);font:600 10px var(--lat);letter-spacing:.12em;color:#D7B989}
+#bonds .bond-atlas-detail>h3{padding:0 23px;margin:27px 0 13px;color:#F0DDC4}
+#bonds .bond-atlas-detail>p{margin:20px 23px;line-height:1.9;color:#D0D4D8}
+#bonds .bond-focus-head{display:flex;align-items:flex-start;gap:21px;padding:25px 22px 17px}
+#bonds .bond-portrait-main{flex:none;background:none;border:1px solid rgba(225,188,132,.42);padding:0;cursor:zoom-in}
+#bonds .bond-portrait-main img{height:156px;width:114px;object-fit:cover;object-position:center 18%}
+#bonds .bond-focus-head h3{font:700 clamp(25px,3vw,35px) var(--disp);margin:0;color:#F4E1C3}
+#bonds .bond-focus-head small{display:block;margin:8px 0;color:#DFC59A;font-size:13px}
+#bonds .bond-focus-head p{margin:12px 0;color:#D1D5DA;font-size:14px;line-height:1.8}
+#bonds .bond-focus-head button[data-dossier]{color:#EDCF9C;border:0;border-bottom:1px solid rgba(229,191,134,.55);padding:5px 0;background:none;font-size:12px;cursor:pointer}
+#bonds .bond-total-relations{padding:0 22px 15px;margin:0;color:#AFC0D0;font-size:12px}
+#bonds .bond-group-title{display:flex;justify-content:space-between;margin:15px 20px 10px;padding:14px 0 10px;border-top:1px solid rgba(216,183,130,.3);font-size:16px;color:#E8CEAB}
+#bonds .bond-group-title span{color:#AAB8C9}
+#bonds .bond-connections{display:grid;gap:9px;padding:0 15px 16px}
+#bonds .bond-connection{display:flex;align-items:flex-start;gap:12px;background:#172232;border:1px solid rgba(215,181,130,.2);padding:12px}
+#bonds .bond-face{flex:none;padding:0;border:1px solid rgba(218,187,133,.3);cursor:zoom-in;background:none}
+#bonds .bond-face img{width:55px;height:72px;object-fit:cover;object-position:center 15%}
+#bonds .bond-connection>div{flex:1;min-width:0}
+#bonds .bond-name-link{border:0;background:none;color:#F0E2CC;font-size:15px;font-weight:750;padding:0;cursor:pointer;text-align:left}
+#bonds .bond-connection strong{display:block;font-size:12px;margin:7px 0;color:#DBB98C}
+#bonds .bond-connection p{font-size:13px;line-height:1.8;color:#CCD3DB;margin:0;word-break:keep-all}
+#bonds .bond-doc-link{font-size:12px;border:1px solid rgba(224,187,135,.33);padding:8px;color:#E0C596;background:#0F1929;cursor:pointer}
+#bonds .bond-atlas-footnote{color:#AAB6C6;font-size:12px;line-height:1.8;margin:17px 0 0}
+#bonds .bond-lock-note{grid-column:1/-1;padding:20px;background:#181F2D;border:1px solid rgba(221,181,148,.35)}
+#bonds .bond-lock-note b{font-size:17px;color:#ECD5BD}
+#bonds .bond-lock-note p{font-size:13px;line-height:1.8;color:#CED1D5}
+#bonds .bond-lock-note button,#bonds .bond-unlock{border:1px solid rgba(218,180,143,.55);padding:12px 14px;color:#E6CBA5;background:#252332;cursor:pointer}
+#bonds .bond-unlock{margin:0 23px 25px}
+.bond-gallery-dialog{max-width:min(850px,calc(100vw - 22px));max-height:calc(100dvh - 22px);padding:0;border:1px solid rgba(212,183,144,.5);background:#0D1420;color:#F0E5D7}
+.bond-gallery-dialog::backdrop{background:rgba(4,7,14,.9)}
+.bond-gallery-frame{width:min(690px,calc(100vw - 25px))}
+.bond-gallery-frame header,.bond-gallery-frame footer{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:13px 17px;background:#151E2C}
+.bond-gallery-frame header b{font-size:18px;color:#F1DDC1}
+.bond-gallery-frame button{background:none;color:#E1C399;border:0;border-bottom:1px solid rgba(230,198,145,.5);padding:6px 0;cursor:pointer}
+.bond-gallery-frame img{display:block;width:100%;max-height:calc(100dvh - 155px);object-fit:contain}
+.bond-gallery-frame footer span{font-size:13px;color:#D1D2D6}
+@media(max-width:1000px){#bonds .bond-atlas{grid-template-columns:1fr}#bonds .bond-atlas-left,#bonds .bond-atlas-detail{min-height:0}#bonds .bond-roster{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){#bonds .bond-roster{grid-template-columns:repeat(2,minmax(0,1fr));padding:10px;gap:8px}#bonds .bond-person{padding:7px;gap:7px}#bonds .bond-person img,#bonds .bond-person-hidden{width:39px;height:49px}#bonds .bond-person b{font-size:13px}#bonds .bond-person small{font-size:11px}#bonds .bond-focus-head{gap:12px;padding:19px 15px}#bonds .bond-portrait-main img{width:83px;height:113px}#bonds .bond-group-title{margin-left:15px;margin-right:15px}#bonds .bond-connections{padding:0 10px 13px}#bonds .bond-connection{gap:9px;padding:10px}#bonds .bond-face img{width:43px;height:58px}#bonds .bond-connection p{font-size:12px}#bonds .bond-doc-link{padding:5px}}
