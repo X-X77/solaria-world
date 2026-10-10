@@ -133,5 +133,18 @@ if('MutationObserver' in window){
  if(m)new MutationObserver(mapAction).observe(m,{childList:true,subtree:true});
  if(p)new MutationObserver(personAction).observe(p,{childList:true,subtree:true});
 }
-render();decorate();
+
+/* Bonus experimental log records — original nine clues stay untouched. */
+const exHolder=document.createElement('div');exHolder.id='arcExperimentRecords';exHolder.className='arc-experiment-records';section.querySelector('.arc-layout').after(exHolder);
+function renderExperimentalLogs(){
+ let hist={};try{hist=JSON.parse(localStorage.getItem('solaria-forbidden-experiment-v1')||'null')?.history||{}}catch(e){}
+ const logs=[
+  ['force','EX-07A · 분류 불가 반응','측정 범위를 넘어선 파장이 기존 마석 분류와 일치하지 않았다.'],
+  ['seal','EX-07B · 봉인 후 잔류 기록','봉인 이후에도 정지된 장치 내부에서 희미한 신호가 확인되었다.'],
+  ['rare','EX-07X · 기록 외 음성','“관측자가 먼저 관측되었다.” 발신자가 확인되지 않은 문장이다.']
+ ];
+ exHolder.innerHTML='<div class="arc-experiment-head"><span>EXPERIMENT NO.07 · CLASSIFIED</span><h3>마탑의 비정규 실험 기록</h3><p>실험 중 발견된 문서가 이곳에 보관됩니다.</p></div><div class="arc-experiment-list">'+logs.map(([k,title,desc])=>'<article class="arc-experiment-entry'+(hist[k]?' unlocked':'')+'"><b>'+(hist[k]?'◇ '+title:'◇ 미발견 실험 기록')+'</b><p>'+(hist[k]?desc:'금지된 실험에서 발견할 수 있습니다.')+'</p></article>').join('')+'</div><a class="arc-experiment-link" href="#resonance">감응 실험실로 이동 ↗</a>';
+}
+window.addEventListener('solaria-forbidden-log',renderExperimentalLogs);
+render();decorate();renderExperimentalLogs();
 })();
