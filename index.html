@@ -987,6 +987,60 @@ footer{background:#080D16}
 }
 @media(prefers-reduced-motion:reduce){#top.hero-reimagined .bg{animation:none}#top.hero-reimagined .btn{transition:none}}
 
+
+/* WORLD CHRONICLES v1 — world intro only; atlas and other page layouts remain intact */
+#world.sec.world{background:#090F19}
+#world .sh{margin-bottom:36px}
+#world .world-prologue{text-align:center;margin:0 auto clamp(42px,7vw,80px);max-width:720px;padding:10px 20px 0}
+#world .world-kicker{font:600 11px var(--lat);letter-spacing:.22em;color:#CCAE78}
+#world .world-prologue p{font:500 clamp(21px,2.9vw,33px)/1.75 var(--read);color:#F1E7D7;margin:18px 0 22px}
+#world .world-prologue-line{display:block;width:1px;height:68px;margin:0 auto;background:linear-gradient(#DAC18C,transparent)}
+#world .world-chapters{display:grid;gap:clamp(58px,8vw,100px)}
+#world .world-chapter{--chapter:#D2B477;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;gap:clamp(25px,5vw,82px);position:relative;min-height:410px}
+#world .world-chapter-north{--chapter:#9ABBD3}
+#world .world-chapter-rift{--chapter:#BFA4DB}
+#world .world-chapter:nth-child(even){grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
+#world .world-chapter:nth-child(even) .world-chapter-image{order:2}
+#world .world-chapter-image{position:relative;aspect-ratio:1.55;overflow:hidden;border:1px solid rgba(231,212,180,.22);box-shadow:0 24px 45px rgba(0,0,0,.25);isolation:isolate}
+#world .world-chapter-image:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(8,14,22,.4),transparent 50%),linear-gradient(90deg,rgba(6,10,18,.14),transparent)}
+#world .world-chapter-image img{width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.81) contrast(1.04);transition:transform .9s ease}
+#world .world-chapter:hover .world-chapter-image img{transform:scale(1.035)}
+#world .world-chapter-content{padding:15px 2px;min-width:0}
+#world .world-chapter-head{display:flex;gap:19px;align-items:center;font:600 11px var(--lat);letter-spacing:.13em;color:var(--chapter)}
+#world .world-chapter-head span:first-child{border-bottom:1px solid var(--chapter);padding-bottom:7px}
+#world .world-chapter h3{font:700 clamp(31px,3.8vw,51px)/1.27 var(--disp);letter-spacing:-.04em;color:#F4E9D6;margin:25px 0 0}
+#world .world-chapter-sub{font:600 clamp(16px,1.6vw,21px)/1.7 var(--disp);color:var(--chapter);margin:10px 0 22px}
+#world .world-chapter-content>p:not(.world-chapter-sub){font-size:clamp(15px,1.3vw,17px);line-height:2;color:#D4D6D6;margin:0;max-width:41em}
+#world .world-chapter-link{display:inline-flex;align-items:center;gap:24px;border-bottom:1px solid color-mix(in srgb,var(--chapter) 65%,transparent);padding:12px 2px 10px;margin-top:23px;color:#F1E2C9;font-size:14px;font-weight:700;transition:color .2s,gap .2s}
+#world .world-chapter-link:hover{color:var(--chapter);gap:30px}
+#world .world-report-intro{text-align:center;margin:clamp(84px,11vw,155px) auto 0;padding-top:27px;border-top:1px solid rgba(222,189,133,.19);max-width:620px}
+#world .world-report-intro span{font:600 11px var(--lat);color:#D8B878;letter-spacing:.19em}
+#world .world-report-intro h3{font:700 clamp(27px,3vw,39px) var(--disp);color:#F0E4D3;margin:12px 0 8px}
+#world .world-report-intro p{font-size:15.5px;line-height:1.8;color:#BEC8D2;margin:0}
+#world .report{margin-top:38px}
+#world .atlas-preview{margin-top:clamp(80px,10vw,146px)}
+#world .world-chapter.animate-in .world-chapter-image{animation:worldReveal .8s cubic-bezier(.2,.7,.25,1) both}
+#world .world-chapter.animate-in .world-chapter-content{animation:worldReveal .8s .12s cubic-bezier(.2,.7,.25,1) both}
+@keyframes worldReveal{from{opacity:.15;transform:translateY(24px)}to{opacity:1;transform:none}}
+@media(max-width:760px){
+ #world .sh{margin-bottom:27px}
+ #world .world-prologue{padding:8px 8px 0;margin-bottom:50px}
+ #world .world-prologue-line{height:45px}
+ #world .world-chapters{gap:58px}
+ #world .world-chapter,#world .world-chapter:nth-child(even){grid-template-columns:1fr;gap:18px;min-height:0}
+ #world .world-chapter-image,#world .world-chapter:nth-child(even) .world-chapter-image{order:0;aspect-ratio:1.42}
+ #world .world-chapter-content{order:1;padding:5px 3px 0}
+ #world .world-chapter h3{font-size:34px;margin-top:15px}
+ #world .world-chapter-sub{margin:9px 0 15px}
+ #world .world-chapter-content>p:not(.world-chapter-sub){font-size:15px;line-height:1.9}
+ #world .world-chapter-link{font-size:13px;margin-top:16px}
+ #world .world-report-intro{margin-top:85px}
+}
+@media(prefers-reduced-motion:reduce){
+ #world .world-chapter.animate-in .world-chapter-image,#world .world-chapter.animate-in .world-chapter-content{animation:none}
+ #world .world-chapter-image img{transition:none}
+}
+
 </style>
 </head>
 <body>
@@ -1042,23 +1096,49 @@ footer{background:#080D16}
 <section class="sec world" id="world"><div class="wrap">
   <div class="sh"><h2>세계관</h2><div class="orn"><i></i></div>
     <p>태양은 수백 년 동안 이 제국을 비췄다. 빛이 오래 머문 만큼, 그늘도 깊어졌다.</p></div>
-  <div class="pillars">
-    <article class="pl fr">
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="24" cy="24" r="8"/><circle cx="24" cy="24" r="13" stroke-dasharray="2 4"/><path d="M24 3v6M24 39v6M3 24h6M39 24h6M9.2 9.2l4.2 4.2M34.6 34.6l4.2 4.2M38.8 9.2l-4.2 4.2M13.4 34.6l-4.2 4.2"/></svg>
-      <h3>태양의 제국</h3>
-      <p>황가는 태양의 빛을 이었다고 전해진다. 병상의 황제 아래에서 제1황자 아우구스와 황녀 셀레네가 옥좌를 두고 조용히 다툰다.</p>
-    </article>
-    <article class="pl fr">
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M27 2 20 13l8 8-10 10 7 6-4 9"/><path d="M20 13l-8 3M28 21l8-3M18 31l-8 3M25 37l7 1"/></svg>
-      <h3>균열과 마물</h3>
-      <p>제국 서쪽 끝, 땅이 갈라진 자리에서 마물이 온다. 북부의 글라시스 방벽과 보레알 대공가가 수백 년 동안 그 길을 막아 왔다.</p>
-    </article>
-    <article class="pl fr">
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M24 3 38 17 24 45 10 17Z"/><path d="M10 17h28M24 3l-6 14 6 28 6-28Z"/></svg>
-      <h3>마석</h3>
-      <p>마탑이 정제하는 마석은 제국의 등불을 밝힌다. 마석이 어디에서 오는지는 마탑과 황실만이 안다고 한다.</p>
-    </article>
-  </div>
+  <div class="world-prologue" aria-label="제국 기록 서문">
+  <span class="world-kicker">THE CHRONICLES OF SOLARIA</span>
+  <p>태양이 비추는 제국에도, 빛이 닿지 않는 곳이 있다.</p>
+  <span class="world-prologue-line" aria-hidden="true"></span>
+</div>
+<div class="world-chapters">
+  <article class="world-chapter world-chapter-empire" data-world-scene="capital">
+    <div class="world-chapter-image"><img src="img/r/capital.jpg" alt="솔라리아 황도와 황궁의 풍경" loading="lazy"></div>
+    <div class="world-chapter-content">
+      <div class="world-chapter-head"><span>RECORD Ⅰ</span><span>THE EMPIRE</span></div>
+      <h3>태양의 제국</h3><p class="world-chapter-sub">찬란한 황금빛 아래, 흔들리는 옥좌.</p>
+      <p>솔라리아의 황가는 태양의 빛을 이었다고 전해진다. 그러나 병상의 황제는 아직 후계자를 정하지 않았다. 제1황자 아우구스와 황녀 셀레네는 각자의 방식으로 옥좌를 향해 움직인다.</p>
+      <a href="#regions" class="world-chapter-link" data-world-region="capital">황도의 기록 살펴보기 <span aria-hidden="true">↗</span></a>
+    </div>
+  </article>
+  <article class="world-chapter world-chapter-north" data-world-scene="north">
+    <div class="world-chapter-image"><img src="img/r/north.jpg" alt="눈 덮인 북부 방벽과 설원의 풍경" loading="lazy"></div>
+    <div class="world-chapter-content">
+      <div class="world-chapter-head"><span>RECORD Ⅱ</span><span>THE FRONTIER</span></div>
+      <h3>마물과 북부</h3><p class="world-chapter-sub">제국의 빛이 가장 먼저 식는 곳.</p>
+      <p>제국 서쪽 끝의 균열과 북쪽 마물 숲은 오래된 위협이다. 글라시스 방벽과 보레알 대공가가 그 길을 지켜 왔다. 그러나 어느 날, 마물들은 방벽이 아닌 단 한 사람을 향해 움직이기 시작했다.</p>
+      <a href="#regions" class="world-chapter-link" data-world-region="north">북부의 기록 살펴보기 <span aria-hidden="true">↗</span></a>
+    </div>
+  </article>
+  <article class="world-chapter world-chapter-rift" data-world-scene="rift">
+    <div class="world-chapter-image"><img src="img/r/rift.jpg" alt="어둠과 보랏빛이 감도는 균열 지대" loading="lazy"></div>
+    <div class="world-chapter-content">
+      <div class="world-chapter-head"><span>RECORD Ⅲ</span><span>THE HIDDEN TRUTH</span></div>
+      <h3>균열과 마석</h3><p class="world-chapter-sub">제국을 밝히는 빛은 어디에서 오는가.</p>
+      <p>마탑이 정제한 마석은 제국 곳곳의 등불을 밝힌다. 그러나 마석의 출처를 아는 것은 황실과 마탑뿐이라고 한다. 갈라진 땅과 마물, 그 뒤에 남겨진 기록은 여전히 불완전하다.</p>
+      <a href="#regions" class="world-chapter-link" data-world-region="rift">균열의 기록 살펴보기 <span aria-hidden="true">↗</span></a>
+    </div>
+  </article>
+</div>
+<div class="world-report-intro"><span>FROM THE NORTHERN FRONT</span><h3>도착한 기록 한 장</h3><p>이 제국의 이야기는, 방벽에서 보내온 짧은 보고로 다시 시작된다.</p></div>
+  <article class="report">
+    <span class="wax" aria-hidden="true"></span>
+    <div class="from">북부 방벽 수비대 보고</div>
+    <h3>대공 각하께.</h3>
+    <p>사흘째 같은 일이 반복되고 있습니다. 숲에서 나온 마물들이 방벽을 치지 않고, 모두 한 방향으로만 움직입니다.</p>
+    <p>그리고 오늘, 그 방향 끝에서 사람 하나를 발견했습니다. 마물들 한가운데에 있었는데, 상처 하나 없었습니다.</p>
+    <p class="sign">방벽 수비대장 비고</p>
+  </article>
   <div class="atlas-preview" aria-label="솔라리아 제국 지도">
     <div class="atlas-heading">
       <div><span class="atlas-overline">THE IMPERIAL ATLAS / 001</span><h3>제국의 지도를 펼치다</h3><p>다섯 권역과 균열. 이 땅에서 모든 이야기가 이어진다.</p></div>
@@ -1093,14 +1173,7 @@ footer{background:#080D16}
     </div>
     <p class="atlas-foot"><span>IMPERIUM SOLARIAE</span><span>지명 선택 → 장소 기록 → 관련 권역·인물 이동</span></p>
   </div>
-  <article class="report">
-    <span class="wax" aria-hidden="true"></span>
-    <div class="from">북부 방벽 수비대 보고</div>
-    <h3>대공 각하께.</h3>
-    <p>사흘째 같은 일이 반복되고 있습니다. 숲에서 나온 마물들이 방벽을 치지 않고, 모두 한 방향으로만 움직입니다.</p>
-    <p>그리고 오늘, 그 방향 끝에서 사람 하나를 발견했습니다. 마물들 한가운데에 있었는데, 상처 하나 없었습니다.</p>
-    <p class="sign">방벽 수비대장 비고</p>
-  </article>
+
 </div></section>
 
 <section class="sec regions" id="regions">
@@ -1837,6 +1910,27 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){setTimeout(off,5000);io.disconnect()}},{threshold:.5});io.observe(viewport)}}
   renderFilters();renderPins();renderDirectory();renderDetail();
   requestAnimationFrame(reset);
+})();
+
+
+/* World chapter interactions: existing region tab navigation; map scripts unchanged. */
+(function(){
+ const chapters=document.querySelectorAll('#world .world-chapter');
+ document.querySelectorAll('#world [data-world-region]').forEach(link=>{
+   link.addEventListener('click',()=>{
+     const region=link.getAttribute('data-world-region');
+     if(typeof setRegion==='function'&&REGIONS[region])setRegion(region,false);
+   });
+ });
+ if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+   const io=new IntersectionObserver(entries=>entries.forEach(entry=>{
+     if(entry.isIntersecting){
+       entry.target.classList.add('animate-in');
+       io.unobserve(entry.target);
+     }
+   }),{threshold:.17});
+   chapters.forEach(el=>io.observe(el));
+ }
 })();
 
 </script>
