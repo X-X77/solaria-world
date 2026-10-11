@@ -2253,6 +2253,88 @@ iframe.skiptranslate,body>.skiptranslate,.goog-te-banner-frame,#goog-gt-tt,.goog
 }
 @media(max-width:360px){#nav ul:not(.lang-menu) li a{padding:11px 3px 12px;font-size:12.5px;letter-spacing:0}#nav .lang-btn #langCur{display:none}#nav .lang-btn{width:34px;padding:0;justify-content:center}}
 </style>
+<style id="book-turn-rift">
+/* 23. Folded page corners */
+#people #peopleDossier .cstage{padding-bottom:66px!important}
+#people .cstage>.pg-corner{position:absolute;bottom:0;z-index:5;display:flex;align-items:flex-end;gap:10px;height:62px;padding:0 0 13px;border:0;background:none;cursor:pointer;font:700 12.5px var(--ui);letter-spacing:.08em;color:#6b5a3e;-webkit-tap-highlight-color:transparent}
+#people .cstage>.pg-corner.prev{left:0;padding-left:14px}
+#people .cstage>.pg-corner.next{right:0;padding-right:14px}
+#people .cstage>.pg-corner span{position:relative;z-index:1;padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .2s,color .2s}
+#people .cstage>.pg-corner:hover span,#people .cstage>.pg-corner:focus-visible span{color:#2b2318;border-bottom-color:currentColor}
+#people .cstage>.pg-corner i{position:relative;display:block;width:34px;height:34px;margin-bottom:-13px;transition:width .25s ease,height .25s ease}
+#people .cstage>.pg-corner.next i{margin-right:-14px;background:linear-gradient(315deg,#3b2516 0 50%,transparent 50%),linear-gradient(135deg,#efe3c4,#d9c7a0);filter:drop-shadow(-3px -3px 4px rgba(60,38,14,.25))}
+#people .cstage>.pg-corner.prev i{margin-left:-14px;background:linear-gradient(45deg,#3b2516 0 50%,transparent 50%),linear-gradient(225deg,#efe3c4,#d9c7a0);filter:drop-shadow(3px -3px 4px rgba(60,38,14,.25))}
+#people .cstage>.pg-corner:hover i,#people .cstage>.pg-corner:focus-visible i{width:48px;height:48px}
+#people .cstage>.pg-corner:focus-visible{outline:none}
+#people .cstage.is-dragging{cursor:grabbing;user-select:none;-webkit-user-select:none}
+#people .cstage.is-dragging .pg-corner.next i{width:calc(34px + max(0,var(--pull,0) * -60px));height:calc(34px + max(0,var(--pull,0) * -60px))}
+#people .cstage.is-dragging .pg-corner.prev i{width:calc(34px + max(0,var(--pull,0) * 60px));height:calc(34px + max(0,var(--pull,0) * 60px))}
+@media(hover:hover){#people .cstage .cpor{cursor:grab}}
+@media(max-width:750px){#people .cstage>.pg-corner{height:58px;font-size:13px}}
+#people .page-turn .pg-corner{visibility:hidden}
+
+/* 24. 균열 기록부: a book that should not be read */
+#people #peopleDossier.rift-record .cstage{background:linear-gradient(90deg,transparent 46.6%,rgba(0,0,0,.62) 47.2%,transparent 47.9%),linear-gradient(90deg,rgba(0,0,0,0) 0,rgba(0,0,0,.34) 43%,rgba(0,0,0,0) 47.2%,rgba(0,0,0,.34) 51%,rgba(0,0,0,0) 56%),radial-gradient(70% 55% at 78% 8%,rgba(140,70,190,.16),transparent 70%),radial-gradient(60% 50% at 18% 96%,rgba(150,28,52,.14),transparent 70%),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .78 0 0 0 0 .68 0 0 0 0 .92 0 0 0 .07 0'/></filter><rect width='220' height='220' filter='url(%23g)'/></svg>"),linear-gradient(180deg,#1c1626,#130f19)!important;color:#d8cdbd!important;box-shadow:0 0 0 10px #0c0811,0 0 0 11px rgba(160,120,220,.42),0 0 40px 12px rgba(90,40,140,.18),0 28px 60px rgba(0,0,0,.65)!important}
+@media(max-width:750px){#people #peopleDossier.rift-record .cstage{background:radial-gradient(90% 40% at 80% 0,rgba(140,70,190,.18),transparent 70%),radial-gradient(80% 40% at 10% 100%,rgba(150,28,52,.14),transparent 70%),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .78 0 0 0 0 .68 0 0 0 0 .92 0 0 0 .07 0'/></filter><rect width='220' height='220' filter='url(%23g)'/></svg>"),linear-gradient(180deg,#1c1626,#130f19)!important;box-shadow:0 0 0 6px #0c0811,0 0 0 7px rgba(160,120,220,.42),0 18px 40px rgba(0,0,0,.6)!important}}
+#people #peopleDossier.rift-record .cstage:before,#people #peopleDossier.rift-record .cstage:after{opacity:.25;filter:invert(1) hue-rotate(200deg)}
+#people #peopleDossier.rift-record .rift-mark{position:absolute;z-index:0;bottom:12%;left:54%;right:4%;text-align:center;transform:rotate(-13deg);font:900 clamp(46px,5.4vw,86px)/1 var(--disp);letter-spacing:.18em;color:rgba(200,52,78,.075);border:5px double rgba(200,52,78,.09);padding:14px 0 10px;pointer-events:none;user-select:none}
+@media(max-width:750px){#people #peopleDossier.rift-record .rift-mark{display:none}}
+#people #peopleDossier.rift-record .cstage>*:not(.rift-mark):not(.pg-corner){position:relative;z-index:1}
+#people #peopleDossier.rift-record .cstage>.cpor{position:relative}
+#people #peopleDossier.rift-record:not(.ruin-record) .cpor{box-shadow:0 0 0 1px rgba(170,130,230,.5),0 0 26px rgba(120,60,190,.35),0 14px 30px rgba(0,0,0,.6)}
+#people #peopleDossier.rift-record:not(.ruin-record) .cpor:before{border-color:rgba(205,175,255,.38)}
+#people #peopleDossier.rift-record .reg-head{color:#9f8dbb!important;border-bottom-color:rgba(170,140,220,.24)!important}
+#people #peopleDossier.rift-record .reg-head .rift-chip{display:inline-block;margin-left:10px;padding:2px 7px 1px;border:1px solid rgba(214,82,104,.62);font:700 9.5px var(--ui);font-style:normal;letter-spacing:.22em;color:#e3828f;transform:rotate(-2deg);vertical-align:1px}
+#people #peopleDossier.rift-record:not(.ruin-record) .cinfo{color:#d8cdbd}
+#people #peopleDossier.rift-record:not(.ruin-record) .cinfo .fac{color:#c9b6e8}
+#people #peopleDossier.rift-record:not(.ruin-record) .cinfo .fac small{color:#9d8fb0}
+#people #peopleDossier.rift-record:not(.ruin-record) .cinfo .fac i{background:#a37ddc}
+#people #peopleDossier.rift-record:not(.ruin-record) .cinfo h3{color:#f2e7d8;text-shadow:0 0 22px rgba(150,95,230,.3)}
+#people #peopleDossier.rift-record:not(.ruin-record) .cinfo .role{color:#bf9ff0}
+#people #peopleDossier.rift-record:not(.ruin-record) .cinfo blockquote.quote{color:#e4d8c6;border-bottom-color:rgba(170,140,220,.22)}
+#people #peopleDossier.rift-record:not(.ruin-record) .cinfo blockquote.quote span{color:#a98fd6}
+#people #peopleDossier.rift-record:not(.ruin-record) .cinfo dl>div{border-bottom-color:rgba(170,140,220,.2)}
+#people #peopleDossier.rift-record:not(.ruin-record) .cinfo dl dt{color:#bea3ea}
+#people #peopleDossier.rift-record:not(.ruin-record) .cinfo dl dt small{color:#8e7caa}
+#people #peopleDossier.rift-record:not(.ruin-record) .cinfo dl dd{color:#d6cbbb}
+#people #peopleDossier.rift-record:not(.ruin-record) .reg-rel{background:rgba(14,10,20,.55);border-color:rgba(170,140,220,.26)}
+#people #peopleDossier.rift-record:not(.ruin-record) .reg-rel h4{color:#c9b6e8}
+#people #peopleDossier.rift-record:not(.ruin-record) .reg-rel p{color:#b5a8c4}
+#people #peopleDossier.rift-record:not(.ruin-record) .reg-rel button,#people #peopleDossier.rift-record:not(.ruin-record) .reg-rel .rift-rel{color:#e6dccd;background:rgba(42,32,58,.55);border-color:rgba(170,140,220,.24)}
+#people #peopleDossier.rift-record:not(.ruin-record) .reg-rel button:hover,#people #peopleDossier.rift-record:not(.ruin-record) .reg-rel .rift-rel:hover{background:rgba(60,46,82,.8);border-color:rgba(190,160,240,.45)}
+#people #peopleDossier.rift-record:not(.ruin-record) .reg-rel .rift-rel b{color:#f2e7d8}
+#people #peopleDossier.rift-record:not(.ruin-record) .reg-rel .rift-rel small,#people #peopleDossier.rift-record:not(.ruin-record) .reg-rel .rift-rel span>span{color:#b5a8c4}
+#people #peopleDossier.rift-record .secret{background:rgba(20,13,28,.75)!important;border-color:rgba(200,70,95,.35)!important;color:#e0d5c5}
+#people #peopleDossier.rift-record .secret .hd b{color:#e3a0ab!important}
+#people #peopleDossier.rift-record .secret .tx{color:#e0d5c5!important}
+#people #peopleDossier.rift-record .secret .bars span{background:#05030a!important}
+#people #peopleDossier.rift-record .cm-tabs{border-bottom-color:rgba(170,140,220,.28)!important}
+#people #peopleDossier.rift-record .cm-tabs button{color:#9d8fb0!important}
+#people #peopleDossier.rift-record .cm-tabs button[aria-selected="true"]{color:#f2e7d8!important;border-bottom-color:#a37ddc!important}
+#people #peopleDossier.rift-record .pg-corner{color:#a995c8}
+#people #peopleDossier.rift-record .pg-corner:hover span,#people #peopleDossier.rift-record .pg-corner:focus-visible span{color:#f2e7d8}
+#people #peopleDossier.rift-record .pg-corner.next i{background:linear-gradient(315deg,#0c0811 0 50%,transparent 50%),linear-gradient(135deg,#3a2d4c,#241b31);filter:drop-shadow(-3px -3px 5px rgba(0,0,0,.55))}
+#people #peopleDossier.rift-record .pg-corner.prev i{background:linear-gradient(45deg,#0c0811 0 50%,transparent 50%),linear-gradient(225deg,#3a2d4c,#241b31);filter:drop-shadow(3px -3px 5px rgba(0,0,0,.55))}
+/* the three burned records keep only their fragment, now in the same book */
+#people #peopleDossier.rift-record.ruin-record{background:radial-gradient(ellipse at 30% 18%,#1d1626,#0b0910 72%)}
+#people #peopleDossier.rift-record.ruin-record .ruin-leaf{filter:drop-shadow(0 0 1px rgba(255,140,80,.5)) drop-shadow(0 0 7px rgba(190,70,30,.28)) drop-shadow(0 9px 14px rgba(0,0,0,.65))}
+#people #peopleDossier.rift-record.ruin-record .ruin-leaf-edge{background:#1a0f0b}
+#people #peopleDossier.rift-record.ruin-record .ruin-leaf-paper{background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .78 0 0 0 0 .68 0 0 0 0 .92 0 0 0 .07 0'/></filter><rect width='220' height='220' filter='url(%23g)'/></svg>"),radial-gradient(80% 50% at 70% 0,rgba(140,70,190,.14),transparent 70%),linear-gradient(180deg,#221a2d,#18121f)!important}
+#people #peopleDossier.rift-record.ruin-record .ruin-kicker{color:#8e7caa}
+#people #peopleDossier.rift-record.ruin-record .ruin-leaf-paper h3{color:#f2e7d8;text-shadow:0 0 22px rgba(150,95,230,.3)}
+#people #peopleDossier.rift-record.ruin-record .ruin-leaf-paper blockquote.quote,#people #peopleDossier.rift-record.ruin-record .ruin-leaf-paper .ruin-cut{color:#e4d8c6}
+#people #peopleDossier.rift-record.ruin-record .ruin-leaf-paper blockquote>span:first-child{color:#a98fd6}
+#people #peopleDossier.rift-record.ruin-record .ruin-fade b{color:#9d8fb0}
+#people #peopleDossier.rift-record.ruin-record .ruin-fade i{background:linear-gradient(90deg,rgba(205,185,235,.32),rgba(205,185,235,.16) 70%,rgba(205,185,235,.04))}
+#people #peopleDossier.rift-record.ruin-record .ruin-under b{color:rgba(190,170,220,.3)}
+#people #peopleDossier.rift-record.ruin-record .ruin-under i{background:linear-gradient(90deg,rgba(190,170,220,.2),rgba(190,170,220,.1) 70%,rgba(190,170,220,.02))}
+#people #peopleDossier.rift-record.ruin-record .ruin-stain{background:radial-gradient(ellipse at 45% 50%,rgba(150,30,50,.3),rgba(150,30,50,.1) 55%,transparent 72%)}
+#people #peopleDossier.rift-record.ruin-record .ruin-scrap{background:#221a2c!important;color:#bcaed0!important;border:1px solid rgba(170,140,220,.3)!important;box-shadow:0 6px 14px rgba(0,0,0,.5)!important}
+#people #peopleDossier.rift-record.ruin-record .ruin-scrap span,#people #peopleDossier.rift-record.ruin-record .ruin-scrap em{color:#bcaed0!important}
+#people #peopleDossier.rift-record .reg-nav .cnav button{color:#e6dccd!important;background:linear-gradient(180deg,#2c2239,#1d1627)!important;border-color:rgba(170,140,220,.45)!important;box-shadow:0 4px 12px rgba(0,0,0,.4)!important}
+#people #peopleDossier.rift-record .reg-nav .cnav>span{color:#b9a6d6}
+#people #peopleDossier.rift-record.ruin-record .cpor-top,#people #peopleDossier.rift-record.ruin-record .cpor-bottom{color:rgba(225,210,245,.75)}
+</style>
 </head>
 <body>
 <div class="site-backdrop" id="siteBackdrop" aria-hidden="true"><div class="sb-slides"></div><div class="sb-veil"></div></div>
@@ -2768,8 +2850,12 @@ const SECRET={
  10:'마물 곁에 선 당신에게서, 성녀는 이상하게 평온한 기운을 느꼈다.'
 };
 // Register order (the record numbers shown on the page follow it); asset and relation ids stay as they are.
-const REGISTER=[1,2,3,4,5,6,7,8,9,10,11,12,59,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,54,55,29,30,31,32,33,56,34,35,36,37,38,57,39,40,41,42,58,43,44,45,46,47,48,49,50,51,52,60,53];
-const recNo=no=>{const i=REGISTER.indexOf(Number(no));return String(i<0?no:i+1).padStart(2,'0')};
+/* 제국 인명록: 주요 인물, 황도, 북부, 남부, 서부, 동부, 교단, 마탑 순으로 01-52. 균열 기록부는 따로 01-08. */
+const RIFT_REGISTER=[11,12,59,49,50,51,52,60];
+const REGISTER=[1,2,3,4,5,6,7,8,9,10,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,54,55,53,29,30,31,32,33,56,34,35,36,37,38,57,39,40,41,42,58,43,44,45,46,47,48,...RIFT_REGISTER];
+const isRiftRec=no=>RIFT_REGISTER.includes(Number(no));
+const recNo=no=>{no=Number(no);const r=RIFT_REGISTER.indexOf(no);if(r>=0)return String(r+1).padStart(2,'0');const i=REGISTER.indexOf(no);return String(i<0?no:i+1).padStart(2,'0')};
+const regHead=p=>isRiftRec(p.no)?'<div class="reg-head rift-head" aria-hidden="true"><span>균열 기록부<em class="rift-chip">열람 금지</em></span><span>제 '+recNo(p.no)+'호</span></div>':'<div class="reg-head" aria-hidden="true"><span>제국 인명록</span><span>제 '+recNo(p.no)+'호</span></div>';
 // Records torn out of the register: only a name and half a line survive.
 const TORN=[11,12,59];window.SOLARIA_TORN=TORN;
 const P=PEOPLE.map(a=>({no:a[0],name:a[1],sex:a[2],age:a[3],aff:a[4],group:a[5],role:a[6],look:a[7],pers:a[8],known:a[9],quote:a[10],main:!!a[11],sealed:!!a[12]})).sort((a,b)=>REGISTER.indexOf(a.no)-REGISTER.indexOf(b.no));
@@ -2864,7 +2950,7 @@ setRegion('north',false);
 regionReady=true;
 
 /* people — dedicated character archive. Faction colors & images, no content changes. */
-const FILTERS=[['main','주요 인물'],['north','북부'],['capital','황도'],['temple','교단'],['tower','마탑'],['south','남부'],['east','동부'],['west','서부'],['rift','균열'],['all','전체']];
+const FILTERS=[['main','주요 인물'],['capital','황도'],['north','북부'],['south','남부'],['west','서부'],['east','동부'],['temple','교단'],['tower','마탑'],['rift','균열'],['all','전체']];
 const chips=$('chips'),cstage=$('cstage'),strip=$('strip'),dossier=$('peopleDossier');
 const peopleCount=$('peopleCount'),peoplePage=$('peoplePage'),peopleWatermark=$('peopleWatermark');
 let list=[],cur=0,filt='main',swipeX=null,swipeY=null;
@@ -2922,8 +3008,8 @@ function RUIN(p){
   return '<div class="ruin ruin-book" role="group" aria-label="훼손된 인물 기록. 이름과 대사 일부만 남아 있다.">'+
    '<div class="ruin-under" aria-hidden="true"><span class="ruin-stain"></span></div>'+
    '<div class="ruin-leaf"><div class="ruin-leaf-edge" aria-hidden="true" style="clip-path:'+leaf+'"></div><div class="ruin-leaf-paper" style="clip-path:'+leaf+'">'+
-    '<div class="reg-head" aria-hidden="true"><span>제국 인명록</span><span>제 '+recNo(p.no)+'호</span></div>'+
-    '<small class="ruin-kicker">PERSONNEL RECORD</small><h3>'+esc(p.name)+'</h3>'+
+    regHead(p)+
+    '<small class="ruin-kicker">'+(isRiftRec(p.no)?'FORBIDDEN RECORD':'PERSONNEL RECORD')+'</small><h3>'+esc(p.name)+'</h3>'+
     (vis?'<blockquote class="quote"><span aria-hidden="true">“</span>'+esc(vis)+(cut?(q.charAt(h)===' '?' ':'')+'<span class="ruin-cut" aria-hidden="true">'+esc(cut)+'</span>':'')+'</blockquote>':'')+
     '<div class="ruin-fade" aria-hidden="true"><b>01 외형</b><i></i><i class="short"></i></div>'+
    '</div></div>'+
@@ -2967,13 +3053,16 @@ function pageTurn(snap,dir){
     const leaf=document.createElement('div');leaf.className='pt-leaf';leaf.style.cssText='left:0;width:'+W+'px';
     leaf.append(face('pt-front',oldA,0));wrap.append(leaf);
   }
-  cstage.after(wrap);pageRustle();
+  cstage.after(wrap);
+  // line the turning leaf up with the page itself (its offset parent can differ from the page's)
+  {const a=cstage.getBoundingClientRect(),w=wrap.getBoundingClientRect();wrap.style.top=(parseFloat(wrap.style.top)+a.top-w.top)+'px';wrap.style.left=(parseFloat(wrap.style.left)+a.left-w.left)+'px'}
+  pageRustle();
   pageTurnTimer=setTimeout(()=>wrap.remove(),760);
 }
 function setPerson(i,anim=true){
   if(!list.length)return;
   const turnDir=anim&&i!==cur&&!matchMedia('(prefers-reduced-motion: reduce)').matches?(i>cur?1:-1):0;
-  const wasRuin=dossier.classList.contains('ruin-record');
+  const wasRuin=dossier.classList.contains('ruin-record'),wasRift=dossier.classList.contains('rift-record');
   const turnSnap=turnDir&&cstage.offsetParent&&cstage.firstElementChild&&!cstage.querySelector('.people-locked-rift,.people-empty')?pageTurnSnapshot():null;
   cur=(i%list.length+list.length)%list.length;
   const p=list[cur],sealed=!!p.sealed&&!window.SOLARIA_RIFT_UNLOCKED,name=sealed?'???':p.name,role=sealed?'봉인된 기록':p.role;
@@ -2986,6 +3075,7 @@ function setPerson(i,anim=true){
   const ruin=TORN.includes(p.no)&&!sealed;
   dossier.classList.toggle('torn-record',TORN.includes(p.no));
   dossier.classList.toggle('ruin-record',ruin);
+  dossier.classList.toggle('rift-record',isRiftRec(p.no)&&!sealed);
   peopleWatermark.textContent=sealed?'SEALED':name.split(' ')[0];
   peoplePage.textContent=String(cur+1).padStart(2,'0')+' / '+String(list.length).padStart(2,'0');
   strip.querySelectorAll('.ct').forEach((b,j)=>{
@@ -3015,10 +3105,10 @@ function setPerson(i,anim=true){
   }
   cstage.innerHTML='<div class="cpor'+(anim?' anim':'')+(sealed?' sealed':'')+'">'+
     '<span class="ln"></span>'+(sealed?'<div class="cast-sealed-art" aria-hidden="true"><span>◇</span><b>SEALED PORTRAIT</b></div>':'<img src="'+window.SOLARIA_PORTRAIT_SRC(p.no,'c')+'" alt="'+esc(name)+'">')+
-    '<span class="cpor-dark" aria-hidden="true"></span><span class="cpor-top">SOLARIA · DOSSIER '+recNo(p.no)+'</span>'+
+    '<span class="cpor-dark" aria-hidden="true"></span><span class="cpor-top">'+(isRiftRec(p.no)?'BEYOND THE RIFT · ':'SOLARIA · DOSSIER ')+recNo(p.no)+'</span>'+
     (sealed?'<span class="cpor-seal" aria-hidden="true">RECORD SEALED</span>':'')+
-    '<span class="cpor-bottom">'+esc(AFF[p.aff]||'제국')+' / PERSONNEL RECORD</span></div>'+
-    '<div class="cinfo'+(anim?' anim':'')+'">'+(ruin||sealed?'':'<div class="reg-head" aria-hidden="true"><span>제국 인명록</span><span>제 '+recNo(p.no)+'호</span></div>')+(ruin?'':'<div class="fac"><i aria-hidden="true"></i>'+esc(AFF[p.aff]||'제국')+
+    '<span class="cpor-bottom">'+esc(AFF[p.aff]||'제국')+(isRiftRec(p.no)?' / FORBIDDEN RECORD':' / PERSONNEL RECORD')+'</span></div>'+
+    '<div class="cinfo'+(anim?' anim':'')+'">'+(ruin||sealed?'':regHead(p))+(ruin?'':'<div class="fac"><i aria-hidden="true"></i>'+esc(AFF[p.aff]||'제국')+
     '<small>'+esc(sealed?'접근 제한':p.group)+(sealed||p.age==='?'?'':' · '+esc(age))+'</small></div>')+
     body+'<div class="cnav"><span>RECORD NAVIGATION</span>'+
     '<button type="button" aria-label="이전 인물" id="cp">'+arrow('M15 5 8 12l7 7')+'이전</button>'+
@@ -3046,7 +3136,8 @@ function setPerson(i,anim=true){
   cstage.querySelectorAll('[data-cast-relation]').forEach(b=>b.onclick=()=>window.SOLARIA_ATLAS?.focus(Number(b.dataset.castRelation)));
   const ob=$('ob');
   if(ob)ob.onclick=()=>{const sec=$('sec');sec.classList.add('open');ob.setAttribute('aria-expanded','true');ob.disabled=true};
-  if(turnSnap&&wasRuin===dossier.classList.contains('ruin-record')){cstage.querySelectorAll('.anim').forEach(n=>n.classList.remove('anim'));pageTurn(turnSnap,turnDir)}
+  if(!ruin&&!sealed&&isRiftRec(p.no))cstage.insertAdjacentHTML('beforeend','<div class="rift-mark" aria-hidden="true">열람 금지</div>');
+  if(turnSnap&&wasRuin===dossier.classList.contains('ruin-record')&&wasRift===dossier.classList.contains('rift-record')){cstage.querySelectorAll('.anim').forEach(n=>n.classList.remove('anim'));pageTurn(turnSnap,turnDir)}
   else pageTurn(null,0);
 }
 dossier.addEventListener('keydown',e=>{
@@ -3055,14 +3146,14 @@ dossier.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight'){e.preventDefault();setPerson(cur+1)}
 });
 cstage.addEventListener('touchstart',e=>{
-  if(!e.target.closest('.cpor'))return;
+  if(e.touches.length>1){swipeX=null;return}
   swipeX=e.touches[0].clientX;swipeY=e.touches[0].clientY;
 },{passive:true});
 cstage.addEventListener('touchend',e=>{
   if(swipeX===null||!e.changedTouches.length)return;
   const dx=e.changedTouches[0].clientX-swipeX,dy=e.changedTouches[0].clientY-swipeY;
   swipeX=null;swipeY=null;
-  if(Math.abs(dx)>65&&Math.abs(dx)>Math.abs(dy)*1.4)setPerson(cur+(dx<0?1:-1));
+  if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.4)(window.SOLARIA_TURN||(n=>setPerson(cur+n)))(dx<0?1:-1);
 },{passive:true});
 setFilter('main');
 
@@ -3460,6 +3551,49 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
  const original=setPerson;
  setPerson=function(){const r=original.apply(this,arguments);decorate();return r};
  decorate();
+})();
+</script>
+<script id="book-turn">
+/* Turning like a book: folded corners at the foot of every page, a swipe anywhere on the page (or a drag on a computer),
+   and after a turn the reader is brought back to the top of the new page. */
+(function(){
+ if(typeof setPerson!=='function'||typeof cstage==='undefined')return;
+ const calm=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
+ function toTop(){
+  const nav=document.getElementById('regNav'),mark=nav&&!nav.hidden&&nav.offsetParent?nav:cstage;
+  const nb=document.getElementById('nav')?.getBoundingClientRect().bottom||0,r=mark.getBoundingClientRect();
+  if(r.top<nb-2)scrollTo({top:scrollY+r.top-nb-10,behavior:calm()?'auto':'smooth'});
+ }
+ function turn(step){if(!list.length)return;setPerson(cur+step);toTop()}
+ window.SOLARIA_TURN=turn;
+ function corners(){
+  if(list.length<2||cstage.querySelector(':scope > .pg-corner')||cstage.querySelector('.people-locked-rift,.people-empty'))return;
+  const nm=k=>{const q=list[(cur+k+list.length)%list.length];return q?String(q.name).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])):''};
+  cstage.insertAdjacentHTML('beforeend',
+   '<button type="button" class="pg-corner prev" data-turn="-1" aria-label="이전 장 · '+nm(-1)+'"><i aria-hidden="true"></i><span>이전 장</span></button>'+
+   '<button type="button" class="pg-corner next" data-turn="1" aria-label="다음 장 · '+nm(1)+'"><span>다음 장</span><i aria-hidden="true"></i></button>');
+ }
+ const original=setPerson;
+ setPerson=function(){const r=original.apply(this,arguments);corners();return r};
+ corners();
+ cstage.addEventListener('click',e=>{const b=e.target.closest('.pg-corner');if(b){e.preventDefault();turn(+b.dataset.turn)}});
+ // computer: drag the page sideways (from the picture or blank paper, so text can still be selected)
+ let drag=null;
+ cstage.addEventListener('pointerdown',e=>{
+  if(e.pointerType!=='mouse'||e.button!==0||e.target.closest('button,a,input,dd,dt,h3,h4,p,blockquote,.role,.fac,.reg-head,small'))return;
+  drag={x:e.clientX,y:e.clientY,on:false};
+ });
+ addEventListener('pointermove',e=>{
+  if(!drag)return;const dx=e.clientX-drag.x;
+  if(!drag.on&&Math.abs(dx)>12&&Math.abs(dx)>Math.abs(e.clientY-drag.y)){drag.on=true;cstage.classList.add('is-dragging');try{getSelection().removeAllRanges()}catch(_){}}
+  if(drag.on)cstage.style.setProperty('--pull',Math.max(-1,Math.min(1,dx/260)).toFixed(3));
+ });
+ const end=e=>{
+  if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y,on=drag.on;drag=null;
+  cstage.classList.remove('is-dragging');cstage.style.removeProperty('--pull');
+  if(on&&Math.abs(dx)>90&&Math.abs(dx)>Math.abs(dy)*1.3)turn(dx<0?1:-1);
+ };
+ addEventListener('pointerup',end);addEventListener('pointercancel',()=>{drag=null;cstage.classList.remove('is-dragging');cstage.style.removeProperty('--pull')});
 })();
 </script>
 <script id="book-size">
