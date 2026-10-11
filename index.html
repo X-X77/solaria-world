@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#0A0E18">
 <script>try{if(!new URLSearchParams(location.search).has('opening')&&(sessionStorage.getItem('sol-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches||location.hash))document.documentElement.classList.add('no-intro')}catch(e){}</script>
 <title>솔라리아 | 태양의 제국</title>
+<script>/* pages: pick the page from the address before anything paints */try{var h=(location.hash||'').slice(1),m={regions:'regions',people:'people',bonds:'bonds',archive:'archive',seals:'archive',libSeals:'archive',libCases:'archive'};document.documentElement.dataset.page=m[h]||'home'}catch(e){document.documentElement.dataset.page='home'}</script>
 <meta name="description" content="마물에게 먹히기 직전, 북부 대공의 칼이 당신을 구했다. 그런데 숲에서 나온 발자국은 모두 당신을 향해 있었다.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="솔라리아">
@@ -1932,8 +1933,137 @@ html.op-handoff .hero-below,html.op-handoff .hero-place,html.op-handoff .hero .c
 @media(prefers-reduced-motion:reduce){#people .page-turn{display:none}}
 </style>
 
+<style id="region-plates">
+/* 12. Regions: six framed plates; each opens a full record */
+#regions .region-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(26px,3vw,40px) clamp(20px,2.4vw,32px);max-width:1240px;margin:clamp(28px,4vw,44px) auto 0;padding:0 clamp(16px,3vw,32px)}
+#regions .region-card{display:flex;flex-direction:column;gap:0;width:100%;padding:0;margin:0;border:0;background:none;color:inherit;text-align:left;cursor:pointer}
+#regions .rc-plate{position:relative;display:block;aspect-ratio:16/10.5;overflow:hidden;border:1px solid rgba(214,185,128,.3);box-shadow:0 16px 34px rgba(0,0,0,.4);background:#0c111a;transition:border-color .3s,box-shadow .3s}
+#regions .rc-plate:after{content:"";position:absolute;inset:8px;border:1px solid rgba(236,214,170,.22);pointer-events:none;transition:border-color .3s}
+#regions .rc-img{position:absolute;inset:0;background-size:cover;filter:saturate(.9) brightness(.74);transform:scale(1.02);transition:transform .9s cubic-bezier(.2,.7,.2,1),filter .5s}
+#regions .rc-shade{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(6,9,16,.15),rgba(6,9,16,.6) 100%),linear-gradient(180deg,rgba(6,9,16,.1),rgba(6,9,16,.45))}
+#regions .rc-mark{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:0 12%;transition:opacity .4s,transform .5s}
+#regions .rc-mark small{font:600 10.5px var(--lat);letter-spacing:.26em;color:rgba(236,220,190,.7)}
+#regions .rc-mark b{font:600 clamp(26px,2.6vw,36px)/1.15 var(--lat);letter-spacing:.24em;color:#efe1c4;text-shadow:0 2px 18px rgba(0,0,0,.6);padding-left:.24em}
+#regions .rc-mark em{font:400 13px var(--read);font-style:normal;letter-spacing:.3em;color:rgba(232,216,186,.72);padding-left:.3em}
+#regions .rc-meta{position:relative;display:block;padding:18px 2px 0}
+#regions .rc-meta small{display:block;font:600 11.5px var(--lat);letter-spacing:.14em;color:color-mix(in srgb,var(--rc,#d6b980) 70%,#f3e6cc)}
+#regions .rc-meta b{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:10px;font:700 clamp(25px,2.2vw,30px)/1.2 var(--disp);color:#f4e8d4}
+#regions .rc-meta b i{font:400 18px var(--ui);font-style:normal;color:rgba(232,210,170,.55);transition:transform .3s,color .3s}
+#regions .rc-meta em{display:block;margin-top:7px;font:600 14px var(--ui);font-style:normal;color:#cfc3ad}
+#regions .rc-line{display:block;margin-top:9px;font:400 15px/1.7 var(--read);color:#c6ccd5}
+#regions .region-card:hover .rc-img,#regions .region-card:focus-visible .rc-img{filter:saturate(1) brightness(.92);transform:scale(1.07)}
+#regions .region-card.is-rift:hover .rc-img,#regions .region-card.is-rift:focus-visible .rc-img{filter:brightness(.9) contrast(1.05)}
+#regions .region-card:hover .rc-plate,#regions .region-card:focus-visible .rc-plate{border-color:color-mix(in srgb,var(--rc,#d6b980) 70%,#fff3d6);box-shadow:0 20px 44px rgba(0,0,0,.5),0 0 0 1px color-mix(in srgb,var(--rc,#d6b980) 35%,transparent)}
+#regions .region-card:hover .rc-plate:after{border-color:rgba(255,236,200,.42)}
+#regions .region-card:hover .rc-meta b i,#regions .region-card:focus-visible .rc-meta b i{transform:translate(3px,-3px);color:#f1d7a3}
+#regions .region-card:focus-visible{outline:2px solid #efd5a0;outline-offset:6px}
+#regions .region-card.is-rift .rc-img{filter:brightness(.7) contrast(1.05)}
+#regions .region-card.is-rift .rc-shade{background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(6,6,8,.15),rgba(4,4,6,.7) 100%)}
+#regions .region-card.is-rift .rc-mark b{font-size:clamp(20px,2vw,27px);color:#ece8e0}
+@media(max-width:1000px){#regions .region-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){#regions .region-grid{grid-template-columns:minmax(0,1fr);gap:30px;padding:0 16px}#regions .rc-plate{aspect-ratio:16/9.5}#regions .rc-meta{padding-top:14px}#regions .rc-line{font-size:14.5px}}
+
+/* the record that opens */
+html.rd-open{overflow:hidden}
+.region-detail{width:min(1080px,calc(100vw - 40px));max-width:none;max-height:calc(100dvh - 40px);margin:auto;padding:0;border:0;background:transparent;color:#2b2318;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:rgba(150,112,52,.6) transparent}
+.region-detail::backdrop{background:rgba(4,6,12,.84);backdrop-filter:blur(5px)}
+.region-detail .rd-shell{--ink:color-mix(in srgb,var(--rc,#8a6a35) 50%,#22170b);position:relative;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+.region-detail .rd-shell.rd-in{animation:rdIn .5s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rdIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.region-detail .rd-hero{position:relative;height:clamp(240px,34vh,340px);overflow:hidden;color:#f3e6cc;border:1px solid rgba(214,185,128,.35);border-bottom:0}
+.region-detail .rd-hero-img{position:absolute;inset:0;background-size:cover;filter:saturate(.85) brightness(.8)}
+.region-detail .rd-hero.is-rift .rd-hero-img{filter:brightness(.85)}
+.region-detail .rd-hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,9,16,.55) 0,rgba(6,9,16,.05) 32%,rgba(6,9,16,.15) 55%,rgba(6,9,16,.82) 100%)}
+.region-detail .rd-top{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px;font:600 12px var(--lat);letter-spacing:.16em;color:rgba(240,226,200,.85)}
+.region-detail .rd-close{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border:1px solid rgba(236,214,170,.45);background:rgba(8,12,20,.55);color:#f2e3c5;font:700 13.5px var(--ui);letter-spacing:0;cursor:pointer}
+.region-detail .rd-close span{font-size:18px;line-height:1}
+.region-detail .rd-close:hover{background:rgba(236,214,170,.18)}
+.region-detail .rd-title{position:absolute;left:clamp(22px,4vw,46px);right:22px;bottom:clamp(20px,3vw,30px)}
+.region-detail .rd-title small{display:block;font:600 13px var(--lat);letter-spacing:.3em;color:color-mix(in srgb,var(--rc,#d6b980) 60%,#fff2d8)}
+.region-detail .rd-title h3{margin:6px 0 0;font:700 clamp(46px,6vw,74px)/1.05 var(--disp);color:#fbf1de;text-shadow:0 3px 22px rgba(0,0,0,.6)}
+.region-detail .rd-title p{margin:8px 0 0;font:600 16px var(--ui);color:#e8dcc4}
+.region-detail .rd-paper{position:relative;padding:clamp(26px,3.6vw,44px) clamp(22px,4vw,46px) clamp(24px,3vw,34px);background:var(--pa-sheet);border:1px solid var(--pa-gilt,rgba(150,112,52,.58));outline:1px solid var(--pa-gilt-in,rgba(150,112,52,.46));outline-offset:-10px}
+.region-detail .rd-motto{margin:0;font:400 clamp(20px,2vw,25px)/1.6 var(--read);color:#2a2116}
+.region-detail .rd-motto span{color:var(--ink);font-size:1.3em;margin-right:6px}
+.region-detail .rd-air{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:16px 0 0;padding-bottom:22px;border-bottom:1px solid rgba(90,70,40,.26)}
+.region-detail .rd-air b{margin-right:6px;font:700 13px var(--ui);color:var(--ink)}
+.region-detail .rd-air span{padding:5px 11px;border:1px solid rgba(90,70,40,.3);background:rgba(255,252,242,.45);font:400 14px var(--read);color:#3a2f20}
+.region-detail .rd-cols{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:0 clamp(26px,3.4vw,44px);margin-top:6px}
+.region-detail .rd-side{padding-left:clamp(22px,3vw,40px);border-left:1px solid rgba(90,70,40,.22)}
+.region-detail .rd-sec{padding:22px 0 0}
+.region-detail .rd-sec h4{display:flex;align-items:baseline;gap:8px;margin:0 0 10px;font:700 16px var(--ui);color:#1d160d}
+.region-detail .rd-sec h4 small{font:700 12px var(--lat);color:var(--ink)}
+.region-detail .rd-sec h4 em{margin-left:auto;font:600 13px var(--ui);font-style:normal;color:#6b5a3e}
+.region-detail .rd-sec p{margin:0;font:400 16.5px/1.85 var(--read);color:#2b2318}
+.region-detail .rd-story p{padding:14px 18px;border-left:3px solid var(--ink);background:rgba(255,252,242,.5);box-shadow:0 1px 2px rgba(60,40,15,.12)}
+.region-detail .rd-now{margin:0;padding:0;list-style:none}
+.region-detail .rd-now li{position:relative;padding:10px 0 10px 22px;border-top:1px dashed rgba(90,70,40,.28);font:400 16px/1.75 var(--read);color:#2b2318}
+.region-detail .rd-now li:first-child{border-top:0}
+.region-detail .rd-now li:before{content:"◇";position:absolute;left:0;top:11px;font-size:12px;color:var(--ink)}
+.region-detail .rd-places{margin:0}
+.region-detail .rd-places div{padding:10px 0;border-top:1px dashed rgba(90,70,40,.28)}
+.region-detail .rd-places div:first-child{border-top:0;padding-top:2px}
+.region-detail .rd-places dt{font:700 15.5px var(--ui);color:#1d160d}
+.region-detail .rd-places dd{margin:4px 0 0;font:400 15px/1.75 var(--read);color:#3a2f20}
+.region-detail .rd-people{margin-top:8px;border-top:1px solid rgba(90,70,40,.26)}
+.region-detail .rd-who{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.region-detail .rd-who button{display:flex;align-items:center;gap:10px;min-width:0;padding:8px 10px;border:1px solid rgba(90,70,40,.24);background:rgba(255,252,242,.5);text-align:left;cursor:pointer;box-shadow:0 1px 2px rgba(60,40,15,.12)}
+.region-detail .rd-who button:hover{background:rgba(255,252,242,.9);border-color:rgba(90,70,40,.5)}
+.region-detail .rd-who img{flex:none;width:38px;height:38px;border-radius:50%;object-fit:cover;object-position:center 18%;box-shadow:0 0 0 1.5px rgba(150,112,52,.65)}
+.region-detail .rd-who span{min-width:0}
+.region-detail .rd-who b{display:block;font:700 14px/1.3 var(--ui);color:#1d160d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.region-detail .rd-who small{display:block;margin-top:2px;font-size:12.5px;line-height:1.3;color:#5a4a33;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.region-detail .rd-empty{font:400 15.5px var(--read);color:#4a3c28}
+.region-detail .rd-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:30px;padding-top:18px;border-top:1px solid rgba(90,70,40,.3)}
+.region-detail .rd-nav span{font:700 12.5px var(--lat);letter-spacing:.16em;color:#55442e}
+.region-detail .rd-nav button{min-width:120px;min-height:44px;padding:0 16px;border:1px solid rgba(90,70,40,.4);background:rgba(255,250,235,.5);color:#3a2d1c;font:700 14px var(--ui);cursor:pointer}
+.region-detail .rd-nav button:hover{background:rgba(255,250,235,.95)}
+.region-detail button:focus-visible{outline:2px solid #7a5a22;outline-offset:2px}
+@media(max-width:760px){
+ .region-detail{width:100vw;max-height:100dvh;height:100dvh}
+ .region-detail .rd-hero{height:230px;border-left:0;border-right:0}
+ .region-detail .rd-top{padding:12px 14px;font-size:10.5px;letter-spacing:.1em}
+ .region-detail .rd-title{left:20px;bottom:18px}
+ .region-detail .rd-title h3{font-size:46px}
+ .region-detail .rd-paper{padding:24px 20px 28px;outline-offset:-7px;border-left:0;border-right:0}
+ .region-detail .rd-cols{grid-template-columns:minmax(0,1fr)}
+ .region-detail .rd-side{padding-left:0;border-left:0}
+ .region-detail .rd-motto{font-size:19px}
+ .region-detail .rd-sec p{font-size:16px}
+ .region-detail .rd-nav button{min-width:0;flex:1}
+ .region-detail .rd-who{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(prefers-reduced-motion:reduce){#regions .rc-img,#regions .rc-plate,#regions .rc-meta b i{transition:none}.region-detail .rd-shell.rd-in{animation:none}.region-detail::backdrop{backdrop-filter:none}}
+</style>
+<style id="pages">
+/* 13. One page at a time over a turning backdrop */
+html[data-page="home"] :is(#regions,#people,#bonds,#archive){display:none}
+html:not([data-page="home"]) :is(#top,#world,#resonance){display:none}
+html[data-page="regions"] :is(#people,#bonds,#archive),html[data-page="people"] :is(#regions,#bonds,#archive),html[data-page="bonds"] :is(#regions,#people,#archive),html[data-page="archive"] :is(#regions,#people,#bonds){display:none}
+html:not([data-page="home"]) :is(#regions,#people,#bonds,#archive){min-height:100svh;padding-top:clamp(96px,9vw,128px)}
+.page-enter{animation:pageEnter .55s cubic-bezier(.2,.7,.2,1) both}
+@keyframes pageEnter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+/* backdrop */
+body{background:#080D16}
+.site-backdrop{position:fixed;inset:0;z-index:-1;overflow:hidden;background:#080D16;pointer-events:none}
+.site-backdrop .sb-slide{position:absolute;inset:-2%;background-size:cover;background-repeat:no-repeat;opacity:0;transition:opacity 2.6s ease;filter:saturate(.92) brightness(.9)}
+.site-backdrop .sb-slide.on{opacity:1}
+.site-backdrop .sb-slide.kb{animation:sbDrift 12s ease-out forwards}
+@keyframes sbDrift{from{transform:scale(1.07)}to{transform:scale(1)}}
+.site-backdrop .sb-veil{position:absolute;inset:0;background:radial-gradient(ellipse 120% 90% at 55% 40%,rgba(6,9,16,.12),rgba(4,6,12,.62) 100%),rgba(6,9,16,calc(.06 + var(--veil,0)*.7))}
+html:not([data-page="home"]) .site-backdrop .sb-veil{background:radial-gradient(ellipse 120% 90% at 50% 40%,rgba(6,9,16,.5),rgba(4,6,12,.82) 100%),rgba(6,9,16,.66)}
+/* sections lie on the backdrop instead of painting their own ground */
+#top.hero-reimagined,#world,#regions,#people,#bonds,#bonds.bonds,#archive,#archive.forbidden-library,#resonance{background:transparent!important}
+#top.hero-reimagined .bg{display:none}
+#top.hero-reimagined:before{background:linear-gradient(90deg,rgba(6,10,18,.78) 0%,rgba(6,10,18,.42) 45%,transparent 75%),linear-gradient(0deg,rgba(6,9,16,.6) 0%,transparent 30%)}
+:is(#world,#people,#bonds,#archive,#resonance)::before{opacity:.6}
+#top .hero-place.sb-swap{animation:sbLabel 1.4s ease both}
+@keyframes sbLabel{0%{opacity:0;transform:translateY(6px)}40%{opacity:0}100%{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.page-enter{animation:none}.site-backdrop .sb-slide{transition:opacity 1s}.site-backdrop .sb-slide.kb{animation:none}#top .hero-place.sb-swap{animation:none}}
+</style>
 </head>
 <body>
+<div class="site-backdrop" id="siteBackdrop" aria-hidden="true"><div class="sb-slides"></div><div class="sb-veil"></div></div>
 <div id="intro" class="op-v2" aria-label="솔라리아 오프닝">
   <div class="op-stage" id="opStage" aria-hidden="true">
     <div class="op-shot eyes active"><img src="img/op/beast-eyes.webp" data-fallback="img/op_forest.jpg" fetchpriority="high" alt=""></div>
@@ -1994,7 +2124,7 @@ html.op-handoff .hero-below,html.op-handoff .hero-place,html.op-handoff .hero .c
 </div>
 <div class="world-chapters">
   <article class="world-chapter world-chapter-empire" data-world-scene="capital">
-    <div class="world-chapter-image"><img src="img/r/capital.jpg" alt="솔라리아 황도와 황궁의 풍경" loading="lazy"></div>
+    <div class="world-chapter-image"><img src="img/r/capital.jpg" alt="대교 너머로 보이는 황도 아우룸의 풍경" loading="lazy"></div>
     <div class="world-chapter-content">
       <div class="world-chapter-head"><span>RECORD Ⅰ</span><span>THE EMPIRE</span></div>
       <h3>태양의 제국</h3><p class="world-chapter-sub">찬란한 황금빛 아래, 흔들리는 옥좌.</p>
@@ -2003,7 +2133,7 @@ html.op-handoff .hero-below,html.op-handoff .hero-place,html.op-handoff .hero .c
     </div>
   </article>
   <article class="world-chapter world-chapter-north" data-world-scene="north">
-    <div class="world-chapter-image"><img src="img/r/north.jpg" alt="눈 덮인 북부 방벽과 설원의 풍경" loading="lazy"></div>
+    <div class="world-chapter-image"><img src="img/r/north.jpg" alt="눈 덮인 마을 뒤로 솟은 글라시스 방벽" loading="lazy"></div>
     <div class="world-chapter-content">
       <div class="world-chapter-head"><span>RECORD Ⅱ</span><span>THE FRONTIER</span></div>
       <h3>마물과 북부</h3><p class="world-chapter-sub">제국의 빛이 가장 먼저 식는 곳.</p>
@@ -2012,7 +2142,7 @@ html.op-handoff .hero-below,html.op-handoff .hero-place,html.op-handoff .hero .c
     </div>
   </article>
   <article class="world-chapter world-chapter-rift" data-world-scene="rift">
-    <div class="world-chapter-image"><img src="img/r/rift.jpg" alt="어둠과 보랏빛이 감도는 균열 지대" loading="lazy"></div>
+    <div class="world-chapter-image"><img src="img/r/rift.jpg" alt="찢긴 흑백 기록 속, 안개에서 걸어 나오는 거대한 마물" loading="lazy"></div>
     <div class="world-chapter-content">
       <div class="world-chapter-head"><span>RECORD Ⅲ</span><span>THE HIDDEN TRUTH</span></div>
       <h3>균열과 마석</h3><p class="world-chapter-sub">제국을 밝히는 빛은 어디에서 오는가.</p>
@@ -2062,8 +2192,7 @@ html.op-handoff .hero-below,html.op-handoff .hero-place,html.op-handoff .hero .c
 <section class="sec regions" id="regions">
   <div class="sh" style="padding:0 16px"><h2>다섯 권역과 균열</h2><div class="orn"><i></i></div>
     <p>권역마다 다른 공기와 다른 이야기가 있다. 원하는 땅에서 이야기를 시작할 수 있다.</p></div>
-  <div class="rtabs" id="rtabs"></div>
-  <div class="rstage" id="rstage"></div>
+  <div class="region-grid" id="regionGrid" role="list" aria-label="권역 기록 목록"></div>
 </section>
 
 <section class="sec people" id="people"><div class="wrap">
@@ -2257,7 +2386,7 @@ const REGIONS = {
   },
   rift: {
     latin: 'ULTRA FISSURAM', name: '균열 너머', full: '봉인 지역', color: '#9c7cff', ink: '#1a0f33', sealed: true,
-    tag: '그 너머를 보고 돌아온 사람은 없다.',
+    tag: '그 너머를 아는 자는, 인간 중에는 없다.',
     air: ['빛 먹는 어둠', '쇠맛 공기', '낮은 울림'],
     about: '대륙 서쪽 끝을 따라 길게 갈라진 검은 균열. 서부 쪽은 아무것도 오를 수 없는 절벽이지만, 북쪽 끝은 마물 숲으로 낮게 열려 있다. 보랏빛 번개가 그치지 않고, 부서진 땅덩이가 허공에 떠 있다. 마물은 그곳에서 온다.',
     places: [
@@ -2366,11 +2495,9 @@ const links=[...nav.querySelectorAll('li a')];
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
 ['world','regions','people','bonds','seals','resonance'].forEach(id=>io.observe($(id)));
 
-/* regions */
-const rtabs=$('rtabs'),rstage=$('rstage');
-rtabs.innerHTML=ORDER.map(k=>`<button class="rtab" data-r="${k}"><span class="th" style="background-image:url(img/r/${k}.jpg)"></span>${REGIONS[k].name}</button>`).join('');
-const POS={north:'50% 28%',capital:'50% 30%',south:'50% 42%',east:'50% 32%',west:'50% 30%',rift:'50% 40%'};
-rstage.innerHTML=ORDER.map(k=>`<div class="rbg" data-r="${k}" style="background-image:url(img/r/${k}.jpg);background-position:${POS[k]}"></div>`).join('')+'<div class="rinfo" id="rinfo"></div>';
+/* regions: six plates on the desk; each opens its own record */
+const regionGrid=$('regionGrid');
+const POS={north:'50% 32%',capital:'60% 40%',south:'50% 45%',east:'50% 50%',west:'55% 42%',rift:'45% 55%'};
 const STORY={
  north:'방벽 너머 숲에서, 마물에게 먹히기 직전의 당신을 대공의 칼이 구한다. 이상한 것은, 마물들이 당신을 해치지 않았다는 것이다.',
  capital:'황도에 들어선 첫날 밤, 숙소 문틈에 금빛 봉인의 초대장이 꽂혀 있다. 보낸 사람은 황녀다. 그녀는 아직 당신의 이름도 모를 텐데.',
@@ -2380,25 +2507,70 @@ const STORY={
  rift:'이 이야기는 아직 기록되지 않았다.'
 };
 function regionPeople(k){const keys=k==='capital'?['capital','temple','tower']:[k];return P.filter(p=>keys.includes(p.aff))}
-function setRegion(k,anim=true){
-  const r=REGIONS[k];
-  rtabs.querySelectorAll('.rtab').forEach(b=>b.classList.toggle('on',b.dataset.r===k));
-  rstage.querySelectorAll('.rbg').forEach(b=>b.classList.toggle('on',b.dataset.r===k));
-  const ppl=regionPeople(k), visible=ppl.filter(p=>!p.sealed||window.SOLARIA_RIFT_UNLOCKED),show=visible.filter(p=>p.main).concat(visible.filter(p=>!p.main)).slice(0,6);
+const regionKicker=(k,i)=>k==='rift'?'봉인 지역':'권역 '+pad(i+1);
+regionGrid.innerHTML=ORDER.map((k,i)=>{const r=REGIONS[k];return `<button type="button" role="listitem" class="region-card${k==='rift'?' is-rift':''}" data-r="${k}" style="--rc:${COL[k]}" aria-label="${r.name} · ${r.full} 기록 열기">
+  <span class="rc-plate"><span class="rc-img" style="background-image:url(img/r/${k}.jpg);background-position:${POS[k]}"></span><span class="rc-shade"></span>
+   <span class="rc-mark"><small translate="no">IMPERIUM SOLARIAE / ${pad(i+1)}</small><b translate="no">${r.latin}</b><em>${r.full}</em></span></span>
+  <span class="rc-meta"><small>${regionKicker(k,i)} / <span translate="no">${r.latin}</span></small><b>${r.name}<i aria-hidden="true">↗</i></b><em>${r.full}</em><span class="rc-line">${r.tag}</span></span>
+ </button>`}).join('');
+const regionDialog=document.createElement('dialog');
+regionDialog.className='region-detail';regionDialog.id='regionDetail';regionDialog.setAttribute('aria-labelledby','rdTitle');
+document.body.append(regionDialog);
+let regionCur='north',regionReady=false;
+function regionRecord(k){
+  const r=REGIONS[k],i=ORDER.indexOf(k),prev=ORDER[(i+ORDER.length-1)%ORDER.length],next=ORDER[(i+1)%ORDER.length];
+  const ppl=regionPeople(k),visible=ppl.filter(p=>!p.sealed||window.SOLARIA_RIFT_UNLOCKED),show=visible.filter(p=>p.main).concat(visible.filter(p=>!p.main));
   const nowLines=k==='rift'&&window.SOLARIA_RIFT_UNLOCKED?['균열 너머 인물들의 공개 기록이 개방되었다.','그 너머의 비밀은 아직 모두 밝혀지지 않았다.']:r.now;
-  const info=$('rinfo');
-  info.style.setProperty('--rc',COL[k]);
-  info.innerHTML=`<div class="lt" translate="no">${r.latin}</div><h3>${r.name}</h3><p class="full">${r.full}</p>
-    <p class="motto">${r.tag}</p><div class="region-story-label">LAND & ATMOSPHERE / 지역 개관</div><p class="about">${r.about}</p>
-    <div class="story"><b>이 땅의 이야기</b><p>${STORY[k]}</p></div>
-    <div class="region-now"><b>현재 정세</b><ul>${nowLines.map(item=>`<li>${esc(item)}</li>`).join('')}</ul></div><div class="region-story-label">KEY LOCATIONS / 주요 거점</div>    <ul class="places">${r.places.filter(p=>p[0]!=='???').slice(0,5).map(p=>`<li>${p[0]}</li>`).join('')}</ul>
-    ${ppl.length?`<section class="region-people" aria-label="관련 인물"><div class="region-people-heading"><b>이 지역의 인물</b><small>관련 인물 ${ppl.length}명 · 초상을 누르면 인물 도감으로 이동</small></div><div class="who">${!show.length?`<div class="region-locked-note"><p>이 권역은 봉인되어 있습니다.</p></div>`:""}${show.map(p=>`<button type="button" class="region-character" data-no="${p.no}" aria-label="${esc(p.name)} · ${esc(p.role)} · 인물 도감 보기"><img src="${window.SOLARIA_PORTRAIT_SRC(p.no,"t")}" alt="" loading="lazy"><span class="region-character-text"><b>${esc(p.name)}</b><small>${esc(p.role)}</small></span></button>`).join('')}</div></section>`:`<div class="region-people region-people-empty">공개된 인물 기록이 없습니다.</div>`}`;
-  if(anim){info.classList.remove('anim');void info.offsetWidth;info.classList.add('anim')}
-  info.querySelectorAll('.who button[data-no]').forEach(b=>b.onclick=()=>{const who=P.find(p=>p.no===Number(b.dataset.no));setFilter(who?.aff||k,+b.dataset.no);$('people').scrollIntoView()});
-  info.querySelector('[data-region-contact]')?.addEventListener('click',()=>window.SOLARIA_RIFT_CONTACT?.begin());
+  const places=r.places.filter(p=>p[0]!=='???');
+  return `<div class="rd-shell" style="--rc:${COL[k]}">
+   <header class="rd-hero${k==='rift'?' is-rift':''}"><span class="rd-hero-img" style="background-image:url(img/r/${k}.jpg);background-position:${POS[k]}"></span><span class="rd-hero-shade"></span>
+    <div class="rd-top"><span>${regionKicker(k,i)} · 권역 기록</span><button type="button" class="rd-close" data-rd-close aria-label="권역 기록 닫기">닫기 <span aria-hidden="true">×</span></button></div>
+    <div class="rd-title"><small translate="no">${r.latin}</small><h3 id="rdTitle">${r.name}</h3><p>${r.full}</p></div>
+   </header>
+   <article class="rd-paper">
+    <p class="rd-motto"><span aria-hidden="true">“</span>${r.tag}</p>
+    ${r.air&&r.air.length?`<div class="rd-air"><b>이 땅의 공기</b>${r.air.map(a=>`<span>${esc(a)}</span>`).join('')}</div>`:''}
+    <div class="rd-cols">
+     <div class="rd-main">
+      <section class="rd-sec"><h4><small>01</small> 지역 개관</h4><p>${r.about}</p></section>
+      <section class="rd-sec rd-story"><h4><small>02</small> 이 땅의 이야기</h4><p>${STORY[k]}</p></section>
+      <section class="rd-sec"><h4><small>03</small> 현재 정세</h4><ul class="rd-now">${nowLines.map(item=>`<li>${esc(item)}</li>`).join('')}</ul></section>
+     </div>
+     <aside class="rd-side">
+      ${places.length?`<section class="rd-sec"><h4><small>04</small> 주요 거점</h4><dl class="rd-places">${places.map(p=>`<div><dt>${esc(p[0])}</dt>${p[1]?`<dd>${esc(p[1])}</dd>`:''}</div>`).join('')}</dl></section>`:''}
+     </aside>
+    </div>
+    <section class="rd-sec rd-people"><h4><small>05</small> 이 지역의 인물 <em>${visible.length?visible.length+'명':''}</em></h4>
+       ${!ppl.length?'<p class="rd-empty">공개된 인물 기록이 없습니다.</p>':!show.length?'<p class="rd-empty">이 권역은 봉인되어 있습니다.</p>':`<div class="rd-who">${show.map(p=>`<button type="button" data-no="${p.no}" aria-label="${esc(p.name)} · ${esc(p.role)} · 인물 도감 보기"><img src="${window.SOLARIA_PORTRAIT_SRC(p.no,'t')}" alt="" loading="lazy"><span><b>${esc(p.name)}</b><small>${esc(p.role)}</small></span></button>`).join('')}</div>`}
+    </section>
+    <nav class="rd-nav" aria-label="다른 권역 기록"><button type="button" data-rd-go="${prev}"><span aria-hidden="true">‹</span> ${REGIONS[prev].name}</button><span>${pad(i+1)} / ${pad(ORDER.length)}</span><button type="button" data-rd-go="${next}">${REGIONS[next].name} <span aria-hidden="true">›</span></button></nav>
+   </article>
+  </div>`;
 }
-rtabs.querySelectorAll('.rtab').forEach(b=>b.onclick=()=>setRegion(b.dataset.r));
+function closeRegion(){if(regionDialog.open)regionDialog.close()}
+regionDialog.addEventListener('close',()=>document.documentElement.classList.remove('rd-open'));
+// setRegion keeps its old name for the atlas, the world chapters, the library and the rift: it now opens that region's record.
+function setRegion(k,anim=true){
+  if(!REGIONS[k])return;
+  regionCur=k;
+  regionGrid.querySelectorAll('.region-card').forEach(b=>b.classList.toggle('on',b.dataset.r===k));
+  if(!regionReady)return;
+  regionDialog.innerHTML=regionRecord(k);
+  regionDialog.scrollTop=0;
+  if(!regionDialog.open){document.documentElement.classList.add('rd-open');regionDialog.showModal()}
+  const shell=regionDialog.querySelector('.rd-shell');
+  if(anim!==false&&!matchMedia('(prefers-reduced-motion: reduce)').matches)shell.classList.add('rd-in');
+  regionDialog.querySelector('.rd-close')?.focus({preventScroll:true});
+}
+regionGrid.addEventListener('click',e=>{const b=e.target.closest('.region-card');if(b)setRegion(b.dataset.r)});
+regionDialog.addEventListener('click',e=>{
+  if(e.target===regionDialog||e.target.closest('[data-rd-close]')){closeRegion();return}
+  const go=e.target.closest('[data-rd-go]');if(go){setRegion(go.dataset.rdGo);return}
+  const who=e.target.closest('.rd-who [data-no]');
+  if(who){const p=P.find(x=>x.no===Number(who.dataset.no));closeRegion();setFilter(p?.aff||regionCur,Number(who.dataset.no));$('people').scrollIntoView()}
+});
 setRegion('north',false);
+regionReady=true;
 
 /* people — dedicated character archive. Faction colors & images, no content changes. */
 const FILTERS=[['main','주요 인물'],['north','북부'],['capital','황도'],['temple','교단'],['tower','마탑'],['south','남부'],['east','동부'],['west','서부'],['rift','균열'],['all','전체']];
@@ -2511,7 +2683,7 @@ function setPerson(i,anim=true){
   if(!list.length)return;
   const turnDir=anim&&i!==cur&&!matchMedia('(prefers-reduced-motion: reduce)').matches?(i>cur?1:-1):0;
   const wasRuin=dossier.classList.contains('ruin-record');
-  const turnSnap=turnDir&&cstage.firstElementChild&&!cstage.querySelector('.people-locked-rift,.people-empty')?pageTurnSnapshot():null;
+  const turnSnap=turnDir&&cstage.offsetParent&&cstage.firstElementChild&&!cstage.querySelector('.people-locked-rift,.people-empty')?pageTurnSnapshot():null;
   cur=(i%list.length+list.length)%list.length;
   const p=list[cur],sealed=!!p.sealed&&!window.SOLARIA_RIFT_UNLOCKED,name=sealed?'???':p.name,role=sealed?'봉인된 기록':p.role;
   const extra=window.SOLARIA_BIO?.[p.no];
@@ -2966,5 +3138,85 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
 <script src="forbidden-library.js"></script>
 <script src="dossier-expansion.js"></script>
 <script src="relationships.js?v=star-record"></script>
+<script id="pages-router">
+/* Pages: home (opening, world, resonance) plus one page each for regions, people, bonds and the library.
+   One fixed backdrop of five scenes keeps turning behind every page. */
+(function(){
+ const root=document.documentElement,calm=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
+ /* ── backdrop ── */
+ const SCENES=[
+  {key:'north',latin:'NORTHERN FRONTIER',place:'보레알 대공령 · 글라시스 방벽',pos:'56% 40%'},
+  {key:'capital',latin:'IMPERIAL CAPITAL',place:'아우룸 · 동쪽 대교',pos:'68% 45%'},
+  {key:'south',latin:'SOUTHERN HARBOR',place:'오스트랄 항만 연합 · 대항구',pos:'45% 45%'},
+  {key:'east',latin:'EASTERN FOREST',place:'아우로라 숲',pos:'52% 50%'},
+  {key:'west',latin:'WESTERN MARCH',place:'베스퍼 변경 · 베스퍼 요새',pos:'60% 42%'}
+ ];
+ const box=document.querySelector('#siteBackdrop .sb-slides'),placeEl=document.querySelector('#top .hero-place');
+  box.innerHTML=SCENES.map((s,i)=>'<div class="sb-slide'+(i===0?' on':'')+'" style="background-image:url(img/r/'+s.key+'.jpg);background-position:'+s.pos+'"></div>').join('');
+ const slides=[...box.children];let idx=0,timer=0;
+ function label(i){if(!placeEl)return;const s=SCENES[i];placeEl.classList.remove('sb-swap');void placeEl.offsetWidth;placeEl.innerHTML='<span>'+s.latin+'</span><b>'+s.place+'</b>';placeEl.classList.add('sb-swap')}
+ function step(){idx=(idx+1)%slides.length;slides.forEach((el,i)=>{el.classList.toggle('on',i===idx);if(i===idx){el.classList.remove('kb');void el.offsetWidth;el.classList.add('kb')}});label(idx)}
+ function run(){clearInterval(timer);timer=setInterval(()=>{if(!document.hidden&&!root.classList.contains('intro-on'))step()},9000)}
+ slides[0].classList.add('kb');run();
+ /* the veil darkens once you leave the opening view */
+ function veil(){const v=root.dataset.page!=='home'?1:Math.min(1,scrollY/(innerHeight*.75));root.style.setProperty('--veil',v.toFixed(3))}
+ addEventListener('scroll',veil,{passive:true});addEventListener('resize',veil);
+ /* ── pages ── */
+ const SUB=['regions','people','bonds','archive'],HASH={regions:'regions',people:'people',bonds:'bonds',archive:'seals'};
+ const pageOfEl=el=>{const s=el&&el.closest&&el.closest('#regions,#people,#bonds,#archive');return s?s.id:'home'};
+ const pageOfId=id=>{if(!id)return 'home';const el=document.getElementById(id);return el?pageOfEl(el):'home'};
+ const nav=document.getElementById('nav'),links=nav?[...nav.querySelectorAll('li a')]:[];
+ function mark(){const p=root.dataset.page;links.forEach(a=>{const id=a.getAttribute('href').slice(1);if(p!=='home')a.classList.toggle('on',pageOfId(id)===p)})}
+ const nativeScroll=Element.prototype.scrollIntoView;
+ function show(page,opts={}){
+  if(!SUB.includes(page))page='home';
+  const changed=root.dataset.page!==page;
+  if(changed){
+   root.dataset.page=page;
+   if(opts.push)try{history.pushState(null,'','#'+(page==='home'?(opts.hash||'top'):HASH[page]))}catch(e){}
+   window.scrollTo({top:0,behavior:'instant'});
+   const shown=page==='home'?document.querySelectorAll('#top,#world,#resonance'):[document.getElementById(page)];
+   if(!calm())shown.forEach(s=>{s.classList.remove('page-enter');void s.offsetWidth;s.classList.add('page-enter')});
+   if(page==='bonds')try{window.SOLARIA_ATLAS?.refresh?.()}catch(e){}
+   window.dispatchEvent(new Event('resize'));
+   mark();veil();
+  }
+  return changed;
+ }
+ // Anything in the site that scrolls to a section on another page opens that page first.
+ Element.prototype.scrollIntoView=function(...args){
+  const page=pageOfEl(this);
+  if(page!==root.dataset.page){
+   const sec=this.closest&&this.closest('section[id]');
+   show(page,{push:true,hash:sec?sec.id:'top'});
+   if(SUB.includes(page)&&this.id===page)return;
+  }
+  return nativeScroll.apply(this,args);
+ };
+ if(window.SOLARIA_ATLAS&&typeof window.SOLARIA_ATLAS.focus==='function'){
+  const focus=window.SOLARIA_ATLAS.focus;
+  window.SOLARIA_ATLAS.focus=function(id){
+   const p=typeof P!=='undefined'?P.find(x=>x.no===Number(id)):null;
+   if(p&&p.aff!=='rift'&&(!p.sealed||window.SOLARIA_RIFT_UNLOCKED))show('bonds',{push:true});
+   return focus.apply(this,arguments);
+  };
+ }
+ function route(){
+  const id=(location.hash||'').slice(1),page=pageOfId(id);
+  show(page);
+  const el=id&&document.getElementById(id);
+  if(el&&!(SUB.includes(page)&&el.id===page)&&id!=='top')nativeScroll.call(el,{block:'start',behavior:'instant'});
+  else if(page==='home'&&(!id||id==='top'))window.scrollTo({top:0,behavior:'instant'});
+ }
+ addEventListener('hashchange',route);
+ addEventListener('popstate',route);
+ links.concat([...document.querySelectorAll('#nav .logo')]).forEach(a=>a.addEventListener('click',e=>{
+  const id=a.getAttribute('href').slice(1),page=pageOfId(id);
+  if(page!=='home'&&page===root.dataset.page&&location.hash==='#'+id){e.preventDefault();window.scrollTo({top:0,behavior:calm()?'auto':'smooth'})}
+ }));
+ mark();veil();
+ if(root.dataset.page==='bonds')try{window.SOLARIA_ATLAS?.refresh?.()}catch(e){}
+})();
+</script>
 </body>
 </html>
