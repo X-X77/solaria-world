@@ -2061,6 +2061,75 @@ html:not([data-page="home"]) .site-backdrop .sb-veil{background:radial-gradient(
 @keyframes sbLabel{0%{opacity:0;transform:translateY(6px)}40%{opacity:0}100%{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.page-enter{animation:none}.site-backdrop .sb-slide{transition:opacity 1s}.site-backdrop .sb-slide.kb{animation:none}#top .hero-place.sb-swap{animation:none}}
 </style>
+<style id="book-size-css">
+/* 14. Every record shares one page size; blank paper fills the rest of shorter records */
+#people #peopleDossier .cstage{min-height:var(--book-h,0px);align-content:start}
+#people #peopleDossier.ruin-record{padding:0}
+#people #peopleDossier.ruin-record .cstage{grid-template-rows:auto 1fr;align-content:stretch}
+#people #peopleDossier.ruin-record .cinfo{align-self:stretch;display:flex;flex-direction:column}
+#people #peopleDossier.ruin-record .ruin-book{flex:1 0 auto}
+@media(max-width:750px){
+ #people #peopleDossier.ruin-record .cstage{grid-template-rows:auto 1fr auto}
+}
+</style>
+<style id="res-career">
+/* 15. The career letter under the device: the Tower circulates the reading, and one house of the Empire answers */
+#resonance .res-career{position:relative;margin:0;padding:24px clamp(16px,2.4vw,30px) 30px;border-top:1px solid rgba(201,168,110,.28);background:radial-gradient(ellipse 80% 46% at 50% 0%,rgba(201,168,110,.08),transparent 72%),linear-gradient(180deg,#0d111c,#0a0d16)}
+#resonance .cr-letter{position:relative;padding:22px 24px 22px;color:var(--pa-ink);background:var(--pa-sheet);border:1px solid var(--pa-gilt);outline:1px solid var(--pa-gilt-in);outline-offset:-7px;box-shadow:0 2px 3px rgba(0,0,0,.35),0 18px 38px rgba(0,0,0,.5);transform:rotate(-.4deg);transition:opacity .4s,filter .4s,transform .4s}
+#resonance .res-career.is-waiting .cr-letter{opacity:.4;filter:saturate(.5);transform:rotate(-.4deg) translateY(6px)}
+#resonance .cr-letter.is-new{animation:crIssue .8s cubic-bezier(.2,.9,.3,1) both}
+@keyframes crIssue{from{opacity:0;transform:translateY(30px) rotate(-2.6deg) scale(.97)}to{opacity:1;transform:rotate(-.4deg)}}
+#resonance .cr-top{display:grid;gap:3px;padding:0 74px 12px 0;border-bottom:1px solid var(--pa-rule)}
+#resonance .cr-top small{font:600 10.5px var(--lat);letter-spacing:.2em;color:var(--pa-gold)}
+#resonance .cr-top b{font:700 20px/1.25 var(--disp);color:var(--pa-ink-strong)}
+#resonance .cr-top span{font:500 12px var(--ui);color:var(--pa-muted)}
+#resonance .cr-kicker{margin:16px 0 4px;font:600 12px var(--ui);letter-spacing:.03em;color:var(--pa-muted)}
+#resonance .cr-letter .cr-job{margin:0;font:700 clamp(27px,2.5vw,33px)/1.25 var(--disp);color:var(--pa-ink-strong);letter-spacing:.01em}
+#resonance .cr-org{margin:5px 0 0;font:700 14.5px var(--ui);color:color-mix(in srgb,rgb(var(--seal,150,112,52)) 30%,#2b2318)}
+#resonance .cr-meta{margin:14px 0 0;border-top:1px dashed var(--pa-rule);border-bottom:1px dashed var(--pa-rule)}
+#resonance .cr-meta div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:7px 2px}
+#resonance .cr-meta div+div{border-top:1px dashed var(--pa-rule)}
+#resonance .cr-meta dt{flex:none;font:600 12.5px var(--ui);color:var(--pa-muted)}
+#resonance .cr-meta dd{margin:0;font:700 13.5px var(--ui);color:var(--pa-ink-strong);text-align:right}
+#resonance .cr-desc{margin:12px 0 0;font:400 15.5px/1.7 var(--read);color:var(--pa-ink)}
+#resonance .cr-say{margin:14px 0 0;padding:11px 14px;background:rgba(255,252,240,.5);border:0;border-left:3px solid color-mix(in srgb,rgb(var(--seal,150,112,52)) 55%,#22170b);font:400 15.5px/1.7 var(--read);color:var(--pa-ink-strong);quotes:none}
+#resonance .cr-say:before,#resonance .cr-say:after{content:none}
+#resonance .cr-ps{margin:12px 0 0;font:400 14px/1.6 var(--read);color:var(--pa-muted)}
+#resonance .cr-sign{display:flex;justify-content:flex-end;margin:12px 0 0}
+#resonance .cr-from{display:flex;align-items:center;gap:10px;padding:6px 2px 0 18px;margin:0;border:0;border-top:1px solid var(--pa-rule);background:none;cursor:pointer;text-align:left;color:inherit;font:inherit}
+#resonance .cr-from img,#resonance .cr-avatar{display:block;width:42px;height:42px;flex:none;border-radius:50%;object-fit:cover;object-position:center 18%;box-shadow:0 0 0 1.5px rgba(150,112,52,.75),0 1px 3px rgba(60,40,15,.3)}
+#resonance .cr-from small{display:block;font:600 11px var(--ui);color:var(--pa-muted)}
+#resonance .cr-from b{display:block;font:700 15px/1.3 var(--ui);color:var(--pa-ink-strong)}
+#resonance .cr-from em{display:block;font-style:normal;font-size:12px;line-height:1.3;color:var(--pa-muted)}
+#resonance .cr-from:hover b{text-decoration:underline;text-underline-offset:3px}
+#resonance .cr-from:focus-visible{outline:2px solid var(--pa-gold);outline-offset:3px}
+#resonance .cr-from.is-lost{cursor:default}
+#resonance .cr-letter .res-seal.cr-seal{right:14px;top:14px;width:62px;height:62px;--rot:-10deg}
+#resonance .cr-letter .res-seal.cr-seal:after{inset:9px}
+#resonance .cr-letter .res-seal.cr-seal.second{right:66px;top:8px;width:46px;height:46px;--rot:12deg}
+#resonance .cr-letter .res-seal.cr-seal.second:after{inset:7px}
+/* before the first reading */
+#resonance .cr-blank-seal{position:absolute;right:20px;top:18px;width:54px;height:54px;border-radius:50%;border:1.5px dashed rgba(120,90,45,.38)}
+#resonance .cr-wait{margin:16px 0 14px;font:400 15.5px/1.75 var(--read);color:var(--pa-ink)}
+#resonance .cr-houses{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+#resonance .cr-houses li{padding:4px 10px;border:1px solid var(--pa-btn-line);background:rgba(255,250,235,.42);font:600 12.5px var(--ui);color:var(--pa-muted)}
+/* the Nox interruption reaches the letter too */
+#resonance .cr-letter.is-nox:after{content:"";position:absolute;inset:26% 6% 10% 10%;background:radial-gradient(ellipse at 42% 52%,rgba(150,10,40,.42),rgba(150,10,40,.14) 46%,transparent 72%);filter:blur(3px);pointer-events:none}
+#resonance .cr-letter.is-nox .cr-job{color:#7a1428}
+#resonance .cr-redacted{color:#8a1a31;letter-spacing:.1em}
+#resonance .cr-avatar{background:radial-gradient(circle at 40% 35%,#6a1426,#1c0408)}
+@media(min-width:761px){#resonance .res-left{background:#0a0d16}}
+@media(max-width:760px){
+ #resonance .res-left{display:contents}
+ #resonance .res-device{order:1}#resonance .res-phase{order:2}#resonance .res-right{order:3}#resonance .res-career{order:4}
+ #resonance .res-career{padding:22px 14px 26px}
+ #resonance .cr-letter{padding:18px 18px 20px}
+ #resonance .cr-top{padding-right:64px}
+ #resonance .cr-letter .res-seal.cr-seal{width:54px;height:54px;right:12px;top:12px}
+ #resonance .cr-letter .res-seal.cr-seal.second{display:none}
+}
+@media(prefers-reduced-motion:reduce){#resonance .cr-letter,#resonance .cr-letter.is-new{animation:none;transition:none}}
+</style>
 </head>
 <body>
 <div class="site-backdrop" id="siteBackdrop" aria-hidden="true"><div class="sb-slides"></div><div class="sb-veil"></div></div>
@@ -3133,11 +3202,60 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
 
 </script>
 <script src="archive.js"></script>
-<script src="resonance.js?v=tower-voices"></script>
+<script src="resonance.js?v=career"></script>
 <script src="people-redesign.js?v=torn-record"></script>
 <script src="forbidden-library.js"></script>
 <script src="dossier-expansion.js"></script>
 <script src="relationships.js?v=star-record"></script>
+<script id="book-size">
+/* One page size for the whole register: every record is measured once (portraits swapped for a blank so nothing
+   downloads), the tallest sets the book height, and short records keep blank paper below. Page turns then match. */
+(function(){
+ const dossierEl=document.getElementById('peopleDossier'),stage=document.getElementById('cstage');
+ if(!dossierEl||!stage||typeof setPerson!=='function'||typeof setFilter!=='function')return;
+ // stand-ins with the portraits' own proportions, so measured boxes match the real ones
+ const BLANK={c:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='760' height='1112'/%3E",t:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='168' height='224'/%3E"};
+ let lastKey='',busy=false,timer=0;
+ const visibleCount=()=>P.filter(p=>!p.sealed||window.SOLARIA_RIFT_UNLOCKED).length;
+ async function measure(){
+  if(busy||!stage.offsetParent)return;
+  const key=Math.round(stage.getBoundingClientRect().width)+'|'+visibleCount()+'|'+innerHeight;
+  if(key===lastKey)return;
+  busy=true;
+  try{await document.fonts?.ready}catch(e){}
+  const prevFilt=typeof filt!=='undefined'?filt:'main',prevNo=list[cur]?.no,y=scrollY,stripEl=document.getElementById('strip'),sx=stripEl?.scrollLeft||0;
+  const src=window.SOLARIA_PORTRAIT_SRC;
+  window.SOLARIA_PORTRAIT_SRC=(no,kind='c')=>BLANK[kind]||BLANK.c;
+  dossierEl.style.setProperty('--book-h','0px');
+  let max=0;
+  try{
+   setFilter('all');
+   for(let i=0;i<list.length;i++){
+    setPerson(i,false);
+    await null; // let the clue buttons other scripts add appear before measuring
+    max=Math.max(max,stage.getBoundingClientRect().height);
+    const sec=stage.querySelector('.secret'); // the opened hidden record can differ in height
+    if(sec){sec.classList.add('open');max=Math.max(max,stage.getBoundingClientRect().height)}
+   }
+  }finally{
+   window.SOLARIA_PORTRAIT_SRC=src;
+   setFilter(prevFilt,prevNo);
+   if(stripEl)stripEl.scrollLeft=sx;
+   if(max)dossierEl.style.setProperty('--book-h',Math.ceil(max)+'px');
+   window.scrollTo({top:y,behavior:'instant'});
+   lastKey=Math.round(stage.getBoundingClientRect().width)+'|'+visibleCount()+'|'+innerHeight;
+   busy=false;
+  }
+ }
+ const schedule=()=>{clearTimeout(timer);timer=setTimeout(measure,180)};
+ if('ResizeObserver' in window){let w=0;new ResizeObserver(es=>{const nw=Math.round(es[0].contentRect.width);if(nw&&nw!==w){w=nw;schedule()}}).observe(dossierEl)}
+ addEventListener('resize',schedule);
+ // the visible register can grow once the rift opens
+ const stripEl=document.getElementById('strip');
+ if(stripEl)new MutationObserver(()=>{if(!busy&&!lastKey.endsWith('|'+visibleCount()+'|'+innerHeight))schedule()}).observe(stripEl,{childList:true});
+ schedule();
+})();
+</script>
 <script id="pages-router">
 /* Pages: home (opening, world, resonance) plus one page each for regions, people, bonds and the library.
    One fixed backdrop of five scenes keeps turning behind every page. */

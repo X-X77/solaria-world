@@ -1,6 +1,7 @@
 /* Solaria — independent random press-and-hold resonance.
    Staged charge (sigil, dimming, hum), a release burst shaped by the attribute,
-   varied readings, and an ink-written observation sealed in wax. */
+   varied readings, an ink-written observation sealed in wax,
+   and a career letter under the device. */
 (()=>{
 'use strict';
 const root=document.getElementById('resonance');if(!root)return;
@@ -311,6 +312,115 @@ const FX=(()=>{
 })();
 const noxLine=device.querySelector('.res-nox-line');
 
+/* ── career letter under the device: the Tower circulates the reading, and one house of the Empire answers ── */
+const CAREER={
+ attr:{
+  fire:{job:'방벽 화염술사',org:'글라시스 방벽 · 북부',by:3,desc:'불길로 마물 숲의 진입로를 막아서는 방벽의 마법사.',say:'불을 다룰 줄 안다면… 방벽에 자리가 있다.'},
+  water:{job:'항해 마법사',org:'남부 함대 · 오스트랄 대항구',by:29,desc:'물길과 파도를 읽어 함대의 뱃길을 여는 마법사.',say:'파도 읽는 재주라면 내 배에 자리가 있지. 멀미만 안 하면.'},
+  wind:{job:'정찰 마법사',org:'베스퍼 변경군',by:35,desc:'황무지 너머의 움직임을 누구보다 먼저 읽어 내는 변경군의 눈.',say:'규율만 지킨다면 받겠습니다. 변경백님 흉내는 내지 마시고요.'},
+  earth:{job:'갱도 수호술사',org:'광산 길드 · 베스퍼 변경',by:34,desc:'무너지는 갱도를 받쳐, 광부들이 돌아올 길을 지키는 술사.',say:'광석보다 광부가 먼저다. 그 손이면 갱도 하나는 버티겠군.'},
+  lightning:{job:'마검사',org:'황실 근위기사단',by:15,desc:'검 끝에 순간의 마력을 실어 싸우는 기사.',say:'검과 마력을 함께 다룰 수 있다면. 시험은 내일 새벽입니다.'},
+  ice:{job:'마석 분석관',org:'마탑 · 분석실',by:8,desc:'마석에 응축된 마력을 정밀하게 읽고 기록하는 연구직.',say:'정밀 제어 체질이에요! 분석실로 와요, 책상 하나 비워 둘게요!'},
+  light:{job:'치유 사제',org:'대신전 · 교단',by:10,desc:'빛의 마력으로 상처를 돌보고 흐트러진 기운을 정화하는 사제.',say:'그 빛이라면, 아픈 사람들 곁을 지켜 줄 수 있을 거예요.'},
+  shadow:{job:'그림자 호위',org:'황녀 직속',by:17,desc:'눈에 띄지 않는 자리에서 주인을 지키고 소식을 모으는 호위.',say:'황녀님 곁에 그림자 하나쯤 더 있어도 괜찮겠지?'}
+ },
+ quiet:[
+  {job:'견습 기사',org:'황실 기사단',by:18,desc:'마력 없이, 검 한 자루로 시작하는 기사의 길.',say:'마력이 없어도 기사는 될 수 있어요. 제가 그 증거거든요.'},
+  {job:'방벽 수비병',org:'글라시스 방벽 수비대',by:25,desc:'방벽 위에서 도끼와 창으로 마물을 막아 내는 병사.',say:'마력? 도끼 드는 데 그런 건 필요 없다.'},
+  {job:'변경군 신병',org:'베스퍼 변경군',by:6,desc:'황무지의 실전에서 살아남는 법부터 배우는 병사.',say:'마력 없어도 칼은 들 수 있잖아. 할 거면 하고.'},
+  {job:'계약 용병',org:'광산 도시 용병단',by:36,desc:'계약서 한 장으로 일을 맡고, 끝까지 해내는 용병.',say:'마력은 계약 조건에 없어. 실력만 있으면 서명해.'}
+ ],
+ faint:[
+  {job:'약방 견습',org:'성하 마을 약방',by:26,desc:'약초에 남은 미세한 기운을 가려 약을 짓는 일.',say:'약한 마력이 오히려 좋아요. 약초가 놀라지 않거든요.'},
+  {job:'견습 사제',org:'아우로라 숲 신전',by:41,desc:'숲의 작은 숨결을 듣고 돌보는 사제의 길.',say:'작은 소리를 들을 줄 아는 귀로구나. 숲으로 오렴.'},
+  {job:'측정 조수',org:'마탑 · 측정실',by:48,desc:'측정 장치를 돌보고 미세한 수치를 받아 적는 조수.',say:'약한 반응을 느끼는 사람, 진짜 귀해요! 제 조수 해요!'},
+  {job:'마석 감정사',org:'베르가 상단 · 경매장',by:4,desc:'마석에 남은 희미한 기운으로 값을 매기는 감정사.',say:'섬세한 손이네. 마석 감정에 딱이야. 급료는… 천천히 정하자.'}
+ ],
+ dual:{job:'복합 속성 연구원',org:'마탑 · 특별 채용',by:47,desc:'두 갈래의 파장을 하나의 술식으로 엮는 법을 연구하는 자리.',say:'쌍속성이라… 제 연구실로 오시죠. 노바 쪽 말고요.'},
+ inverse:{job:'마석 정제사',org:'마탑 · 정제실',by:46,desc:'마력을 안으로 끌어당기는 체질로 마석을 정제하는 기술직.',say:'으음… 끌어당기는 체질이네요. 정제실에 빈자리가 있어요.'},
+ burst:{job:'특별 관찰 대상',org:'마탑 · 마탑주 직속',by:7,desc:'분류표에 없는 파장의 주인에게는, 직업보다 관찰이 먼저입니다.',say:'직업이요? 관찰이 끝날 때까지는 마탑에 머물러 주셔야겠습니다.'}
+};
+const CAREER_GRADE={quiet:'추천',faint:'추천',success:'추천',high:'특별 추천 · 즉시 배치',unstable:'조건부 추천 · 제어 수련 후 배치',burst:'배치 보류 · 관찰 우선'};
+const CAREER_HOUSES=['황실 기사단','글라시스 방벽','남부 함대','베스퍼 변경군','광산 길드','마탑','대신전','숲 신전'];
+GLYPH.sword='<path d="M12 2.6v13.2"/><path d="M10.2 4.6L12 2.6l1.8 2v11.2h-3.6z"/><path d="M8 15.8h8M12 15.8v4.4M10.6 21h2.8"/>';
+const careerEl=document.createElement('section');
+careerEl.className='res-career';careerEl.setAttribute('aria-label','진로 추천서');
+phase.after(careerEl);
+const careerTop='<div class="cr-top"><small translate="no">LITTERAE COMMENDATICIAE</small><b>진로 추천서</b><span>마탑 공명 측정실 발행</span></div>';
+function careerIdle(){
+ careerEl.innerHTML='<div class="cr-letter is-empty">'+careerTop+'<span class="cr-blank-seal" aria-hidden="true"></span>'+
+  '<p class="cr-wait">관측을 마치면, 파장에 어울리는 자리를 제국 곳곳에서 추천해 옵니다.</p>'+
+  '<ul class="cr-houses" aria-label="추천을 보내오는 곳">'+CAREER_HOUSES.map(h=>'<li>'+h+'</li>').join('')+'</ul></div>';
+}
+careerIdle();
+let careerTimer=0,lastCareer=null;
+function careerFor(result){
+ const {strength,attribute,special}=result;
+ if(strength.state==='burst')return CAREER.burst;
+ if(special==='dual')return CAREER.dual;
+ if(special==='inverse')return CAREER.inverse;
+ if(strength.state==='quiet'||strength.state==='faint'){
+  const pool=CAREER[strength.state].filter(c=>c!==lastCareer);
+  return pick(pool);
+ }
+ return CAREER.attr[attribute.key];
+}
+function careerWait(){clearTimeout(careerTimer);careerEl.classList.add('is-waiting')}
+function careerResume(){careerEl.classList.remove('is-waiting')}
+function issueCareer(result,at){
+ clearTimeout(careerTimer);
+ const {strength,attribute,nox,second}=result;
+ const letter=document.createElement('div');letter.className='cr-letter is-new';
+ let sealKey,sealRgb;
+ if(nox){
+  letter.classList.add('is-nox');sealKey='nox';sealRgb='150,20,40';
+  letter.innerHTML=careerTop+
+   '<p class="cr-kicker">관측 결과에 따라 아래 직업을 추천합니다</p><h4 class="cr-job">판독 불가</h4><p class="cr-org"><span class="cr-redacted">▨▨▨▨ · ▨▨</span></p>'+
+   '<dl class="cr-meta"><div><dt>추천 등급</dt><dd>기록 손상</dd></div><div><dt>관측 근거</dt><dd>기록 외 반응</dd></div></dl>'+
+   '<p class="cr-desc">추천처와 추천인의 이름이 붉은 잉크에 덮여 읽을 수 없습니다.</p>'+
+   '<div class="cr-sign"><span class="cr-from is-lost"><i class="cr-avatar" aria-hidden="true"></i><span><small>추천인</small><b class="cr-redacted">▨▨</b></span></span></div>';
+ }else{
+  const c=careerFor(result);lastCareer=c;
+  const person=towerPerson(c.by);
+  sealKey=strength.state==='quiet'?'sword':attribute.key;
+  sealRgb=strength.state==='quiet'?'112,116,128':attribute.color;
+  const basis=strength.title+' · '+(strength.state==='quiet'?'속성 미검출':second?attribute.name+' · '+second.name:attribute.name);
+  letter.innerHTML=careerTop+
+   '<p class="cr-kicker">관측 결과에 따라 아래 직업을 추천합니다</p><h4 class="cr-job">'+c.job+'</h4><p class="cr-org">'+c.org+'</p>'+
+   '<dl class="cr-meta"><div><dt>추천 등급</dt><dd>'+CAREER_GRADE[strength.state]+'</dd></div><div><dt>관측 근거</dt><dd>'+basis+'</dd></div></dl>'+
+   '<p class="cr-desc">'+c.desc+'</p>'+
+   '<blockquote class="cr-say">“'+c.say+'”</blockquote>'+
+   '<div class="cr-sign"><button type="button" class="cr-from" data-career-person="'+c.by+'" aria-label="'+(person?person.name:'')+' 인물 도감 보기">'+
+    '<img alt="" loading="lazy" src="'+(window.SOLARIA_PORTRAIT_SRC?window.SOLARIA_PORTRAIT_SRC(c.by,'t'):'')+'">'+
+    '<span><small>추천인</small><b>'+(person?person.name:'')+'</b><em>'+(person?person.role:'')+'</em></span></button></div>';
+ }
+ letter.style.setProperty('--seal',sealRgb);
+ letter.insertAdjacentHTML('beforeend',sealMarkup(sealKey,sealRgb,'cr-seal',calm()?0:520)+(!nox&&second?sealMarkup(second.key,second.color,'cr-seal second',calm()?0:700):''));
+ careerTimer=setTimeout(()=>{
+  careerResume();careerEl.replaceChildren(letter);
+  const job=letter.querySelector('.cr-job');if(job)ink(job,200,60);
+  setTimeout(()=>SFX.seal(),calm()?0:640);
+ },at);
+}
+function careerEcho(){
+ const letter=careerEl.querySelector('.cr-letter:not(.is-empty):not(.is-nox)');if(!letter||letter.querySelector('.cr-ps'))return;
+ const ps=document.createElement('p');ps.className='cr-ps res-echo-in';ps.textContent='추신 — 잔향이 관측되어, 측정실에서 재관측을 요청했습니다.';
+ letter.querySelector('.cr-sign')?.before(ps);
+}
+careerEl.addEventListener('click',e=>{
+ const b=e.target.closest('[data-career-person]');if(!b)return;
+ const person=towerPerson(Number(b.dataset.careerPerson));
+ if(person&&typeof setFilter==='function'){setFilter(person.aff,person.no);document.getElementById('people')?.scrollIntoView({behavior:calm()?'auto':'smooth',block:'start'})}
+});
+/* the left column may now be taller than the window: stick so that its bottom stays in view */
+const leftCol=root.querySelector('.res-left');
+function fitSticky(){
+ if(!leftCol)return;
+ if(!matchMedia('(min-width: 761px)').matches){leftCol.style.removeProperty('top');return}
+ leftCol.style.top=Math.min(84,Math.round(innerHeight-leftCol.offsetHeight-16))+'px';
+}
+if(leftCol){if('ResizeObserver' in window)new ResizeObserver(fitSticky).observe(leftCol);addEventListener('resize',fitSticky);fitSticky()}
+
 /* ── the notebook: ink-written lines and a wax seal ── */
 function ink(el,start,step){
  if(calm())return start;
@@ -386,9 +496,11 @@ function renderOutcome(result){
    const sp=document.createElement('p');sp.className='res-special-note res-echo-in';sp.textContent=specials.echo.line;
    const firstNote=panel.querySelector('.res-attribute-note');panel.insertBefore(sp,firstNote);
    phase.textContent=strength.title+' · '+elementText+' · 잔향 감지';
+   careerEcho();
    const memo=panel.querySelector('.res-memo');if(memo)memo.append(memoEntry(drawLine(TOWER_SPECIAL.echo,[...memo.querySelectorAll('[data-memo-person]')].map(b=>Number(b.dataset.memoPerson))),calm()?0:250));
   },calm()?400:Math.max(1900,t+1700));
  }
+ issueCareer(result,calm()?0:Math.max(700,sealAt+200));
  cooldown=performance.now()+900;
 }
 
@@ -426,7 +538,7 @@ function tick(){
 }
 function holdStart(input){
  if(started!==null||performance.now()<cooldown)return false;
- clearTimeout(echoTimer);FX.clear();noxLine?.classList.remove('show');
+ clearTimeout(echoTimer);FX.clear();noxLine?.classList.remove('show');careerWait();
  delete root.dataset.element;root.dataset.special='';root.style.removeProperty('--res-light');root.style.removeProperty('--res-light2');
  root.classList.remove('res-ready','res-released');source=input;started=performance.now();lastTick=0;ready=false;setState('charging');phase.textContent='접촉 중 · 빛이 모이고 있습니다';
  SFX.humStart();tick();return true;
@@ -435,6 +547,7 @@ function holdEnd(cancel=false){
  if(started===null)return;
  const elapsed=performance.now()-started;started=null;source=null;cancelAnimationFrame(frame);root.style.setProperty('--charge',0);
  SFX.humStop();root.classList.remove('res-ready');
+ if(cancel||elapsed<MIN_HOLD)careerResume();
  if(cancel){setState('idle');phase.textContent='접촉이 중단되었습니다. 다시 손을 대어 주세요.';return}
  if(elapsed<MIN_HOLD){setState('idle');phase.textContent='반응이 약합니다. 조금 더 오래 접촉해 보세요.';return}
  root.classList.add('res-released');setTimeout(()=>root.classList.remove('res-released'),900);
