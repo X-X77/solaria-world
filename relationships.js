@@ -45,28 +45,50 @@ const relations=id=>edges.filter(e=>e.a===id||e.b===id).map(e=>({other:people.ge
 const imperialOrder=[13,14,1,2,3,4,6,5,7,8,9,10];
 const members=key=>key==='all'?imperialOrder.map(id=>people.get(id)).filter(Boolean):P.filter(p=>p.aff===key).sort((a,b)=>Number(b.main)-Number(a.main)||a.no-b.no);
 let region='all',selected=null,photo=null;
+// Wide screens widen the night sky instead of enlarging it, so the whole constellation stays in view.
+let geo={sx:1,x:0,w:940},flowed=null,recordFor=null;
+function sky(){
+ const cw=scroll.clientWidth||board.clientWidth||940;
+ if(cw<900)return {sx:1,x:0,w:940};
+ const w=Math.round(Math.max(940,Math.min(1280,cw*690/620)));
+ return {sx:w/940*.98,x:Math.round(470-w/2),w};
+}
+// Even spacing along the length of the orbit (not by angle) keeps its narrow ends from crowding.
+function orbit(count,rx,ry,cx,cy){
+ const N=720,pts=[],len=[0],out=[];
+ for(let i=0;i<=N;i++){
+  const t=-Math.PI/2+2*Math.PI*i/N;pts.push([cx+Math.cos(t)*rx,cy+Math.sin(t)*ry]);
+  if(i)len.push(len[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
+ }
+ let j=0;
+ for(let k=0;k<count;k++){
+  const target=len[N]*k/count;
+  while(j<N-1&&len[j+1]<target)j++;
+  const f=(target-len[j])/((len[j+1]-len[j])||1);
+  out.push({x:Math.round((pts[j][0]+(pts[j+1][0]-pts[j][0])*f)*10)/10,y:Math.round((pts[j][1]+(pts[j+1][1]-pts[j][1])*f)*10)/10});
+ }
+ return out;
+}
 function positions(cast){
- const points=new Map(),count=cast.length;
+ const points=new Map(),count=cast.length,sx=geo.sx;
  if(!count)return points;
  if(region==='all'){
   // Equal spacing on the outer orbit prevents a dense 12-person central cluster.
-  cast.forEach((p,i)=>{
-   const theta=-Math.PI/2+i*2*Math.PI/count;
-   points.set(p.no,{x:470+Math.cos(theta)*351,y:326+Math.sin(theta)*226});
-  });
+  const ring=orbit(count,351*sx,226,470,326);
+  cast.forEach((p,i)=>points.set(p.no,ring[i]));
   return points;
  }
  const central=cast.find(p=>p.main)||cast[0];
  points.set(central.no,{x:470,y:320});
  const others=cast.filter(p=>p.no!==central.no);
- others.forEach((p,i)=>{
-  const angle=-Math.PI/2+2*Math.PI*i/others.length;
-  const rx=others.length>9?347:others.length>5?330:311,ry=others.length>9?227:218;
-  points.set(p.no,{x:470+Math.cos(angle)*rx,y:320+Math.sin(angle)*ry});
- });
+ const rx=others.length>9?347:others.length>5?330:311,ry=others.length>9?227:218;
+ const ring=orbit(others.length,rx*sx,ry,470,320);
+ others.forEach((p,i)=>points.set(p.no,ring[i]));
  return points;
 }
 function renderGraph(){
+ geo=sky();
+ svg.setAttribute('viewBox',geo.x+' 0 '+geo.w+' 690');
  const cast=members(region),pts=positions(cast),locked=region==='rift'&&!window.SOLARIA_RIFT_UNLOCKED;
  svg.replaceChildren();
  const defs=node('defs');
@@ -76,13 +98,14 @@ function renderGraph(){
  }
  svg.append(defs);
  const stars=node('g',{class:'arc-starfield','aria-hidden':'true'});
- for(let i=0;i<54;i++){
-  const x=22+(i*173+39)%890,y=22+(i*131+75)%650;
+ const starCount=Math.round(54*geo.w/940);
+ for(let i=0;i<starCount;i++){
+  const x=geo.x+22+(i*173+39)%(geo.w-44),y=22+(i*131+75)%650;
   stars.append(node('circle',{cx:x,cy:y,r:i%5===0?1.8:0.8,class:i%6===0?'star-bright':'star-dim'}));
  }
  svg.append(stars);
  const geometry=node('g',{class:'arc-geometry','aria-hidden':'true'});
- geometry.append(node('ellipse',{cx:470,cy:320,rx:347,ry:231,class:'orbit-main'}));
+ geometry.append(node('ellipse',{cx:470,cy:320,rx:Math.round(347*geo.sx),ry:231,class:'orbit-main'}));
  geometry.append(node('circle',{cx:470,cy:325,r:169,class:'orbit-inner'}));
  geometry.append(node('circle',{cx:470,cy:325,r:179,class:'orbit-dashed'}));
  for(const a of [0,45,90,135]){
@@ -96,8 +119,10 @@ function renderGraph(){
   glyph.append(node('text',{x:470,y:344,'text-anchor':'middle',class:'arc-glyph-word'},'SOLARIA'));
   svg.append(glyph);
  }
- const lines=node('g',{class:'arc-link-lines'});
+ const lines=node('g',{class:'arc-link-lines'}),flows=node('g',{class:'arc-flows','aria-hidden':'true'});
  const intra=edges.filter(e=>pts.has(e.a)&&pts.has(e.b));
+ // A single pulse of light runs outward along the chosen person's threads, once per selection.
+ const playFlow=selected!==null&&!locked&&flowed!==region+':'+selected&&!quiet();
  intra.forEach(e=>{
   const a=pts.get(e.a),b=pts.get(e.b),dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy)||1;
   const bend=Math.min(21,len*.07)*((e.a+e.b)%2===0?1:-1);
@@ -105,8 +130,13 @@ function renderGraph(){
   const path=node('path',{d:'M'+a.x+','+a.y+' Q'+mx+','+my+' '+b.x+','+b.y,class:'arc-thread '+colorType(e.type)+(selected!==null&&(e.a===selected||e.b===selected)?' selected':'')+(selected!==null&&e.a!==selected&&e.b!==selected?' muted':'')});
   const title=node('title',{},visibleName(people.get(e.a))+' ↔ '+visibleName(people.get(e.b))+' · '+e.type);
   path.append(title);lines.append(path);
+  if(playFlow&&(e.a===selected||e.b===selected)){
+   const from=e.a===selected?a:b,to=e.a===selected?b:a;
+   flows.append(node('path',{d:'M'+from.x+','+from.y+' Q'+mx+','+my+' '+to.x+','+to.y,class:'arc-flow '+colorType(e.type),pathLength:100}));
+  }
  });
- svg.append(lines);
+ flowed=selected===null?null:region+':'+selected;
+ svg.append(lines,flows);
  const related=new Set([selected]);
  intra.forEach(e=>{if(e.a===selected||e.b===selected){related.add(e.a);related.add(e.b)}});
  const portraits=node('g',{class:'arc-portraits'});
@@ -149,32 +179,46 @@ function renderGraph(){
  const activePoint=pts.get(selected);
  if(activePoint&&!locked&&scroll.scrollWidth>scroll.clientWidth){
   const scale=svg.getBoundingClientRect().width/svg.viewBox.baseVal.width;
-  scroll.scrollTo({left:Math.max(0,activePoint.x*scale-scroll.clientWidth/2),behavior:quiet()?'auto':'smooth'});
+  scroll.scrollTo({left:Math.max(0,(activePoint.x-geo.x)*scale-scroll.clientWidth/2),behavior:quiet()?'auto':'smooth'});
  }
  document.getElementById('arcanaCount').textContent=cast.length+'명 · '+(region==='all'?'제국 주요 연결 ':'권역 내 연결 ')+intra.length+'개';
 }
-function relatedMarkup(items,caption){
+const typeWord={allied:'호의·협력',hostile:'대립·긴장',complex:'그 밖의 연결'};
+function relatedMarkup(items,caption,away){
  if(!items.length)return '';
- return '<h4 class="arc-dossier-caption">'+caption+' <span>'+items.length+'</span></h4><div class="arc-connection-list">'+
- items.map(({other,type,description})=>'<article class="arc-connection"><button class="arc-related-image" type="button" data-portrait="'+other.no+'" aria-label="'+safe(other.name)+' 일러스트 크게 보기"><img src="'+window.SOLARIA_PORTRAIT_SRC(other.no,'t')+'" alt="" loading="lazy"></button>'+
- '<div class="arc-connection-copy"><button type="button" data-person="'+other.no+'" class="arc-related-name">'+safe(other.name)+' <span>↗</span></button>'+
- '<small class="'+colorType(type)+'">'+safe(type)+'</small><p>'+safe(description)+'</p></div><button type="button" class="arc-doc" data-dossier="'+other.no+'">도감</button></article>').join('')+'</div>';
+ return '<section class="arc-link-group"><h4 class="arc-dossier-caption">'+caption+' <span>'+items.length+'</span></h4><div class="arc-connection-list">'+
+ items.map(({other,type,description})=>'<article class="arc-connection '+colorType(type)+'"><button class="arc-related-image" type="button" data-portrait="'+other.no+'" aria-label="'+safe(other.name)+' 일러스트 크게 보기"><img src="'+window.SOLARIA_PORTRAIT_SRC(other.no,'t')+'" alt="" loading="lazy"></button>'+
+ '<div class="arc-connection-copy"><button type="button" data-person="'+other.no+'" class="arc-related-name" aria-label="'+safe(other.name)+', 관계도에서 보기">'+safe(other.name)+' <span aria-hidden="true">↗</span></button>'+
+ '<small class="'+colorType(type)+'" title="'+typeWord[colorType(type)]+'"><i aria-hidden="true"></i>'+safe(type)+(away?'<em> · '+safe(AFF[other.aff]||'')+'</em>':'')+'</small><p>'+safe(description)+'</p></div><button type="button" class="arc-doc" data-dossier="'+other.no+'" aria-label="'+safe(other.name)+' 인물 도감 보기">도감</button></article>').join('')+'</div></section>';
 }
 function renderDetail(){
  const locked=region==='rift'&&!window.SOLARIA_RIFT_UNLOCKED,p=people.get(selected);
  if(locked){
-  detail.innerHTML='<div class="arc-dossier-stamp">RESTRICTED / BEYOND THE RIFT</div><div class="arc-dossier-sealed"><span aria-hidden="true">✧</span><h3>이름 없는 별자리</h3><p>균열 너머는 아직 봉인되어 있습니다. 오프닝을 끝까지 감상하면 드물게 균열이 열릴 수 있습니다.</p><button type="button" data-unlock>오프닝 다시 보기 ↗</button></div>';
+  recordFor=null;detail.classList.remove('is-unfolding');detail.classList.add('is-empty');
+  detail.innerHTML='<div class="arc-dossier-stamp"><span>RESTRICTED / BEYOND THE RIFT</span></div><div class="arc-dossier-sealed"><span aria-hidden="true">✧</span><h3>이름 없는 별자리</h3><p>균열 너머는 아직 봉인되어 있습니다. 오프닝을 끝까지 감상하면 드물게 균열이 열릴 수 있습니다.</p><button type="button" data-unlock>오프닝 다시 보기 ↗</button></div>';
   return;
  }
  if(!p||(region!=='all'&&p.aff!==region)||!shown(p)){
-  detail.innerHTML='<div class="arc-dossier-stamp">PERSONNEL / CONNECTIONS</div><div class="arc-dossier-empty"><span aria-hidden="true">✧</span><h3>하나의 별을 선택하세요</h3><p>인물의 초상을 누르면 서로 주고받는 약속과 대립, 다른 권역으로 이어진 관계가 나타납니다.</p></div>';
+  recordFor=null;detail.classList.remove('is-unfolding');detail.classList.add('is-empty');
+  detail.innerHTML='<div class="arc-dossier-stamp"><span>관계 기록</span><span>선택 대기</span></div><div class="arc-dossier-empty"><span aria-hidden="true">✧</span><h3>하나의 별을 선택하세요</h3><p>위의 초상을 누르면 이곳에 그 인물의 관계 기록이 펼쳐집니다.</p></div>';
   return;
  }
  const all=relations(p.no).filter(e=>shown(e.other)),local=all.filter(e=>e.other.aff===p.aff),outside=all.filter(e=>e.other.aff!==p.aff);
- detail.innerHTML='<div class="arc-dossier-stamp">DOSSIER / '+pad(p.no)+' · '+safe(AFF[p.aff]||'솔라리아')+'</div>'+
- '<div class="arc-dossier-person"><button type="button" class="arc-dossier-photo" data-portrait="'+p.no+'" aria-label="'+safe(p.name)+' 일러스트 크게 보기"><img src="'+window.SOLARIA_PORTRAIT_SRC(p.no,'t')+'" alt="" loading="lazy"></button><div><h3>'+safe(p.name)+'</h3><small>'+safe(p.group)+' · '+safe(p.role)+'</small><p>'+safe(p.known)+'</p><button type="button" data-dossier="'+p.no+'" class="arc-profile-link">인물 상세 기록 ↗</button></div></div>'+
- '<div class="arc-relation-summary">공개된 인연 '+all.length+'개 <span>·</span> 권역 내부 '+local.length+'개</div>'+
- (all.length?relatedMarkup(local,'같은 권역의 인연')+relatedMarkup(outside,'다른 권역으로 이어진 인연'):'<p class="arc-no-links">공개된 관계가 없습니다. 다른 인물을 선택해 살펴보세요.</p>');
+ detail.classList.remove('is-empty');
+ detail.classList.toggle('is-unfolding',recordFor!==p.no&&!quiet());
+ recordFor=p.no;
+ detail.style.setProperty('--rc',COL[p.aff]||'#D9B86C');
+ detail.innerHTML='<div class="arc-dossier-stamp"><span>관계 기록 · '+safe(AFF[p.aff]||'솔라리아')+'</span><span>제 '+pad(p.no)+'호</span></div>'+
+ '<div class="arc-record">'+
+  '<div class="arc-dossier-person">'+
+   '<button type="button" class="arc-dossier-photo" data-portrait="'+p.no+'" aria-label="'+safe(p.name)+' 일러스트 크게 보기"><img src="'+window.SOLARIA_PORTRAIT_SRC(p.no,'c')+'" alt="" loading="lazy"></button>'+
+   '<div class="arc-id"><small>'+safe(p.group)+'</small><h3>'+safe(p.name)+'</h3><p class="arc-role">'+safe(p.role)+'</p></div>'+
+   '<div class="arc-known"><b>알려진 사실</b><p>'+safe(p.known)+'</p></div>'+
+   '<dl class="arc-relation-summary"><div><dt>공개된 인연</dt><dd>'+all.length+'</dd></div><div><dt>같은 권역</dt><dd>'+local.length+'</dd></div><div><dt>다른 권역</dt><dd>'+outside.length+'</dd></div></dl>'+
+   '<div class="arc-record-actions"><button type="button" data-dossier="'+p.no+'" class="arc-profile-link">인물 도감에서 보기 ↗</button><button type="button" data-portrait="'+p.no+'" class="arc-zoom-link">초상 크게 보기</button></div>'+
+  '</div>'+
+  '<div class="arc-record-links">'+(all.length?relatedMarkup(local,'같은 권역의 인연')+relatedMarkup(outside,'다른 권역으로 이어진 인연',true):'<p class="arc-no-links">공개된 관계가 없습니다. 다른 인물을 선택해 살펴보세요.</p>')+'</div>'+
+ '</div>';
 }
 function renderBridges(){
  const root=document.getElementById('arcanaBridges');
@@ -193,16 +237,23 @@ function render(){
  document.getElementById('bondRegionName').textContent=info[2];
  document.getElementById('arcanaNumber').textContent=String(factions.findIndex(x=>x[0]===region)+1).padStart(2,'0')+' / '+String(factions.length).padStart(2,'0');
  renderGraph();renderDetail();renderBridges();
+ const hint=board.querySelector('.arcana-bottomline span:first-child'),sp=people.get(selected);
+ if(hint)hint.innerHTML=sp&&shown(sp)&&(region==='all'||sp.aff===region)?'<button type="button" class="arc-to-record" data-to-record>✧ '+safe(sp.name)+'의 관계 기록 보기 ↓</button>':'✧ 초상 선택 · 인연 확인';
 }
 function focus(id){
  const p=people.get(Number(id));if(!p||!shown(p))return;
  region=p.aff;selected=shown(p)?p.no:null;render();
- document.getElementById('bonds')?.scrollIntoView({behavior:quiet()?'auto':'smooth',block:'start'});
+ // Land on the region tabs and the map itself rather than the section title.
+ window.scrollTo({top:Math.max(0,tabs.getBoundingClientRect().top+scrollY-84),behavior:quiet()?'auto':'smooth'});
 }
 function preview(no){
  const p=people.get(Number(no));if(!p||(p.sealed&&!window.SOLARIA_RIFT_UNLOCKED))return '';
  if(p.no===11||p.no===12)return '<article class="torn-relation-fragment" aria-label="찢어진 관계 기록"><small>RELATION RECORD / FRAGMENT</small><h4>'+safe(p.name)+'</h4><p>'+safe(p.quote.slice(0,Math.ceil(p.quote.length/2)))+'</p></article>';
- if(p.aff==='rift')return '<h4>이 인물의 관계 기록</h4>'+relations(p.no).filter(x=>!x.other.sealed||window.SOLARIA_RIFT_UNLOCKED).map(x=>'<p>'+safe(x.other.name)+' · '+safe(x.type)+'</p>').join('');
+ if(p.aff==='rift'){
+  // Nox and Charon survive only as torn records, so their threads are left out here as well.
+  const kin=relations(p.no).filter(x=>x.other.no!==11&&x.other.no!==12&&(!x.other.sealed||window.SOLARIA_RIFT_UNLOCKED));
+  return '<h4>균열 너머의 관계</h4>'+(kin.length?'<div class="rift-rel-list">'+kin.map(x=>'<button type="button" class="rift-rel '+colorType(x.type)+'" data-rift-record="'+x.other.no+'" aria-label="'+safe(x.other.name)+' 기록 보기"><img src="'+window.SOLARIA_PORTRAIT_SRC(x.other.no,'t')+'" alt="" loading="lazy"><span><span class="rift-rel-top"><b>'+safe(x.other.name)+'</b><em><i aria-hidden="true"></i>'+safe(x.type)+'</em></span><small>'+safe(x.description)+'</small></span></button>').join('')+'</div>':'<p>남아 있는 관계 기록이 없습니다.</p>');
+ }
  const related=relations(p.no).filter(x=>shown(x.other)).slice(0,4);
  return '<h4>이 인물의 관계</h4>'+(related.length?related.map(x=>'<button type="button" data-cast-relation="'+x.other.no+'">'+safe(x.other.name)+' · '+safe(x.type)+' ↗</button>').join(''):'<p>공개된 관계가 없습니다.</p>')+
  '<button type="button" data-cast-relation="'+p.no+'">관계도에서 모두 보기 ↗</button>';
@@ -232,6 +283,21 @@ detail.addEventListener('click',e=>{
  const picture=e.target.closest('[data-portrait]');if(picture)showPhoto(picture.dataset.portrait);
 });
 document.getElementById('bondShowAll')?.addEventListener('click',()=>{selected=null;render()});
+board.addEventListener('click',e=>{
+ if(!e.target.closest('[data-to-record]'))return;
+ const top=detail.getBoundingClientRect().top+scrollY-84;
+ window.scrollTo({top:Math.max(0,top),behavior:quiet()?'auto':'smooth'});
+});
+// Rift records point to one another inside the register instead of the imperial map.
+document.getElementById('people')?.addEventListener('click',e=>{
+ const b=e.target.closest('[data-rift-record]');if(!b||typeof setFilter!=='function')return;
+ const p=people.get(Number(b.dataset.riftRecord));if(!p||(p.sealed&&!window.SOLARIA_RIFT_UNLOCKED))return;
+ setFilter(typeof filt!=='undefined'&&filt==='all'?'all':'rift',p.no);
+ const box=document.getElementById('peopleDossier');
+ if(box){const r=box.getBoundingClientRect();if(r.top<0||r.top>innerHeight*.45)window.scrollTo({top:Math.max(0,r.top+scrollY-84),behavior:quiet()?'auto':'smooth'})}
+});
+let resizeTimer;
+addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{if(sky().w!==geo.w)renderGraph()},180)});
 for(const [id,dir] of [['bondScrollLeft',-1],['bondScrollRight',1]]){
  document.getElementById(id)?.addEventListener('click',()=>scroll.scrollBy({left:scroll.clientWidth*.65*dir,behavior:quiet()?'auto':'smooth'}));
 }

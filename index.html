@@ -1191,9 +1191,9 @@ html.op-handoff .hero-below,html.op-handoff .hero-place,html.op-handoff .hero .c
  --ink:color-mix(in srgb,var(--rc,#8a6a35) 52%,#22170b);
  background:linear-gradient(90deg,transparent 46.6%,rgba(60,40,18,.34) 47.2%,transparent 47.9%),linear-gradient(90deg,rgba(90,62,30,0) 0,rgba(90,62,30,.2) 43%,rgba(90,62,30,0) 47.2%,rgba(90,62,30,.2) 51%,rgba(90,62,30,0) 100%),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .36 0 0 0 0 .28 0 0 0 0 .17 0 0 0 .34 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),linear-gradient(180deg,#ebe1c7,#ddcfae);
  box-shadow:0 0 0 10px #3b2516,0 0 0 11px rgba(214,185,128,.45),0 34px 80px rgba(0,0,0,.6),inset 0 0 60px rgba(110,80,40,.22)}
-#people #peopleDossier:not(.ruin-record) .cpor{grid-area:por;position:relative;top:auto;margin:0 44px 0 4px;height:clamp(500px,62vh,620px);border:0;box-shadow:0 10px 22px rgba(60,40,15,.35),inset 0 0 0 1px rgba(90,62,30,.35)}
+#people #peopleDossier:not(.ruin-record) .cpor{grid-area:por;position:relative;top:auto;justify-self:center;align-self:start;width:min(calc(100% - 64px),440px);max-width:none;min-height:0;height:auto;aspect-ratio:3/4;margin:0 36px 0 0;border:0;box-shadow:0 10px 22px rgba(60,40,15,.35),inset 0 0 0 1px rgba(90,62,30,.35)}
 #people #peopleDossier:not(.ruin-record) .cpor:before{inset:8px;border:1px solid rgba(255,240,210,.35);background:none}
-#people #peopleDossier:not(.ruin-record) .reg-rel{grid-area:rel;margin:24px 44px 0 4px;padding:16px 18px 18px;border:1px solid rgba(90,70,40,.28);background:rgba(255,250,235,.3)}
+#people #peopleDossier:not(.ruin-record) .reg-rel{grid-area:rel;justify-self:center;width:min(calc(100% - 64px),440px);margin:26px 36px 0 0;padding:16px 18px 18px;border:1px solid rgba(90,70,40,.28);background:rgba(255,250,235,.3)}
 #people #peopleDossier:not(.ruin-record) .reg-rel .cast-profile-links{border:0;background:none;padding:0;margin:0}
 #people #peopleDossier:not(.ruin-record) .reg-rel h4{font:700 13px var(--ui);color:var(--ink);letter-spacing:.04em;margin:0 0 10px}
 #people #peopleDossier:not(.ruin-record) .reg-rel button{color:#3a2d1c;background:rgba(255,250,235,.55);border:1px solid rgba(90,70,40,.32)}
@@ -1240,7 +1240,7 @@ html.op-handoff .hero-below,html.op-handoff .hero-place,html.op-handoff .hero .c
  #people #peopleDossier:not(.ruin-record) .cstage{grid-template-columns:42% minmax(0,1fr);grid-template-areas:none;column-gap:16px;padding:22px 16px 22px;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .36 0 0 0 0 .28 0 0 0 0 .17 0 0 0 .34 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),linear-gradient(180deg,#ebe1c7,#ddcfae);box-shadow:0 0 0 6px #3b2516,0 0 0 7px rgba(214,185,128,.45),0 20px 50px rgba(0,0,0,.6)}
  #people #peopleDossier:not(.ruin-record) .cinfo{display:contents}
  #people #peopleDossier:not(.ruin-record) .reg-head{grid-column:1/-1;order:0;padding-right:40px;margin-bottom:16px;font-size:10px;letter-spacing:.14em}
- #people #peopleDossier:not(.ruin-record) .cpor{grid-area:auto;grid-column:1;order:1;margin:0;height:auto;aspect-ratio:3/4.1;align-self:start}
+ #people #peopleDossier:not(.ruin-record) .cpor{grid-area:auto;grid-column:1;order:1;justify-self:stretch;width:auto;margin:0;height:auto;aspect-ratio:3/4.1;align-self:start}
  #people #peopleDossier:not(.ruin-record) .cpor-top{display:none}
  #people #peopleDossier:not(.ruin-record) .cpor-bottom{font-size:9px;left:10px!important;right:10px!important;bottom:9px!important}
  #people #peopleDossier:not(.ruin-record) .reg-id{grid-column:2;order:2;align-self:center;min-width:0}
@@ -1251,11 +1251,134 @@ html.op-handoff .hero-below,html.op-handoff .hero-place,html.op-handoff .hero .c
  #people #peopleDossier:not(.ruin-record) .cinfo blockquote.quote{grid-column:1/-1;order:3;margin-top:18px;font-size:17.5px}
  #people #peopleDossier:not(.ruin-record) .cinfo dl{grid-column:1/-1;order:4;display:block}
  #people #peopleDossier:not(.ruin-record) .cinfo dl dd{font-size:15.5px}
- #people #peopleDossier:not(.ruin-record) .reg-rel{grid-area:auto;grid-column:1/-1;order:5;margin:18px 0 0}
+ #people #peopleDossier:not(.ruin-record) .reg-rel{grid-area:auto;grid-column:1/-1;order:5;justify-self:stretch;width:auto;margin:18px 0 0}
  #people #peopleDossier:not(.ruin-record) .personnel-supplements{grid-column:1/-1;order:6}
  #people #peopleDossier:not(.ruin-record) .cinfo:after{right:14px;top:-6px;height:66px;width:20px}
 }
+/* rift relations: readable cards (Nox and Charon are left out) */
+#people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel-list{display:grid;gap:8px}
+#people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel{display:flex;align-items:flex-start;gap:12px;width:100%;min-height:0;margin:0;padding:11px 12px 12px;text-align:left;line-height:1.5;border:1px solid rgba(90,70,40,.24);border-left:3px solid #a7843f;background:rgba(255,250,235,.45);cursor:pointer}
+#people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel.hostile{border-left-color:#a1402f}
+#people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel.complex{border-left-color:#5b6f86}
+#people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel:hover{background:rgba(255,250,235,.9);border-color:rgba(90,70,40,.45)}
+#people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel img{flex:none;width:46px;height:60px;object-fit:cover;object-position:center 18%;box-shadow:0 2px 5px rgba(60,40,15,.28)}
+#people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel>span{display:block;min-width:0;flex:1}
+#people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px}
+#people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel b{font:700 16px/1.35 var(--disp);color:#1d160d}
+#people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel em{display:inline-flex;align-items:center;gap:6px;font:700 12.5px var(--ui);font-style:normal}
+#people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel em i{display:block;width:14px;height:0;border-top:2px solid currentColor}
+#people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel.allied em{color:#85601d}
+#people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel.hostile em{color:#983828}
+#people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel.complex em{color:#475b71}
+#people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel.complex em i{border-top-style:dashed}
+#people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel small{display:block;margin-top:4px;color:#3a2f20;font-size:13.5px;line-height:1.65}
 @media(prefers-reduced-motion:reduce){#people .ct .im{transition:none}}
+</style>
+<style id="celestial-record">
+/* 4. Relationship map: the night sky spans the full width; choosing a person unfolds a paper record below it. */
+#bonds .arcana-layout{display:block}
+#bonds .arcana-board{position:relative;z-index:2}
+/* thread colours: gold = allied, blue-grey = complex, red = hostile */
+#bonds .arc-thread.allied{stroke:#DDBB81}
+#bonds .arc-thread.complex{stroke:#8FA3BA;stroke-dasharray:6 7}
+#bonds .arc-thread.hostile{stroke:#D76A5D}
+#bonds .arc-thread.selected{opacity:1;stroke-width:2.8}
+#bonds .arc-thread.muted{opacity:.05}
+#bonds .arc-person.is-dim{opacity:.24;filter:saturate(.3)}
+#bonds .arc-person.is-selected .arc-person-name{fill:#FFF1D4}
+#bonds .arc-flow{fill:none;stroke-width:3.6;stroke-linecap:round;stroke-dasharray:8 192;stroke-dashoffset:8;opacity:0;pointer-events:none;animation:arcFlow 1.7s cubic-bezier(.45,.05,.35,1) .1s 1 forwards}
+#bonds .arc-flow.allied{stroke:#FFF2CF}
+#bonds .arc-flow.complex{stroke:#E6EFFA}
+#bonds .arc-flow.hostile{stroke:#FFD6CC}
+@keyframes arcFlow{0%{stroke-dashoffset:8;opacity:0}14%{opacity:1}82%{opacity:.85}100%{stroke-dashoffset:-100;opacity:0}}
+#bonds .arcana-legend span:before{width:28px;height:0;background:none;border-top:2px solid #DDBB81}
+#bonds .arcana-legend .hostile:before{background:none;border-top-color:#D76A5D}
+#bonds .arcana-legend .complex:before{background:none;border-top:2px dashed #8FA3BA}
+#bonds .arc-to-record{background:none;border:0;border-bottom:1px solid rgba(225,200,157,.5);padding:6px 0;color:#E9CF9F;font:700 12.5px var(--ui);cursor:pointer}
+#bonds .arc-to-record:hover{color:#FFF1D3;border-bottom-color:#FFF1D3}
+/* the paper record */
+#bonds .arcana-dossier{--ink:color-mix(in srgb,var(--rc,#8a6a35) 50%,#22170b);position:relative;z-index:1;min-height:0;margin:0 clamp(0px,1.8vw,24px);padding:0;border:0;border-radius:0 0 5px 5px;color:#2a2219;overflow:hidden;
+ background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .36 0 0 0 0 .28 0 0 0 0 .17 0 0 0 .34 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),linear-gradient(180deg,#ebe1c7,#ddcfae);
+ box-shadow:inset 0 18px 20px -16px rgba(40,24,8,.6),0 0 0 1px rgba(214,185,128,.32),0 28px 60px rgba(0,0,0,.5)}
+#bonds .arcana-dossier .arc-dossier-stamp{display:flex;justify-content:space-between;gap:12px;margin:0 34px;padding:26px 0 12px;background:none;box-shadow:none;border-bottom:1px solid rgba(90,70,40,.26);color:#6b5a3e;font:600 11px var(--lat);letter-spacing:.2em}
+#bonds .arc-record{display:grid;grid-template-columns:minmax(250px,300px) minmax(0,1fr);padding:26px 34px 36px}
+#bonds .arcana-dossier.is-unfolding .arc-record{animation:recUnfold .75s cubic-bezier(.3,.7,.2,1) both}
+@keyframes recUnfold{from{clip-path:inset(0 0 100% 0);opacity:.25;transform:translateY(-12px)}to{clip-path:inset(0 0 0 0);opacity:1;transform:none}}
+#bonds .arcana-dossier .arc-dossier-person{display:block;padding:0 32px 0 0;margin:0;background:none}
+#bonds .arcana-dossier .arc-dossier-photo{position:relative;display:block;width:100%;padding:0;border:0;background:#1a1410;box-shadow:0 10px 22px rgba(60,40,15,.32),inset 0 0 0 1px rgba(90,62,30,.35);cursor:zoom-in}
+#bonds .arcana-dossier .arc-dossier-photo:after{content:"";position:absolute;inset:7px;border:1px solid rgba(255,240,210,.35);pointer-events:none}
+#bonds .arcana-dossier .arc-dossier-photo img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:center 18%}
+#bonds .arc-id{margin-top:20px}
+#bonds .arcana-dossier .arc-id small{display:block;margin:0;color:var(--ink);font:700 12.5px/1.5 var(--ui);letter-spacing:.03em}
+#bonds .arcana-dossier .arc-id h3{margin:6px 0 0;color:#1d160d;font:700 32px/1.25 var(--disp);text-shadow:none}
+#bonds .arcana-dossier .arc-role{margin:4px 0 0;color:var(--ink);font-size:15px;font-weight:700;line-height:1.5}
+#bonds .arc-known{margin-top:16px;padding-top:14px;border-top:1px dashed rgba(90,70,40,.32)}
+#bonds .arc-known b{display:block;color:var(--ink);font-size:13px;margin-bottom:6px}
+#bonds .arcana-dossier .arc-known p{margin:0;color:#2b2318;font-size:15px;line-height:1.8}
+#bonds .arcana-dossier .arc-relation-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:18px 0 0;padding:0;border:1px solid rgba(90,70,40,.26);color:inherit;font-size:inherit}
+#bonds .arcana-dossier .arc-relation-summary div{padding:10px 4px 9px;text-align:center}
+#bonds .arcana-dossier .arc-relation-summary div+div{border-left:1px solid rgba(90,70,40,.2)}
+#bonds .arcana-dossier .arc-relation-summary dt{color:#6b5a3e;font-size:12px}
+#bonds .arcana-dossier .arc-relation-summary dd{margin:2px 0 0;color:#1d160d;font:700 23px/1.2 var(--disp)}
+#bonds .arc-record-actions{display:grid;gap:8px;margin-top:16px}
+#bonds .arcana-dossier .arc-record-actions button{min-height:44px;margin:0;padding:10px 14px;border:1px solid rgba(90,70,40,.4);background:rgba(255,250,235,.45);color:#3a2d1c;font:700 13.5px var(--ui);text-align:center;cursor:pointer;transition:background .2s}
+#bonds .arcana-dossier .arc-record-actions button:hover{background:rgba(255,250,235,.9)}
+#bonds .arcana-dossier .arc-record-actions .arc-profile-link{color:#fbf3e2;background:color-mix(in srgb,var(--rc,#8a6a35) 20%,#33230f);border-color:transparent}
+#bonds .arcana-dossier .arc-record-actions .arc-profile-link:hover{background:color-mix(in srgb,var(--rc,#8a6a35) 14%,#1d1308)}
+#bonds .arc-record-links{min-width:0;padding-left:32px;border-left:1px solid rgba(90,70,40,.22)}
+#bonds .arc-link-group+.arc-link-group{margin-top:30px}
+#bonds .arcana-dossier .arc-dossier-caption{display:flex;align-items:baseline;justify-content:flex-start;gap:10px;margin:0 0 12px;padding:0 0 9px;background:none;border-bottom:1px solid rgba(90,70,40,.26);color:#1d160d;font:700 18px var(--disp)}
+#bonds .arcana-dossier .arc-dossier-caption span{color:var(--ink);font:700 13px var(--lat)}
+#bonds .arcana-dossier .arc-connection-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:10px 12px;padding:0}
+#bonds .arcana-dossier .arc-connection{display:grid;grid-template-columns:50px minmax(0,1fr) auto;gap:12px;align-items:start;padding:12px 12px 13px;background:rgba(255,250,235,.42);border:1px solid rgba(90,70,40,.2);border-left:3px solid #a7843f}
+#bonds .arcana-dossier .arc-connection.hostile{border-left-color:#a1402f}
+#bonds .arcana-dossier .arc-connection.complex{border-left-color:#5b6f86}
+#bonds .arcana-dossier .arc-related-image{padding:0;border:0;background:none;box-shadow:0 2px 6px rgba(60,40,15,.28);cursor:zoom-in}
+#bonds .arcana-dossier .arc-related-image img{display:block;width:50px;height:66px;object-fit:cover;object-position:center 18%}
+#bonds .arcana-dossier .arc-related-name{display:inline-block;min-height:30px;padding:0;border:0;background:none;color:#1d160d;font:700 16px/1.45 var(--disp);text-align:left;cursor:pointer}
+#bonds .arcana-dossier .arc-related-name span{color:var(--ink);font-size:13px}
+#bonds .arcana-dossier .arc-related-name:hover{text-decoration:underline;text-underline-offset:3px}
+#bonds .arcana-dossier .arc-connection-copy small{display:flex;flex-wrap:wrap;align-items:center;gap:4px 7px;margin:2px 0 0;font:700 12.5px/1.5 var(--ui)}
+#bonds .arcana-dossier .arc-connection-copy small i{display:block;width:16px;height:0;border-top:2px solid currentColor}
+#bonds .arcana-dossier .arc-connection-copy small.allied{color:#85601d}
+#bonds .arcana-dossier .arc-connection-copy small.hostile{color:#983828}
+#bonds .arcana-dossier .arc-connection-copy small.complex{color:#475b71}
+#bonds .arcana-dossier .arc-connection-copy small.complex i{border-top-style:dashed}
+#bonds .arcana-dossier .arc-connection-copy small em{font-style:normal;font-weight:600;color:#6b5a3e}
+#bonds .arcana-dossier .arc-connection-copy p{margin:6px 0 0;color:#33291b;font-size:14px;line-height:1.75}
+#bonds .arcana-dossier .arc-doc{align-self:start;min-height:36px;margin:0;padding:6px 11px;border:1px solid rgba(90,70,40,.34);background:rgba(255,250,235,.5);color:#3a2d1c;font:700 12px var(--ui);cursor:pointer}
+#bonds .arcana-dossier .arc-doc:hover{background:rgba(255,250,235,.95)}
+#bonds .arcana-dossier .arc-no-links{padding:0;color:#4a3c28;font-size:14.5px}
+#bonds .arcana-dossier .arc-dossier-empty,#bonds .arcana-dossier .arc-dossier-sealed{padding:24px 34px 30px;text-align:center}
+#bonds .arcana-dossier .arc-dossier-empty>span,#bonds .arcana-dossier .arc-dossier-sealed>span{font-size:26px;color:#8a6a35;opacity:.8}
+#bonds .arcana-dossier .arc-dossier-empty h3,#bonds .arcana-dossier .arc-dossier-sealed h3{margin:6px 0 6px;color:#1d160d;font:700 21px var(--disp)}
+#bonds .arcana-dossier .arc-dossier-empty p,#bonds .arcana-dossier .arc-dossier-sealed p{margin:0;color:#4a3c28;font-size:14.5px;line-height:1.8}
+#bonds .arcana-dossier .arc-dossier-sealed button{color:#3a2d1c;border-color:rgba(90,70,40,.4);background:rgba(255,250,235,.45)}
+@media(max-width:1100px){
+ #bonds .arc-record{grid-template-columns:minmax(220px,260px) minmax(0,1fr);padding:22px 26px 30px}
+ #bonds .arcana-dossier .arc-dossier-stamp{margin:0 26px}
+ #bonds .arcana-dossier .arc-dossier-person{padding-right:26px}
+ #bonds .arc-record-links{padding-left:26px}
+}
+@media(max-width:760px){
+ #bonds .arcana-dossier{margin:0}
+ #bonds .arcana-dossier .arc-dossier-stamp{margin:0 18px;padding:18px 0 10px;font-size:10px;letter-spacing:.14em}
+ #bonds .arc-record{grid-template-columns:minmax(0,1fr);padding:18px 18px 26px}
+ #bonds .arcana-dossier .arc-dossier-person{display:grid;grid-template-columns:40% minmax(0,1fr);column-gap:16px;padding:0}
+ #bonds .arc-id{margin:0;align-self:center;min-width:0}
+ #bonds .arcana-dossier .arc-id h3{font-size:clamp(24px,7.2vw,30px);word-break:keep-all}
+ #bonds .arcana-dossier .arc-role{font-size:14px}
+ #bonds .arc-known,#bonds .arcana-dossier .arc-relation-summary,#bonds .arc-record-actions{grid-column:1/-1}
+ #bonds .arc-record-actions{grid-template-columns:1fr 1fr}
+ #bonds .arcana-dossier .arc-record-actions button{padding:10px 8px;font-size:13px}
+ #bonds .arc-record-links{margin-top:24px;padding:22px 0 0;border-left:0;border-top:1px solid rgba(90,70,40,.26)}
+ #bonds .arcana-dossier .arc-connection{grid-template-columns:46px minmax(0,1fr) auto;gap:10px;padding:12px 10px 12px 11px}
+ #bonds .arcana-dossier .arc-related-image img{width:46px;height:61px}
+ #bonds .arcana-dossier .arc-doc{min-height:40px;padding:6px 10px}
+ #bonds .arcana-dossier .arc-connection-copy p{font-size:14px}
+ #bonds .arcana-dossier .arc-dossier-empty,#bonds .arcana-dossier .arc-dossier-sealed{padding:20px 18px 24px}
+}
+@media(prefers-reduced-motion:reduce){#bonds .arc-flow{display:none}#bonds .arcana-dossier .arc-record{animation:none}#bonds .arcana-dossier .arc-record-actions button{transition:none}}
 </style>
 </head>
 <body>
@@ -2228,6 +2351,6 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
 <script src="people-redesign.js?v=torn-record"></script>
 <script src="forbidden-library.js"></script>
 <script src="dossier-expansion.js"></script>
-<script src="relationships.js?v=weathered-fragments"></script>
+<script src="relationships.js?v=star-record"></script>
 </body>
 </html>
