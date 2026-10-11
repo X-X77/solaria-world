@@ -2140,6 +2140,12 @@ html:not([data-page="home"]) .site-backdrop .sb-veil{background:radial-gradient(
 #people .cinfo blockquote.quote>span.q-end{margin:0 0 0 5px}
 .region-detail .rd-motto span.q-end{margin:0 0 0 5px}
 </style>
+<style id="play-soon">
+/* 18. Before release the start link reads as in preparation */
+#top .hero-below a.is-soon{cursor:default;color:#cbbd9f;letter-spacing:.02em}
+#top .hero-below a.is-soon:hover{color:#e6d8bf}
+#top .hero-below a.is-soon .soon-tag{display:inline-block;margin-left:8px;padding:2px 7px;border:1px solid rgba(214,185,128,.45);font:600 10.5px var(--lat);letter-spacing:.16em;color:#d6b980;vertical-align:1px}
+</style>
 </head>
 <body>
 <div class="site-backdrop" id="siteBackdrop" aria-hidden="true"><div class="sb-slides"></div><div class="sb-veil"></div></div>
@@ -2930,12 +2936,17 @@ const SND=(function(){
 })();
 
 /* play */
+// The story is not public yet: PLAY_OPEN=false shows 'in preparation'. Set it to true on release day.
+const PLAY_OPEN=false;
 const PLAY_URL='https://caveduck.io/character-info/94c25e1f-961a-4ff0-a4a5-e9e7dc7d1cc1';
 (function(){
   const t=document.createElement('div');t.className='toast';document.body.appendChild(t);
   document.querySelectorAll('[data-play]').forEach(a=>{
-    if(PLAY_URL){a.href=PLAY_URL;a.target='_blank';a.rel='noopener'}
-    else a.onclick=e=>{e.preventDefault();t.textContent='플레이 링크가 곧 열립니다';t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),2200)};
+    if(PLAY_OPEN&&PLAY_URL){a.href=PLAY_URL;a.target='_blank';a.rel='noopener';return}
+    a.classList.add('is-soon');a.removeAttribute('href');a.setAttribute('role','button');a.setAttribute('tabindex','0');a.setAttribute('aria-disabled','true');
+    a.innerHTML='이야기 준비 중 <span class="soon-tag">COMING SOON</span>';
+    const tell=e=>{e.preventDefault();t.textContent='이야기는 아직 준비 중이에요. 곧 열립니다.';t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),2400)};
+    a.onclick=tell;a.onkeydown=e=>{if(e.key==='Enter'||e.key===' ')tell(e)};
   });
 })();
 
