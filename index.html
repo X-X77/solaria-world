@@ -2231,6 +2231,28 @@ iframe.skiptranslate,body>.skiptranslate,.goog-te-banner-frame,#goog-gt-tt,.goog
 }
 @media(pointer:coarse){#resonance .res-help{display:none}}
 </style>
+<style id="phone-nav">
+/* 22. Phone bar: two calm rows instead of one crowded line */
+@media(max-width:760px){
+ #nav.nav{height:auto;flex-wrap:wrap;align-items:center;row-gap:0;padding:max(8px,env(safe-area-inset-top)) 16px 0}
+ #nav .logo{order:0;margin-right:auto;font-size:18px;gap:8px;letter-spacing:.04em}
+ #nav .logo b{display:inline}
+ #nav .logo svg{width:22px;height:22px}
+ #nav .lang{order:1;margin-left:0}
+ #nav .snd{order:2;margin-left:8px}
+ #nav .lang-btn{width:auto;height:34px;padding:0 11px;gap:6px;font-size:11.5px}
+ #nav .lang-btn #langCur{display:inline}
+ #nav ul:not(.lang-menu){order:3;flex:0 0 calc(100% + 32px);display:flex;justify-content:space-around;gap:0;margin:8px -16px 0;padding:0 6px;border-top:1px solid rgba(214,185,128,.13);overflow-x:auto;scrollbar-width:none}
+ #nav ul:not(.lang-menu) li a{padding:11px 5px 12px;font-size:13.5px;letter-spacing:.02em}
+ #nav ul:not(.lang-menu) li a.on:after{left:5px;right:5px;bottom:5px}
+ /* the pages start below the taller bar */
+ html{scroll-padding-top:108px}
+ .sec:not(.hero){scroll-margin-top:104px}
+ .hero:after{top:100px}
+ html:not([data-page="home"]) :is(#regions,#people,#bonds,#archive){padding-top:calc(clamp(96px,9vw,128px) + 32px)}
+}
+@media(max-width:360px){#nav ul:not(.lang-menu) li a{padding:11px 3px 12px;font-size:12.5px;letter-spacing:0}#nav .lang-btn #langCur{display:none}#nav .lang-btn{width:34px;padding:0;justify-content:center}}
+</style>
 </head>
 <body>
 <div class="site-backdrop" id="siteBackdrop" aria-hidden="true"><div class="sb-slides"></div><div class="sb-veil"></div></div>
@@ -2550,7 +2572,7 @@ iframe.skiptranslate,body>.skiptranslate,.goog-te-banner-frame,#goog-gt-tt,.goog
  if(!onProxy&&current()!=='ko')loadWidget().catch(()=>{setCookie('');mark('ko')});
 })();
 </script>
-<script src="rift-contact.js?v=korean-captions"></script>
+<script src="rift-contact.js?v=quiet-prime"></script>
 <script>
 const REGIONS = {
   north: {
@@ -3066,22 +3088,26 @@ const SND=(function(){
   const EL={op,bg},VOL={op:.9,bg:.3},G={},T={};
   let ctx=null,on=false,bgWant=false,disarm=null,wasBg=false,hiddenFilm=false;
   const btn=document.getElementById('snd');
+  // iPhones ignore volume changes on audio elements; without the audio graph, silence there has to be done with mute
+  const canVol=(()=>{try{const a=new Audio();a.volume=.5;return Math.abs(a.volume-.5)<.01}catch(e){return false}})();
   const save=v=>{try{localStorage.setItem('sol-sound',v?'1':'0')}catch(e){}};
   const pref=()=>{try{return localStorage.getItem('sol-sound')}catch(e){return null}};
   function init(){if(ctx||!graph)return;try{ctx=new AC();for(const k in EL){const s=ctx.createMediaElementSource(EL[k]),g=ctx.createGain();g.gain.value=0;s.connect(g);g.connect(ctx.destination);G[k]=g}}catch(e){ctx=null}}
   function resume(){if(ctx&&ctx.state!=='running'){try{ctx.resume()}catch(e){}}}
-  function set(k,v){if(ctx&&G[k]){const p=G[k].gain;p.cancelScheduledValues(ctx.currentTime);p.value=v}else{clearInterval(T[k]);EL[k].volume=v}}
+  function set(k,v){if(ctx&&G[k]){const p=G[k].gain;p.cancelScheduledValues(ctx.currentTime);p.value=v}else{clearInterval(T[k]);EL[k].volume=v;if(!canVol)EL[k].muted=v<=.001}}
   function ramp(k,v,d){d=d||.05;
     if(ctx&&G[k]){const p=G[k].gain,n=ctx.currentTime;p.cancelScheduledValues(n);p.setValueAtTime(p.value,n);p.linearRampToValueAtTime(v,n+d);return}
+    if(!canVol){set(k,v);return}
     const el=EL[k],a=el.volume,t0=performance.now();clearInterval(T[k]);
     T[k]=setInterval(()=>{const f=Math.min(1,(performance.now()-t0)/(d*1000));el.volume=Math.max(0,Math.min(1,a+(v-a)*f));if(f>=1)clearInterval(T[k])},40)}
   function play(el){try{const p=el.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
   function ui(){if(!btn)return;btn.classList.toggle('on',on);btn.setAttribute('aria-pressed',on?'true':'false');const l=on?'배경음 끄기':'배경음 켜기';btn.setAttribute('aria-label',l);btn.title=l}
-  function bgOn(d){if(hiddenFilm)return;bgWant=true;init();resume();clearTimeout(T.bp);if(bg.paused){set('bg',0);play(bg)}ramp('bg',VOL.bg,d||2)}
+  function bgOn(d){if(hiddenFilm)return;bgWant=true;init();resume();clearTimeout(T.bp);bg.muted=false;if(bg.paused){set('bg',0);play(bg)}ramp('bg',VOL.bg,d||2)}
   function bgOff(d){bgWant=false;ramp('bg',0,d||.6);clearTimeout(T.bp);T.bp=setTimeout(()=>{if(!bgWant)bg.pause()},(d||.6)*1000+100)}
   function opOff(d){ramp('op',0,d||.6);clearTimeout(T.op);T.op=setTimeout(()=>op.pause(),(d||.6)*1000+100)}
-  function unlockBg(){set('bg',0);try{const p=bg.play();if(p&&p.then)p.then(()=>{if(!bgWant){bg.pause();bg.currentTime=0}}).catch(()=>{})}catch(e){}}
-  if(btn)btn.addEventListener('click',()=>{if(disarm)disarm();on=!on;save(on);ui();if(on)bgOn(1.5);else{bgOff(.6);if(!op.paused)opOff(.4)}});
+  // started once inside the tap so it may play later; muted, because a phone can ignore a zero volume and play it out loud
+  function unlockBg(){set('bg',0);bg.muted=true;const done=()=>{if(!bgWant){bg.pause();try{bg.currentTime=0}catch(e){}}bg.muted=false};try{const p=bg.play();if(p&&p.then)p.then(done,()=>{bg.muted=false});else done()}catch(e){bg.muted=false}}
+  if(btn)btn.addEventListener('click',()=>{if(disarm)disarm();on=!on;save(on);ui();if(on)bgOn(1.5);else{clearTimeout(T.bgIn);bgOff(.6);if(!op.paused)opOff(.4)}});
   document.addEventListener('visibilitychange',()=>{if(document.hidden){wasBg=!bg.paused;if(wasBg)bg.pause()}else if(on&&bgWant&&wasBg)play(bg)});
   ui();
   return{
@@ -3095,8 +3121,10 @@ const SND=(function(){
       let p;try{p=op.play()}catch(e){}
       if(p&&p.then)p.then(()=>{clearTimeout(to);if(late)op.pause();else go()}).catch(()=>{clearTimeout(to);go()});else{clearTimeout(to);go()}},
     silent(){on=false;save(false);ui()},
-    introEnd(){if(!on)return;if(!op.paused)opOff(newOpening?2.3:1.4);bgOn(newOpening?3.0:3.5)},
-    hiddenStart(){hiddenFilm=true;bgWant=false;clearTimeout(T.bp);clearTimeout(T.op);set('op',0);set('bg',0);op.pause();bg.pause();return on;},
+    introEnd(){if(!on)return;const fading=!op.paused;if(fading)opOff(newOpening?1.8:1.4);clearTimeout(T.bgIn);
+      // the background music comes in only once the opening song has nearly faded, so the two never play together
+      if(fading)T.bgIn=setTimeout(()=>{if(on&&!hiddenFilm)bgOn(2.6)},1500);else bgOn(newOpening?3.0:3.5)},
+    hiddenStart(){hiddenFilm=true;bgWant=false;clearTimeout(T.bgIn);clearTimeout(T.bp);clearTimeout(T.op);set('op',0);set('bg',0);op.pause();bg.pause();return on;},
     hiddenEnd(){hiddenFilm=false;if(on)bgOn(1.5);},
     openingTime(){return op.currentTime||0;},
     openingPlaying(){return !op.paused&&!op.ended;},

@@ -93,8 +93,9 @@ function attempt(){
 }
 // Prime the dedicated media element during the existing sound-start gesture (important on mobile).
 document.getElementById('opStart')?.addEventListener('click',()=>{
- player.volume=0;player.preload='auto';
- try{const p=player.play();p?.then(()=>{if(!active){player.pause();player.currentTime=0}}).catch(()=>{})}catch(_){}
+ player.volume=0;player.muted=true;player.preload='auto';
+ const ready=()=>{if(!active){player.pause();player.currentTime=0;player.muted=false}};
+ try{const p=player.play();if(p)p.then(ready,()=>{if(!active)player.muted=false});else ready()}catch(_){player.muted=false}
 });
 document.addEventListener('solaria:intro-finished',attempt,{once:true});
 player.addEventListener('waiting',()=>{if(active&&mediaClock&&!complete){clearTimeout(loadTimer);loadTimer=setTimeout(()=>{if(active&&!complete&&player.readyState<3)useSilentClock()},3000)}});
