@@ -267,10 +267,15 @@ function unlock(){
  // This button replays the film; the rare post-opening event alone unlocks the records.
  window.SOLARIA_RIFT_CONTACT?.begin();
 }
-tabs.addEventListener('click',e=>{
- const b=e.target.closest('[data-region]');if(!b)return;
- region=b.dataset.region;const cast=members(region),primary=cast.find(p=>p.main)||cast[0];
+function goRegion(key){
+ region=key;const cast=members(region),primary=cast.find(p=>p.main)||cast[0];
  selected=region==='all'?null:(primary?primary.no:null);render();
+ // keep the active tab visible when the tab row scrolls on narrow screens
+ const a=tabs.querySelector('.active');
+ if(a&&tabs.scrollWidth>tabs.clientWidth){const tr=tabs.getBoundingClientRect(),ar=a.getBoundingClientRect();tabs.scrollTo({left:tabs.scrollLeft+ar.left-tr.left-(tabs.clientWidth-ar.width)/2,behavior:quiet()?'auto':'smooth'})}
+}
+tabs.addEventListener('click',e=>{
+ const b=e.target.closest('[data-region]');if(b)goRegion(b.dataset.region);
 });
 document.getElementById('arcanaBridges')?.addEventListener('click',e=>{
  const b=e.target.closest('[data-bridge]');
@@ -298,8 +303,9 @@ document.getElementById('people')?.addEventListener('click',e=>{
 });
 let resizeTimer;
 addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{if(sky().w!==geo.w)renderGraph()},180)});
+// The arrows beside "01 / 08" turn to the previous or next region, wrapping around.
 for(const [id,dir] of [['bondScrollLeft',-1],['bondScrollRight',1]]){
- document.getElementById(id)?.addEventListener('click',()=>scroll.scrollBy({left:scroll.clientWidth*.65*dir,behavior:quiet()?'auto':'smooth'}));
+ document.getElementById(id)?.addEventListener('click',()=>{const i=factions.findIndex(x=>x[0]===region);goRegion(factions[(i+dir+factions.length)%factions.length][0])});
 }
 const gallery=document.createElement('dialog');
 gallery.className='arc-gallery';

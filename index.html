@@ -2292,7 +2292,7 @@ html:not([data-page="home"]) .site-backdrop .sb-veil{background:radial-gradient(
  <div class="bond-region-tabs" id="bondRegionTabs" role="group" aria-label="관계도 권역 선택"></div>
  <div class="arcana-layout">
   <div class="arcana-board" id="bondBoard">
-   <div class="arcana-topline"><div><small>IMPERIAL CONCORDANCE · <span id="arcanaNumber">I / VIII</span></small><h3 id="bondRegionName">북부의 인연</h3></div><div class="arcana-tools"><button id="bondShowAll" type="button" aria-label="선택 해제하고 전체 연결 보기">선택 해제</button><button type="button" id="bondScrollLeft" aria-label="관계도 왼쪽으로 이동">‹</button><button type="button" id="bondScrollRight" aria-label="관계도 오른쪽으로 이동">›</button></div></div>
+   <div class="arcana-topline"><div><small>IMPERIAL CONCORDANCE · <span id="arcanaNumber">I / VIII</span></small><h3 id="bondRegionName">북부의 인연</h3></div><div class="arcana-tools"><button id="bondShowAll" type="button" aria-label="선택 해제하고 전체 연결 보기">선택 해제</button><button type="button" id="bondScrollLeft" aria-label="이전 권역 관계도" title="이전 권역">‹</button><button type="button" id="bondScrollRight" aria-label="다음 권역 관계도" title="다음 권역">›</button></div></div>
    <div class="arcana-scroll" id="bondScroller" tabindex="0" aria-label="인물 관계도. 초상을 선택하여 연결을 살펴보세요. 좁은 화면에서는 좌우로 이동할 수 있습니다.">
     <svg id="bsvg" viewBox="0 0 940 690" role="group" aria-label="인물의 초상과 인연을 연결한 관계도"></svg>
    </div>
@@ -3206,7 +3206,7 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
 <script src="people-redesign.js?v=torn-record"></script>
 <script src="forbidden-library.js"></script>
 <script src="dossier-expansion.js"></script>
-<script src="relationships.js?v=star-record"></script>
+<script src="relationships.js?v=region-arrows"></script>
 <script id="book-size">
 /* One page size for the whole register: every record is measured once (portraits swapped for a blank so nothing
    downloads), the tallest sets the book height, and short records keep blank paper below. Page turns then match. */
