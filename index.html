@@ -1903,6 +1903,35 @@ html.op-handoff .hero-below,html.op-handoff .hero-place,html.op-handoff .hero .c
  #people #peopleDossier.ruin-record .ruin-note{font-size:13px}
 }
 </style>
+<style id="page-turn">
+/* 11. Turning the register's pages */
+#people #peopleDossier{position:relative}
+#people .page-turn{position:absolute;z-index:6;pointer-events:none;perspective:2400px}
+#people .page-turn .pt-copy,#people .page-turn .pt-copy *{animation:none!important;transition:none!important}
+#people .page-turn .pt-still{position:absolute;top:0;height:100%;overflow:hidden;z-index:0;isolation:isolate}
+#people .page-turn .pt-leaf{position:absolute;top:0;height:100%;z-index:1;transform-style:preserve-3d;will-change:transform}
+#people .page-turn .pt-face{position:absolute;inset:0;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+#people .page-turn .pt-back{transform:rotateY(180deg)}
+#people .page-turn .pt-face:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0}
+/* forward: the right page lifts at the spine and lands on the left */
+#people .page-turn.pt-spread.pt-forward .pt-leaf{transform-origin:0 50%;animation:ptForward .72s cubic-bezier(.42,.08,.28,1) forwards}
+#people .page-turn.pt-spread.pt-backward .pt-leaf{transform-origin:100% 50%;animation:ptBackward .72s cubic-bezier(.42,.08,.28,1) forwards}
+#people .page-turn.pt-forward .pt-front:after{background:linear-gradient(90deg,rgba(40,24,6,.45),rgba(40,24,6,.08) 55%,rgba(255,250,235,.12));animation:ptShadeIn .72s ease-in forwards}
+#people .page-turn.pt-forward .pt-back:after{background:linear-gradient(270deg,rgba(40,24,6,.45),rgba(40,24,6,.06) 55%,transparent);opacity:1;animation:ptShadeOut .72s ease-out forwards}
+#people .page-turn.pt-backward .pt-front:after{background:linear-gradient(270deg,rgba(40,24,6,.45),rgba(40,24,6,.08) 55%,rgba(255,250,235,.12));animation:ptShadeIn .72s ease-in forwards}
+#people .page-turn.pt-backward .pt-back:after{background:linear-gradient(90deg,rgba(40,24,6,.45),rgba(40,24,6,.06) 55%,transparent);opacity:1;animation:ptShadeOut .72s ease-out forwards}
+/* phone: a single page turns away */
+#people .page-turn.pt-single.pt-forward .pt-leaf{transform-origin:0 50%;animation:ptAwayL .6s cubic-bezier(.42,.08,.28,1) forwards}
+#people .page-turn.pt-single.pt-backward .pt-leaf{transform-origin:100% 50%;animation:ptAwayR .6s cubic-bezier(.42,.08,.28,1) forwards}
+@keyframes ptForward{from{transform:rotateY(0)}to{transform:rotateY(-180deg)}}
+@keyframes ptBackward{from{transform:rotateY(0)}to{transform:rotateY(180deg)}}
+@keyframes ptAwayL{0%{transform:rotateY(0);opacity:1}70%{opacity:1}100%{transform:rotateY(-100deg);opacity:0}}
+@keyframes ptAwayR{0%{transform:rotateY(0);opacity:1}70%{opacity:1}100%{transform:rotateY(100deg);opacity:0}}
+@keyframes ptShadeIn{0%{opacity:0}50%{opacity:1}100%{opacity:1}}
+@keyframes ptShadeOut{0%,50%{opacity:1}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){#people .page-turn{display:none}}
+</style>
+
 </head>
 <body>
 <div id="intro" class="op-v2" aria-label="솔라리아 오프닝">
@@ -2438,8 +2467,51 @@ function RUIN(p){
    '<div class="ruin-scrap" aria-hidden="true"><span>No.'+pad(p.no)+'</span><i class="ruin-wax"></i><em>기록 대부분 소실</em></div>'+
   '</div>';
 }
+/* Page turn: the old spread is copied before the new record is drawn, then the leaf turns over the spine. */
+let pageTurnTimer=0;
+function pageTurnSnapshot(){
+  const ci=cstage.querySelector(':scope > .cinfo');
+  return {node:cstage.cloneNode(true),h:cstage.offsetHeight,spine:ci&&!matchMedia('(max-width:750px)').matches?ci.offsetLeft:0};
+}
+function pageRustle(){
+  if(document.getElementById('snd')?.getAttribute('aria-pressed')!=='true')return;
+  const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+  try{
+    const c=pageRustle.ctx||(pageRustle.ctx=new AC());if(c.state!=='running')c.resume();
+    const t=c.currentTime,len=Math.floor(c.sampleRate*.32),buf=c.createBuffer(1,len,c.sampleRate),d=buf.getChannelData(0);
+    for(let k=0;k<len;k++){const e=k/len;d[k]=(Math.random()*2-1)*Math.pow(Math.sin(Math.PI*e),1.6)*(.6+.4*Math.random())}
+    const s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();s.buffer=buf;f.type='bandpass';f.Q.value=.7;f.frequency.setValueAtTime(3200,t);f.frequency.exponentialRampToValueAtTime(900,t+.3);g.gain.value=.16;
+    s.connect(f);f.connect(g);g.connect(c.destination);s.start(t);
+  }catch(e){}
+}
+function pageTurn(snap,dir){
+  document.querySelectorAll('#people .page-turn').forEach(n=>n.remove());clearTimeout(pageTurnTimer);
+  if(!snap||!dir)return;
+  const W=cstage.offsetWidth,Hn=cstage.offsetHeight,Ho=snap.h,H=Math.max(Ho,Hn),spine=snap.spine;
+  const prep=(node,h)=>{node.removeAttribute('id');node.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));node.querySelectorAll('.anim').forEach(n=>n.classList.remove('anim'));node.classList.add('pt-copy');node.style.cssText='position:absolute;top:0;width:'+W+'px;height:'+h+'px;margin:0;left:0';return node};
+  const oldA=prep(snap.node,Ho),wrap=document.createElement('div');
+  wrap.className='page-turn '+(dir>0?'pt-forward':'pt-backward')+(spine?' pt-spread':' pt-single');wrap.setAttribute('aria-hidden','true');
+  wrap.style.cssText='left:'+cstage.offsetLeft+'px;top:'+cstage.offsetTop+'px;width:'+W+'px;height:'+H+'px';
+  const face=(cls,node,left)=>{const f=document.createElement('div');f.className='pt-face '+cls;if(node){node.style.left=left+'px';f.append(node)}return f};
+  if(spine){
+    const L=dir>0?W-spine:spine,newA=prep(cstage.cloneNode(true),Hn),oldB=oldA.cloneNode(true);
+    const still=document.createElement('div');still.className='pt-still';still.style.cssText=dir>0?'left:0;width:'+spine+'px':'left:'+spine+'px;width:'+(W-spine)+'px';
+    oldB.style.left=(dir>0?0:-spine)+'px';still.append(oldB);
+    const leaf=document.createElement('div');leaf.className='pt-leaf';leaf.style.cssText='left:'+(dir>0?spine:0)+'px;width:'+L+'px';
+    leaf.append(face('pt-front',oldA,dir>0?-spine:0),face('pt-back',newA,dir>0?L-spine:-spine));
+    wrap.append(still,leaf);
+  }else{
+    const leaf=document.createElement('div');leaf.className='pt-leaf';leaf.style.cssText='left:0;width:'+W+'px';
+    leaf.append(face('pt-front',oldA,0));wrap.append(leaf);
+  }
+  cstage.after(wrap);pageRustle();
+  pageTurnTimer=setTimeout(()=>wrap.remove(),760);
+}
 function setPerson(i,anim=true){
   if(!list.length)return;
+  const turnDir=anim&&i!==cur&&!matchMedia('(prefers-reduced-motion: reduce)').matches?(i>cur?1:-1):0;
+  const wasRuin=dossier.classList.contains('ruin-record');
+  const turnSnap=turnDir&&cstage.firstElementChild&&!cstage.querySelector('.people-locked-rift,.people-empty')?pageTurnSnapshot():null;
   cur=(i%list.length+list.length)%list.length;
   const p=list[cur],sealed=!!p.sealed&&!window.SOLARIA_RIFT_UNLOCKED,name=sealed?'???':p.name,role=sealed?'봉인된 기록':p.role;
   const extra=window.SOLARIA_BIO?.[p.no];
@@ -2511,6 +2583,8 @@ function setPerson(i,anim=true){
   cstage.querySelectorAll('[data-cast-relation]').forEach(b=>b.onclick=()=>window.SOLARIA_ATLAS?.focus(Number(b.dataset.castRelation)));
   const ob=$('ob');
   if(ob)ob.onclick=()=>{const sec=$('sec');sec.classList.add('open');ob.setAttribute('aria-expanded','true');ob.disabled=true};
+  if(turnSnap&&wasRuin===dossier.classList.contains('ruin-record')){cstage.querySelectorAll('.anim').forEach(n=>n.classList.remove('anim'));pageTurn(turnSnap,turnDir)}
+  else pageTurn(null,0);
 }
 dossier.addEventListener('keydown',e=>{
   if(e.target.closest('button,a'))return;
