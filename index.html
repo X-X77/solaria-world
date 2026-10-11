@@ -2135,6 +2135,11 @@ html:not([data-page="home"]) .site-backdrop .sb-veil{background:radial-gradient(
 .region-detail .rd-who button.is-torn img{filter:grayscale(1) sepia(.34) contrast(.8) brightness(.86)}
 .region-detail .rd-who button.is-torn small{color:#7a6545;font-style:italic}
 </style>
+<style id="quote-close">
+/* 17. Quotes close as well as open (torn lines stay open: their end is missing) */
+#people .cinfo blockquote.quote>span.q-end{margin:0 0 0 5px}
+.region-detail .rd-motto span.q-end{margin:0 0 0 5px}
+</style>
 </head>
 <body>
 <div class="site-backdrop" id="siteBackdrop" aria-hidden="true"><div class="sb-slides"></div><div class="sb-veil"></div></div>
@@ -2614,7 +2619,7 @@ function regionRecord(k){
     <div class="rd-title"><small translate="no">${r.latin}</small><h3 id="rdTitle">${r.name}</h3><p>${r.full}</p></div>
    </header>
    <article class="rd-paper">
-    <p class="rd-motto"><span aria-hidden="true">“</span>${r.tag}</p>
+    <p class="rd-motto"><span aria-hidden="true">“</span>${r.tag}<span class="q-end" aria-hidden="true">”</span></p>
     ${r.air&&r.air.length?`<div class="rd-air"><b>이 땅의 공기</b>${r.air.map(a=>`<span>${esc(a)}</span>`).join('')}</div>`:''}
     <div class="rd-cols">
      <div class="rd-main">
@@ -2796,7 +2801,7 @@ function setPerson(i,anim=true){
     body=RUIN(p);
   }else{
     body='<h3>'+esc(p.name)+'</h3><p class="role">'+esc(p.role)+'</p>'+
-      ((p.quote||extra?.quote)?'<blockquote class="quote"><span aria-hidden="true">“</span>'+esc(p.quote||extra.quote)+'</blockquote>':'')+
+      ((p.quote||extra?.quote)?'<blockquote class="quote"><span aria-hidden="true">“</span>'+esc(p.quote||extra.quote)+'<span class="q-end" aria-hidden="true">”</span></blockquote>':'')+
       '<dl><div><dt><small>01</small> 외형</dt><dd>'+esc(p.look)+'</dd></div>'+
       '<div><dt><small>02</small> 성품</dt><dd>'+esc(p.pers)+'</dd></div>'+
       '<div><dt><small>03</small> 알려진 사실</dt><dd>'+esc(p.known)+'</dd></div>'+(extra?'<div><dt><small>04</small> 행동과 말투</dt><dd>'+esc(extra.manner)+'</dd></div>'+'<div><dt><small>05</small> 지금의 관심사</dt><dd>'+esc(extra.goal)+'</dd></div>':'')+'</dl>'+'<div class="cast-profile-links" id="castProfileLinks">'+(window.SOLARIA_ATLAS?.preview(p.no)||'<p>이 인물의 관계 기록을 불러오는 중입니다.</p>')+'</div>';
