@@ -195,7 +195,7 @@ function renderDetail(){
  const locked=region==='rift'&&!window.SOLARIA_RIFT_UNLOCKED,p=people.get(selected);
  if(locked){
   recordFor=null;detail.classList.remove('is-unfolding');detail.classList.add('is-empty');
-  detail.innerHTML='<div class="arc-dossier-stamp"><span>RESTRICTED / BEYOND THE RIFT</span></div><div class="arc-dossier-sealed"><span aria-hidden="true">✧</span><h3>이름 없는 별자리</h3><p>균열 너머는 아직 봉인되어 있습니다. 오프닝을 끝까지 감상하면 드물게 균열이 열릴 수 있습니다.</p><button type="button" data-unlock>오프닝 다시 보기 ↗</button></div>';
+  detail.innerHTML='<div class="arc-dossier-stamp"><span>RESTRICTED / BEYOND THE RIFT</span></div><div class="arc-dossier-sealed"><span aria-hidden="true">✧</span><h3>이름 없는 별자리</h3><p>균열 너머는 아직 봉인되어 있습니다.</p></div>';
   return;
  }
  if(!p||(region!=='all'&&p.aff!==region)||!shown(p)){

@@ -1272,6 +1272,13 @@ html.op-handoff .hero-below,html.op-handoff .hero-place,html.op-handoff .hero .c
 #people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel.complex em{color:#475b71}
 #people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel.complex em i{border-top-style:dashed}
 #people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel small{display:block;margin-top:4px;color:#3a2f20;font-size:13.5px;line-height:1.65}
+/* sealed rift register: a closed, wax-sealed record with no hint on how it opens */
+#people #peopleDossier:not(.ruin-record) .cstage:has(> .people-locked-rift){display:block;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .36 0 0 0 0 .28 0 0 0 0 .17 0 0 0 .34 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),linear-gradient(180deg,#ebe1c7,#ddcfae)}
+#people #peopleDossier:not(.ruin-record) .people-locked-rift{position:relative;grid-column:1/-1;padding:56px 20px 62px;color:#2a2219;text-align:center}
+#people #peopleDossier:not(.ruin-record) .people-locked-rift:before{content:"";position:absolute;left:4%;right:4%;top:87px;height:2px;background:linear-gradient(90deg,transparent,rgba(70,42,66,.5) 12%,rgba(70,42,66,.5) 88%,transparent)}
+#people #peopleDossier:not(.ruin-record) .people-locked-rift>span{position:relative;display:grid;place-items:center;width:62px;height:62px;margin:0 auto;border-radius:50%;background:radial-gradient(circle at 35% 30%,#8b6a99,#4f2f5e 62%,#3a2046);box-shadow:0 3px 8px rgba(40,20,40,.35),inset 0 -3px 6px rgba(0,0,0,.28),inset 0 2px 3px rgba(255,255,255,.16);color:rgba(244,232,248,.82);font-size:27px;line-height:1}
+#people #peopleDossier:not(.ruin-record) .people-locked-rift h3{margin:22px 0 8px;color:#1d160d;font:700 clamp(22px,2.6vw,30px) var(--disp);text-shadow:none}
+#people #peopleDossier:not(.ruin-record) .people-locked-rift p{max-width:420px;margin:0 auto;color:#5a4a33;font:400 15.5px/1.8 var(--read)}
 @media(prefers-reduced-motion:reduce){#people .ct .im{transition:none}}
 </style>
 <style id="celestial-record">
@@ -1379,6 +1386,362 @@ html.op-handoff .hero-below,html.op-handoff .hero-place,html.op-handoff .hero .c
  #bonds .arcana-dossier .arc-dossier-empty,#bonds .arcana-dossier .arc-dossier-sealed{padding:20px 18px 24px}
 }
 @media(prefers-reduced-motion:reduce){#bonds .arc-flow{display:none}#bonds .arcana-dossier .arc-record{animation:none}#bonds .arcana-dossier .arc-record-actions button{transition:none}}
+</style>
+<style id="parchment-unify">
+/* 5. One material for every record: parchment documents laid on the night desk.
+      Section backdrops, the opening, the maps and the star chart stay dark; the pages are paper. */
+:root{
+ --pa-paper:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .36 0 0 0 0 .28 0 0 0 0 .17 0 0 0 .34 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),linear-gradient(180deg,#ece2c8,#ddcfae);
+ --pa-ink-strong:#1d160d;--pa-ink:#2b2318;--pa-body:#3a2f20;--pa-muted:#6b5a3e;--pa-rule:rgba(90,70,40,.26);--pa-gold:#85601d;
+ --pa-edge:0 0 0 1px rgba(214,185,128,.32),0 24px 54px rgba(0,0,0,.46),inset 0 0 60px rgba(110,80,40,.2);
+ --pa-btn-line:rgba(90,70,40,.4);--pa-btn-bg:rgba(255,250,235,.45);--pa-btn-hover:rgba(255,250,235,.9);--pa-dark:#3a2a17;
+}
+/* shared paper buttons */
+:is(#world,#regions,#archive,#resonance) .arc-find{border:1px solid var(--pa-btn-line);background:var(--pa-btn-bg);color:#3a2d1c;box-shadow:none}
+:is(#world,#regions,#archive,#resonance) .arc-find:hover{background:var(--pa-btn-hover);border-color:rgba(90,70,40,.6);color:#1d160d}
+
+/* ── 세계관: three chronicle pages ── */
+#world .world-chapter{--pa-accent:color-mix(in srgb,var(--chapter,#D2B477) 52%,#22170b);gap:clamp(24px,3.6vw,52px);min-height:0;padding:clamp(18px,2.4vw,30px);background:var(--pa-paper);box-shadow:var(--pa-edge);border-radius:3px}
+#world .world-chapter+.world-chapter{margin-top:clamp(30px,4vw,54px)}
+#world .world-chapter-image{border:0;box-shadow:0 10px 22px rgba(60,40,15,.32),inset 0 0 0 1px rgba(90,62,30,.35)}
+#world .world-chapter-image:before{content:"";position:absolute;z-index:2;inset:8px;border:1px solid rgba(255,240,210,.38);pointer-events:none}
+#world .world-chapter-image:after{background:linear-gradient(0deg,rgba(40,26,10,.22),transparent 45%)}
+#world .world-chapter-content{padding:6px 10px 6px 4px}
+#world .world-chapter-head span{color:var(--pa-muted);border-color:var(--pa-rule)}
+#world .world-chapter-head span:first-child{color:var(--pa-accent)}
+#world .world-chapter h3{color:var(--pa-ink-strong);text-shadow:none}
+#world .world-chapter-sub{color:var(--pa-accent);text-shadow:none}
+#world .world-chapter-content>p:not(.world-chapter-sub){color:var(--pa-body)}
+#world .world-chapter-link{color:#3a2d1c;border-color:rgba(90,70,40,.5)}
+#world .world-chapter-link:hover{color:#1d160d;border-color:#1d160d}
+
+/* ── 세계관: the imperial atlas as one folded map sheet ── */
+#world .atlas-preview{padding:clamp(20px,2.6vw,34px);background:var(--pa-paper);border:0;border-radius:3px;box-shadow:var(--pa-edge);color:var(--pa-ink)}
+#world .atlas-preview:before,#world .atlas-preview:after{display:none}
+#world .atlas-overline{color:var(--pa-gold)}
+#world .atlas-heading h3{color:var(--pa-ink-strong);text-shadow:none}
+#world .atlas-heading p{color:var(--pa-body)}
+#world .atlas-link{color:#3a2d1c;border:1px solid var(--pa-btn-line);background:var(--pa-btn-bg)}
+#world .atlas-link:hover{background:var(--pa-btn-hover);color:#1d160d}
+#world .atlas-explorer{border:1px solid var(--pa-rule);background:transparent;box-shadow:none}
+#world .atlas-toolbar{background:rgba(255,250,235,.32);border-bottom:1px solid var(--pa-rule)}
+#world .atlas-toolbar-title{color:var(--pa-muted)}
+#world .atlas-filter{color:#3a2d1c;background:transparent;border:1px solid var(--pa-btn-line)}
+#world .atlas-filter:hover{background:var(--pa-btn-hover);color:#1d160d}
+#world .atlas-filter[aria-pressed=true]{background:var(--pa-dark);border-color:var(--pa-dark);color:#fbf1dc;box-shadow:none}
+#world .atlas-mapframe{box-shadow:0 10px 22px rgba(60,40,15,.32)}
+#world .atlas-aside{background:transparent;border-left:1px solid var(--pa-rule)}
+#world .atlas-aside-in{background:transparent}
+#world .atlas-detail{border-bottom:1px solid var(--pa-rule);background:transparent}
+#world .atlas-detail-kicker{color:var(--pa-gold)}
+#world .atlas-detail h4{color:var(--pa-ink-strong);text-shadow:none}
+#world .atlas-detail p{color:var(--pa-body)}
+#world .atlas-detail .atlas-detail-region{color:color-mix(in srgb,var(--atlas-accent,#8a6a35) 50%,#22170b)!important}
+#world .atlas-dir-entry:before{background:color-mix(in srgb,var(--pin,#8a6a35) 62%,#22170b)}
+#world .atlas-related b{color:var(--pa-gold)}
+#world .atlas-related div{color:var(--pa-ink)}
+#world .atlas-actions button{color:#3a2d1c;background:var(--pa-btn-bg);border:1px solid var(--pa-btn-line)}
+#world .atlas-actions button:hover{background:var(--pa-btn-hover);color:#1d160d}
+#world .atlas-directory-head b{color:var(--pa-ink-strong)}
+#world .atlas-directory-head small{color:var(--pa-muted)}
+#world .atlas-directory h5{color:var(--pa-muted)}
+#world .atlas-dir-entry{color:var(--pa-body);background:transparent;border-color:transparent}
+#world .atlas-dir-entry:hover{background:rgba(255,250,235,.7);color:#1d160d}
+#world .atlas-dir-entry[aria-current=true]{background:rgba(58,42,23,.1);color:#1d160d;border-color:var(--pa-rule);box-shadow:inset 3px 0 0 var(--pa-dark)}
+#world .atlas-foot{color:var(--pa-muted)}
+#world .atlas-foot span{color:var(--pa-muted)}
+
+/* ── 권역: the regional dossier laid over the landscape ── */
+#regions .rinfo{--pa-accent:color-mix(in srgb,var(--rc,#8a6a35) 52%,#22170b);background:var(--pa-paper);border:0;border-radius:3px;box-shadow:var(--pa-edge);color:var(--pa-ink);backdrop-filter:none}
+#regions .rinfo:before,#regions .rinfo:after{display:none}
+#regions .rinfo .lt{color:var(--pa-accent);opacity:1}
+#regions .rinfo h3{color:var(--pa-ink-strong);text-shadow:none}
+#regions .rinfo .full{color:var(--pa-accent)}
+#regions .rinfo .motto{color:var(--pa-body)}
+#regions .rinfo .region-story-label{color:var(--pa-muted)}
+#regions .rinfo .about{color:var(--pa-body)}
+#regions .rinfo .story{background:rgba(255,250,235,.42);border:1px solid var(--pa-rule);border-left:3px solid var(--pa-accent)}
+#regions .rinfo .story b{color:var(--pa-ink-strong)}
+#regions .rinfo .story p{color:var(--pa-body)}
+#regions .rinfo .region-now{background:rgba(255,250,235,.3);border:1px solid var(--pa-rule);box-shadow:none}
+#regions .rinfo .region-now:before,#regions .rinfo .region-now:after{border-color:var(--pa-accent)}
+#regions .rinfo .region-now>b{color:var(--pa-ink-strong)}
+#regions .rinfo .region-now>b:before{color:var(--pa-accent);text-shadow:none}
+#regions .rinfo .region-now li{color:var(--pa-body);border-color:var(--pa-rule)}
+#regions .rinfo .region-now li:before{color:var(--pa-accent)}
+#regions .rinfo .places li{color:#3a2d1c;background:rgba(255,250,235,.4);border:1px solid var(--pa-btn-line)}
+#regions .rinfo .region-people{border-color:var(--pa-rule)}
+#regions .rinfo .region-people-heading b{color:var(--pa-ink-strong)}
+#regions .rinfo .region-people-heading small{color:var(--pa-muted)}
+#regions .rinfo .region-character{background:rgba(255,250,235,.42);border:1px solid var(--pa-rule);color:var(--pa-ink)}
+#regions .rinfo .region-character:hover{background:rgba(255,250,235,.9);border-color:rgba(90,70,40,.5)}
+#regions .rinfo .region-character img{box-shadow:0 2px 5px rgba(60,40,15,.28)}
+#regions .rinfo .region-character b{color:var(--pa-ink-strong)}
+#regions .rinfo .region-character small{color:var(--pa-muted)}
+#regions .rinfo .region-locked-note p{color:var(--pa-body)}
+
+/* ── 금서고: the six volumes stay bound in leather; what you open is paper ── */
+#archive .lib-seal-detail{--pa-accent:color-mix(in srgb,var(--lib-region-color,#8a6a35) 52%,#22170b);background:var(--pa-paper);border:0;border-radius:3px;box-shadow:var(--pa-edge);color:var(--pa-ink)}
+#archive .lib-seal-detail .lib-detail-top{color:var(--pa-muted);border-color:var(--pa-rule)}
+#archive .lib-seal-detail .lib-detail-top span:last-child{color:#8a3a2c}
+#archive .lib-detail-title{color:var(--pa-ink-strong);text-shadow:none}
+#archive .lib-detail-quote{color:var(--pa-ink);border-left-color:var(--pa-accent)}
+#archive .lib-detail-body{color:var(--pa-body)}
+#archive .lib-recovery{background:rgba(255,250,235,.4);border:1px solid var(--pa-rule);border-left:3px solid var(--pa-accent)}
+#archive .lib-recovery:hover{background:rgba(255,250,235,.85);border-color:rgba(90,70,40,.5)}
+#archive .lib-recovery .lib-document-damage span,#archive .lib-document-damage span{background:#17110b;border:0}
+#archive .lib-recovery>b{color:var(--pa-ink-strong)}
+#archive .lib-recovery>small{color:var(--pa-muted)}
+#archive .lib-document-actions button{color:#3a2d1c;background:var(--pa-btn-bg);border:1px solid var(--pa-btn-line)}
+#archive .lib-document-actions button:hover{background:var(--pa-btn-hover);color:#1d160d}
+#archive .lib-document-code{color:var(--pa-gold)}
+#archive .lib-redaction{background:#17110b;color:#2a1f16}
+#archive .lib-missing{color:var(--pa-muted)}
+#archive .lib-fragment{background:rgba(255,250,235,.45);border:1px solid var(--pa-rule);border-left:3px solid var(--pa-accent,#8a6a35)}
+#archive .lib-fragment>small{color:var(--pa-gold)}
+#archive .lib-fragment h4{color:var(--pa-ink-strong)}
+#archive .lib-fragment>p{color:var(--pa-ink)}
+#archive .lib-fragment-remainder{border-color:var(--pa-rule)}
+#archive .lib-fragment-remainder span{color:#8a3a2c}
+#archive .lib-fragment-remainder b{background:#17110b;color:#5a4038}
+#archive .lib-fragment-remainder small{color:var(--pa-muted)}
+#archive .lib-case-dilemma{background:rgba(140,60,40,.08);border-left-color:#9b3a2c}
+#archive .lib-case-dilemma b{color:#8a3a2c}
+#archive .lib-case-dilemma p{color:var(--pa-ink)}
+#archive .lib-caution{color:var(--pa-muted)}
+/* case files: a ledger with index tabs */
+#archive .arc-overview{background:var(--pa-paper);border:0;border-radius:3px;box-shadow:var(--pa-edge)}
+#archive .arc-overview b,#archive .arc-overview span{color:var(--pa-ink-strong)}
+#archive .arc-progress{background:rgba(90,70,40,.18)}
+#archive .arc-progress i{background:var(--pa-dark)}
+#archive .arc-layout{background:var(--pa-paper);border:0;gap:0;border-radius:3px;box-shadow:var(--pa-edge)}
+#archive .arc-tabs{background:rgba(120,90,50,.1);border-right:1px solid var(--pa-rule)}
+#archive .arc-tab{background:rgba(255,250,235,.35);border:1px solid var(--pa-rule);border-left:3px solid rgba(90,70,40,.3)}
+#archive .arc-tab:hover{background:rgba(255,250,235,.8);border-color:rgba(90,70,40,.45)}
+#archive .arc-tab[aria-pressed=true]{background:rgba(255,250,235,.92);border-color:rgba(90,70,40,.45);border-left-color:var(--pa-dark)}
+#archive .arc-tab small{color:var(--pa-gold)}
+#archive .arc-tab b{color:var(--pa-ink-strong)}
+#archive .arc-tab em{color:var(--pa-muted)}
+#archive .arc-paper{background:transparent}
+#archive .arc-head{color:var(--pa-muted);border-color:var(--pa-rule)}
+#archive .arc-head span:last-child{color:#8a3a2c}
+#archive .arc-paper h3{color:var(--pa-ink-strong);text-shadow:none}
+#archive .arc-intro{color:var(--pa-body)}
+#archive .arc-sub{color:var(--pa-ink-strong)}
+#archive .arc-clue{background:rgba(255,250,235,.42);border:1px solid var(--pa-rule);border-left:3px solid var(--pa-gold)}
+#archive .arc-clue:has(.arc-hint-go){border-left-color:rgba(90,70,40,.3)}
+#archive .arc-clue b{color:var(--pa-ink-strong)}
+#archive .arc-clue small{color:var(--pa-muted)}
+#archive .arc-clue p{color:var(--pa-body)}
+#archive .arc-clue a{color:#3a2d1c;border-color:rgba(90,70,40,.5)}
+#archive .arc-hint-go{color:#3a2d1c;background:var(--pa-btn-bg);border:1px solid var(--pa-btn-line)}
+#archive .arc-hint-go:hover{background:var(--pa-btn-hover);color:#1d160d}
+#archive .arc-hint-go small{color:var(--pa-muted)}
+#archive .arc-reward{background:rgba(255,250,235,.38);border:1px solid rgba(90,70,40,.38)}
+#archive .arc-reward.locked{background:rgba(255,250,235,.22);border-style:dashed;opacity:1}
+#archive .arc-reward h4{color:var(--pa-ink-strong)}
+#archive .arc-reward p{color:var(--pa-ink)}
+
+/* ── 마석 공명: the tower's observation notebook ── */
+#resonance .res-panel{border:0;background:#090c15;box-shadow:var(--pa-edge);border-radius:3px}
+#resonance .res-right{background:var(--pa-paper);color:var(--pa-ink);align-self:stretch;display:flex;flex-direction:column;justify-content:center}
+#resonance .res-right .res-overline{color:var(--pa-gold)}
+#resonance .res-right h3{color:var(--pa-ink-strong);text-shadow:none}
+#resonance .res-copy{color:var(--pa-body)}
+#resonance .res-help{color:var(--pa-muted)}
+#resonance .res-result{border-top-color:var(--pa-rule);border-bottom-color:var(--pa-rule)}
+#resonance .res-result>span{color:var(--pa-muted)}
+#resonance .res-result h4{color:var(--pa-ink-strong)!important;text-shadow:none}
+#resonance .res-result p{color:var(--pa-body)}
+#resonance .res-result small{color:var(--pa-muted)}
+#resonance .res-profile{border-color:var(--pa-rule)}
+#resonance .res-profile dt{color:var(--pa-muted)}
+#resonance .res-profile dd,#resonance .res-attribute-note{color:color-mix(in srgb,rgb(var(--res-light,120,100,60)) 45%,#1d140a)}
+#resonance .res-system-warning{background:rgba(140,30,50,.08);border-left-color:#9b2a3c;color:#7e1f30}
+#resonance .nox-quote{text-shadow:none}
+#resonance .nox-quote.nox-dismiss{color:#3f3b52}
+#resonance .nox-quote.nox-curious{color:#552a7c}
+#resonance .nox-quote.nox-heir{color:#8a1a31}
+#resonance .nox-quote cite{color:var(--pa-muted)}
+#resonance .res-archive-link{color:#3a2d1c;border-bottom-color:rgba(90,70,40,.5)}
+#resonance .res-archive-link:hover{color:#1d160d;border-bottom-color:#1d160d}
+
+@media(max-width:760px){
+ #world .world-chapter{padding:14px 14px 20px}
+ #world .world-chapter-content{padding:4px 4px 0}
+ #world .atlas-preview{padding:16px 12px}
+ #world .atlas-aside{border-left:0;border-top:1px solid var(--pa-rule)}
+ #archive .arc-tabs{border-right:0;border-bottom:1px solid var(--pa-rule)}
+}
+</style>
+<style id="readability">
+/* 6. Readability pass: no text below 12px, darker ink on paper, brighter small print on the night background. */
+:root{--pa-muted:#54432d;--pa-gold:#6c4c12;--pa-body:#2e2519}
+/* ── night background: section intros and footnotes ── */
+:is(#world,#regions,#people,#bonds,#archive,#resonance) .sh p{color:#E2E5EA;font-size:clamp(16px,1.25vw,18px);line-height:1.85}
+#top .cue{font-size:11.5px;color:#D9D3C6}
+#top .replay{font-size:13px}
+#people .people-eyebrow span{font-size:12px;letter-spacing:.12em;color:#DCCBA8}
+#people .people-eyebrow span:last-child{color:#E0E4EA}
+#people .people-gallery-actions span{font-size:13.5px;color:#D6DBE2}
+#people .people-afterline span,#people .people-afterline span:first-child{font-size:12px;color:#CFD4DB}
+#people .people-afterline span:last-child{font-size:14px}
+#people .ct b{font-size:13.5px;color:#F3EADB}
+#bonds .bond-intro-line span:last-child{font-size:13.5px;color:#D9DEE5}
+#bonds .arcana-topline small,#bonds .arcana-topline small span{font-size:12px;letter-spacing:.12em;color:#D6C29C}
+#bonds .arcana-tools button,#bonds #bondShowAll{font-size:13.5px}
+#bonds .arcana-bottomline{font-size:13.5px;color:#D3DAE3}
+#bonds .arcana-legend span{font-size:13.5px;color:#E2E2E4}
+#bonds .arcana-disclaimer{font-size:13.5px;color:#CDD3DB}
+#bonds .arc-person-role{font-size:12.5px;fill:#D3DDE8}
+#bonds .arc-bridge b{font-size:14px}
+#bonds .arc-bridge small{font-size:12.5px;color:#D6DBE3}
+#bonds .arc-bridges-heading{font-size:15px}
+#bonds .arc-bridges-heading small{font-size:12px;color:#C9D0DC}
+#archive .arc-overline,#resonance .sh .res-overline{font-size:12px;letter-spacing:.14em}
+#archive .lib-nav a{font-size:14px}
+#archive .lib-section-head small{font-size:12px;letter-spacing:.12em;color:#D6C29C}
+#archive .lib-section-head p{font-size:14.5px;line-height:1.75;color:#D9DEE5}
+#archive .lib-seal-number{font-size:11.5px;letter-spacing:.1em;color:#E2D3B6}
+#archive .lib-seal-sub{font-size:12.5px;color:#E3E1DC}
+#archive .arc-actions span{font-size:13.5px;color:#CDD3DB}
+#archive .arc-reset{font-size:13.5px}
+#resonance .res-phase{font-size:14px;color:#DDDFEE}
+#resonance .res-touch-label{font-size:14px}
+#resonance .res-disclaimer{font-size:13px;color:#C9CDD8}
+#world .atlas-guide{font-size:13px}
+#regions .rtab{font-size:15px}
+
+/* ── paper: Latin labels (record codes, kickers) ── */
+#world .world-chapter-head span{font-size:12.5px;letter-spacing:.12em;font-weight:700}
+#world .atlas-overline,#world .atlas-detail-kicker{font-size:12px;letter-spacing:.12em;font-weight:700}
+#world .atlas-foot span{font-size:13px}
+#regions .rinfo .lt{font-size:13px;letter-spacing:.14em;font-weight:700}
+#regions .rinfo .region-story-label{font-size:12.5px;letter-spacing:.08em;color:var(--pa-muted);font-weight:700}
+#people #peopleDossier:not(.ruin-record) .reg-head{font-size:12.5px;letter-spacing:.16em;color:var(--pa-muted)}
+#people #peopleDossier:not(.ruin-record) .cpor-top{font-size:11.5px}
+#people #peopleDossier:not(.ruin-record) .cpor-bottom{font-size:12.5px}
+#people #peopleDossier:not(.ruin-record) .cinfo dl dt small{font-size:12px;color:var(--pa-muted)}
+#people #peopleDossier:not(.ruin-record) .secret .hd b small{font-size:11px;letter-spacing:.1em}
+#people #peopleDossier:not(.ruin-record) .cnav span{font-size:12px;letter-spacing:.14em;color:var(--pa-muted)}
+#bonds .arcana-dossier .arc-dossier-stamp{font-size:12.5px;letter-spacing:.16em;color:var(--pa-muted)}
+#archive .lib-seal-detail .lib-detail-top{font-size:12.5px;letter-spacing:.1em;color:var(--pa-muted)}
+#archive .arc-head{font-size:12px;letter-spacing:.1em;color:var(--pa-muted)}
+#archive .lib-document-code{font-size:12px;letter-spacing:.12em;color:var(--pa-gold)}
+#archive .arc-tab small{font-size:12px;letter-spacing:.1em;color:var(--pa-gold)}
+#resonance .res-right .res-overline,#resonance .res-result>span{font-size:12px;letter-spacing:.14em;color:var(--pa-gold)}
+
+/* ── paper: small Korean labels and buttons ── */
+:is(#world,#regions,#people,#archive,#resonance) .arc-find{font-size:14px}
+#world .world-chapter-link{font-size:15px}
+#world .atlas-link{font-size:14.5px}
+#world .atlas-toolbar-title{font-size:13.5px;color:var(--pa-muted)}
+#world .atlas-filter{font-size:14px}
+#world .atlas-detail .atlas-detail-region{font-size:14.5px!important;font-weight:700}
+#world .atlas-detail p{font-size:15.5px;line-height:1.8}
+#world .atlas-related b{font-size:13.5px}
+#world .atlas-related div{font-size:14.5px}
+#world .atlas-actions button{font-size:14px}
+#world .atlas-directory-head b{font-size:15px}
+#world .atlas-directory-head small{font-size:13px}
+#world .atlas-directory h5{font-size:13.5px;font-weight:700}
+#world .atlas-dir-entry{font-size:14.5px}
+#regions .rinfo .region-now li{font-size:15.5px;line-height:1.75}
+#regions .rinfo .places li{font-size:14.5px}
+#regions .rinfo .region-people-heading small{font-size:13.5px}
+#regions .rinfo .region-character b{font-size:15px}
+#regions .rinfo .region-character small{font-size:13.5px}
+#regions .rinfo .region-locked-note p{font-size:15.5px}
+#people #peopleDossier:not(.ruin-record) .cinfo .fac{font-size:13.5px}
+#people #peopleDossier:not(.ruin-record) .cinfo .fac small{font-size:13.5px;color:var(--pa-muted)}
+#people #peopleDossier:not(.ruin-record) .cinfo dl dt{font-size:14.5px}
+#people #peopleDossier:not(.ruin-record) .cinfo dl dd{font-size:16.5px;line-height:1.8;color:#251d12}
+#people #peopleDossier:not(.ruin-record) .reg-rel h4{font-size:14.5px}
+#people #peopleDossier:not(.ruin-record) .reg-rel button{font-size:14px}
+#people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel small{font-size:14.5px}
+#people #peopleDossier:not(.ruin-record) .secret-action-label{font-size:14px}
+#bonds .arcana-dossier .arc-id small{font-size:13.5px}
+#bonds .arcana-dossier .arc-known b{font-size:14px}
+#bonds .arcana-dossier .arc-known p{font-size:16px}
+#bonds .arcana-dossier .arc-relation-summary dt{font-size:13px;color:var(--pa-muted)}
+#bonds .arcana-dossier .arc-connection-copy small{font-size:13.5px}
+#bonds .arcana-dossier .arc-connection-copy small em{color:var(--pa-muted)}
+#bonds .arcana-dossier .arc-connection-copy p{font-size:15px;color:#2e2519}
+#bonds .arcana-dossier .arc-doc{font-size:13px}
+#archive .lib-detail-body{font-size:16.5px;line-height:1.85}
+#archive .lib-recovery>small{font-size:13.5px}
+#archive .lib-document-actions button{font-size:14px}
+#archive .lib-missing{font-size:13.5px}
+#archive .arc-overview b{font-size:15px}
+#archive .arc-tab b{font-size:19px}
+#archive .arc-tab em{font-size:13.5px}
+#archive .arc-intro{font-size:17px}
+#archive .arc-sub{font-size:14.5px}
+#archive .arc-clue b{font-size:15px}
+#archive .arc-clue small{font-size:13.5px}
+#archive .arc-clue p{font-size:15px}
+#archive .arc-hint-go{font-size:14px}
+#archive .arc-hint-go small{font-size:13px}
+#archive .arc-reward p{font-size:16px}
+#archive .lib-fragment>p{font-size:16.5px}
+#archive .lib-fragment-remainder span,#archive .lib-fragment-remainder small{font-size:13.5px}
+#resonance .res-copy{font-size:16.5px}
+#resonance .res-help{font-size:13.5px;color:var(--pa-muted)}
+#resonance .res-result p{font-size:15.5px}
+#resonance .res-profile dt{font-size:13.5px}
+#resonance .res-profile dd{font-size:15px}
+#resonance .res-archive-link{font-size:14px}
+@media(max-width:760px){
+ #top.hero-reimagined .hero-kicker,#top .hero-kicker-split{font-size:11px}
+ #top .cue{font-size:11px}
+ #top .replay{font-size:12.5px}
+ :is(#world,#regions,#people,#bonds,#archive,#resonance) .sh p{font-size:15.5px}
+ #world .world-chapter-content>p:not(.world-chapter-sub){font-size:16px;line-height:1.85}
+ #world .world-chapter-link{font-size:14.5px}
+ #regions .rinfo .about,#regions .rinfo .story p{font-size:16px}
+ #regions .rinfo .region-now li{font-size:15px}
+ #regions .rtab{font-size:13.5px}
+ #people .ct b{font-size:12.5px}
+ #people .people-eyebrow span{font-size:11.5px}
+ #people #peopleDossier:not(.ruin-record) .reg-head{font-size:11.5px}
+ #people #peopleDossier:not(.ruin-record) .reg-id .fac{font-size:12px}
+ #people #peopleDossier:not(.ruin-record) .reg-id .arc-find{font-size:12.5px}
+ #people #peopleDossier:not(.ruin-record) .cpor-bottom{font-size:11px}
+ #people #peopleDossier:not(.ruin-record) .cinfo dl dd{font-size:16px}
+ #bonds .bond-intro-line span:last-child{font-size:12.5px}
+ #bonds .arcana-topline small span{font-size:11.5px}
+ #bonds .arcana-dossier .arc-dossier-stamp{font-size:11.5px}
+ #archive .lib-nav a{font-size:13px}
+ #archive .lib-seal-number{font-size:11px}
+ #archive .arc-tab b{font-size:16px}
+}
+</style>
+<style id="paper-premium">
+/* 7. Finer paper: ivory stock with soft mottling, a gilt double rule and small gilt corner lozenges. */
+:root{
+ --pa-paper:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .34 0 0 0 0 .26 0 0 0 0 .15 0 0 0 .26 0'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>"),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='700' height='700'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='4' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45 0 0 0 0 .32 0 0 0 0 .15 0 0 0 .44 -.09'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>"),radial-gradient(ellipse 75% 60% at 42% 28%,rgba(255,252,240,.55),transparent 70%),radial-gradient(ellipse 110% 100% at 50% 45%,transparent 58%,rgba(105,70,30,.2) 100%),linear-gradient(172deg,#f4ecd8 0%,#ece1c6 50%,#e3d5b4 100%);
+ --pa-sheet:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><path d='M8 1L15 8L8 15L1 8Z' fill='%23a98242'/><path d='M8 4.6L11.4 8L8 11.4L4.6 8Z' fill='%23f3ead4'/><path d='M8 6.6L9.4 8L8 9.4L6.6 8Z' fill='%23a98242'/></svg>") left 0px top 0px/16px no-repeat,url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><path d='M8 1L15 8L8 15L1 8Z' fill='%23a98242'/><path d='M8 4.6L11.4 8L8 11.4L4.6 8Z' fill='%23f3ead4'/><path d='M8 6.6L9.4 8L8 9.4L6.6 8Z' fill='%23a98242'/></svg>") right 0px top 0px/16px no-repeat,url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><path d='M8 1L15 8L8 15L1 8Z' fill='%23a98242'/><path d='M8 4.6L11.4 8L8 11.4L4.6 8Z' fill='%23f3ead4'/><path d='M8 6.6L9.4 8L8 9.4L6.6 8Z' fill='%23a98242'/></svg>") left 0px bottom 0px/16px no-repeat,url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><path d='M8 1L15 8L8 15L1 8Z' fill='%23a98242'/><path d='M8 4.6L11.4 8L8 11.4L4.6 8Z' fill='%23f3ead4'/><path d='M8 6.6L9.4 8L8 9.4L6.6 8Z' fill='%23a98242'/></svg>") right 0px bottom 0px/16px no-repeat,url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .34 0 0 0 0 .26 0 0 0 0 .15 0 0 0 .26 0'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>"),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='700' height='700'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='4' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45 0 0 0 0 .32 0 0 0 0 .15 0 0 0 .44 -.09'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>"),radial-gradient(ellipse 75% 60% at 42% 28%,rgba(255,252,240,.55),transparent 70%),radial-gradient(ellipse 110% 100% at 50% 45%,transparent 58%,rgba(105,70,30,.2) 100%),linear-gradient(172deg,#f4ecd8 0%,#ece1c6 50%,#e3d5b4 100%);
+ --pa-gilt:rgba(150,112,52,.58);--pa-gilt-in:rgba(150,112,52,.46);
+ --pa-edge:0 2px 3px rgba(0,0,0,.32),0 18px 40px rgba(0,0,0,.42),0 44px 90px rgba(0,0,0,.22),inset 0 0 50px rgba(110,75,35,.14);
+}
+#world .world-chapter,#world .atlas-preview,#regions .rinfo,#archive .lib-seal-detail,#archive .arc-layout,#resonance .res-right,#bonds .arcana-dossier{background:var(--pa-sheet);border:1px solid var(--pa-gilt);outline:1px solid var(--pa-gilt-in);outline-offset:-10px;box-shadow:var(--pa-edge)}
+#resonance .res-right{box-shadow:none}
+#bonds .arcana-dossier{border-top:0;box-shadow:inset 0 18px 20px -16px rgba(40,24,8,.55),var(--pa-edge)}
+#archive .arc-overview{background:var(--pa-paper);border:1px solid var(--pa-gilt);box-shadow:var(--pa-edge)}
+#archive .arc-tabs{padding:22px 16px 22px 22px}
+/* slips laid on the page */
+#regions .rinfo .story,#regions .rinfo .region-character,#archive .lib-recovery,#archive .lib-fragment,#archive .arc-clue,#archive .arc-tab,#bonds .arcana-dossier .arc-connection,#people #peopleDossier:not(.ruin-record) .reg-rel .rift-rel{background-color:rgba(255,252,242,.5);box-shadow:0 1px 2px rgba(60,40,15,.12)}
+/* the register book and its sealed state get the same stock */
+#people #peopleDossier:not(.ruin-record) .cstage{background:linear-gradient(90deg,transparent 46.6%,rgba(60,40,18,.34) 47.2%,transparent 47.9%),linear-gradient(90deg,rgba(90,62,30,0) 0,rgba(90,62,30,.18) 43%,rgba(90,62,30,0) 47.2%,rgba(90,62,30,.18) 51%,rgba(90,62,30,0) 100%),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .34 0 0 0 0 .26 0 0 0 0 .15 0 0 0 .26 0'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>"),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='700' height='700'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='4' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45 0 0 0 0 .32 0 0 0 0 .15 0 0 0 .44 -.09'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>"),radial-gradient(ellipse 75% 60% at 42% 28%,rgba(255,252,240,.55),transparent 70%),radial-gradient(ellipse 110% 100% at 50% 45%,transparent 58%,rgba(105,70,30,.2) 100%),linear-gradient(172deg,#f4ecd8 0%,#ece1c6 50%,#e3d5b4 100%);outline:1px solid var(--pa-gilt-in);outline-offset:-12px}
+#people #peopleDossier:not(.ruin-record) .cstage:has(> .people-locked-rift){background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><path d='M8 1L15 8L8 15L1 8Z' fill='%23a98242'/><path d='M8 4.6L11.4 8L8 11.4L4.6 8Z' fill='%23f3ead4'/><path d='M8 6.6L9.4 8L8 9.4L6.6 8Z' fill='%23a98242'/></svg>") left 3px top 3px/16px no-repeat,url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><path d='M8 1L15 8L8 15L1 8Z' fill='%23a98242'/><path d='M8 4.6L11.4 8L8 11.4L4.6 8Z' fill='%23f3ead4'/><path d='M8 6.6L9.4 8L8 9.4L6.6 8Z' fill='%23a98242'/></svg>") right 3px top 3px/16px no-repeat,url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><path d='M8 1L15 8L8 15L1 8Z' fill='%23a98242'/><path d='M8 4.6L11.4 8L8 11.4L4.6 8Z' fill='%23f3ead4'/><path d='M8 6.6L9.4 8L8 9.4L6.6 8Z' fill='%23a98242'/></svg>") left 3px bottom 3px/16px no-repeat,url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><path d='M8 1L15 8L8 15L1 8Z' fill='%23a98242'/><path d='M8 4.6L11.4 8L8 11.4L4.6 8Z' fill='%23f3ead4'/><path d='M8 6.6L9.4 8L8 9.4L6.6 8Z' fill='%23a98242'/></svg>") right 3px bottom 3px/16px no-repeat,url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .34 0 0 0 0 .26 0 0 0 0 .15 0 0 0 .26 0'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>"),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='700' height='700'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='4' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45 0 0 0 0 .32 0 0 0 0 .15 0 0 0 .44 -.09'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>"),radial-gradient(ellipse 75% 60% at 42% 28%,rgba(255,252,240,.55),transparent 70%),radial-gradient(ellipse 110% 100% at 50% 45%,transparent 58%,rgba(105,70,30,.2) 100%),linear-gradient(172deg,#f4ecd8 0%,#ece1c6 50%,#e3d5b4 100%)}
+@media(max-width:760px){
+ #world .world-chapter{padding:22px 20px 24px}
+ #world .atlas-preview{padding:22px 18px}
+ #regions .rinfo{padding:28px 22px 32px}
+ #archive .lib-seal-detail{padding:26px 22px}
+ #archive .arc-tabs{padding:20px 18px 14px}
+ #people #peopleDossier:not(.ruin-record) .cstage{background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .34 0 0 0 0 .26 0 0 0 0 .15 0 0 0 .26 0'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>"),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='700' height='700'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='4' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45 0 0 0 0 .32 0 0 0 0 .15 0 0 0 .44 -.09'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>"),radial-gradient(ellipse 75% 60% at 42% 28%,rgba(255,252,240,.55),transparent 70%),radial-gradient(ellipse 110% 100% at 50% 45%,transparent 58%,rgba(105,70,30,.2) 100%),linear-gradient(172deg,#f4ecd8 0%,#ece1c6 50%,#e3d5b4 100%);outline-offset:-8px}
+}
 </style>
 </head>
 <body>
@@ -1552,7 +1915,7 @@ html.op-handoff .hero-below,html.op-handoff .hero-place,html.op-handoff .hero .c
   </div>
   <aside class="arcana-dossier" id="bondDetail" aria-live="polite"></aside>
  </div>
- <p class="arcana-disclaimer">부부·사제·가족·동맹과 갈등까지 공개된 관계를 표시합니다. 균열의 기록은 별도 열람 후 확인할 수 있습니다.</p>
+ <p class="arcana-disclaimer">부부·사제·가족·동맹과 갈등까지 공개된 관계를 표시합니다.</p>
 </div></section>
 
 
@@ -1840,7 +2203,7 @@ function setRegion(k,anim=true){
     <p class="motto">${r.tag}</p><div class="region-story-label">LAND & ATMOSPHERE / 지역 개관</div><p class="about">${r.about}</p>
     <div class="story"><b>이 땅의 이야기</b><p>${STORY[k]}</p></div>
     <div class="region-now"><b>현재 정세</b><ul>${nowLines.map(item=>`<li>${esc(item)}</li>`).join('')}</ul></div><div class="region-story-label">KEY LOCATIONS / 주요 거점</div>    <ul class="places">${r.places.filter(p=>p[0]!=='???').slice(0,5).map(p=>`<li>${p[0]}</li>`).join('')}</ul>
-    ${ppl.length?`<section class="region-people" aria-label="관련 인물"><div class="region-people-heading"><b>이 지역의 인물</b><small>관련 인물 ${ppl.length}명 · 초상을 누르면 인물 도감으로 이동</small></div><div class="who">${!show.length?`<div class="region-locked-note"><p>이 권역은 봉인되어 있습니다. 오프닝이 끝나면 드물게 균열이 열릴 수 있습니다.</p><button class="region-contact-go" type="button" data-region-contact>오프닝 다시 보기 ↗</button></div>`:""}${show.map(p=>`<button type="button" class="region-character" data-no="${p.no}" aria-label="${esc(p.name)} · ${esc(p.role)} · 인물 도감 보기"><img src="${window.SOLARIA_PORTRAIT_SRC(p.no,"t")}" alt="" loading="lazy"><span class="region-character-text"><b>${esc(p.name)}</b><small>${esc(p.role)}</small></span></button>`).join('')}</div></section>`:`<div class="region-people region-people-empty">공개된 인물 기록이 없습니다.</div>`}`;
+    ${ppl.length?`<section class="region-people" aria-label="관련 인물"><div class="region-people-heading"><b>이 지역의 인물</b><small>관련 인물 ${ppl.length}명 · 초상을 누르면 인물 도감으로 이동</small></div><div class="who">${!show.length?`<div class="region-locked-note"><p>이 권역은 봉인되어 있습니다.</p></div>`:""}${show.map(p=>`<button type="button" class="region-character" data-no="${p.no}" aria-label="${esc(p.name)} · ${esc(p.role)} · 인물 도감 보기"><img src="${window.SOLARIA_PORTRAIT_SRC(p.no,"t")}" alt="" loading="lazy"><span class="region-character-text"><b>${esc(p.name)}</b><small>${esc(p.role)}</small></span></button>`).join('')}</div></section>`:`<div class="region-people region-people-empty">공개된 인물 기록이 없습니다.</div>`}`;
   if(anim){info.classList.remove('anim');void info.offsetWidth;info.classList.add('anim')}
   info.querySelectorAll('.who button[data-no]').forEach(b=>b.onclick=()=>{const who=P.find(p=>p.no===Number(b.dataset.no));setFilter(who?.aff||k,+b.dataset.no);$('people').scrollIntoView()});
   info.querySelector('[data-region-contact]')?.addEventListener('click',()=>window.SOLARIA_RIFT_CONTACT?.begin());
@@ -1874,7 +2237,7 @@ function setFilter(f,no){
   const i=no?list.findIndex(p=>p.no===no):-1;
   if(!list.length){
     if(f==='rift'&&!window.SOLARIA_RIFT_UNLOCKED){
-      cstage.innerHTML='<div class="people-locked-rift"><span aria-hidden="true">✧</span><h3>균열 너머의 인물 기록</h3><p>아직 봉인된 인물 기록입니다. 오프닝을 끝까지 감상한 뒤 드물게 균열이 열리면 공개됩니다.</p><button type="button" id="riftPeopleContact">오프닝 다시 보기 ↗</button></div>';
+      cstage.innerHTML='<div class="people-locked-rift"><span aria-hidden="true">✧</span><h3>균열 너머의 인물 기록</h3><p>봉인되어 열람할 수 없는 기록입니다.</p></div>';
       const go=$('riftPeopleContact');if(go)go.onclick=()=>window.SOLARIA_RIFT_CONTACT?.begin();
     }else cstage.innerHTML='<div class="people-empty">이 분류에 등록된 인물이 없습니다.</div>';
     peoplePage.textContent='00 / 00';peopleWatermark.textContent=f==='rift'?'SEALED':'';return;
@@ -1926,7 +2289,7 @@ function setPerson(i,anim=true){
   let body='';
   if(sealed){
     body='<h3>???</h3><p class="role">봉인된 기록</p><p class="people-restricted">◇ 열람 권한이 없는 기록</p>'+
-      '<dl><div><dt>기록</dt><dd>균열 너머에서 전해진 문서입니다. 인물의 기본 정보는 선택적으로 열람할 수 있습니다.</dd></div></dl>'+'<button type="button" class="cast-reveal-control" id="castReveal">오프닝 다시 보기 ↗</button>';
+      '<dl><div><dt>기록</dt><dd>균열 너머에서 전해진 문서입니다.</dd></div></dl>';
   }else if(ruin){
     body=RUIN(p);
   }else{
