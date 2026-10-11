@@ -3,7 +3,7 @@
 'use strict';
 const tabs=document.getElementById('bondRegionTabs'),svg=document.getElementById('bsvg'),detail=document.getElementById('bondDetail'),scroll=document.getElementById('bondScroller'),board=document.getElementById('bondBoard');
 if(!tabs||!svg||!detail||!scroll||!board||typeof P==='undefined')return;
-const factions=[['all','제국 전체','제국을 잇는 인연'],['north','북부','설원의 맹세'],['capital','황도','황좌를 향한 시선'],['south','남부','황금으로 엮인 약속'],['west','서부','칼끝에 새긴 자치'],['east','동부','숲이 기억하는 이름'],['tower','마탑','별을 읽는 자들'],['temple','교단','기도 아래의 갈등'],['rift','균열','가려진 왕좌']];
+const factions=[['all','제국 전체','제국을 잇는 인연'],['north','북부','설원의 맹세'],['capital','황도','황좌를 향한 시선'],['south','남부','황금으로 엮인 약속'],['west','서부','칼끝에 새긴 자치'],['east','동부','숲이 기억하는 이름'],['tower','마탑','별을 읽는 자들'],['temple','교단','기도 아래의 갈등']];
 const relationPairs=[
 [1,2,'대립','서로 다른 방식으로 계승권을 준비하는 남매'],[1,13,'가족','황제의 계승 결정을 기다리는 제1황자'],[2,13,'가족','황제의 결정과 궁정의 움직임을 주시하는 황녀'],
 [1,14,'가족','황후의 아들'],[2,14,'가족','황후의 딸'],[14,19,'가문','황후의 친정인 세베루스 공작가'],[19,20,'가족','세베루스 가문의 공작과 영애'],[1,20,'혼담','확정되지 않은 정치적 혼담 후보'],
@@ -39,7 +39,7 @@ const safe=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt
 const quiet=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const node=(tag,attrs={},text)=>{const el=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,String(v));if(text!==undefined)el.textContent=String(text);return el;};
 const colorType=t=>/대립|충돌|경쟁|긴장|견제|마찰|불신/.test(t)?'hostile':/부부|사제|스승|제자|후임|호의|인연|충성|친밀|전우|협력|후원|가족|돌봄|호위|신뢰|지원|친근|의무|동료/.test(t)?'allied':'complex';
-const shown=p=>!p.sealed||!!window.SOLARIA_RIFT_UNLOCKED;
+const shown=p=>p.aff!=='rift'&&(!p.sealed||!!window.SOLARIA_RIFT_UNLOCKED);
 const visibleName=p=>shown(p)?p.name:'열람 제한';
 const relations=id=>edges.filter(e=>e.a===id||e.b===id).map(e=>({other:people.get(e.a===id?e.b:e.a),type:e.type,description:e.description}));
 const imperialOrder=[13,14,1,2,3,4,6,5,7,8,9,10];
@@ -191,16 +191,18 @@ function render(){
  board.style.setProperty('--arc-aura',region==='all'?'#D5B88B':COL[region]||'#D8B88A');
  tabs.innerHTML=factions.map(([key,name])=>'<button type="button" class="arc-region-tab'+(key===region?' active':'')+'" data-region="'+key+'" aria-pressed="'+(key===region)+'">'+name+'</button>').join('');
  document.getElementById('bondRegionName').textContent=info[2];
- document.getElementById('arcanaNumber').textContent=String(factions.findIndex(x=>x[0]===region)+1).padStart(2,'0')+' / 09';
+ document.getElementById('arcanaNumber').textContent=String(factions.findIndex(x=>x[0]===region)+1).padStart(2,'0')+' / '+String(factions.length).padStart(2,'0');
  renderGraph();renderDetail();renderBridges();
 }
 function focus(id){
- const p=people.get(Number(id));if(!p)return;
+ const p=people.get(Number(id));if(!p||!shown(p))return;
  region=p.aff;selected=shown(p)?p.no:null;render();
  document.getElementById('bonds')?.scrollIntoView({behavior:quiet()?'auto':'smooth',block:'start'});
 }
 function preview(no){
- const p=people.get(Number(no));if(!p)return '';
+ const p=people.get(Number(no));if(!p||(p.sealed&&!window.SOLARIA_RIFT_UNLOCKED))return '';
+ if(p.no===11||p.no===12)return '<article class="torn-relation-fragment" aria-label="찢어진 관계 기록"><small>RELATION RECORD / FRAGMENT</small><h4>'+safe(p.name)+'</h4><p>'+safe(p.quote.slice(0,Math.ceil(p.quote.length/2)))+'</p></article>';
+ if(p.aff==='rift')return '<h4>이 인물의 관계 기록</h4>'+relations(p.no).filter(x=>!x.other.sealed||window.SOLARIA_RIFT_UNLOCKED).map(x=>'<p>'+safe(x.other.name)+' · '+safe(x.type)+'</p>').join('');
  const related=relations(p.no).filter(x=>shown(x.other)).slice(0,4);
  return '<h4>이 인물의 관계</h4>'+(related.length?related.map(x=>'<button type="button" data-cast-relation="'+x.other.no+'">'+safe(x.other.name)+' · '+safe(x.type)+' ↗</button>').join(''):'<p>공개된 관계가 없습니다.</p>')+
  '<button type="button" data-cast-relation="'+p.no+'">관계도에서 모두 보기 ↗</button>';

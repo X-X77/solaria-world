@@ -33,6 +33,13 @@ with sync_playwright() as p:
         # All original visible profile fields, quotes and expanded biography survive.
         for person in page.evaluate('P'):
             page.evaluate('(n)=>setFilter("all",n)', person['no'])
+            assert page.locator('#peopleDossier.torn-record').count() == int(person['no'] in (11,12))
+            if person['no'] in (11,12):
+                assert page.locator('#cstage .cpor img').evaluate('e=>getComputedStyle(e).filter') == 'grayscale(1)'
+                assert page.locator('#cstage [data-cast-relation]').count() == 0
+                assert page.locator('.torn-relation-fragment h4').inner_text() == person['name']
+                assert page.locator('.torn-relation-fragment p').inner_text() == person['quote'][:(len(person['quote'])+1)//2]
+                assert page.locator('#cstage .cpor').evaluate('e=>getComputedStyle(e).clipPath') != 'none'
             text = page.locator('#cstage .cinfo').inner_text()
             for field in ['name', 'role', 'look', 'pers', 'known', 'quote']:
                 if person[field]:
@@ -41,7 +48,9 @@ with sync_playwright() as p:
             if extra:
                 assert extra['manner'] in text and extra['goal'] in text
         page.evaluate("setFilter('all',1); SOLARIA_ATLAS.focus(1)")
-        # All nine diagram classifications, plus selection, deselection and keyboard focus.
+        assert page.locator('#bondRegionTabs button').count() == 8
+        assert page.locator('#bondRegionTabs [data-region="rift"]').count() == 0
+        # All eight diagram classifications, plus selection, deselection and keyboard focus.
         for key in page.locator('#bondRegionTabs button').evaluate_all('els=>els.map(e=>e.dataset.region)'):
             page.locator(f'#bondRegionTabs [data-region="{key}"]').click()
             assert page.locator(f'#bondRegionTabs [data-region="{key}"]').get_attribute('aria-pressed') == 'true'
@@ -82,7 +91,7 @@ with sync_playwright() as p:
         if reduced:
             assert page.locator('#cstage .cinfo').evaluate('e=>getComputedStyle(e).animationName') == 'none'
             assert page.locator('#bsvg .arc-thread').first.evaluate('e=>getComputedStyle(e).transitionDuration') == '0s'
-        print('PASS filters, 53 profiles, gallery navigation, 9 diagrams, keyboard, relations, bridges, zoom, layout:', width, reduced, flush=True)
+        print('PASS filters, 53 profiles, gallery navigation, 8 diagrams, keyboard, relations, bridges, zoom, layout:', width, reduced, flush=True)
         context.close()
     # A new visitor receives no sealed names, portraits, biographies or SVG tooltips.
     context = browser.new_context()
@@ -93,7 +102,8 @@ with sync_playwright() as p:
     page.evaluate("setFilter('rift');SOLARIA_ATLAS.focus(11)")
     assert page.locator('#strip .ct').count() == 0
     assert page.locator('#cstage img').count() == 0
-    assert page.locator('#bsvg image').count() == 0
+    assert page.locator('#bondRegionTabs [data-region="rift"]').count() == 0
+    assert page.locator('#bsvg [data-person="11"]').count() == 0
     hidden_names = page.evaluate('P.filter(p=>p.sealed).map(p=>p.name)')
     text = page.locator('#bsvg').text_content() + page.locator('#bondDetail').inner_text()
     assert all(name not in text for name in hidden_names)
