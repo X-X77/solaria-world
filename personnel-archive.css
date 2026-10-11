@@ -127,3 +127,20 @@
 #people .personnel-supplements .cnav,#people .personnel-supplements .cast-reveal-control{grid-column:1/-1}
 #people .personnel-supplements .cnav{margin-top:0}
 @media(max-width:750px){#people .personnel-supplements{display:flex;flex-direction:column;gap:18px;margin-top:20px;width:100%}}
+
+/* Nox and Charon alone: monochrome, weathered parchment records. */
+#people .ct.monochrome-record .im{filter:grayscale(1)}
+#people .ct.monochrome-record img,#people .torn-record .cpor img{filter:grayscale(1)}
+#people .torn-record .cpor.sealed img{filter:grayscale(1) blur(11px) brightness(.4)}
+#people .torn-record .cinfo{
+ background:radial-gradient(ellipse at 12% 9%,#e3d6b9aa,transparent 42%),repeating-linear-gradient(4deg,#7d6a4610 0 1px,transparent 1px 5px),linear-gradient(135deg,#d0c2a5,#b9aa8c 70%,#cdbd9d);
+ color:#26241f;border:0;padding:35px 28px 42px;box-shadow:inset 0 0 65px #53432c44;
+ clip-path:polygon(2% 1%,10% 2%,18% 0,29% 1.5%,42% 0,55% 2%,68% 1%,80% 0,91% 2%,98% 0,100% 11%,98% 22%,100% 34%,97% 43%,100% 54%,98% 67%,100% 79%,98% 89%,100% 98%,90% 100%,79% 98%,65% 100%,54% 98%,43% 100%,30% 98%,17% 100%,6% 98%,0 100%,1% 88%,0 76%,2% 64%,0 51%,2% 38%,0 24%,2% 13%);
+}
+#people .torn-record .cinfo h3,#people .torn-record .cinfo .role,#people .torn-record .cinfo .fac,#people .torn-record .cinfo .fac small,#people .torn-record .cinfo dl dt,#people .torn-record .cinfo dl dd{color:#29271f}
+#people .torn-record .cinfo blockquote.quote{color:#302b23;border-left-color:#6e5b3d;background:#73613f12;text-shadow:none}
+#people .torn-record .cinfo dl>div,#people .torn-record .cinfo .fac{border-bottom-color:#66543855}
+#people .torn-record .cinfo dl dt small{color:#66563d}
+@media(max-width:750px){#people .torn-record .cinfo{padding:30px 23px 35px}}
+
+#people .torn-record .cinfo .fac i,#people .torn-record .cinfo blockquote.quote:before{color:#62543e;background-color:#62543e}

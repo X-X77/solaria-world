@@ -430,12 +430,6 @@ html.intro-done .hero .in{animation:heroIn 1.6s cubic-bezier(.2,.7,.2,1) both}
 #intro.op-v2 .op-title{background:none;padding:24px}
 #intro.op-v2 .op-title b{font-family:var(--disp);font-size:clamp(44px,9vw,112px);color:#f5dfac;text-shadow:0 0 42px rgba(210,172,103,.25);letter-spacing:.07em}
 #intro.op-v2 .op-title small{font-family:var(--lat);font-size:clamp(11px,1.4vw,15px);color:#d4bd86;letter-spacing:.4em}
-/* The empire name rises first; its existing world prologue follows. */
-#intro.op-v2 .op-title b{opacity:0;transform:translateY(26px);transition:opacity 1.1s ease,transform 1.3s cubic-bezier(.2,.7,.2,1)}
-#intro.op-v2 .op-title small{opacity:0;transition:opacity .9s ease .15s}
-#intro.op-v2 .op-title p{opacity:0;transform:translateY(10px);transition:opacity 1.1s ease .45s,transform 1.1s ease .45s}
-#intro.op-v2 .op-title.on b,#intro.op-v2 .op-title.on small,#intro.op-v2 .op-title.on p{opacity:1;transform:translateY(0)}
-@media(prefers-reduced-motion:reduce){#intro.op-v2 .op-title b,#intro.op-v2 .op-title small,#intro.op-v2 .op-title p{transition:none;transform:none}}
 
 #intro.op-v2 .op-gate{position:absolute;inset:0;z-index:11;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:20px;padding:20px;background:radial-gradient(ellipse at 50% 53%,rgba(41,54,80,.22),transparent 72%),rgba(2,5,11,.91);transition:opacity .8s ease}
 #intro.op-v2 .op-gate.out{opacity:0;pointer-events:none}
@@ -1063,7 +1057,7 @@ footer{background:#080D16}
 <link rel="stylesheet" href="regional-relationships.css">
 <link rel="stylesheet" href="mystic-atmosphere.css?v=stage2-2">
 <link rel="stylesheet" href="rift-contact.css">
-<link rel="stylesheet" href="personnel-archive.css?v=portrait-space">
+<link rel="stylesheet" href="personnel-archive.css?v=torn-record">
 <style id="polish-2026-10-11">
 /* polish pass: phone nav, line breaks, one label per heading, spacing, soft section edges */
 @media(max-width:400px){
@@ -1096,7 +1090,6 @@ footer{background:#080D16}
     <div class="op-grade"></div><div class="op-snow"></div>
     <div class="op-beam" id="opBeam"></div><div class="op-light" id="opLight"></div>
   </div>
-  <div class="op-title" id="opTitle" role="status"><small>IMPERIUM SOLARIAE</small><b>솔라리아 제국</b><p>태양이 비추는 제국에도,<br>빛이 닿지 않는 곳이 있다.</p></div>
   <div class="op-caption" id="opCaption" role="status" aria-live="off"></div>
   <div class="op-gate" id="opGate">
     <div class="op-brand" translate="no">SOLARIA</div>
@@ -1596,6 +1589,7 @@ function setPerson(i,anim=true){
   dossier.style.setProperty('--rc',COL[p.aff]||'#D9B86C');
   dossier.style.setProperty('--people-bg','url("img/r/'+theme+'.jpg")');
   dossier.dataset.faction=p.aff;
+  dossier.classList.toggle('torn-record',p.no===11||p.no===12);
   peopleWatermark.textContent=sealed?'SEALED':name.split(' ')[0];
   peoplePage.textContent=String(cur+1).padStart(2,'0')+' / '+String(list.length).padStart(2,'0');
   strip.querySelectorAll('.ct').forEach((b,j)=>{
@@ -1743,8 +1737,8 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
   R.classList.add('intro-on');SND.preload();
   const gate=document.getElementById('opGate'),stage=document.getElementById('opStage');
   const shots=[...stage.querySelectorAll('.op-shot')],caption=document.getElementById('opCaption');
-  const beam=document.getElementById('opBeam'),light=document.getElementById('opLight'),title=document.getElementById('opTitle');
-  let started=false,ended=false,withSound=false,startAt=0,raf=0,shot=-1,spoken='',outro=false,bgStarted=false,newMix=false,outroAt=0,handoffTimer=0,titleTimer=0;
+  const beam=document.getElementById('opBeam'),light=document.getElementById('opLight');
+  let started=false,ended=false,withSound=false,startAt=0,raf=0,shot=-1,spoken='',outro=false,bgStarted=false,newMix=false,outroAt=0,handoffTimer=0;
   // Use the verified new soundtrack directly; no asynchronous HEAD-check race.
   const OLD={start:6.05,beast:8.42,nox:10.55,slash:12.28,cassian:13.45,
     beastLine:[9.10,10.43],noxLine:[10.72,11.90],cassianLine:[16.73,19.12],
@@ -1770,7 +1764,6 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     }
     light.classList.toggle('on',t>=C.flash[0]&&t<C.flash[1]);
     beam.classList.toggle('on',t>=C.beam[0]&&t<C.beam[1]);
-    if(!outro)title.classList.remove('on');
     if(t>=C.beastLine[0]&&t<C.beastLine[1])changeLine('『ㅊ,ㅏㅈ았다』','beast-line');
     else if(t>=C.noxLine[0]&&t<C.noxLine[1])changeLine('드디어.','nox-line');
     else if(t>=C.cassianLine[0]&&t<C.cassianLine[1])changeLine('움직이지 마라.','cassian-line');
@@ -1780,10 +1773,9 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     if(outro)return;
     outro=true;outroAt=performance.now();changeLine('','');box.classList.add('ending');
     const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-    titleTimer=setTimeout(()=>title.classList.add('on'),reduced?150:1400);
     handoffTimer=setTimeout(()=>{
       box.classList.add('out');R.classList.remove('intro-on');R.classList.add('intro-done');
-    },4700);
+    },reduced?150:1400);
     try{sessionStorage.setItem('sol-intro','1')}catch(e){}
     if(started){SND.introEnd();bgStarted=true;}
   }
@@ -1812,9 +1804,9 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     if(ended)return;
     ended=true;cancelAnimationFrame(raf);
     if(!outro)startOutro();
-    if(skipped){clearTimeout(handoffTimer);clearTimeout(titleTimer);title.classList.remove('on');box.style.transition='opacity .35s ease';box.classList.add('out');R.classList.remove('intro-on');R.classList.add('intro-done');}
+    if(skipped){clearTimeout(handoffTimer);box.style.transition='opacity .35s ease';box.classList.add('out');R.classList.remove('intro-on');R.classList.add('intro-done');}
     if(started&&!bgStarted)SND.introEnd();else if(!started)SND.arm();
-    const duration=matchMedia('(prefers-reduced-motion: reduce)').matches?5000:6800;
+    const duration=matchMedia('(prefers-reduced-motion: reduce)').matches?350:3300;
     const removeAfter=skipped?450:Math.max(100,duration-(performance.now()-outroAt));
     setTimeout(()=>{box.remove();if(started&&!skipped)document.dispatchEvent(new CustomEvent('solaria:intro-finished'))},removeAfter);
   }
@@ -2020,9 +2012,9 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
 </script>
 <script src="archive.js"></script>
 <script src="resonance.js"></script>
-<script src="people-redesign.js"></script>
+<script src="people-redesign.js?v=torn-record"></script>
 <script src="forbidden-library.js"></script>
 <script src="dossier-expansion.js"></script>
-<script src="relationships.js?v=stage2-2"></script>
+<script src="relationships.js?v=no-rift"></script>
 </body>
 </html>
