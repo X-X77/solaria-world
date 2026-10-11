@@ -2335,6 +2335,18 @@ iframe.skiptranslate,body>.skiptranslate,.goog-te-banner-frame,#goog-gt-tt,.goog
 #people #peopleDossier.rift-record .reg-nav .cnav>span{color:#b9a6d6}
 #people #peopleDossier.rift-record.ruin-record .cpor-top,#people #peopleDossier.rift-record.ruin-record .cpor-bottom{color:rgba(225,210,245,.75)}
 </style>
+<style id="lib-scrawl">
+/* 25. The unreadable line: forced out with a knife and a pen, not a neat black bar */
+#archive .lib-fragment-remainder b.lib-scrawl{display:block;width:min(100%,440px);padding:0;margin:4px 0 2px;background:none!important;letter-spacing:0;line-height:0}
+#archive .lib-scrawl svg{display:block;width:100%;height:auto;overflow:visible}
+#archive .lib-scrawl .scr-under path{fill:none;stroke:#5a4630;stroke-width:1.2;stroke-linecap:round;opacity:.5}
+#archive .lib-scrawl .scr-scrape rect{fill:#f6ecd4;opacity:.55}
+#archive .lib-scrawl .scr-soak rect{fill:#1d130b;opacity:.42}
+#archive .lib-scrawl .scr-pass path{fill:none;stroke:#1a1009;stroke-linecap:round;stroke-linejoin:round}
+#archive .lib-scrawl .scr-heavy path{fill:none;stroke:#120a05;stroke-linecap:round;stroke-linejoin:round;opacity:.7}
+#archive .lib-scrawl .scr-blot path,#archive .lib-scrawl .scr-blot circle{fill:#120a05;opacity:.85}
+#archive .lib-scrawl .scr-blot .scr-drip{fill:none;stroke:#120a05;stroke-width:1.8;stroke-linecap:round;opacity:.7}
+</style>
 </head>
 <body>
 <div class="site-backdrop" id="siteBackdrop" aria-hidden="true"><div class="sb-slides"></div><div class="sb-veil"></div></div>
@@ -3528,7 +3540,7 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
 <script src="archive.js"></script>
 <script src="resonance.js?v=mobile-read"></script>
 <script src="people-redesign.js?v=roster60"></script>
-<script src="forbidden-library.js"></script>
+<script src="forbidden-library.js?v=scrawl"></script>
 <script src="dossier-expansion.js?v=roster60"></script>
 <script src="relationships.js?v=roster60"></script>
 <script id="dossier-tabs">
