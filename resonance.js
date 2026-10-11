@@ -346,6 +346,13 @@ GLYPH.sword='<path d="M12 2.6v13.2"/><path d="M10.2 4.6L12 2.6l1.8 2v11.2h-3.6z"
 const careerEl=document.createElement('section');
 careerEl.className='res-career';careerEl.setAttribute('aria-label','진로 추천서');
 phase.after(careerEl);
+/* on phones the notebook and the letter share one place, switched by two tabs */
+const mtabs=document.createElement('div');mtabs.className='res-mtabs';mtabs.setAttribute('role','tablist');mtabs.setAttribute('aria-label','관측 결과 보기');
+mtabs.innerHTML='<button type="button" role="tab" data-mtab="note" aria-selected="true">관측 기록</button><button type="button" role="tab" data-mtab="letter" aria-selected="false">진로 추천서<i class="res-mtab-dot" aria-hidden="true"></i></button>';
+root.querySelector('.res-panel')?.insertBefore(mtabs,root.querySelector('.res-right'));
+function showTab(t){root.dataset.mtab=t;mtabs.querySelectorAll('[data-mtab]').forEach(b=>{const on=b.dataset.mtab===t;b.setAttribute('aria-selected',on?'true':'false');if(on&&t==='letter')b.classList.remove('has-new')})}
+mtabs.addEventListener('click',e=>{const b=e.target.closest('[data-mtab]');if(b)showTab(b.dataset.mtab)});
+showTab('note');
 const careerTop='<div class="cr-top"><small translate="no">LITTERAE COMMENDATICIAE</small><b>진로 추천서</b><span>마탑 공명 측정실 발행</span></div>';
 function careerIdle(){
  careerEl.innerHTML='<div class="cr-letter is-empty">'+careerTop+'<span class="cr-blank-seal" aria-hidden="true"></span>'+
@@ -398,6 +405,7 @@ function issueCareer(result,at){
  letter.insertAdjacentHTML('beforeend',sealMarkup(sealKey,sealRgb,'cr-seal',calm()?0:520)+(!nox&&second?sealMarkup(second.key,second.color,'cr-seal second',calm()?0:700):''));
  careerTimer=setTimeout(()=>{
   careerResume();careerEl.replaceChildren(letter);
+  if(root.dataset.mtab!=='letter')mtabs.querySelector('[data-mtab="letter"]')?.classList.add('has-new');
   const job=letter.querySelector('.cr-job');if(job)ink(job,200,60);
   setTimeout(()=>SFX.seal(),calm()?0:640);
  },at);
@@ -426,7 +434,10 @@ function ink(el,start,step){
  if(calm())return start;
  const text=el.textContent;el.textContent='';let i=0;
  for(const ch of text){const s=document.createElement('span');s.className='res-ink';s.textContent=ch;s.style.animationDelay=(start+i*step)+'ms';el.append(s);i++}
- return start+i*step;
+ const end=start+i*step;
+ // once written, the letters become plain text again so nothing stays half-drawn
+ setTimeout(()=>{if(el.isConnected&&el.querySelector('.res-ink'))el.textContent=text},end+600);
+ return end;
 }
 function addRow(profile,name,value){
  const row=document.createElement('div'),term=document.createElement('dt'),definition=document.createElement('dd');
@@ -440,7 +451,7 @@ function renderOutcome(result){
  root.dataset.element=nox?'nox':attribute.key;
  root.style.setProperty('--res-light',nox?'236,44,78':attribute.color);
  if(second)root.style.setProperty('--res-light2',second.color);else root.style.removeProperty('--res-light2');
- root.dataset.special=special||'';
+ root.dataset.special=special||'';root.classList.add('res-has-read');if(typeof showTab==='function')showTab('note');
  const elementText=second?attribute.name+' + '+second.name+' 쌍속성':attribute.name+' 속성';
  phase.textContent=nox?'시스템 경고 · 기록 외 음성 감지':strength.title+' · '+elementText+(special==='inverse'?' · 역류':'');
  panel.replaceChildren();

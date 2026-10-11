@@ -2203,6 +2203,34 @@ body{top:0!important}
 iframe.skiptranslate,body>.skiptranslate,.goog-te-banner-frame,#goog-gt-tt,.goog-te-balloon-frame,.goog-tooltip{display:none!important}
 .goog-text-highlight{background:none!important;box-shadow:none!important}
 </style>
+<style id="mobile-reading">
+/* 21. Phone reading: no blurred letters, shorter pages behind tabs */
+@keyframes resInk{from{opacity:0}to{opacity:1}}
+.cm-tabs,#resonance .res-mtabs{display:none}
+@media(max-width:750px){
+ #people .cinfo .cm-tabs{display:flex;grid-column:1/-1;order:3;width:100%;margin:18px 0 4px;border-bottom:1px solid rgba(90,70,40,.3)}
+ /* relations and the hidden record are short: the page ends with them instead of blank paper */
+ #people #peopleDossier #cstage[data-cm-tab="rel"],#people #peopleDossier #cstage[data-cm-tab="sec"]{min-height:0}
+ #people #cstage[data-cm-tab="rel"] .reg-rel,#people #cstage[data-cm-tab="sec"] .personnel-supplements{margin-top:14px}
+ #people .cinfo .cm-tabs button{flex:1 1 auto;white-space:nowrap;min-height:44px;padding:8px 6px;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;background:none;font:700 13.5px var(--ui);letter-spacing:-.01em;color:#6b5a3e;cursor:pointer}
+ #people .cinfo .cm-tabs button[aria-selected="true"]{color:#1d160d;border-bottom-color:color-mix(in srgb,var(--rc,#8a6a35) 70%,#2b2318)}
+ #people #cstage[data-cm-tab="rec"] [data-cm-panel]:not([data-cm-panel="rec"]),
+ #people #cstage[data-cm-tab="rel"] [data-cm-panel]:not([data-cm-panel="rel"]),
+ #people #cstage[data-cm-tab="sec"] [data-cm-panel]:not([data-cm-panel="sec"]){display:none!important}
+}
+@media(max-width:760px){
+ #resonance .res-mtabs{order:3;display:flex;gap:0;margin:0;padding:0 14px;background:#0a0d16;border-top:1px solid rgba(201,168,110,.22)}
+ #resonance .res-mtabs button{position:relative;flex:1;min-height:48px;border:0;border-bottom:2px solid transparent;background:none;color:#a99f8c;font:700 14px var(--ui);cursor:pointer}
+ #resonance .res-mtabs button[aria-selected="true"]{color:#f1e5cf;border-bottom-color:#d6b980}
+ #resonance .res-mtab-dot{display:none;position:absolute;top:13px;margin-left:4px;width:7px;height:7px;border-radius:50%;background:#e2b45a;box-shadow:0 0 6px rgba(226,180,90,.8)}
+ #resonance .res-mtabs button.has-new .res-mtab-dot{display:inline-block}
+ #resonance .res-right{order:4}#resonance .res-career{order:4}
+ #resonance[data-mtab="note"] .res-career,#resonance[data-mtab="letter"] .res-right{display:none}
+ /* after the first reading the instructions step aside */
+ #resonance.res-has-read .res-right>.res-overline,#resonance.res-has-read .res-right>h3,#resonance.res-has-read #resInstruction{display:none}
+}
+@media(pointer:coarse){#resonance .res-help{display:none}}
+</style>
 </head>
 <body>
 <div class="site-backdrop" id="siteBackdrop" aria-hidden="true"><div class="sb-slides"></div><div class="sb-veil"></div></div>
@@ -3379,11 +3407,33 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
 
 </script>
 <script src="archive.js"></script>
-<script src="resonance.js?v=career"></script>
+<script src="resonance.js?v=mobile-read"></script>
 <script src="people-redesign.js?v=roster60"></script>
 <script src="forbidden-library.js"></script>
 <script src="dossier-expansion.js?v=roster60"></script>
 <script src="relationships.js?v=roster60"></script>
+<script id="dossier-tabs">
+/* Phones: the record's long parts sit behind three bookmark tabs instead of one long page. */
+(function(){
+ if(typeof setPerson!=='function'||typeof cstage==='undefined')return;
+ let tab='rec';
+ function decorate(){
+  const info=cstage.querySelector(':scope > .cinfo');if(!info||info.querySelector('.cm-tabs'))return;
+  const dl=info.querySelector(':scope > dl');if(!dl)return;
+  const parts=[['rec','기록',dl],['rel','관계',cstage.querySelector(':scope > .reg-rel')],['sec','감춰진 기록',info.querySelector('.secret')]].filter(t=>t[2]);
+  parts.forEach(t=>t[2].dataset.cmPanel=t[0]);
+  const bar=document.createElement('div');bar.className='cm-tabs';bar.setAttribute('role','tablist');bar.setAttribute('aria-label','기록 나누어 보기');
+  bar.innerHTML=parts.map(t=>'<button type="button" role="tab" data-cm="'+t[0]+'">'+t[1]+'</button>').join('');
+  dl.before(bar);
+  const set=t=>{cstage.dataset.cmTab=t;bar.querySelectorAll('[data-cm]').forEach(b=>b.setAttribute('aria-selected',b.dataset.cm===t?'true':'false'))};
+  set(parts.some(t=>t[0]===tab)?tab:'rec');
+  bar.addEventListener('click',e=>{const b=e.target.closest('[data-cm]');if(!b)return;tab=b.dataset.cm;set(tab)});
+ }
+ const original=setPerson;
+ setPerson=function(){const r=original.apply(this,arguments);decorate();return r};
+ decorate();
+})();
+</script>
 <script id="book-size">
 /* One page size for the whole register: every record is measured once (portraits swapped for a blank so nothing
    downloads), the tallest sets the book height, and short records keep blank paper below. Page turns then match. */
@@ -3400,6 +3450,8 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
   if(key===lastKey)return;
   busy=true;
   try{await document.fonts?.ready}catch(e){}
+  // wait until the name strip has stopped sliding, then read where the reader is: a tap made meanwhile must not be undone
+  await new Promise(done=>{const el=document.getElementById('strip');let last=-1,still=0,frames=0;const tick=()=>{const x=el?el.scrollLeft:0;if(x===last)still++;else{still=0;last=x}if(still>=3||++frames>90)return done();requestAnimationFrame(tick)};requestAnimationFrame(tick)});
   const prevFilt=typeof filt!=='undefined'?filt:'main',prevNo=list[cur]?.no,y=scrollY,stripEl=document.getElementById('strip'),sx=stripEl?.scrollLeft||0;
   const src=window.SOLARIA_PORTRAIT_SRC;
   window.SOLARIA_PORTRAIT_SRC=(no,kind='c')=>BLANK[kind]||BLANK.c;
