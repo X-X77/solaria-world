@@ -1699,13 +1699,9 @@ function setPerson(i,anim=true){
   dossier.style.setProperty('--rc',COL[p.aff]||'#D9B86C');
   dossier.style.setProperty('--people-bg','url("img/r/'+theme+'.jpg")');
   dossier.dataset.faction=p.aff;
-<<<<<<< HEAD
   const ruin=(p.no===11||p.no===12)&&!sealed;
   dossier.classList.toggle('torn-record',p.no===11||p.no===12);
   dossier.classList.toggle('ruin-record',ruin);
-=======
-  dossier.classList.toggle('torn-record',p.no===11||p.no===12);
->>>>>>> 79259cc8e1c2bf3e32b100db3b3be04c45c59777
   peopleWatermark.textContent=sealed?'SEALED':name.split(' ')[0];
   peoplePage.textContent=String(cur+1).padStart(2,'0')+' / '+String(list.length).padStart(2,'0');
   strip.querySelectorAll('.ct').forEach((b,j)=>{
@@ -1893,12 +1889,8 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
     handoffTimer=setTimeout(()=>{
       box.classList.add('out');R.classList.remove('intro-on');R.classList.add('intro-done');
-<<<<<<< HEAD
       R.classList.add('op-handoff');
     },reduced?150:1900);
-=======
-    },reduced?150:1400);
->>>>>>> 79259cc8e1c2bf3e32b100db3b3be04c45c59777
     try{sessionStorage.setItem('sol-intro','1')}catch(e){}
     if(started){SND.introEnd();bgStarted=true;}
   }
@@ -1927,11 +1919,7 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     if(ended)return;
     ended=true;cancelAnimationFrame(raf);
     if(!outro)startOutro();
-<<<<<<< HEAD
     if(skipped){clearTimeout(handoffTimer);box.style.transition='opacity .35s ease';box.classList.add('out');R.classList.remove('intro-on');R.classList.add('intro-done');R.classList.add('op-handoff');}
-=======
-    if(skipped){clearTimeout(handoffTimer);box.style.transition='opacity .35s ease';box.classList.add('out');R.classList.remove('intro-on');R.classList.add('intro-done');}
->>>>>>> 79259cc8e1c2bf3e32b100db3b3be04c45c59777
     if(started&&!bgStarted)SND.introEnd();else if(!started)SND.arm();
     const duration=matchMedia('(prefers-reduced-motion: reduce)').matches?350:3300;
     const removeAfter=skipped?450:Math.max(100,duration-(performance.now()-outroAt));
