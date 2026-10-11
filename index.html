@@ -1166,6 +1166,97 @@ html.op-handoff .hero-below,html.op-handoff .hero-place,html.op-handoff .hero .c
  #people .ruin-scrap{right:1%;top:-8px}
 }
 </style>
+<style id="imperial-register">
+/* 3. Imperial register: round portrait index on top, an open register book below.
+      Normal records are clean pages; only Nox and Charon remain torn scraps. */
+/* index: round medallions */
+#people .people-index-head{padding:18px 0 8px}
+#people .people-index-head h3{font:700 18px var(--disp);color:#efe2c8;margin:0}
+#people .strip{gap:12px;padding:8px 4px 16px}
+#people .ct{width:94px;background:none;border:0;box-shadow:none}
+#people .ct:before,#people .ct:after,#people .ct .ct-serial,#people .ct .ct-affiliation,#people .ct small{display:none}
+#people .ct .im,#people .ct.monochrome-record .im{aspect-ratio:1/1;border-radius:50%;overflow:hidden;clip-path:none;box-shadow:0 0 0 2px rgba(214,185,128,.5),0 0 0 5px rgba(9,14,23,.9),0 0 0 6px rgba(214,185,128,.22);transition:box-shadow .2s,filter .2s}
+#people .ct .im:before{display:none}
+#people .ct:hover .im{box-shadow:0 0 0 2px rgba(236,209,154,.85),0 0 0 5px rgba(9,14,23,.9),0 0 0 6px rgba(214,185,128,.4)}
+#people .ct.on{background:none;box-shadow:none}
+#people .ct.on .im{box-shadow:0 0 0 3px #ecd19a,0 0 0 6px rgba(9,14,23,.9),0 0 0 7px rgba(236,209,154,.55),0 0 18px rgba(236,209,154,.3)}
+#people .ct b{text-align:center;padding:9px 0 0;font-size:12.5px;line-height:1.35;color:#e9dfcd}
+#people .ct.on b{color:#fff1d6}
+#people .people-section-break{display:none}
+/* the book */
+#people #peopleDossier{margin-top:20px}
+#people #peopleDossier:not(.ruin-record){background:none;border:0;box-shadow:none;overflow:visible}
+#people #peopleDossier:not(.ruin-record):before,#people #peopleDossier:not(.ruin-record) .people-dossier-top,#people #peopleDossier:not(.ruin-record) .people-watermark{display:none}
+#people #peopleDossier:not(.ruin-record) .cstage{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);grid-template-areas:"por info" "rel info";align-items:start;gap:0;padding:36px 32px 32px;border-radius:6px;color:#2a2219;
+ --ink:color-mix(in srgb,var(--rc,#8a6a35) 52%,#22170b);
+ background:linear-gradient(90deg,transparent 46.6%,rgba(60,40,18,.34) 47.2%,transparent 47.9%),linear-gradient(90deg,rgba(90,62,30,0) 0,rgba(90,62,30,.2) 43%,rgba(90,62,30,0) 47.2%,rgba(90,62,30,.2) 51%,rgba(90,62,30,0) 100%),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .36 0 0 0 0 .28 0 0 0 0 .17 0 0 0 .34 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),linear-gradient(180deg,#ebe1c7,#ddcfae);
+ box-shadow:0 0 0 10px #3b2516,0 0 0 11px rgba(214,185,128,.45),0 34px 80px rgba(0,0,0,.6),inset 0 0 60px rgba(110,80,40,.22)}
+#people #peopleDossier:not(.ruin-record) .cpor{grid-area:por;position:relative;top:auto;margin:0 44px 0 4px;height:clamp(500px,62vh,620px);border:0;box-shadow:0 10px 22px rgba(60,40,15,.35),inset 0 0 0 1px rgba(90,62,30,.35)}
+#people #peopleDossier:not(.ruin-record) .cpor:before{inset:8px;border:1px solid rgba(255,240,210,.35);background:none}
+#people #peopleDossier:not(.ruin-record) .reg-rel{grid-area:rel;margin:24px 44px 0 4px;padding:16px 18px 18px;border:1px solid rgba(90,70,40,.28);background:rgba(255,250,235,.3)}
+#people #peopleDossier:not(.ruin-record) .reg-rel .cast-profile-links{border:0;background:none;padding:0;margin:0}
+#people #peopleDossier:not(.ruin-record) .reg-rel h4{font:700 13px var(--ui);color:var(--ink);letter-spacing:.04em;margin:0 0 10px}
+#people #peopleDossier:not(.ruin-record) .reg-rel button{color:#3a2d1c;background:rgba(255,250,235,.55);border:1px solid rgba(90,70,40,.32)}
+#people #peopleDossier:not(.ruin-record) .reg-rel button:hover{background:rgba(255,250,235,.95);border-color:rgba(90,70,40,.55)}
+#people #peopleDossier:not(.ruin-record) .reg-rel p{color:#4a3c28}
+#people #peopleDossier:not(.ruin-record) .cinfo{grid-area:info;position:relative;background:none;border:0;box-shadow:none;clip-path:none;min-height:0;padding:6px 14px 0 46px;color:#2a2219}
+#people #peopleDossier:not(.ruin-record) .cinfo:before{display:none}
+#people #peopleDossier:not(.ruin-record) .cinfo:after{content:"";position:absolute;right:14px;top:-42px;width:26px;height:104px;background:linear-gradient(90deg,color-mix(in srgb,var(--rc,#8a6a35) 70%,#2a1808),color-mix(in srgb,var(--rc,#8a6a35) 86%,#4a3010),color-mix(in srgb,var(--rc,#8a6a35) 70%,#2a1808));clip-path:polygon(0 0,100% 0,100% 100%,50% 84%,0 100%);box-shadow:0 2px 4px rgba(0,0,0,.3)}
+#people #peopleDossier:not(.ruin-record) .reg-head{display:flex;justify-content:space-between;gap:12px;font:600 11px var(--lat);letter-spacing:.2em;color:#6b5a3e;padding:0 54px 12px 0;border-bottom:1px solid rgba(90,70,40,.25);margin-bottom:18px}
+#people #peopleDossier:not(.ruin-record) .cinfo .fac{color:var(--ink);border-bottom:0;padding-bottom:0;font-size:12.5px}
+#people #peopleDossier:not(.ruin-record) .cinfo .fac small{color:#6b5a3e}
+#people #peopleDossier:not(.ruin-record) .cinfo .fac i{background:var(--ink)}
+#people #peopleDossier:not(.ruin-record) .cinfo h3{color:#1d160d;font-size:clamp(40px,3.8vw,58px);margin-top:10px;text-shadow:none}
+#people #peopleDossier:not(.ruin-record) .cinfo .role{color:var(--ink);font-weight:700}
+#people #peopleDossier:not(.ruin-record) .cinfo .arc-find{color:#3a2d1c;border-color:rgba(90,70,40,.45);background:rgba(255,250,235,.35)}
+#people #peopleDossier:not(.ruin-record) .cinfo .arc-find:hover{background:rgba(255,250,235,.75)}
+#people #peopleDossier:not(.ruin-record) .cinfo blockquote.quote{margin:20px 0 4px;padding:0 0 18px;border:0;border-bottom:1px solid rgba(90,70,40,.25);background:none;color:#33281a;font:400 clamp(18px,1.6vw,22px)/1.7 var(--read);text-shadow:none}
+#people #peopleDossier:not(.ruin-record) .cinfo blockquote.quote:before{display:none}
+#people #peopleDossier:not(.ruin-record) .cinfo blockquote.quote>span{color:var(--ink);font-size:1.4em;line-height:0;margin-right:6px;vertical-align:-.15em}
+#people #peopleDossier:not(.ruin-record) .cinfo dl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:30px;margin-top:2px}
+#people #peopleDossier:not(.ruin-record) .cinfo dl>div{display:block;padding:14px 0 15px;border-bottom:1px dashed rgba(90,70,40,.3)}
+#people #peopleDossier:not(.ruin-record) .cinfo dl>div:last-child:nth-child(odd){grid-column:1/-1}
+#people #peopleDossier:not(.ruin-record) .cinfo dl dt{color:var(--ink);font-size:13px;font-weight:700;letter-spacing:.02em;margin-bottom:6px}
+#people #peopleDossier:not(.ruin-record) .cinfo dl dt small{color:#8a7656;margin-right:4px}
+#people #peopleDossier:not(.ruin-record) .cinfo dl dd{color:#2b2318;font-size:15.5px;line-height:1.8;margin:0}
+#people #peopleDossier:not(.ruin-record) .personnel-supplements{display:block;margin-top:20px;padding:0;border:0;background:none}
+#people #peopleDossier:not(.ruin-record) .secret{position:relative;margin-top:0;padding:16px 20px 20px;border:1px solid rgba(110,60,45,.35);background:linear-gradient(160deg,#e3d6ba,#d3c3a0);box-shadow:0 6px 14px rgba(70,50,25,.18);clip-path:polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,0 100%)}
+#people #peopleDossier:not(.ruin-record) .secret:after{content:"";position:absolute;right:0;top:0;width:22px;height:22px;background:linear-gradient(225deg,transparent 50%,#bfae88 50%)}
+#people #peopleDossier:not(.ruin-record) .secret .hd b{color:#5a2f24}
+#people #peopleDossier:not(.ruin-record) .secret .hd b small{color:#7a5a48;opacity:.9}
+#people #peopleDossier:not(.ruin-record) .secret .hd i{display:inline-block;flex:none;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#b04a3c,#6e1d16 70%);box-shadow:0 1px 2px rgba(0,0,0,.35)}
+#people #peopleDossier:not(.ruin-record) .secret .ob{color:#5a2f24!important;border-bottom:1px solid rgba(110,60,45,.55)!important}
+#people #peopleDossier:not(.ruin-record) .secret .ob:hover{color:#2b140e!important;border-bottom-color:#2b140e!important}
+#people #peopleDossier:not(.ruin-record) .secret .bars span{background:#2b1f17;box-shadow:none}
+#people #peopleDossier:not(.ruin-record) .secret .tx{color:#2b2318}
+#people #peopleDossier:not(.ruin-record) .cnav{margin-top:18px;padding-top:14px;border-top:1px solid rgba(90,70,40,.25)}
+#people #peopleDossier:not(.ruin-record) .cnav span{color:#7a6646}
+#people #peopleDossier:not(.ruin-record) .cnav button{color:#3a2d1c;border-color:rgba(90,70,40,.38);background:rgba(255,250,235,.35)}
+#people #peopleDossier:not(.ruin-record) .cnav button:hover{background:rgba(255,250,235,.75)}
+@media(max-width:1100px){#people #peopleDossier:not(.ruin-record) .cinfo dl{grid-template-columns:1fr}#people #peopleDossier:not(.ruin-record) .cinfo dl>div:last-child:nth-child(odd){grid-column:auto}}
+@media(max-width:750px){
+ #people .ct{width:76px}
+ #people .ct b{font-size:11.5px}
+ #people #peopleDossier:not(.ruin-record) .cstage{grid-template-columns:42% minmax(0,1fr);grid-template-areas:none;column-gap:16px;padding:22px 16px 22px;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .36 0 0 0 0 .28 0 0 0 0 .17 0 0 0 .34 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),linear-gradient(180deg,#ebe1c7,#ddcfae);box-shadow:0 0 0 6px #3b2516,0 0 0 7px rgba(214,185,128,.45),0 20px 50px rgba(0,0,0,.6)}
+ #people #peopleDossier:not(.ruin-record) .cinfo{display:contents}
+ #people #peopleDossier:not(.ruin-record) .reg-head{grid-column:1/-1;order:0;padding-right:40px;margin-bottom:16px;font-size:10px;letter-spacing:.14em}
+ #people #peopleDossier:not(.ruin-record) .cpor{grid-area:auto;grid-column:1;order:1;margin:0;height:auto;aspect-ratio:3/4.1;align-self:start}
+ #people #peopleDossier:not(.ruin-record) .cpor-top{display:none}
+ #people #peopleDossier:not(.ruin-record) .cpor-bottom{font-size:9px;left:10px!important;right:10px!important;bottom:9px!important}
+ #people #peopleDossier:not(.ruin-record) .reg-id{grid-column:2;order:2;align-self:center;min-width:0}
+ #people #peopleDossier:not(.ruin-record) .reg-id .fac{font-size:10.5px;line-height:1.5}
+ #people #peopleDossier:not(.ruin-record) .reg-id h3{font-size:clamp(24px,7.4vw,32px);margin-top:6px;line-height:1.2;word-break:keep-all}
+ #people #peopleDossier:not(.ruin-record) .reg-id .role{font-size:14px;margin-top:4px}
+ #people #peopleDossier:not(.ruin-record) .reg-id .arc-find{margin-top:10px;font-size:11px;padding:6px 8px}
+ #people #peopleDossier:not(.ruin-record) .cinfo blockquote.quote{grid-column:1/-1;order:3;margin-top:18px;font-size:17.5px}
+ #people #peopleDossier:not(.ruin-record) .cinfo dl{grid-column:1/-1;order:4;display:block}
+ #people #peopleDossier:not(.ruin-record) .cinfo dl dd{font-size:15.5px}
+ #people #peopleDossier:not(.ruin-record) .reg-rel{grid-area:auto;grid-column:1/-1;order:5;margin:18px 0 0}
+ #people #peopleDossier:not(.ruin-record) .personnel-supplements{grid-column:1/-1;order:6}
+ #people #peopleDossier:not(.ruin-record) .cinfo:after{right:14px;top:-6px;height:66px;width:20px}
+}
+@media(prefers-reduced-motion:reduce){#people .ct .im{transition:none}}
+</style>
 </head>
 <body>
 <div id="intro" class="op-v2" aria-label="솔라리아 오프닝">
@@ -1306,7 +1397,7 @@ html.op-handoff .hero-below,html.op-handoff .hero-place,html.op-handoff .hero .c
   <div class="people-eyebrow"><span>IMPERIAL CHARACTER ARCHIVE</span><span id="peopleCount">00 FILES</span></div>
   <div class="chips" id="chips" role="group" aria-label="인물 소속 선택"></div>
   <div class="people-index-head">
-    <div><small>SELECT A CHARACTER</small><h3>누구의 기록을 열람할까요?</h3></div>
+    <div><small>SELECT A CHARACTER</small><h3>인명록 색인</h3></div>
     <div class="people-gallery-actions"><span>초상 선택 · 좌우로 탐색</span>
       <button id="castPrev" type="button" aria-label="인물 목록 왼쪽으로 이동"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg></button>
       <button id="castNext" type="button" aria-label="인물 목록 오른쪽으로 이동"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
@@ -1699,13 +1790,9 @@ function setPerson(i,anim=true){
   dossier.style.setProperty('--rc',COL[p.aff]||'#D9B86C');
   dossier.style.setProperty('--people-bg','url("img/r/'+theme+'.jpg")');
   dossier.dataset.faction=p.aff;
-<<<<<<< HEAD
   const ruin=(p.no===11||p.no===12)&&!sealed;
   dossier.classList.toggle('torn-record',p.no===11||p.no===12);
   dossier.classList.toggle('ruin-record',ruin);
-=======
-  dossier.classList.toggle('torn-record',p.no===11||p.no===12);
->>>>>>> 79259cc8e1c2bf3e32b100db3b3be04c45c59777
   peopleWatermark.textContent=sealed?'SEALED':name.split(' ')[0];
   peoplePage.textContent=String(cur+1).padStart(2,'0')+' / '+String(list.length).padStart(2,'0');
   strip.querySelectorAll('.ct').forEach((b,j)=>{
@@ -1738,7 +1825,7 @@ function setPerson(i,anim=true){
     '<span class="cpor-dark" aria-hidden="true"></span><span class="cpor-top">SOLARIA · DOSSIER '+pad(p.no)+'</span>'+
     (sealed?'<span class="cpor-seal" aria-hidden="true">RECORD SEALED</span>':'')+
     '<span class="cpor-bottom">'+esc(AFF[p.aff]||'제국')+' / PERSONNEL RECORD</span></div>'+
-    '<div class="cinfo'+(anim?' anim':'')+'">'+(ruin?'':'<div class="fac"><i aria-hidden="true"></i>'+esc(AFF[p.aff]||'제국')+
+    '<div class="cinfo'+(anim?' anim':'')+'">'+(ruin||sealed?'':'<div class="reg-head" aria-hidden="true"><span>제국 인명록</span><span>제 '+pad(p.no)+'호</span></div>')+(ruin?'':'<div class="fac"><i aria-hidden="true"></i>'+esc(AFF[p.aff]||'제국')+
     '<small>'+esc(sealed?'접근 제한':p.group)+(sealed||p.age==='?'?'':' · '+esc(age))+'</small></div>')+
     body+'<div class="cnav"><span>RECORD NAVIGATION</span>'+
     '<button type="button" aria-label="이전 인물" id="cp">'+arrow('M15 5 8 12l7 7')+'이전</button>'+
@@ -1746,7 +1833,14 @@ function setPerson(i,anim=true){
   const supplements=document.createElement('div');
   supplements.className='personnel-supplements';
   cstage.querySelectorAll('.cinfo .cast-profile-links,.cinfo .secret,.cinfo .cast-reveal-control,.cinfo .cnav').forEach(node=>supplements.append(node));
-  cstage.append(supplements);
+  (ruin||sealed?cstage:cstage.querySelector('.cinfo')).append(supplements);
+  if(!ruin&&!sealed){
+    const ci=cstage.querySelector('.cinfo'),idBox=document.createElement('div');idBox.className='reg-id';
+    ['.fac','h3','.role'].forEach(sel=>{const n=ci.querySelector(':scope > '+sel);if(n)idBox.append(n)});
+    const head=ci.querySelector(':scope > .reg-head');if(head)head.after(idBox);else ci.prepend(idBox);
+    const rel=ci.querySelector('.cast-profile-links');
+    if(rel){const box=document.createElement('div');box.className='reg-rel';box.append(rel);cstage.insertBefore(box,ci)}
+  }
   $('cp').onclick=()=>setPerson(cur-1);
   $('cn').onclick=()=>setPerson(cur+1);
   const castReveal=$('castReveal');
@@ -1893,12 +1987,8 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
     handoffTimer=setTimeout(()=>{
       box.classList.add('out');R.classList.remove('intro-on');R.classList.add('intro-done');
-<<<<<<< HEAD
       R.classList.add('op-handoff');
     },reduced?150:1900);
-=======
-    },reduced?150:1400);
->>>>>>> 79259cc8e1c2bf3e32b100db3b3be04c45c59777
     try{sessionStorage.setItem('sol-intro','1')}catch(e){}
     if(started){SND.introEnd();bgStarted=true;}
   }
@@ -1927,11 +2017,7 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
     if(ended)return;
     ended=true;cancelAnimationFrame(raf);
     if(!outro)startOutro();
-<<<<<<< HEAD
     if(skipped){clearTimeout(handoffTimer);box.style.transition='opacity .35s ease';box.classList.add('out');R.classList.remove('intro-on');R.classList.add('intro-done');R.classList.add('op-handoff');}
-=======
-    if(skipped){clearTimeout(handoffTimer);box.style.transition='opacity .35s ease';box.classList.add('out');R.classList.remove('intro-on');R.classList.add('intro-done');}
->>>>>>> 79259cc8e1c2bf3e32b100db3b3be04c45c59777
     if(started&&!bgStarted)SND.introEnd();else if(!started)SND.arm();
     const duration=matchMedia('(prefers-reduced-motion: reduce)').matches?350:3300;
     const removeAfter=skipped?450:Math.max(100,duration-(performance.now()-outroAt));
