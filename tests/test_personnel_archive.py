@@ -37,6 +37,9 @@ with sync_playwright() as p:
             if person['no'] in (11,12):
                 assert page.locator('#cstage .cpor img').evaluate('e=>getComputedStyle(e).filter') == 'grayscale(1)'
                 assert page.locator('#cstage [data-cast-relation]').count() == 0
+                assert page.locator('.torn-relation-fragment h4').inner_text() == person['name']
+                assert page.locator('.torn-relation-fragment p').inner_text() == person['quote'][:(len(person['quote'])+1)//2]
+                assert page.locator('#cstage .cpor').evaluate('e=>getComputedStyle(e).clipPath') != 'none'
             text = page.locator('#cstage .cinfo').inner_text()
             for field in ['name', 'role', 'look', 'pers', 'known', 'quote']:
                 if person[field]:

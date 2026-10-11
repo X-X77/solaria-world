@@ -201,6 +201,7 @@ function focus(id){
 }
 function preview(no){
  const p=people.get(Number(no));if(!p||(p.sealed&&!window.SOLARIA_RIFT_UNLOCKED))return '';
+ if(p.no===11||p.no===12)return '<article class="torn-relation-fragment" aria-label="찢어진 관계 기록"><small>RELATION RECORD / FRAGMENT</small><h4>'+safe(p.name)+'</h4><p>'+safe(p.quote.slice(0,Math.ceil(p.quote.length/2)))+'</p></article>';
  if(p.aff==='rift')return '<h4>이 인물의 관계 기록</h4>'+relations(p.no).filter(x=>!x.other.sealed||window.SOLARIA_RIFT_UNLOCKED).map(x=>'<p>'+safe(x.other.name)+' · '+safe(x.type)+'</p>').join('');
  const related=relations(p.no).filter(x=>shown(x.other)).slice(0,4);
  return '<h4>이 인물의 관계</h4>'+(related.length?related.map(x=>'<button type="button" data-cast-relation="'+x.other.no+'">'+safe(x.other.name)+' · '+safe(x.type)+' ↗</button>').join(''):'<p>공개된 관계가 없습니다.</p>')+
