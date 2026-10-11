@@ -2155,10 +2155,53 @@ html:not([data-page="home"]) .site-backdrop .sb-veil{background:radial-gradient(
  #nav ul.fade-l.fade-r{-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
 }
 /* the rift film fills a phone screen instead of a thin strip */
-@media(max-aspect-ratio:4/5),(max-height:500px){#riftAwakening .rift-cut{object-fit:cover;object-position:50% 40%}#riftAwakening .rift-film:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(3,3,10,.92) 0,rgba(3,3,10,.55) 26%,transparent 50%)}}
+@media(max-aspect-ratio:6/5),(min-aspect-ratio:39/20),(max-height:500px){#riftAwakening .rift-cut{object-fit:contain;object-position:50% 46%}#riftAwakening .rift-film:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(3,3,10,.92) 0,rgba(3,3,10,.55) 26%,transparent 50%)}}
 @media(max-aspect-ratio:4/5){#riftAwakening .rift-film-caption{bottom:12%}}
 @media(max-width:620px){#riftAwakening .rift-film-caption p{font-size:20px;line-height:1.6}}
 @media(max-height:500px){#riftAwakening .rift-film-caption{bottom:24%}#riftAwakening .rift-film-status{font-size:10px;bottom:calc(10px + env(safe-area-inset-bottom))}}
+</style>
+<style id="phone-films-lang">
+/* 20. Films show the whole picture on phones; language switch */
+#intro.op-v2 .op-blur,#riftAwakening .rift-bg{display:none}
+@media(max-aspect-ratio:6/5),(min-aspect-ratio:39/20),(max-height:500px){
+ #intro.op-v2 .op-shot img.op-blur,#riftAwakening .rift-bg{display:block;position:absolute;inset:-8%;width:116%;height:116%;object-fit:cover;filter:blur(24px) brightness(.4) saturate(1.15);pointer-events:none}
+ #riftAwakening .rift-bg{z-index:0;transition:opacity .8s ease}
+ #riftAwakening .rift-cut{z-index:1}
+ #intro.op-v2 .op-shot img:not(.op-blur){position:relative;object-fit:contain;object-position:50% 44%}
+ #intro.op-v2 .op-shot.active,#intro.op-v2 .op-shot.eyes.active,#intro.op-v2 .op-shot.beast.active,#intro.op-v2 .op-shot.nox.active,#intro.op-v2 .op-shot.cassian.active{transform:scale(1.025)}
+ #intro.op-v2 .op-letterbox{display:none}
+}
+@media(max-aspect-ratio:6/5){
+ #intro.op-v2 .op-caption{bottom:calc(16vh + env(safe-area-inset-bottom))}
+ #intro.op-v2 .op-skip{bottom:calc(5vh + env(safe-area-inset-bottom))}
+}
+@media(min-aspect-ratio:39/20),(max-height:500px) and (orientation:landscape){#intro.op-v2 .op-skip{bottom:calc(14px + env(safe-area-inset-bottom))}#intro.op-v2 .op-caption{bottom:12vh}}
+#intro.op-v2{height:100dvh}
+/* switch in the bar */
+.nav .lang{position:relative;margin-left:8px;flex:none}
+.nav .lang-btn{display:flex;align-items:center;gap:5px;height:34px;padding:0 9px;border:1px solid rgba(214,185,128,.35);border-radius:17px;background:rgba(8,12,22,.45);color:#e6d8bf;font:600 12px var(--ui);letter-spacing:.04em;cursor:pointer;transition:border-color .2s,background .2s}
+.nav .lang-btn:hover,.nav .lang-btn[aria-expanded="true"]{border-color:rgba(214,185,128,.75);background:rgba(20,26,40,.8)}
+.nav .lang-btn svg{width:15px;height:15px}
+.nav .lang-menu{position:absolute;right:0;top:calc(100% + 8px);z-index:60;margin:0;padding:6px;list-style:none;min-width:148px;background:#0d111c;border:1px solid rgba(214,185,128,.4);box-shadow:0 14px 30px rgba(0,0,0,.55)}
+.nav ul.lang-menu{display:block;margin:0;gap:0;overflow:visible;-webkit-mask-image:none;mask-image:none}
+.nav ul.lang-menu li{display:block}
+.nav ul.lang-menu[hidden]{display:none}
+.nav .lang-menu button{display:flex;align-items:center;justify-content:space-between;width:100%;padding:10px 12px;border:0;background:none;color:#d8cfbd;font:500 14px var(--ui);text-align:left;cursor:pointer}
+.nav .lang-menu button:hover,.nav .lang-menu button:focus-visible{background:rgba(214,185,128,.12);color:#f6dfb2;outline:none}
+.nav .lang-menu button.on{color:#f6dfb2}
+.nav .lang-menu button.on:after{content:"";width:6px;height:6px;border-radius:50%;background:#d6b980}
+.nav .lang + .snd{margin-left:8px}
+@media(max-width:760px){.nav .lang{margin-left:4px}.nav .lang-btn{height:32px;padding:0 7px;font-size:11px}.nav .lang + .snd{margin-left:4px}}
+@media(max-width:430px){.nav .lang-btn{width:32px;padding:0;justify-content:center}.nav .lang-btn #langCur{display:none}.nav .lang-btn svg{width:16px;height:16px}#nav ul:not(.lang-menu) li a{padding:12px 3.5px;font-size:12.5px;letter-spacing:0}.nav .logo{margin-right:2px}}
+/* switch on the opening gate */
+#intro.op-v2 .op-lang{position:absolute;top:calc(18px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);display:flex;gap:4px;padding:4px;border:1px solid rgba(214,185,128,.28);background:rgba(4,7,14,.6)}
+#intro.op-v2 .op-lang button{min-width:44px;height:32px;padding:0 10px;border:0;background:none;color:#a9b2c2;font:600 12px var(--ui);letter-spacing:.04em;cursor:pointer}
+#intro.op-v2 .op-lang button.on{background:rgba(214,185,128,.18);color:#f3dfb4}
+/* keep Google's translator out of sight */
+#gtHost{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+body{top:0!important}
+iframe.skiptranslate,body>.skiptranslate,.goog-te-banner-frame,#goog-gt-tt,.goog-te-balloon-frame,.goog-tooltip{display:none!important}
+.goog-text-highlight{background:none!important;box-shadow:none!important}
 </style>
 </head>
 <body>
@@ -2175,6 +2218,7 @@ html:not([data-page="home"]) .site-backdrop .sb-veil{background:radial-gradient(
   </div>
   <div class="op-caption" id="opCaption" role="status" aria-live="off"></div>
   <div class="op-gate" id="opGate">
+    <div class="op-lang notranslate" translate="no" role="group" aria-label="언어 · Language"><button type="button" data-lang="ko" lang="ko" aria-checked="false">KO</button><button type="button" data-lang="en" lang="en" aria-checked="false">EN</button><button type="button" data-lang="zh-TW" lang="zh-TW" aria-checked="false">繁中</button><button type="button" data-lang="ja" lang="ja" aria-checked="false">日本語</button></div>
     <div class="op-brand" translate="no">SOLARIA</div>
     <button class="op-start" id="opStart" type="button">오프닝 시작하기</button>
     <p>소리와 함께 감상하면 더 좋습니다.</p>
@@ -2187,6 +2231,7 @@ html:not([data-page="home"]) .site-backdrop .sb-veil{background:radial-gradient(
 <header class="nav" id="nav">
   <a class="logo" href="#top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 22 12 12 22 2 12Z"/><path d="M12 7 17 12 12 17 7 12Z" fill="currentColor"/></svg><b>솔라리아</b></a>
   <ul><li><a href="#world">세계관</a></li><li><a href="#regions">권역</a></li><li><a href="#people">인물</a></li><li><a href="#bonds">관계</a></li><li><a href="#seals">금서고</a></li><li><a href="#resonance">마석 공명</a></li></ul>
+  <div class="lang notranslate" id="langSwitch" translate="no"><button type="button" class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu" aria-label="언어 · Language"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3z"/></svg><span id="langCur">KO</span></button><ul class="lang-menu" id="langMenu" role="menu" hidden><li><button type="button" role="menuitemradio" aria-checked="false" data-lang="ko" lang="ko">한국어</button></li><li><button type="button" role="menuitemradio" aria-checked="false" data-lang="en" lang="en">English</button></li><li><button type="button" role="menuitemradio" aria-checked="false" data-lang="zh-TW" lang="zh-TW">繁體中文</button></li><li><button type="button" role="menuitemradio" aria-checked="false" data-lang="ja" lang="ja">日本語</button></li></ul></div>
   <button class="snd" id="snd" type="button" aria-pressed="false" aria-label="배경음 켜기" title="배경음 켜기"><i></i><i></i><i></i><i></i></button>
 </header>
 
@@ -2392,6 +2437,91 @@ html:not([data-page="home"]) .site-backdrop .sb-veil{background:radial-gradient(
 
 
 
+<div id="gtHost" aria-hidden="true"></div>
+<script id="lang-switch">
+/* Language switch (Korean is the original; English, Traditional Chinese and Japanese are machine translations)
+   and whole-picture framing for the films on phones. */
+(function(){
+ /* ── films: a blurred copy fills the screen behind the full picture ── */
+ document.querySelectorAll('#intro .op-shot').forEach(shot=>{
+  const img=shot.querySelector('img');if(!img||shot.querySelector('.op-blur'))return;
+  const bg=document.createElement('img');bg.className='op-blur';bg.alt='';bg.setAttribute('aria-hidden','true');
+  const sync=()=>{bg.src=img.currentSrc||img.src};sync();img.addEventListener('load',sync);img.addEventListener('error',()=>setTimeout(sync,50));
+  shot.prepend(bg);
+ });
+ const film=document.querySelector('#riftAwakening .rift-film');
+ if(film){
+  const bg=document.createElement('img');bg.className='rift-bg';bg.alt='';bg.setAttribute('aria-hidden','true');film.prepend(bg);
+  const sync=()=>{const a=film.querySelector('.rift-cut.active');if(a&&bg.getAttribute('src')!==a.getAttribute('src'))bg.src=a.getAttribute('src')};
+  new MutationObserver(sync).observe(film,{subtree:true,attributes:true,attributeFilter:['class']});
+ }
+
+ /* ── language ── */
+ const LANGS=[['ko','한국어','KO'],['en','English','EN'],['zh-TW','繁體中文','繁中'],['ja','日本語','日本語']];
+ const onProxy=/\.translate\.goog$/i.test(location.hostname);
+ const cookieLang=()=>{const m=document.cookie.match(/(?:^|;\s*)googtrans=\/ko\/([^;]+)/);return m?decodeURIComponent(m[1]):''};
+ const current=()=>{if(onProxy)return new URLSearchParams(location.search).get('_x_tr_tl')||'ko';const c=cookieLang();return LANGS.some(l=>l[0]===c)?c:'ko'};
+ function setCookie(v){
+  const exp=v?'':';expires=Thu, 01 Jan 1970 00:00:00 GMT',val=v?'/ko/'+v:'';
+  document.cookie='googtrans='+val+';path=/'+exp;
+  document.cookie='googtrans='+val+';path=/;domain='+location.hostname+exp;
+ }
+ // Google's page-translation address for this site (used if the in-page translator cannot load).
+ const proxyURL=lang=>'https://'+location.hostname.replace(/-/g,'--').replace(/\./g,'-')+'.translate.goog'+location.pathname+'?_x_tr_sl=ko&_x_tr_tl='+lang+'&_x_tr_hl='+lang+'&_x_tr_pto=wapp'+location.hash;
+ const originalURL=()=>'https://'+location.hostname.replace(/\.translate\.goog$/i,'').replace(/--/g,'\u0001').replace(/-/g,'.').replace(/\u0001/g,'-')+location.pathname+location.hash;
+ let loading=null;
+ function loadWidget(){
+  if(loading)return loading;
+  loading=new Promise((resolve,reject)=>{
+   const host=document.getElementById('gtHost')||Object.assign(document.body.appendChild(document.createElement('div')),{id:'gtHost'});
+   host.setAttribute('aria-hidden','true');
+   const timer=setTimeout(()=>reject(new Error('timeout')),7000);
+   window.solariaTranslateReady=()=>{
+    try{new google.translate.TranslateElement({pageLanguage:'ko',includedLanguages:'en,zh-TW,ja',autoDisplay:false},'gtHost');clearTimeout(timer);resolve()}
+    catch(e){clearTimeout(timer);reject(e)}
+   };
+   const s=document.createElement('script');s.src='https://translate.google.com/translate_a/element.js?cb=solariaTranslateReady';
+   s.onerror=()=>{clearTimeout(timer);reject(new Error('blocked'))};document.head.append(s);
+  });
+  return loading;
+ }
+ function pickInWidget(lang){
+  return new Promise((resolve,reject)=>{
+   let n=0;const t=setInterval(()=>{
+    const sel=document.querySelector('#gtHost select.goog-te-combo');
+    if(sel){clearInterval(t);sel.value=lang;sel.dispatchEvent(new Event('change',{bubbles:true}));resolve()}
+    else if(++n>40){clearInterval(t);reject(new Error('no menu'))}
+   },100);
+  });
+ }
+ function apply(lang){
+  close();
+  if(lang===current())return;
+  if(onProxy){
+   if(lang==='ko'){location.href=originalURL();return}
+   const u=new URL(location.href);u.searchParams.set('_x_tr_tl',lang);u.searchParams.set('_x_tr_hl',lang);location.href=u.toString();return;
+  }
+  if(lang==='ko'){setCookie('');location.reload();return}
+  setCookie(lang);mark(lang);
+  loadWidget().then(()=>pickInWidget(lang)).catch(()=>{setCookie('');location.href=proxyURL(lang)});
+ }
+ /* ── switcher ── */
+ const box=document.getElementById('langSwitch'),btn=document.getElementById('langBtn'),menu=document.getElementById('langMenu');
+ function mark(lang){
+  const l=LANGS.find(x=>x[0]===lang)||LANGS[0];
+  const cur=document.getElementById('langCur');if(cur)cur.textContent=l[2];
+  document.querySelectorAll('[data-lang]').forEach(b=>{const on=b.dataset.lang===l[0];b.classList.toggle('on',on);b.setAttribute('aria-checked',on?'true':'false')});
+ }
+ function close(){if(menu){menu.hidden=true;btn?.setAttribute('aria-expanded','false')}}
+ btn?.addEventListener('click',e=>{e.stopPropagation();const open=menu.hidden;menu.hidden=!open;btn.setAttribute('aria-expanded',open?'true':'false');if(open)menu.querySelector('.on')?.focus()});
+ document.addEventListener('click',e=>{if(box&&!box.contains(e.target))close()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu&&!menu.hidden){close();btn.focus()}});
+ document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',()=>apply(b.dataset.lang)));
+ mark(current());
+ // A chosen language stays chosen on the next visit.
+ if(!onProxy&&current()!=='ko')loadWidget().catch(()=>{setCookie('');mark('ko')});
+})();
+</script>
 <script src="rift-contact.js?v=korean-captions"></script>
 <script>
 const REGIONS = {
