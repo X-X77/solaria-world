@@ -2146,6 +2146,20 @@ html:not([data-page="home"]) .site-backdrop .sb-veil{background:radial-gradient(
 #top .hero-below a.is-soon:hover{color:#e6d8bf}
 #top .hero-below a.is-soon .soon-tag{display:inline-block;margin-left:8px;padding:2px 7px;border:1px solid rgba(214,185,128,.45);font:600 10.5px var(--lat);letter-spacing:.16em;color:#d6b980;vertical-align:1px}
 </style>
+<style id="mobile-polish">
+/* 19. Phones and page translators */
+.toast{width:max-content;max-width:calc(100vw - 32px);text-align:center;line-height:1.5}
+@media(max-width:760px){
+ #nav ul.fade-r{-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent)}
+ #nav ul.fade-l{-webkit-mask-image:linear-gradient(90deg,transparent,#000 18%);mask-image:linear-gradient(90deg,transparent,#000 18%)}
+ #nav ul.fade-l.fade-r{-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
+}
+/* the rift film fills a phone screen instead of a thin strip */
+@media(max-aspect-ratio:4/5),(max-height:500px){#riftAwakening .rift-cut{object-fit:cover;object-position:50% 40%}#riftAwakening .rift-film:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(3,3,10,.92) 0,rgba(3,3,10,.55) 26%,transparent 50%)}}
+@media(max-aspect-ratio:4/5){#riftAwakening .rift-film-caption{bottom:12%}}
+@media(max-width:620px){#riftAwakening .rift-film-caption p{font-size:20px;line-height:1.6}}
+@media(max-height:500px){#riftAwakening .rift-film-caption{bottom:24%}#riftAwakening .rift-film-status{font-size:10px;bottom:calc(10px + env(safe-area-inset-bottom))}}
+</style>
 </head>
 <body>
 <div class="site-backdrop" id="siteBackdrop" aria-hidden="true"><div class="sb-slides"></div><div class="sb-veil"></div></div>
@@ -2807,7 +2821,7 @@ function setPerson(i,anim=true){
     body=RUIN(p);
   }else{
     body='<h3>'+esc(p.name)+'</h3><p class="role">'+esc(p.role)+'</p>'+
-      ((p.quote||extra?.quote)?'<blockquote class="quote"><span aria-hidden="true">“</span>'+esc(p.quote||extra.quote)+'<span class="q-end" aria-hidden="true">”</span></blockquote>':'')+
+      ((p.quote||extra?.quote)?'<blockquote class="quote"'+(/『/.test(p.quote||extra.quote)?' translate="no"':'')+'><span aria-hidden="true">“</span>'+esc(p.quote||extra.quote)+'<span class="q-end" aria-hidden="true">”</span></blockquote>':'')+
       '<dl><div><dt><small>01</small> 외형</dt><dd>'+esc(p.look)+'</dd></div>'+
       '<div><dt><small>02</small> 성품</dt><dd>'+esc(p.pers)+'</dd></div>'+
       '<div><dt><small>03</small> 알려진 사실</dt><dd>'+esc(p.known)+'</dd></div>'+(extra?'<div><dt><small>04</small> 행동과 말투</dt><dd>'+esc(extra.manner)+'</dd></div>'+'<div><dt><small>05</small> 지금의 관심사</dt><dd>'+esc(extra.goal)+'</dd></div>':'')+'</dl>'+'<div class="cast-profile-links" id="castProfileLinks">'+(window.SOLARIA_ATLAS?.preview(p.no)||'<p>이 인물의 관계 기록을 불러오는 중입니다.</p>')+'</div>';
@@ -2978,7 +2992,7 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
   function changeLine(s,cls){
     const key=s+'|'+cls;
     if(spoken===key)return;
-    spoken=key;caption.textContent=s;caption.className='op-caption'+(s?' on '+cls:'');
+    spoken=key;caption.textContent=s;caption.setAttribute('translate',cls==='beast-line'?'no':'yes');caption.className='op-caption'+(s?' on '+cls:'');
   }
   function paint(t){
     const next=t<C.beast?0:t<C.nox?1:t<C.slash?2:t<C.cassian?3:4;
@@ -3361,6 +3375,14 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
  }
  addEventListener('hashchange',route);
  addEventListener('popstate',route);
+ (function navRow(){
+  const ul=document.querySelector('#nav ul');if(!ul)return;
+  const edges=()=>{const max=ul.scrollWidth-ul.clientWidth;ul.classList.toggle('fade-l',max>2&&ul.scrollLeft>2);ul.classList.toggle('fade-r',max>2&&ul.scrollLeft<max-2)};
+  const center=()=>{const a=ul.querySelector('a.on');if(a&&ul.scrollWidth>ul.clientWidth+2){const ur=ul.getBoundingClientRect(),ar=a.getBoundingClientRect();ul.scrollTo({left:ul.scrollLeft+ar.left-ur.left-(ul.clientWidth-ar.width)/2,behavior:'smooth'})}edges()};
+  ul.addEventListener('scroll',edges,{passive:true});addEventListener('resize',center);
+  new MutationObserver(center).observe(ul,{subtree:true,attributes:true,attributeFilter:['class']});
+  setTimeout(center,300);
+ })();
  links.concat([...document.querySelectorAll('#nav .logo')]).forEach(a=>a.addEventListener('click',e=>{
   const id=a.getAttribute('href').slice(1),page=pageOfId(id);
   if(page!=='home'&&page===root.dataset.page&&location.hash==='#'+id){e.preventDefault();window.scrollTo({top:0,behavior:calm()?'auto':'smooth'})}
