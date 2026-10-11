@@ -26,7 +26,7 @@
   rail.querySelectorAll('.ct').forEach(card=>{
    const person=typeof list!=='undefined'?list[Number(card.dataset.i)]:null;
    if(!person||(person.sealed&&!window.SOLARIA_RIFT_UNLOCKED))return;
-   card.classList.toggle('monochrome-record',person.no===11||person.no===12);
+   card.classList.toggle('monochrome-record',(window.SOLARIA_TORN||[11,12]).includes(person.no));
    card.style.setProperty('--cast-accent',COL[person.aff]||'#d6b980');
    if(!card.querySelector('.ct-affiliation')){
     const label=document.createElement('span');label.className='ct-affiliation';

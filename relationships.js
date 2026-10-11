@@ -31,8 +31,15 @@ const relationPairs=[
 [3,5,"호의·인연","북부 대공가와 숲의 대마법사 사이에 대를 이어 내려온 빚이 있다."],
 [5,2,"호의","대마법사는 황녀에게 호의를 보인다."],
 [5,1,"경계","대마법사는 제1황자의 움직임을 경계한다."],
-[2,4,"협력·거래","황녀와 베르가 상단주 사이에 비공개 거래가 이어진다."]];
+[2,4,"협력·거래","황녀와 베르가 상단주 사이에 비공개 거래가 이어진다."],
+[3,54,'신뢰','방벽의 보급을 맡기는 대공과 운송대장'],[4,54,'거래','남부 물자를 넘기는 단골 거래처'],[25,54,'티격태격','보급 시간을 두고 늘 다투는 수비대장과 운송대장'],[28,54,'협력','물자난을 함께 버티는 영주와 운송대장'],
+[3,55,'충성','선대부터 대공가를 지켜 온 퇴역병'],[24,55,'오랜 동료','선대 때부터 성을 함께 지켜 온 사이'],[27,55,'전우','같은 전장을 겪은 옛 전우'],
+[4,56,'거래·견제','상단의 물건을 경매에 올리며 서로 속을 떠본다'],[32,56,'거래','출처를 묻지 않는 경매 의뢰'],[30,56,'정보','경매장 소문을 사고파는 사이'],[7,56,'고객','마탑은 경매장의 가장 큰 마석 구매자'],
+[6,57,'마찰','변경군의 사냥 통제와 사냥꾼의 마찰'],[36,57,'경쟁','같은 의뢰를 두고 다투는 사이'],[34,57,'거래','사냥한 마석을 광산 길드에 넘긴다'],
+[39,58,'충성','족장의 명은 따르는 젊은 전사'],[40,58,'친분','같은 일족에서 자란 또래'],[42,58,'불신','황실 총독을 믿지 않는 수호자 전사'],[5,58,'경계','대마법사를 경외하면서도 경계한다'],
+[11,59,'신하','마왕을 섬기는 마족 귀족'],[49,59,'접촉','크루엔타가 자주 기사단장을 찾아간다'],[50,59,'대립','협상과 강경의 길을 두고 엇갈린다'],[59,60,'충성','크루엔타를 섬기는 부관'],[51,60,'경쟁','경계 너머에서 자주 마주치는 사이'],[12,60,'견제','서로의 동선을 캐는 사이']];
 const people=new Map(P.map(p=>[p.no,p]));
+const TORN=window.SOLARIA_TORN||[11,12];
 const edges=relationPairs.map(([a,b,type,description])=>({a,b,type,description})).filter(e=>people.has(e.a)&&people.has(e.b));
 const NS='http://www.w3.org/2000/svg';
 const safe=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -248,10 +255,10 @@ function focus(id){
 }
 function preview(no){
  const p=people.get(Number(no));if(!p||(p.sealed&&!window.SOLARIA_RIFT_UNLOCKED))return '';
- if(p.no===11||p.no===12)return '<article class="torn-relation-fragment" aria-label="찢어진 관계 기록"><small>RELATION RECORD / FRAGMENT</small><h4>'+safe(p.name)+'</h4><p>'+safe(p.quote.slice(0,Math.ceil(p.quote.length/2)))+'</p></article>';
+ if(TORN.includes(p.no))return '<article class="torn-relation-fragment" aria-label="찢어진 관계 기록"><small>RELATION RECORD / FRAGMENT</small><h4>'+safe(p.name)+'</h4><p>'+safe(p.quote.slice(0,Math.ceil(p.quote.length/2)))+'</p></article>';
  if(p.aff==='rift'){
-  // Nox and Charon survive only as torn records, so their threads are left out here as well.
-  const kin=relations(p.no).filter(x=>x.other.no!==11&&x.other.no!==12&&(!x.other.sealed||window.SOLARIA_RIFT_UNLOCKED));
+  // Torn records (Nox, Charon, Cruenta) keep no threads, so they are left out here as well.
+  const kin=relations(p.no).filter(x=>!TORN.includes(x.other.no)&&(!x.other.sealed||window.SOLARIA_RIFT_UNLOCKED));
   return '<h4>균열 너머의 관계</h4>'+(kin.length?'<div class="rift-rel-list">'+kin.map(x=>'<button type="button" class="rift-rel '+colorType(x.type)+'" data-rift-record="'+x.other.no+'" aria-label="'+safe(x.other.name)+' 기록 보기"><img src="'+window.SOLARIA_PORTRAIT_SRC(x.other.no,'t')+'" alt="" loading="lazy"><span><span class="rift-rel-top"><b>'+safe(x.other.name)+'</b><em><i aria-hidden="true"></i>'+safe(x.type)+'</em></span><small>'+safe(x.description)+'</small></span></button>').join('')+'</div>':'<p>남아 있는 관계 기록이 없습니다.</p>');
  }
  const related=relations(p.no).filter(x=>shown(x.other)).slice(0,4);

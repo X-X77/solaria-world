@@ -2130,6 +2130,11 @@ html:not([data-page="home"]) .site-backdrop .sb-veil{background:radial-gradient(
 }
 @media(prefers-reduced-motion:reduce){#resonance .cr-letter,#resonance .cr-letter.is-new{animation:none;transition:none}}
 </style>
+<style id="torn-region">
+/* 16. Torn records stay torn in the region record: faded grey portrait, worn label */
+.region-detail .rd-who button.is-torn img{filter:grayscale(1) sepia(.34) contrast(.8) brightness(.86)}
+.region-detail .rd-who button.is-torn small{color:#7a6545;font-style:italic}
+</style>
 </head>
 <body>
 <div class="site-backdrop" id="siteBackdrop" aria-hidden="true"><div class="sb-slides"></div><div class="sb-veil"></div></div>
@@ -2514,15 +2519,22 @@ const PEOPLE = [
   [44,'엘레오노라','여','55','temple','세라핀 후작가','후작','은빛 금발, 흰금 드레스.','신앙 깊고 우아하다.','교단의 큰 후원자.','',0,0],
   [45,'로렌조','남','43','temple','대신전','주교','검은 머리, 검은 눈, 가늘고 긴 손.','낮고 차분한 목소리에 은근한 위압이 있다.','교주의 오른팔. 심문과 기록을 맡는다.','',0,0],
   [46,'이사벨라','여','55','tower','마탑','마탑 이사','짧은 은발, 안경 걸이 줄.','졸린 듯 느릿하다.','마탑 중립파의 이사.','',0,0],
-  [47,'세바스티안','남','25','tower','에테리온 백작가','백작가 후계','백금발, 청회색 눈.','오만한 천재.','노바의 라이벌.','',0,0],
+  [47,'세바스티안','남','25','tower','에테리온 백작가','백작가 차기 가주','백금발, 청회색 눈.','오만한 천재.','노바의 라이벌.','',0,0],
   [48,'티토','남','27','tower','마탑','연구원','부스스한 갈색 머리.','호기심 많고 수다스럽다.','노바의 동료 연구원.','',0,0],
+  [54,'시그리드','여','31','north','설원 교역로','운송대장','은갈색 땋은 머리, 털모자와 방한 외투. 썰매 채찍.','털털하고 강단 있다. 길 위에서는 누구보다 대장이다.','남쪽 물자를 썰매로 실어 나르는 북부의 생명줄. 지원금이 줄면서 길이 끊길 위기에 놓였다.','',0,0],
+  [55,'군나르','남','56','north','보레알 성','서고지기','희끗한 수염과 얼굴의 흉터. 낡은 군복과 지팡이.','과묵하고 고집이 세다. 술을 좋아한다.','오래전 마물 숲 원정에서 다리를 잃은 퇴역병. 지금은 보레알 성의 서고를 지킨다.','',0,0],
+  [56,'비토리아','여','34','south','경매장','경매사','흑단빛 올림머리와 호박색 눈, 금 귀걸이. 진홍 드레스.','우아하고 냉정하다. 값을 매기는 눈과 무거운 입을 가졌다.','오스트랄 경매장의 경매사. 희귀한 마석은 대부분 그녀의 경매봉 아래를 지난다.','',0,0],
+  [57,'카야','여','28','west','무소속','마석 사냥꾼','짧은 흑발과 그을린 피부. 경갑과 등에 멘 쇠뇌.','냉소적이고 생존이 먼저다. 돈만 믿는다.','황무지에서 마물을 사냥해 마석을 판다. 마물이 늘어난 뒤로 일이 끊이지 않는다.','',0,0],
+  [58,'로완','남','25','east','수호자 일족','전사','한쪽으로 땋은 긴 갈색 머리, 얼굴의 녹색 문양. 활과 화살통.','직선적이고 외부인을 싫어한다. 숲에는 누구보다 헌신한다.','숲 가장자리의 오염 구역을 순찰하는 수호자 일족의 전사.','',0,0],
   [53,'움브라','?','?','north','동행','검은 털 아기 늑대','검은 털, 붉은 눈의 아기 늑대. 털색이 특이한 변종이라고 한다.','어린애처럼 들러붙는다. 잘 잊어버린다.','당신을 졸졸 따라다니는 털뭉치. 먼저 물지는 않는다.','',0,0],
   [11,"녹스","여","외견 30대 초반","rift","균열 너머","마왕","칠흑 장발과 붉은 눈, 작은 곡선 뿔. 검은 드레스와 붉은 안감의 망토, 가느다란 금관.","공적인 자리에서는 말수가 적고 위엄 있다. 신하 앞에서는 흔들리지 않으려 한다.","균열 너머를 다스리는 군주. 인간과의 갈등을 끝낼 길을 찾고 있지만 전쟁을 피할 수 있다고 장담하지 않는다.","왔구나. 오래 기다렸다.",0,1 ],
   [12,"카론","남","외견 30대 초반","rift","마왕의 측근","궁정 책략가","남색 긴 머리를 낮게 묶고 청록색 눈과 송곳니를 지녔다. 나른한 검은 코트.","능글맞은 농담 뒤에서 상황을 계산한다. 허술해 보여도 중요한 동선은 놓치지 않는다.","마왕궁의 정무와 첩보를 보좌하며 외부를 살핀다.","아이고, 이런 분이 길을 잃으셨나.",0,1 ],
   [49,"이졸데","여","외견 20대","rift","마족 기사단","기사단장","청흑 장발과 노란 눈, 작은 곡선 뿔. 검보라 갑주 드레스와 마력으로 빚은 검.","원칙적이고 용맹하며 동족의 안전에 예민하다. 인간에게는 쉽게 마음을 열지 않는다.","균열 너머의 기사단을 이끌고 병력과 부상자의 운명을 책임진다.","전투에 앞서, 지킬 자부터 정하라.",0,1 ],
   [50,"실바누스","남","외견 30대","rift","마왕궁 참모진","참모","은회색 올백 머리와 외눈 안경. 보라 안감의 검은 코트.","느긋하고 정중한 전략가. 상냥한 표정으로도 냉정한 계산을 이어간다.","마왕궁에서 외교와 협상안을 검토한다. 전쟁 밖의 선택지를 찾는다.","가능성과 신뢰는 별개랍니다.",0,1 ],
   [51,"자일","남","외견 20대 초반","rift","마족 정찰대","정찰병","끝이 짙은 잿빛 금발, 붉은 눈과 송곳니, 작은 꼬리.","장난기가 많고 호기심을 못 참지만 위험을 느끼면 눈치가 빨라진다.","경계를 넘어 정보를 모으는 정찰병. 종종 귀찮은 사고까지 함께 가져온다.","에이, 한 번만 속아 주면 안 돼?",0,1 ],
-  [52,"오필리아","여","외견 20대 중반","rift","마왕궁 의무실","주술의관","한쪽 눈을 가린 긴 보라 머리, 보라색 눈. 흰 가운과 검은 숄.","기묘하게 웃어도 환자에게는 놀랍도록 섬세하다. 새 마력 반응 앞에선 흥분한다.","마력 감별과 부상자의 치료를 맡는다. 수상한 약병 대부분은 평범한 회복제다.","후후, 아프시더라도 치료는 받아야죠.",0,1 ]
+  [52,"오필리아","여","외견 20대 중반","rift","마왕궁 의무실","주술의관","한쪽 눈을 가린 긴 보라 머리, 보라색 눈. 흰 가운과 검은 숄.","기묘하게 웃어도 환자에게는 놀랍도록 섬세하다. 새 마력 반응 앞에선 흥분한다.","마력 감별과 부상자의 치료를 맡는다. 수상한 약병 대부분은 평범한 회복제다.","후후, 아프시더라도 치료는 받아야죠.",0,1 ],
+  [59,"크루엔타","여","외견 20대 후반","rift","균열 너머","마족 귀족","핏빛 긴 머리와 금빛 눈, 굽은 큰 뿔과 박쥐 날개. 검붉은 드레스.","늘 웃고 있다. 그 웃음이 무엇을 뜻하는지는 아무도 모른다.","균열 너머의 한 세력을 이끈다. 남은 기록이 거의 없다.","어머, 이렇게 귀한 분이 혼자 다니시면…",0,1 ],
+  [60,"라시엘","남","외견 20대 중반","rift","크루엔타 휘하","부관","흑자색 머리와 자홍색 눈, 작은 뿔과 박쥐 날개. 풀어헤친 검은 셔츠.","나른하고 능청스럽다. 상대가 듣고 싶은 말을 먼저 안다.","크루엔타를 섬기는 부관. 그와 이야기를 나눈 사람은 무엇을 말했는지 잘 기억하지 못한다.","쉿, 비밀은 둘만 아는 게 제일 달콤하잖아.",0,1 ]
 ];
 
 const SEALS = [
@@ -2550,10 +2562,15 @@ const SECRET={
  9:'자애로운 미소 뒤에서, 그는 이미 몇 사람의 이름을 지웠다.',
  10:'마물 곁에 선 당신에게서, 성녀는 이상하게 평온한 기운을 느꼈다.'
 };
-const P=PEOPLE.map(a=>({no:a[0],name:a[1],sex:a[2],age:a[3],aff:a[4],group:a[5],role:a[6],look:a[7],pers:a[8],known:a[9],quote:a[10],main:!!a[11],sealed:!!a[12]})).sort((a,b)=>a.no-b.no);
+// Register order (the record numbers shown on the page follow it); asset and relation ids stay as they are.
+const REGISTER=[1,2,3,4,5,6,7,8,9,10,11,12,59,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,54,55,29,30,31,32,33,56,34,35,36,37,38,57,39,40,41,42,58,43,44,45,46,47,48,49,50,51,52,60,53];
+const recNo=no=>{const i=REGISTER.indexOf(Number(no));return String(i<0?no:i+1).padStart(2,'0')};
+// Records torn out of the register: only a name and half a line survive.
+const TORN=[11,12,59];window.SOLARIA_TORN=TORN;
+const P=PEOPLE.map(a=>({no:a[0],name:a[1],sex:a[2],age:a[3],aff:a[4],group:a[5],role:a[6],look:a[7],pers:a[8],known:a[9],quote:a[10],main:!!a[11],sealed:!!a[12]})).sort((a,b)=>REGISTER.indexOf(a.no)-REGISTER.indexOf(b.no));
 const pad=n=>String(n).padStart(2,'0');
 // Keep sealed assets until this browser has completed the hidden film.
-window.SOLARIA_PORTRAIT_SRC=(no,kind='c')=>'img/'+kind+'/'+pad(no)+([11,12,49,50,51,52].includes(Number(no))&&window.SOLARIA_RIFT_UNLOCKED?'-unsealed':'')+'.jpg';
+window.SOLARIA_PORTRAIT_SRC=(no,kind='c')=>'img/'+kind+'/'+pad(no)+([11,12,49,50,51,52,59,60].includes(Number(no))&&window.SOLARIA_RIFT_UNLOCKED?'-unsealed':'')+'.jpg';
 const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 const $=id=>document.getElementById(id);
 
@@ -2610,7 +2627,7 @@ function regionRecord(k){
      </aside>
     </div>
     <section class="rd-sec rd-people"><h4><small>05</small> 이 지역의 인물 <em>${visible.length?visible.length+'명':''}</em></h4>
-       ${!ppl.length?'<p class="rd-empty">공개된 인물 기록이 없습니다.</p>':!show.length?'<p class="rd-empty">이 권역은 봉인되어 있습니다.</p>':`<div class="rd-who">${show.map(p=>`<button type="button" data-no="${p.no}" aria-label="${esc(p.name)} · ${esc(p.role)} · 인물 도감 보기"><img src="${window.SOLARIA_PORTRAIT_SRC(p.no,'t')}" alt="" loading="lazy"><span><b>${esc(p.name)}</b><small>${esc(p.role)}</small></span></button>`).join('')}</div>`}
+       ${!ppl.length?'<p class="rd-empty">공개된 인물 기록이 없습니다.</p>':!show.length?'<p class="rd-empty">이 권역은 봉인되어 있습니다.</p>':`<div class="rd-who">${show.map(p=>{const torn=TORN.includes(p.no),role=torn?'훼손된 기록':p.role;return `<button type="button" data-no="${p.no}"${torn?' class="is-torn"':''} aria-label="${esc(p.name)} · ${esc(role)} · 인물 도감 보기"><img src="${window.SOLARIA_PORTRAIT_SRC(p.no,'t')}" alt="" loading="lazy"><span><b>${esc(p.name)}</b><small>${esc(role)}</small></span></button>`}).join('')}</div>`}
     </section>
     <nav class="rd-nav" aria-label="다른 권역 기록"><button type="button" data-rd-go="${prev}"><span aria-hidden="true">‹</span> ${REGIONS[prev].name}</button><span>${pad(i+1)} / ${pad(ORDER.length)}</span><button type="button" data-rd-go="${next}">${REGIONS[next].name} <span aria-hidden="true">›</span></button></nav>
    </article>
@@ -2661,7 +2678,7 @@ function setFilter(f,no){
     return '<button type="button" class="ct'+(p.sealed&&!window.SOLARIA_RIFT_UNLOCKED?' sealed':'')+'" data-i="'+i+'" aria-current="false" aria-label="'+esc(name)+' 인물 기록">'+
       '<span class="ct-serial">'+String(i+1).padStart(2,'0')+'</span>'+
       '<div class="im"><img src="'+window.SOLARIA_PORTRAIT_SRC(p.no,'t')+'" alt="" loading="lazy"></div>'+
-      '<b>'+esc(name)+'</b><small>'+esc(p.sealed&&!window.SOLARIA_RIFT_UNLOCKED?'봉인된 기록':(p.no===11||p.no===12)?'훼손된 기록':p.role)+'</small></button>';
+      '<b>'+esc(name)+'</b><small>'+esc(p.sealed&&!window.SOLARIA_RIFT_UNLOCKED?'봉인된 기록':TORN.includes(p.no)?'훼손된 기록':p.role)+'</small></button>';
   }).join('');
   strip.querySelectorAll('.ct').forEach(b=>b.onclick=()=>setPerson(+b.dataset.i));
   const i=no?list.findIndex(p=>p.no===no):-1;
@@ -2700,12 +2717,12 @@ function RUIN(p){
   return '<div class="ruin ruin-book" role="group" aria-label="훼손된 인물 기록. 이름과 대사 일부만 남아 있다.">'+
    '<div class="ruin-under" aria-hidden="true"><span class="ruin-stain"></span></div>'+
    '<div class="ruin-leaf"><div class="ruin-leaf-edge" aria-hidden="true" style="clip-path:'+leaf+'"></div><div class="ruin-leaf-paper" style="clip-path:'+leaf+'">'+
-    '<div class="reg-head" aria-hidden="true"><span>제국 인명록</span><span>제 '+pad(p.no)+'호</span></div>'+
+    '<div class="reg-head" aria-hidden="true"><span>제국 인명록</span><span>제 '+recNo(p.no)+'호</span></div>'+
     '<small class="ruin-kicker">PERSONNEL RECORD</small><h3>'+esc(p.name)+'</h3>'+
     (vis?'<blockquote class="quote"><span aria-hidden="true">“</span>'+esc(vis)+(cut?(q.charAt(h)===' '?' ':'')+'<span class="ruin-cut" aria-hidden="true">'+esc(cut)+'</span>':'')+'</blockquote>':'')+
     '<div class="ruin-fade" aria-hidden="true"><b>01 외형</b><i></i><i class="short"></i></div>'+
    '</div></div>'+
-   '<div class="ruin-scrap" aria-hidden="true"><span>No.'+pad(p.no)+'</span><i class="ruin-wax"></i><em>기록 대부분 소실</em></div>'+
+   '<div class="ruin-scrap" aria-hidden="true"><span>No.'+recNo(p.no)+'</span><i class="ruin-wax"></i><em>기록 대부분 소실</em></div>'+
   '</div>';
 }
 /* Page turn: the old spread is copied before the new record is drawn, then the leaf turns over the spine. */
@@ -2761,8 +2778,8 @@ function setPerson(i,anim=true){
   dossier.style.setProperty('--rc',COL[p.aff]||'#D9B86C');
   dossier.style.setProperty('--people-bg','url("img/r/'+theme+'.jpg")');
   dossier.dataset.faction=p.aff;
-  const ruin=(p.no===11||p.no===12)&&!sealed;
-  dossier.classList.toggle('torn-record',p.no===11||p.no===12);
+  const ruin=TORN.includes(p.no)&&!sealed;
+  dossier.classList.toggle('torn-record',TORN.includes(p.no));
   dossier.classList.toggle('ruin-record',ruin);
   peopleWatermark.textContent=sealed?'SEALED':name.split(' ')[0];
   peoplePage.textContent=String(cur+1).padStart(2,'0')+' / '+String(list.length).padStart(2,'0');
@@ -2793,10 +2810,10 @@ function setPerson(i,anim=true){
   }
   cstage.innerHTML='<div class="cpor'+(anim?' anim':'')+(sealed?' sealed':'')+'">'+
     '<span class="ln"></span>'+(sealed?'<div class="cast-sealed-art" aria-hidden="true"><span>◇</span><b>SEALED PORTRAIT</b></div>':'<img src="'+window.SOLARIA_PORTRAIT_SRC(p.no,'c')+'" alt="'+esc(name)+'">')+
-    '<span class="cpor-dark" aria-hidden="true"></span><span class="cpor-top">SOLARIA · DOSSIER '+pad(p.no)+'</span>'+
+    '<span class="cpor-dark" aria-hidden="true"></span><span class="cpor-top">SOLARIA · DOSSIER '+recNo(p.no)+'</span>'+
     (sealed?'<span class="cpor-seal" aria-hidden="true">RECORD SEALED</span>':'')+
     '<span class="cpor-bottom">'+esc(AFF[p.aff]||'제국')+' / PERSONNEL RECORD</span></div>'+
-    '<div class="cinfo'+(anim?' anim':'')+'">'+(ruin||sealed?'':'<div class="reg-head" aria-hidden="true"><span>제국 인명록</span><span>제 '+pad(p.no)+'호</span></div>')+(ruin?'':'<div class="fac"><i aria-hidden="true"></i>'+esc(AFF[p.aff]||'제국')+
+    '<div class="cinfo'+(anim?' anim':'')+'">'+(ruin||sealed?'':'<div class="reg-head" aria-hidden="true"><span>제국 인명록</span><span>제 '+recNo(p.no)+'호</span></div>')+(ruin?'':'<div class="fac"><i aria-hidden="true"></i>'+esc(AFF[p.aff]||'제국')+
     '<small>'+esc(sealed?'접근 제한':p.group)+(sealed||p.age==='?'?'':' · '+esc(age))+'</small></div>')+
     body+'<div class="cnav"><span>RECORD NAVIGATION</span>'+
     '<button type="button" aria-label="이전 인물" id="cp">'+arrow('M15 5 8 12l7 7')+'이전</button>'+
@@ -3203,10 +3220,10 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
 </script>
 <script src="archive.js"></script>
 <script src="resonance.js?v=career"></script>
-<script src="people-redesign.js?v=torn-record"></script>
+<script src="people-redesign.js?v=roster60"></script>
 <script src="forbidden-library.js"></script>
-<script src="dossier-expansion.js"></script>
-<script src="relationships.js?v=region-arrows"></script>
+<script src="dossier-expansion.js?v=roster60"></script>
+<script src="relationships.js?v=roster60"></script>
 <script id="book-size">
 /* One page size for the whole register: every record is measured once (portraits swapped for a blank so nothing
    downloads), the tallest sets the book height, and short records keep blank paper below. Page turns then match. */
