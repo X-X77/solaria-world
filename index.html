@@ -2663,6 +2663,7 @@ iframe.skiptranslate,body>.skiptranslate,.goog-te-banner-frame,#goog-gt-tt,.goog
  const box=document.getElementById('langSwitch'),btn=document.getElementById('langBtn'),menu=document.getElementById('langMenu');
  function mark(lang){
   const l=LANGS.find(x=>x[0]===lang)||LANGS[0];
+  window.SOLARIA_LANG=l[0]; // the film lines follow the language the moment it is chosen
   const cur=document.getElementById('langCur');if(cur)cur.textContent=l[2];
   document.querySelectorAll('[data-lang]').forEach(b=>{const on=b.dataset.lang===l[0];b.classList.toggle('on',on);b.setAttribute('aria-checked',on?'true':'false')});
  }
