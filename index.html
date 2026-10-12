@@ -2347,6 +2347,13 @@ iframe.skiptranslate,body>.skiptranslate,.goog-te-banner-frame,#goog-gt-tt,.goog
 #archive .lib-scrawl .scr-blot path,#archive .lib-scrawl .scr-blot circle{fill:#120a05;opacity:.85}
 #archive .lib-scrawl .scr-blot .scr-drip{fill:none;stroke:#120a05;stroke-width:1.8;stroke-linecap:round;opacity:.7}
 </style>
+<style id="film-blur-lines">
+/* 26. Film backdrops are ready-made blurred pictures; live blur only as a fallback */
+@media(max-aspect-ratio:6/5),(min-aspect-ratio:39/20),(max-height:500px){
+ #intro.op-v2 .op-shot img.op-blur,#riftAwakening .rift-bg{inset:-2%;width:104%;height:104%;filter:none;transform:translateZ(0)}
+ #intro.op-v2 .op-shot img.op-blur.live-blur,#riftAwakening .rift-bg.live-blur{filter:blur(18px) brightness(.4) saturate(1.15)}
+}
+</style>
 </head>
 <body>
 <div class="site-backdrop" id="siteBackdrop" aria-hidden="true"><div class="sb-slides"></div><div class="sb-veil"></div></div>
@@ -2587,16 +2594,19 @@ iframe.skiptranslate,body>.skiptranslate,.goog-te-banner-frame,#goog-gt-tt,.goog
    and whole-picture framing for the films on phones. */
 (function(){
  /* ── films: a blurred copy fills the screen behind the full picture ── */
+ // ready-made blurred copies in img/op/blur; anything else falls back to a live blur
+ const blurOf=u=>{const m=/(^|\/)img\/op\/([^/?#]+)\.(webp|png|jpe?g)(?:[?#].*)?$/i.exec(u||'');return m?u.slice(0,m.index)+m[1]+'img/op/blur/'+m[2]+'.jpg':''};
+ const setBlur=(bg,u)=>{if(!u||bg.dataset.from===u)return;bg.dataset.from=u;const b=blurOf(u);bg.classList.toggle('live-blur',!b);bg.onerror=b?()=>{bg.onerror=null;bg.classList.add('live-blur');bg.src=u}:null;bg.src=b||u};
  document.querySelectorAll('#intro .op-shot').forEach(shot=>{
   const img=shot.querySelector('img');if(!img||shot.querySelector('.op-blur'))return;
   const bg=document.createElement('img');bg.className='op-blur';bg.alt='';bg.setAttribute('aria-hidden','true');
-  const sync=()=>{bg.src=img.currentSrc||img.src};sync();img.addEventListener('load',sync);img.addEventListener('error',()=>setTimeout(sync,50));
+  const sync=()=>setBlur(bg,img.getAttribute('src')&&!img.dataset.fallback?img.getAttribute('src'):img.currentSrc||img.src);sync();img.addEventListener('load',sync);img.addEventListener('error',()=>setTimeout(sync,50));
   shot.prepend(bg);
  });
  const film=document.querySelector('#riftAwakening .rift-film');
  if(film){
   const bg=document.createElement('img');bg.className='rift-bg';bg.alt='';bg.setAttribute('aria-hidden','true');film.prepend(bg);
-  const sync=()=>{const a=film.querySelector('.rift-cut.active');if(a&&bg.getAttribute('src')!==a.getAttribute('src'))bg.src=a.getAttribute('src')};
+  const sync=()=>{const a=film.querySelector('.rift-cut.active');if(a)setBlur(bg,a.getAttribute('src'))};
   new MutationObserver(sync).observe(film,{subtree:true,attributes:true,attributeFilter:['class']});
  }
 
@@ -2662,11 +2672,20 @@ iframe.skiptranslate,body>.skiptranslate,.goog-te-banner-frame,#goog-gt-tt,.goog
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu&&!menu.hidden){close();btn.focus()}});
  document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',()=>apply(b.dataset.lang)));
  mark(current());
+ window.SOLARIA_LANG=current();
+ const LINES={
+  '『ㅊ,ㅏㅈ았다』':{en:'『F,oUND』','zh-TW':'『找,到 了』',ja:'『ミ,ツケタ』'},
+  '드디어.':{en:'At last.','zh-TW':'終於。',ja:'ついに。'},
+  '움직이지 마라.':{en:'Don\u2019t move.','zh-TW':'別動。',ja:'動くな。'},
+  '누가 침묵을 깨뜨렸느냐?':{en:'Who broke the silence?','zh-TW':'是誰打破了沉默？',ja:'誰が沈黙を破った？'},
+  '눈을 돌리지 마라.':{en:'Do not look away.','zh-TW':'不准移開視線。',ja:'目を逸らすな。'}
+ };
+ window.solariaSay=s=>{const l=window.SOLARIA_LANG||'ko';return l!=='ko'&&LINES[s]?.[l]||s};
  // A chosen language stays chosen on the next visit.
- if(!onProxy&&current()!=='ko')loadWidget().catch(()=>{setCookie('');mark('ko')});
+ if(!onProxy&&current()!=='ko')loadWidget().catch(()=>{setCookie('');mark('ko');window.SOLARIA_LANG='ko'});
 })();
 </script>
-<script src="rift-contact.js?v=quiet-prime"></script>
+<script src="rift-contact.js?v=lines-lang"></script>
 <script>
 const REGIONS = {
   north: {
@@ -3281,7 +3300,7 @@ document.querySelectorAll('[data-replay]').forEach(b=>b.onclick=()=>{try{session
   function changeLine(s,cls){
     const key=s+'|'+cls;
     if(spoken===key)return;
-    spoken=key;caption.textContent=s;caption.setAttribute('translate',cls==='beast-line'?'no':'yes');caption.className='op-caption'+(s?' on '+cls:'');
+    spoken=key;caption.textContent=window.solariaSay?window.solariaSay(s):s;caption.setAttribute('translate','no');caption.className='op-caption notranslate'+(s?' on '+cls:'');
   }
   function paint(t){
     const next=t<C.beast?0:t<C.nox?1:t<C.slash?2:t<C.cassian?3:4;

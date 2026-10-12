@@ -50,7 +50,8 @@ function paint(t){
  const index=t<CUES.open?0:t<CUES.nox?1:t<CUES.seal?2:3;
  cuts.forEach((el,i)=>el.classList.toggle('active',i===index));veil.dataset.cut=String(index+1);
  const line=CUES.lines.find(l=>t>=l.start&&t<l.end);
- if(korean.textContent!==(line?.korean||''))korean.textContent=line?.korean||'';
+ const said=line?.korean?(window.solariaSay?window.solariaSay(line.korean):line.korean):'';
+ if(korean.textContent!==said){korean.textContent=said;korean.setAttribute('translate','no');korean.classList.add('notranslate')}
 }
 function tick(){
  if(!active||complete)return;
