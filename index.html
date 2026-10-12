@@ -1010,6 +1010,7 @@ footer{background:#080D16}
 #world .world-chapter{--chapter:#D2B477;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;gap:clamp(25px,5vw,82px);position:relative;min-height:410px}
 #world .world-chapter-north{--chapter:#9ABBD3}
 #world .world-chapter-rift{--chapter:#BFA4DB}
+#world .world-chapter-faith{--chapter:#E6C27E}
 #world .world-chapter:nth-child(even){grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
 #world .world-chapter:nth-child(even) .world-chapter-image{order:2}
 #world .world-chapter-image{position:relative;aspect-ratio:1.55;overflow:hidden;border:1px solid rgba(231,212,180,.22);box-shadow:0 24px 45px rgba(0,0,0,.25);isolation:isolate}
@@ -2455,6 +2456,15 @@ html,body{top:0!important}
       <a href="#regions" class="world-chapter-link" data-world-region="rift">균열의 기록 살펴보기 <span aria-hidden="true">↗</span></a>
     </div>
   </article>
+  <article class="world-chapter world-chapter-faith" data-world-scene="capital">
+    <div class="world-chapter-image"><img src="img/r/faith.jpg" alt="아치 너머로 보이는 대신전과 금빛 돔, 태양 문장 깃발" loading="lazy"></div>
+    <div class="world-chapter-content">
+      <div class="world-chapter-head"><span>RECORD Ⅳ</span><span>THE FAITH</span></div>
+      <h3>태양의 신앙</h3><p class="world-chapter-sub">같은 빛 아래서도, 기도는 저마다 다르다.</p>
+      <p>교단은 태양신 솔을 섬긴다. 제국의 이름도 그 신에게서 왔다. 대신전은 초대 황제가 솔의 은총으로 균열을 봉인했다고 가르치고, 마물을 신이 내린 시험이라 부른다. 황도에서 신앙은 곧 국법이지만, 북부는 소박한 기도만 올리고 남부의 뱃사람은 옛 바다 정령에게도 손을 모은다. 서부 변경에는 신전이 드물고, 동부의 숲 신전은 끝내 다른 것을 믿는다.</p>
+      <a href="#regions" class="world-chapter-link" data-world-region="capital">대신전의 기록 살펴보기 <span aria-hidden="true">↗</span></a>
+    </div>
+  </article>
 </div>
 
   <div class="atlas-preview" aria-label="솔라리아 제국 지도">
@@ -2725,7 +2735,7 @@ const REGIONS = {
     places: [
       ['황궁', '태양 문장이 새겨진 제국의 심장. 황제의 병상이 이곳에 있다.'],
       ['마탑', '마석을 정제해 제국의 불을 밝히는 마법사들의 탑.'],
-      ['대신전', '교단의 본산. 성녀의 기도가 매일 이곳에서 울린다.'],
+      ['대신전', '태양신 솔을 섬기는 교단의 본산. 성녀의 기도가 매일 이곳에서 울린다.'],
       ['동쪽의 큰 강', '북부 설산에서 발원해 황도 동쪽을 지나 남부 바다로 흐른다. 대교 하나가 도시와 동쪽 길을 잇는다.'],
       ['중앙 평야', '황도를 둘러싼 너른 들. 제국의 대로가 모두 이곳에서 갈라진다.']
     ],
@@ -2760,7 +2770,7 @@ const REGIONS = {
     places: [
       ['아우로라 숲', '동부의 대부분. 허락 없이 들어간 자는 길을 잃는다고들 한다.'],
       ['수호자 일족의 마을', '숲 안쪽, 외부인을 들이지 않는 일족의 터전.'],
-      ['숲 신전', '교단과 거리를 둔 오래된 신전. 숲 또한 신의 일부라 가르친다.'],
+      ['숲 신전', '교단의 태양신을 섬기지 않는 오래된 숲 신앙의 신전. 숲 또한 신의 일부라 가르친다.'],
       ['이름 없는 유적', '숲 깊은 중앙, 지도에 이름이 없는 곳. 아무도 읽지 못하는 석판이 서 있다.'],
       ['지류의 발원', '숲에서 흘러나온 물줄기가 남부 곡창으로 내려간다.']
     ],
