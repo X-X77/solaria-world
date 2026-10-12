@@ -2352,7 +2352,17 @@ iframe.skiptranslate,body>.skiptranslate,.goog-te-banner-frame,#goog-gt-tt,.goog
 @media(max-aspect-ratio:6/5),(min-aspect-ratio:39/20),(max-height:500px){
  #intro.op-v2 .op-shot img.op-blur,#riftAwakening .rift-bg{inset:-2%;width:104%;height:104%;filter:none;transform:translateZ(0)}
  #intro.op-v2 .op-shot img.op-blur.live-blur,#riftAwakening .rift-bg.live-blur{filter:blur(18px) brightness(.4) saturate(1.15)}
+ /* the shade was made for a full-screen picture; around a centred picture it only blacked out the bottom */
+ #intro.op-v2 .op-grade{background:linear-gradient(0deg,rgba(2,6,15,.5),rgba(2,6,15,.12) 18%,transparent 30%,transparent 72%,rgba(2,6,15,.12) 84%,rgba(2,6,15,.42)),radial-gradient(ellipse at 50% 50%,transparent 40%,rgba(2,6,15,.22) 100%)}
+ #intro.op-v2 .op-caption{text-shadow:0 1px 3px rgba(0,0,0,.9),0 0 18px rgba(0,0,0,.75)}
+ /* lighter work for phones: only the picture on screen is kept ready */
+ #intro.op-v2 .op-shot{will-change:auto}
+ #intro.op-v2 .op-shot.active{will-change:opacity}
+ #intro.op-v2.ending .op-stage{filter:none;transform:none}
 }
+/* Google's newer translator pieces (banner, spinner, tooltip) never sit on top of the page */
+iframe.VIpgJd-ZVi9od-ORHb-OEVmcd,.VIpgJd-ZVi9od-aZ2wEe-wOHMyf,.VIpgJd-ZVi9od-aZ2wEe-OiiCO,.VIpgJd-yAWNEb-L7lbkb,#goog-gt-vt{display:none!important}
+html,body{top:0!important}
 </style>
 </head>
 <body>
