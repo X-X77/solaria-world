@@ -56,10 +56,11 @@ const shown=p=>p.aff!=='rift'&&(!p.sealed||!!window.SOLARIA_RIFT_UNLOCKED);
 const visibleName=p=>shown(p)?p.name:'열람 제한';
 const relations=id=>edges.filter(e=>e.a===id||e.b===id).map(e=>({other:people.get(e.a===id?e.b:e.a),type:e.type,description:e.description}));
 const imperialOrder=[13,14,1,2,3,4,6,5,7,8,9,10];
-const members=key=>key==='all'?imperialOrder.map(id=>people.get(id)).filter(Boolean):P.filter(p=>p.aff===key).sort((a,b)=>Number(b.main)-Number(a.main)||a.no-b.no);
+const members=key=>key==='all'?P.filter(shown):P.filter(p=>p.aff===key).sort((a,b)=>Number(b.main)-Number(a.main)||a.no-b.no);
 let region='all',selected=null,photo=null;
 // Wide screens widen the night sky instead of enlarging it, so the whole constellation stays in view.
 let geo={sx:1,x:0,w:940},flowed=null,recordFor=null;
+const ALL_CY=455,ALL_H=920;
 function sky(){
  const cw=scroll.clientWidth||board.clientWidth||940;
  if(cw<900)return {sx:1,x:0,w:940};
@@ -86,14 +87,28 @@ function positions(cast){
  const points=new Map(),count=cast.length,sx=geo.sx;
  if(!count)return points;
  if(region==='all'){
-  // Equal spacing on the outer orbit prevents a dense 12-person central cluster.
-  const ring=orbit(count,351*sx,226,470,326);
-  cast.forEach((p,i)=>points.set(p.no,ring[i]));
+  // Every public record: leaders on the inner orbit, the rest grouped by region in sectors of two outer orbits.
+  const order=['north','east','temple','south','west','capital','tower'],cy=ALL_CY;
+  const rest=cast.filter(p=>!p.main),leaders=cast.filter(p=>p.main);
+  const total=rest.length||1;let start=-90,n=0;const mid={};
+  const at=(deg,rx,ry,s)=>{const t=deg*Math.PI/180;return {x:Math.round((470+Math.cos(t)*rx*sx)*10)/10,y:Math.round((cy+Math.sin(t)*ry)*10)/10,s};};
+  order.forEach(k=>{
+   const group=rest.filter(p=>p.aff===k),span=360*group.length/total;
+   mid[k]=start+span/2;
+   group.forEach((p,i)=>{const deg=start+span*(i+.5)/group.length;points.set(p.no,n++%2?at(deg,300,262,.56):at(deg,425,372,.56));});
+   start+=span;
+  });
+  leaders.sort((a,b)=>((mid[a.aff]??0)+360)%360-((mid[b.aff]??0)+360)%360||a.no-b.no);
+  const first=mid[leaders[0]?.aff]??-90;
+  leaders.forEach((p,i)=>points.set(p.no,at(first+360*i/leaders.length,178,142,.72)));
   return points;
  }
- const central=cast.find(p=>p.main)||cast[0];
- points.set(central.no,{x:470,y:320});
- const others=cast.filter(p=>p.no!==central.no);
+ // Two leaders (siblings, church, tower) share the centre so neither reads as the lone protagonist.
+ const leads=cast.filter(p=>p.main);
+ const centre=leads.length>1?leads.slice(0,2):[leads[0]||cast[0]];
+ if(centre.length===2){points.set(centre[0].no,{x:470-92,y:320});points.set(centre[1].no,{x:470+92,y:320});}
+ else points.set(centre[0].no,{x:470,y:320});
+ const others=cast.filter(p=>!centre.includes(p));
  const rx=others.length>9?347:others.length>5?330:311,ry=others.length>9?227:218;
  const ring=orbit(others.length,rx*sx,ry,470,320);
  others.forEach((p,i)=>points.set(p.no,ring[i]));
@@ -101,7 +116,8 @@ function positions(cast){
 }
 function renderGraph(){
  geo=sky();
- svg.setAttribute('viewBox',geo.x+' 0 '+geo.w+' 690');
+ const H=region==='all'?ALL_H:690,CY=region==='all'?ALL_CY:325;
+ svg.setAttribute('viewBox',geo.x+' 0 '+geo.w+' '+H);
  const cast=members(region),pts=positions(cast),locked=region==='rift'&&!window.SOLARIA_RIFT_UNLOCKED;
  svg.replaceChildren();
  const defs=node('defs');
@@ -111,13 +127,18 @@ function renderGraph(){
  }
  svg.append(defs);
  const stars=node('g',{class:'arc-starfield','aria-hidden':'true'});
- const starCount=Math.round(54*geo.w/940);
+ const starCount=Math.round(54*geo.w/940*H/690);
  for(let i=0;i<starCount;i++){
-  const x=geo.x+22+(i*173+39)%(geo.w-44),y=22+(i*131+75)%650;
+  const x=geo.x+22+(i*173+39)%(geo.w-44),y=22+(i*131+75)%(H-40);
   stars.append(node('circle',{cx:x,cy:y,r:i%5===0?1.8:0.8,class:i%6===0?'star-bright':'star-dim'}));
  }
  svg.append(stars);
  const geometry=node('g',{class:'arc-geometry','aria-hidden':'true'});
+ if(region==='all'){
+  geometry.append(node('ellipse',{cx:470,cy:CY,rx:Math.round(425*geo.sx),ry:372,class:'orbit-main'}));
+  geometry.append(node('ellipse',{cx:470,cy:CY,rx:Math.round(300*geo.sx),ry:262,class:'orbit-dashed'}));
+  geometry.append(node('ellipse',{cx:470,cy:CY,rx:Math.round(178*geo.sx),ry:142,class:'orbit-inner'}));
+ }else{
  geometry.append(node('ellipse',{cx:470,cy:320,rx:Math.round(347*geo.sx),ry:231,class:'orbit-main'}));
  geometry.append(node('circle',{cx:470,cy:325,r:169,class:'orbit-inner'}));
  geometry.append(node('circle',{cx:470,cy:325,r:179,class:'orbit-dashed'}));
@@ -125,11 +146,12 @@ function renderGraph(){
   const t=a*Math.PI/180,x=470+165*Math.cos(t),y=325+165*Math.sin(t);
   geometry.append(node('line',{x1:470-x+470,y1:325-y+325,x2:x,y2:y,class:'orbit-axis'}));
  }
+ }
  svg.append(geometry);
  if(region==='all'){
   const glyph=node('g',{class:'arc-imperial-glyph','aria-hidden':'true'});
-  glyph.append(node('text',{x:470,y:314,'text-anchor':'middle',class:'arc-glyph-mark'},'✧'));
-  glyph.append(node('text',{x:470,y:344,'text-anchor':'middle',class:'arc-glyph-word'},'SOLARIA'));
+  glyph.append(node('text',{x:470,y:CY-11,'text-anchor':'middle',class:'arc-glyph-mark'},'✧'));
+  glyph.append(node('text',{x:470,y:CY+19,'text-anchor':'middle',class:'arc-glyph-word'},'SOLARIA'));
   svg.append(glyph);
  }
  const lines=node('g',{class:'arc-link-lines'}),flows=node('g',{class:'arc-flows','aria-hidden':'true'});
@@ -155,7 +177,7 @@ function renderGraph(){
  const portraits=node('g',{class:'arc-portraits'});
  cast.forEach(p=>{
   const pos=pts.get(p.no),isSelected=selected===p.no,dim=selected!==null&&!related.has(p.no);
-  const g=node('g',{transform:'translate('+pos.x+' '+pos.y+')',class:'arc-person'+(isSelected?' is-selected':'')+(dim?' is-dim':'')+(locked?' is-sealed':''),'data-person':p.no,role:'button',tabindex:'0','aria-pressed':String(isSelected),'aria-label':shown(p)?p.name+' 관계 보기':'열람 제한 인물'});
+  const g=node('g',{transform:'translate('+pos.x+' '+pos.y+')'+(pos.s?' scale('+pos.s+')':''),class:'arc-person'+(isSelected?' is-selected':'')+(dim?' is-dim':'')+(locked?' is-sealed':''),'data-person':p.no,role:'button',tabindex:'0','aria-pressed':String(isSelected),'aria-label':shown(p)?p.name+' 관계 보기':'열람 제한 인물'});
   const title=node('title',{},visibleName(p));g.append(title);
   g.append(node('circle',{r:52,class:'arc-glow'}));
   g.append(node('circle',{r:43,class:'arc-outer-ring'}));
@@ -167,7 +189,7 @@ function renderGraph(){
   }
   g.append(node('circle',{r:39.5,class:'arc-rim'}));
   g.append(node('text',{x:0,y:67,class:'arc-person-name','text-anchor':'middle'},shown(p)?p.name:'???'));
-  g.append(node('text',{x:0,y:85,class:'arc-person-role','text-anchor':'middle'},shown(p)?p.role:'열람 제한'));
+  if(!pos.s||pos.s>.6)g.append(node('text',{x:0,y:85,class:'arc-person-role','text-anchor':'middle'},shown(p)?p.role:'열람 제한'));
   g.addEventListener('click',()=>{selected=selected===p.no?null:p.no;render()});
   g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selected=selected===p.no?null:p.no;render();svg.querySelector('[data-person="'+p.no+'"]')?.focus({preventScroll:true})}});
   portraits.append(g);
@@ -185,8 +207,8 @@ function renderGraph(){
  };
  portraits.querySelectorAll('.arc-person').forEach(person=>{
   const name=person.querySelector('.arc-person-name'),role=person.querySelector('.arc-person-role');
-  if(wrapLabel(name,18))role.setAttribute('y',103);
-  wrapLabel(role,14);
+  if(wrapLabel(name,18)&&role)role.setAttribute('y',103);
+  if(role)wrapLabel(role,14);
  });
  // Keep the active portrait visible in the existing horizontal mobile scroller.
  const activePoint=pts.get(selected);
@@ -194,7 +216,7 @@ function renderGraph(){
   const scale=svg.getBoundingClientRect().width/svg.viewBox.baseVal.width;
   scroll.scrollTo({left:Math.max(0,(activePoint.x-geo.x)*scale-scroll.clientWidth/2),behavior:quiet()?'auto':'smooth'});
  }
- document.getElementById('arcanaCount').textContent=cast.length+'명 · '+(region==='all'?'제국 주요 연결 ':'권역 내 연결 ')+intra.length+'개';
+ document.getElementById('arcanaCount').textContent=cast.length+'명 · '+(region==='all'?'제국 전체 연결 ':'권역 내 연결 ')+intra.length+'개';
 }
 const typeWord={allied:'호의·협력',hostile:'대립·긴장',complex:'그 밖의 연결'};
 function relatedMarkup(items,caption,away){
@@ -281,8 +303,8 @@ function unlock(){
  window.SOLARIA_RIFT_CONTACT?.begin();
 }
 function goRegion(key){
- region=key;const cast=members(region),primary=cast.find(p=>p.main)||cast[0];
- selected=region==='all'?null:(primary?primary.no:null);render();
+ region=key;const cast=members(region),leads=cast.filter(p=>p.main),primary=leads[0]||cast[0];
+ selected=region==='all'||leads.length>1?null:(primary?primary.no:null);render();
  // keep the active tab visible when the tab row scrolls on narrow screens
  const a=tabs.querySelector('.active');
  if(a&&tabs.scrollWidth>tabs.clientWidth){const tr=tabs.getBoundingClientRect(),ar=a.getBoundingClientRect();tabs.scrollTo({left:tabs.scrollLeft+ar.left-tr.left-(tabs.clientWidth-ar.width)/2,behavior:quiet()?'auto':'smooth'})}
